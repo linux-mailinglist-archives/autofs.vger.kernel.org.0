@@ -2,135 +2,152 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 945AC1FEA3
-	for <lists+autofs@lfdr.de>; Thu, 16 May 2019 06:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3782203E6
+	for <lists+autofs@lfdr.de>; Thu, 16 May 2019 12:53:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726247AbfEPE6Y (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 16 May 2019 00:58:24 -0400
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:44637 "EHLO
-        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725975AbfEPE6Y (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 16 May 2019 00:58:24 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 259253B0;
-        Thu, 16 May 2019 00:58:21 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Thu, 16 May 2019 00:58:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm3; bh=
-        JjKu8lsyP7vLXxKARe+GYWZMCFFmFpCrDaEHZoIbfTc=; b=rZA3xV2i2yxK/Hy0
-        oG7kLlC+ZWNMBCvjrMLnTI2tlBS6IBI7ZQ/a9bjzzodmTyX6joxfwjC1xGZTcAw4
-        JwyYVyXb/Of+riPssDHkRwwWw5VXA4IVqWol7z/owoH91HI5g1W/5Q9qidq5L32n
-        zsKP1XocQ1gphFwpsQt+uXrYcYJYBlea7pJerhvTA7JGC2zUw3cYTlO2IQdeEVFQ
-        nCy+bmXhomDBq+eo6zXDLAR8M+Rn35/hgyYftMYq9zREKnjrzgccXhqVUX/48zLq
-        vn8ucWhGOb434GQHwDcd7dkznFTc2o8eXB1ApHXMVvrUMj5DDq2f15YyvdbVHoB5
-        KcL65Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=JjKu8lsyP7vLXxKARe+GYWZMCFFmFpCrDaEHZoIbf
-        Tc=; b=kIK8TRWBRnHqoGAJLZrckAMV8wBna7/IX67hXiAgssPOSL8u1bPt3BSUc
-        SDqTqMiWobfFeIF9hyamBchvo7qGopBLO5IQGu3MiKIz7e616bEkzW4lbFABnL4K
-        /kPR4Ktiekip5T8X4tD8KDdkX5lyeDQ/zJOkzw0L92NNDJL6GKfb4S4qGs7p2BBo
-        reqPp1dsSBcgAam1IjwMmlUoXE5hJahP+wV++oYSkJklph1dS30vwIRIdhqc41yv
-        l5x2mcAMNSL4GpT1ChCdL/lmqlOebW/VWnr8DsVepz0d3q8Try2cQ7M3tuJFPLy3
-        wf5+81qStOx7vb+2Nzbh2vzxIUOJA==
-X-ME-Sender: <xms:7O3cXEGmiB7-waxCCTuiWg9SK_Ojmy0TRvMBUdSrpUEYopHLz6JCfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrleelgdeltdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtofgggfesthejre
-    dtredtjeenucfhrhhomhepkfgrnhcumfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhn
-    vghtqeenucfkphepuddukedrvddtkedrheeirdduuddvnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvthenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:7O3cXJocJCm0YNtXGFVsf0-f-AXBJatLLcu3PLI8rjpqZSiUdfahNQ>
-    <xmx:7O3cXA6TCe8p_gYTXFrFB2e6rpBhipErePVku2Flzn_1ZSItVt_E3A>
-    <xmx:7O3cXH7Qre6zjslcA-nVEAEYL0tiNlYYpLRpTUskxP58gXURsRtPfQ>
-    <xmx:7O3cXPyoEjNZ2RQV-ZTONPEZq8xtVZJQmDqfB0OWFGSeVH_fMYBh0g>
-Received: from pluto.themaw.net (unknown [118.208.56.112])
-        by mail.messagingengine.com (Postfix) with ESMTPA id B1B811037C;
-        Thu, 16 May 2019 00:58:19 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
-        by pluto.themaw.net (Postfix) with ESMTP id 4D98B1C0154;
-        Thu, 16 May 2019 12:58:15 +0800 (AWST)
-Message-ID: <309672538baaec7b1c6ebfd9026ac93a64bd0efd.camel@themaw.net>
-Subject: Re: Changes in indirect multi-maps don't become effective w/o
- autofs restart
-From:   Ian Kent <raven@themaw.net>
-To:     Frank Thommen <list.autofs@drosera.ch>, autofs@vger.kernel.org
-Date:   Thu, 16 May 2019 12:58:15 +0800
-In-Reply-To: <93d8c49815cc059c80bd43493e8a3e0a7a79c8e0.camel@themaw.net>
+        id S1726796AbfEPKx6 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 16 May 2019 06:53:58 -0400
+Received: from mhos01.weblink.ch ([91.193.20.22]:63438 "EHLO MHOS01.weblink.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726707AbfEPKx6 (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Thu, 16 May 2019 06:53:58 -0400
+Received: from MH04.weblink.ch (mh04.weblink.ch [91.193.20.62]) by MHOS01.weblink.ch with SMTP
+        (version=TLS\Tls12
+        cipher=Aes256 bits=256);
+   Thu, 16 May 2019 12:54:23 +0200
+Received: from [193.174.51.189] (w610-pc05.inet.dkfz-heidelberg.de [193.174.51.189]) by MH04.weblink.ch with SMTP
+        (version=Tls12
+        cipher=Aes256 bits=256);
+   Thu, 16 May 2019 12:53:41 +0200
+Subject: Re: Changes in indirect multi-maps don't become effective w/o autofs
+ restart
+To:     Ian Kent <raven@themaw.net>, autofs@vger.kernel.org
 References: <1f7715b4-5f95-c79e-a80c-9d70755a7a5d@drosera.ch>
-         <f6ea87d9cfb287fff91c35e89ea082917c201b06.camel@themaw.net>
-         <93d8c49815cc059c80bd43493e8a3e0a7a79c8e0.camel@themaw.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-2.fc28) 
-Mime-Version: 1.0
+ <f6ea87d9cfb287fff91c35e89ea082917c201b06.camel@themaw.net>
+From:   Frank Thommen <list.autofs@drosera.ch>
+Message-ID: <5e0cd181-00c3-112e-20b1-1ba66f5931fa@drosera.ch>
+Date:   Thu, 16 May 2019 12:53:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <f6ea87d9cfb287fff91c35e89ea082917c201b06.camel@themaw.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Exim-Id: 5e0cd181-00c3-112e-20b1-1ba66f5931fa
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Thu, 2019-05-16 at 09:28 +0800, Ian Kent wrote:
-> On Thu, 2019-05-16 at 09:01 +0800, Ian Kent wrote:
-> > 
-> > > We are running autofs-5.0.7-70.el7_4.1.x86_64 on CentOS 7.4.1708 and we 
-> > > cannot update to newer CentOS releases due to other restrictions 
-> > > (special hardware/drivers).
-> > 
-> > Mmm ... CentOS 7.4, that's a while ago so I'm not sure if the
-> > changes are present but I suspect they are.
-> > 
-> > So it's likely the changes made for this are not working properly.
-> > 
-> > I'll check if the changes are present (it will take a while as
-> > I'll need to track down what those changes were first) and try
-> > to duplicate it to see what's going on.
+
+
+On 5/16/19 3:01 AM, Ian Kent wrote:
+> On Wed, 2019-05-15 at 18:00 +0200, Frank Thommen wrote:
+>> Dear all,
+>>
+>> the autofs manpages says:
+>>
+>> "If  an  indirect  map  is modified then the change will become
+>> effective immediately.  If an indirect map uses the browse option, the
+>> master map contains direct mount maps or the auto.master map is modified
+>> then the autofs service control reload action must be rerun to activate
+>> the changes."
+>>
+>> However this doesn't seem true when using multi-maps:
+>>
+>> In /etc/auto.master:
+>>
+>>       /base/data /etc/auto.data
+>>
+>>
+>> In /etc/auto.data:
+>>
+>>      # section 1
+>>      #
+>>      p1  -fstype=nfs,vers=3,sec=sys  srv:/export/p1
+>>      p2  -fstype=nfs,vers=3,sec=sys  srv:/export/p2
+>>
+>>      # section 2
+>>      #
+>>      others   -fstype=nfs,vers=3,sec=sys \
+>>         /p3   srv:/export/p2 \
+>>         /p4   srv:/export/p4
+>>
+>> When adding an entry
+>>
+>>      p5  -fstype=nfs,vers=3,sec=sys  srv:/export/p5
+>>
+>> in section 1, I can immediately change into /base/data/p2 and it is
+>> mounted.  All well.  But when I add an entry
+>>
+>>      /p5 srv:/export/p5
+>>
+>> to section 2, then this new entry is not accessible as
+>> /base/data/others/p5 even after a `systemctl reload autofs`.  autofs has
+>> to be completely restarted.  Unfortunately we've had many issues
+>> (crashes) with clusterjobs accessing NFS shares during autofs restarts.
+>> That's why we'd like to avoid complete autofs restart whenever possible.
 > 
-> Yes, that's not working properly even with the current upstream
-> code.
+> Yes, on restart there is a window of time where automounting won't
+> be happening.
 > 
-> I'll look further into it.
+> That can be a problem and there's little I can do about it
+> but existing mounts should continue to function fine.
+> 
+> If you have an environment that's busy enough to get caught by
+> this then you have no choice but to avoid restarts.
 
-I can't find the changes I was thinking of but I did find some
-changes I did for updating the internal hosts map on re-read
-since this map essentially turns the list of exports into a
-multi-mount map entry for each host.
+I wouldn't have problems avoiding starts if the reload refreshed the 
+multi-mount maps.
 
-I think that I did that to see how it would go and was planning
-of going further with it if there were no adverse reports.
 
-But looking at it again now, in spite of not seeing reported
-problems with it, I'm very reluctant to do it for multi-mounts
-in general.
+>>
+>> Can you confirm that multi-maps are not updated by autofs reloads and/or
+>> is there a way to achieve this?
+> 
+> I call these multi-mounts because there's a different construct
+> I call multi-maps.
 
-The problem with updating multi-mounts is it's very easy to get
-problems similar to the dead mount problem you've recently already
-encountered due to mount dependencies within the mount tree.
+the autofs(5) manpage calls them "multi-map" in the "EXAMPLES" section 
+and "multi-mount map" in the "FEATURES" section.  That might be a point 
+for the "Future changes to documentation" thread?
 
-For example if you have:
 
-ent \
-	/s1	   <server>:/<path1> \
-	/s1/s2/s3  <server>:/<path2>
+> 
+> Anyway, for a very long time an active (ie. currently mounted)
+> multi-mount would be ignored on map update requests because of
+> potential problems with mount dependencies.
+> 
+> A while ago I did try hard to improve this and allow multi-mount
+> map entries to be updated on reload and, for the cases I tested,
+> it seemed to function.
+> 
+> But other subsequent changes could have affected this or the
+> version of autofs might not have those changes.
+> 
+>>
+>> We are running autofs-5.0.7-70.el7_4.1.x86_64 on CentOS 7.4.1708 and we
+>> cannot update to newer CentOS releases due to other restrictions
+>> (special hardware/drivers).
+> 
+> Mmm ... CentOS 7.4, that's a while ago so I'm not sure if the
+> changes are present but I suspect they are.
+> 
+> So it's likely the changes made for this are not working properly.
+> 
+> I'll check if the changes are present (it will take a while as
+> I'll need to track down what those changes were first) and try
+> to duplicate it to see what's going on.
 
-and it changes to:
+Since this specific issue is interfering with productive jobs on the 
+cluster I might be prepared to build autofs from the newest sources 
+manually for the cluster.
 
-ent \
-	/s1	   <server>:/<path1> \
-	/s1/s2	   <server>:/<path3> \
-	/s1/s2/s3  <server>:/<path2>
+> 
+> Ian
+> 
 
-then I need to ensure that the mount trigger mounted on <base>/s1/s2/s3
-is umounted before mounting the mount trigger on <base>/s1/s2 and then
-remount the mount trigger on <base>/s1/s2/s3.
+frank
 
-If there's an actual mount on <base>/s1/s2/s3 you can't do the update
-for this offset until the real mount gets umounted leading to partially
-updated multi-mounts that don't look like the updated map should and
-might not be able to be reverted to behave like the original either.
-
-Ian
 
