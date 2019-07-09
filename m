@@ -2,50 +2,47 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 93A645AF87
-	for <lists+autofs@lfdr.de>; Sun, 30 Jun 2019 11:02:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0087864062
+	for <lists+autofs@lfdr.de>; Wed, 10 Jul 2019 07:08:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726519AbfF3JC5 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+autofs@lfdr.de>); Sun, 30 Jun 2019 05:02:57 -0400
-Received: from mail.planimolde.pt ([62.48.184.67]:50974 "EHLO
-        mail.planimolde.pt" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726482AbfF3JC5 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sun, 30 Jun 2019 05:02:57 -0400
-X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Sun, 30 Jun 2019 05:02:56 EDT
-Received: from 192.168.1.3 (217.217.179.17) by svr21.planimolde.net
- (192.168.10.21) with Microsoft SMTP Server id 14.3.408.0; Sun, 30 Jun 2019
- 09:57:43 +0100
-Date:   Sun, 30 Jun 2019 10:57:39 +0200
-From:   Peter Wong <info@planimolde.pt>
-Reply-To: Peter Wong <pw178483@gmail.com>
-To:     <autofs@vger.kernel.org>
-Message-ID: <24166892.209609.1561885062673.JavaMail.cash@62.48.184.67>
-Subject: =?Cp1252?Q?Investitionsm=F6glichkeit?=
+        id S1726033AbfGJFIT convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+autofs@lfdr.de>); Wed, 10 Jul 2019 01:08:19 -0400
+Received: from 50-244-196-250-static.hfc.comcastbusiness.net ([50.244.196.250]:17608
+        "EHLO hometime.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1726015AbfGJFIT (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 10 Jul 2019 01:08:19 -0400
+X-Greylist: delayed 15223 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jul 2019 01:08:19 EDT
+Received: from [100.120.34.195] ([195.181.172.135]) by hometime.com with Microsoft SMTPSVC(6.0.3790.4675);
+         Tue, 9 Jul 2019 15:57:16 -0500
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="Cp1252"
 Content-Transfer-Encoding: 8BIT
-X-Originating-IP: [217.217.179.17]
-X-EsetResult: clean, is OK
-X-EsetId: 37303A296AB0236A6C756A
+Content-Description: Mail message body
+Subject: Greetings!
+To:     Recipients <fuqingzheng@asia.com>
+From:   fuqingzheng@asia.com
+Date:   Tue, 09 Jul 2019 22:56:42 +0200
+Reply-To: zhengfuqing@yandex.com
+X-Antivirus: Avast (VPS 190709-4, 09-07-2019), Outbound message
+X-Antivirus-Status: Clean
+Message-ID: <SBSDoT2OPVF258iZgUt000087ec@hometime.com>
+X-OriginalArrivalTime: 09 Jul 2019 20:57:17.0136 (UTC) FILETIME=[E45A7500:01D53698]
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Schöne Grüße,
+Good day,
 
-Bitte finden Sie den Inhalt dieser Mail sehr vertraulich und legal. Ich heiße Peter Wong und arbeite mit einer Bank hier in Hongkong zusammen. 
-Ich habe mich entschlossen, mit Ihnen Kontakt aufzunehmen, um in jedes lukrative Geschäft in Ihrem Land investieren zu können. Ich bin bereit, 
-Ihnen 40% des Anlageergebnisses als Geschäftspartner anzubieten.
+  I have a mutual business proposal, which refers to the transfer of a large amount of money to an account abroad, with your help as a foreign partner as a beneficiary of the funds. Everything about this transaction will be legal without any bridge of financial authority both in my country and yours. If you are interested and I will give you more information about the project as soon as I receive your positive response.
 
-Wir bieten auch ein schnelles Darlehen zu niedrigen Zinssätzen an, ohne dass Sicherheiten erforderlich sind. Bei Interesse antworten Sie bitte auf 
-meine private E-Mail: pw178484@gmail.com
+Best regards,
 
-Mit freundlichen Grüßen: Peter Wong
+Executive Director.
+ 
+ICBC. China
 
-
-
-
-----------------------------------------------------
-This email was sent by the shareware version of Postman Professional.
+---
+Dit e-mailbericht is gecontroleerd op virussen met Avast antivirussoftware.
+https://www.avast.com/antivirus
 
