@@ -2,35 +2,37 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 02DAAAAF45
+	by mail.lfdr.de (Postfix) with ESMTP id B1F95AAF46
 	for <lists+autofs@lfdr.de>; Fri,  6 Sep 2019 01:50:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389219AbfIEXuW (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 5 Sep 2019 19:50:22 -0400
-Received: from icp-osb-irony-out7.external.iinet.net.au ([203.59.1.107]:50112
+        id S1725975AbfIEXuX (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 5 Sep 2019 19:50:23 -0400
+Received: from icp-osb-irony-out7.external.iinet.net.au ([203.59.1.107]:50113
         "EHLO icp-osb-irony-out7.external.iinet.net.au" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725975AbfIEXuW (ORCPT
+        by vger.kernel.org with ESMTP id S2388314AbfIEXuW (ORCPT
         <rfc822;autofs@vger.kernel.org>); Thu, 5 Sep 2019 19:50:22 -0400
 X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2DqEgAKnHFd/1230XZlghkCghaBPyE?=
- =?us-ascii?q?SKoQhjwxSAQaBETiJXJEmCQEBAQEBAQEBARsZAQIBAYQ/AoI2IzcGDgIMAQE?=
- =?us-ascii?q?BBAEBAQEBBgMBbYRrT0IBEAGEdwYjBGIYDQIYDgICRxAGE4UZE6p4fzMaAoo?=
- =?us-ascii?q?1gQwoAYt3GHiBB4ERM4psglgEjEoKgl6FRV5CbpQ9boIplGgbjXwDineELKQ?=
- =?us-ascii?q?7IoFYTS4KO4Jsgk4Xji82MIEGAQGEPIoIAQE?=
-X-IPAS-Result: =?us-ascii?q?A2DqEgAKnHFd/1230XZlghkCghaBPyESKoQhjwxSAQaBE?=
- =?us-ascii?q?TiJXJEmCQEBAQEBAQEBARsZAQIBAYQ/AoI2IzcGDgIMAQEBBAEBAQEBBgMBb?=
- =?us-ascii?q?YRrT0IBEAGEdwYjBGIYDQIYDgICRxAGE4UZE6p4fzMaAoo1gQwoAYt3GHiBB?=
- =?us-ascii?q?4ERM4psglgEjEoKgl6FRV5CbpQ9boIplGgbjXwDineELKQ7IoFYTS4KO4Jsg?=
- =?us-ascii?q?k4Xji82MIEGAQGEPIoIAQE?=
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2CdAwAKnHFd/1230XZbCh4BBgcGgVY?=
+ =?us-ascii?q?GCwEBgWwqbVIhEiqEIY8MUgeBESUTiU4OhUSLYgkBAQEBAQEBAQEbDA0BAgE?=
+ =?us-ascii?q?BhD8CgjYjNwYOAgwBAQEEAQEBAQEGAwFthGtDDEIBEAGEdwYjZhgFAwUCGA4?=
+ =?us-ascii?q?CAiEmAg4GE4MjgWoDCROqeIEyGgKHfg2CKoEMKAGLdxh4gQeBRIQhAYEVgX8?=
+ =?us-ascii?q?VgyGCWASMSgooCoIshUVeQm6UakGCKYZ3iXODfhuCNG+KWQMQimeELIsGiEu?=
+ =?us-ascii?q?QaiKBWE0uCjuCbAmCUYEPAQeFGYgKNjABgQUBAYQ8iggBAQ?=
+X-IPAS-Result: =?us-ascii?q?A2CdAwAKnHFd/1230XZbCh4BBgcGgVYGCwEBgWwqbVIhE?=
+ =?us-ascii?q?iqEIY8MUgeBESUTiU4OhUSLYgkBAQEBAQEBAQEbDA0BAgEBhD8CgjYjNwYOA?=
+ =?us-ascii?q?gwBAQEEAQEBAQEGAwFthGtDDEIBEAGEdwYjZhgFAwUCGA4CAiEmAg4GE4Mjg?=
+ =?us-ascii?q?WoDCROqeIEyGgKHfg2CKoEMKAGLdxh4gQeBRIQhAYEVgX8VgyGCWASMSgooC?=
+ =?us-ascii?q?oIshUVeQm6UakGCKYZ3iXODfhuCNG+KWQMQimeELIsGiEuQaiKBWE0uCjuCb?=
+ =?us-ascii?q?AmCUYEPAQeFGYgKNjABgQUBAYQ8iggBAQ?=
 X-IronPort-AV: E=Sophos;i="5.64,471,1559491200"; 
-   d="scan'208";a="201582392"
+   d="scan'208";a="201582409"
 Received: from unknown (HELO mickey.themaw.net) ([118.209.183.93])
-  by icp-osb-irony-out7.iinet.net.au with ESMTP; 06 Sep 2019 07:41:04 +0800
-Subject: [PATCH 03/32] autofs-5.1.5 - fix macro expansion in selector values
+  by icp-osb-irony-out7.iinet.net.au with ESMTP; 06 Sep 2019 07:41:10 +0800
+Subject: [PATCH 04/32] autofs-5.1.5 - fix typing errors
 From:   Ian Kent <raven@themaw.net>
 To:     autofs mailing list <autofs@vger.kernel.org>
-Date:   Fri, 06 Sep 2019 07:41:04 +0800
-Message-ID: <156772686394.5865.8169000998688622944.stgit@mickey.themaw.net>
+Date:   Fri, 06 Sep 2019 07:41:10 +0800
+Message-ID: <156772686966.5865.1649577308914702426.stgit@mickey.themaw.net>
 In-Reply-To: <156772672378.5865.3952237351056831247.stgit@mickey.themaw.net>
 References: <156772672378.5865.3952237351056831247.stgit@mickey.themaw.net>
 User-Agent: StGit/unknown-version
@@ -42,423 +44,305 @@ Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Macro expansion is not done in selector values before use, for example
-in "hostd==${/key}.<donain>.<name>" the ${/key} is not expanded before
-use leading to an attempt to use an invalid host name.
+From: Andreas P <nurgrak@gmail.com>
 
+Fix typing errors of various files.
+
+Signed-off-by: Andreas P <nurgrak@gmail.com>
 Signed-off-by: Ian Kent <raven@themaw.net>
 ---
- CHANGELOG           |    1 
- modules/parse_amd.c |  286 ++++++++++++++++++++++++++++++++++-----------------
- 2 files changed, 193 insertions(+), 94 deletions(-)
+ CHANGELOG                      |    1 +
+ Makefile.conf.in               |    2 +-
+ README.amd-maps                |    4 ++--
+ man/autofs.5                   |   12 ++++++-----
+ redhat/autofs.conf.default.in  |   42 ++++++++++++++++++++--------------------
+ samples/autofs.conf.default.in |   20 ++++++++++---------
+ samples/autofs.init.conf       |    2 +-
+ 7 files changed, 42 insertions(+), 41 deletions(-)
 
 diff --git a/CHANGELOG b/CHANGELOG
-index 24534e34..956a33b7 100644
+index 956a33b7..44ce6b69 100644
 --- a/CHANGELOG
 +++ b/CHANGELOG
-@@ -9,6 +9,7 @@ xx/xx/2019 autofs-5.1.6
- - Fix NFS mount from IPv6 addresses.
+@@ -10,6 +10,7 @@ xx/xx/2019 autofs-5.1.6
  - make expire remaining log level debug.
  - allow period following macro in selector value.
-+- fix macro expansion in selector values.
+ - fix macro expansion in selector values.
++- fix typing errors.
  
  30/10/2018 autofs-5.1.5
  - fix flag file permission.
-diff --git a/modules/parse_amd.c b/modules/parse_amd.c
-index 0e48e5ce..7703be5b 100644
---- a/modules/parse_amd.c
-+++ b/modules/parse_amd.c
-@@ -231,17 +231,29 @@ static struct substvar *add_lookup_vars(struct autofs_point *ap,
- 	return list;
- }
+diff --git a/Makefile.conf.in b/Makefile.conf.in
+index ff9b18a1..a1e5eada 100644
+--- a/Makefile.conf.in
++++ b/Makefile.conf.in
+@@ -72,7 +72,7 @@ RANLIB = @PATH_RANLIB@
+ TIRPCLIB = @TIRPC_LIBS@
+ TIRPCCFLAGS = @TIRPC_CFLAGS@
  
--static int match_my_name(unsigned int logopt, const char *name, struct substvar *sv)
-+static int match_my_name(struct autofs_point *ap, const char *name, struct substvar *sv)
- {
- 	struct addrinfo hints, *cni, *ni, *haddr;
- 	char host[NI_MAXHOST + 1], numeric[NI_MAXHOST + 1];
-+	unsigned int logopt = ap->logopt;
- 	const struct substvar *v;
-+	char *exp_name = NULL;
- 	int rv = 0, ret;
+-# Use dmalloc for memory debuging
++# Use dmalloc for memory debugging
+ DMALLOCLIB = @DMALLOCLIB@
  
-+	if (!expand_selectors(ap, name, &exp_name, sv))
-+		exp_name = strdup(name);
-+	if (!exp_name) {
-+		error(logopt,
-+		      MODPREFIX "error: failed to alloc space for name");
-+		goto out;
-+	}
-+
- 	v = macro_findvar(sv, "host", 4);
- 	if (v) {
--		if (!strcmp(v->val, name))
--			return 1;
-+		if (!strcmp(v->val, exp_name)) {
-+			rv = 1;
-+			goto out;
-+		}
- 	}
+ #
+diff --git a/README.amd-maps b/README.amd-maps
+index c7e22c8d..d933a678 100644
+--- a/README.amd-maps
++++ b/README.amd-maps
+@@ -61,8 +61,8 @@ add it below the autofs configuration. Apart from changing the amd
+ changed. However, quite a few amd configuration options don't have
+ meaning within autofs. When these options are seen they are logged.
  
- 	if (!v || !v->val) {
-@@ -268,11 +280,11 @@ static int match_my_name(unsigned int logopt, const char *name, struct substvar
- 	hints.ai_flags = AI_V4MAPPED | AI_ADDRCONFIG | AI_CANONNAME;
+-Be aware that, if the an old configuration exists and the configuration
+-hasn't been updated after the installation, changes to the the old
++Be aware that, if an old configuration exists and the configuration
++hasn't been updated after the installation, changes to the old
+ configuration will override changes to the new configuration because
+ backward compatibility takes priority over the new implementation.
  
- 	/* Resolve comparison name to its names and compare */
--	ret = getaddrinfo(name, NULL, &hints, &ni);
-+	ret = getaddrinfo(exp_name, NULL, &hints, &ni);
- 	if (ret) {
- 		error(logopt, MODPREFIX
- 		      "hostname lookup for %s failed: %s\n",
--		      name, gai_strerror(ret));
-+		      exp_name, gai_strerror(ret));
- 		freeaddrinfo(cni);
- 		goto out;
- 	}
-@@ -310,18 +322,180 @@ next:
- 	freeaddrinfo(ni);
- 	freeaddrinfo(cni);
- out:
-+	if (exp_name)
-+		free(exp_name);
- 	return rv;
- }
- 
--static int eval_selector(unsigned int logopt,
-+static int sel_strcmp(struct autofs_point *ap,
-+		      const struct substvar *v, struct selector *s,
-+		      struct substvar *sv)
-+{
-+	char *expand = NULL;
-+	int ret = 0;
-+	int res;
-+
-+	res = expand_selectors(ap, s->comp.value, &expand, sv);
-+	if (res)
-+		res = strcmp(v->val, expand);
-+	else
-+		res = strcmp(v->val, s->comp.value);
-+
-+	if (s->compare & SEL_COMP_EQUAL && !res) {
-+		debug(ap->logopt, MODPREFIX
-+		      "matched selector %s(%s) == %s",
-+		      v->def, v->val, expand ? expand : s->comp.value);
-+		ret = 1;
-+	} else if (s->compare & SEL_COMP_NOTEQUAL && res) {
-+		debug(ap->logopt, MODPREFIX
-+		      "matched selector %s(%s) != %s",
-+		      v->def, v->val, expand ? expand : s->comp.value);
-+		ret = 1;
-+	} else
-+		debug(ap->logopt, MODPREFIX
-+		      "did not match selector %s(%s) %s %s",
-+		      v->def, v->val,
-+		      (s->compare & SEL_COMP_EQUAL ? "==" : "!="),
-+		      expand ? expand : s->comp.value);
-+
-+	if (expand)
-+		free(expand);
-+
-+	return ret;
-+}
-+
-+static int sel_lstat(struct autofs_point *ap,
-+		     struct selector *s, struct substvar *sv)
-+{
-+	struct stat st;
-+	char *expand = NULL;
-+	int res, ret;
-+
-+	/* Sould be OK to fail on any error here */
-+	res = expand_selectors(ap, s->func.arg1, &expand, sv);
-+	if (res)
-+		ret = !lstat(expand, &st);
-+	else
-+		ret = !lstat(s->func.arg1, &st);
-+
-+	if (s->compare == SEL_COMP_NOT)
-+		ret = !ret;
-+	if (ret)
-+		debug(ap->logopt, MODPREFIX
-+		      "matched selector %s(%s)",
-+		      s->sel->name, expand ? expand : s->func.arg1);
-+	else
-+		debug(ap->logopt, MODPREFIX
-+		      "did not match selector %s(%s)",
-+		      s->sel->name, expand ? expand : s->func.arg1);
-+	if (expand)
-+		free(expand);
-+
-+	return ret;
-+}
-+
-+static int sel_in_network(struct autofs_point *ap,
-+			  struct selector *s, struct substvar *sv)
-+{
-+	char *expand = NULL;
-+	int res, ret;
-+
-+	res = expand_selectors(ap, s->func.arg1, &expand, sv);
-+	if (!res)
-+		ret = in_network(s->func.arg1);
-+	else
-+		ret = in_network(expand);
-+
-+	if (s->compare == SEL_COMP_NOT)
-+		ret = !ret;
-+	if (ret)
-+		debug(ap->logopt, MODPREFIX
-+		      "matched selector %s(%s)",
-+		      s->sel->name, expand ? expand : s->func.arg1);
-+	else
-+		debug(ap->logopt, MODPREFIX
-+		      "did not match selector %s(%s)",
-+		      s->sel->name, expand ? expand : s->func.arg1);
-+
-+	if (expand)
-+		free(expand);
-+
-+	return ret;
-+}
-+
-+static int sel_netgrp(struct autofs_point *ap,
-+		      struct selector *s, struct substvar *sv)
-+{
-+	char *exp_arg1 = NULL, *exp_arg2 = NULL;
-+	const struct substvar *v;
-+	int res, ret = 0;
-+	char *host;
-+
-+	if (s->func.arg2) {
-+		res = expand_selectors(ap, s->func.arg2, &exp_arg2, sv);
-+		if (res)
-+			host = exp_arg2;
-+		else
-+			host = s->func.arg2;
-+	} else {
-+		if (s->sel->selector == SEL_NETGRP)
-+			v = macro_findvar(sv, "host", 4);
-+		else
-+			v = macro_findvar(sv, "hostd", 5);
-+		if (!v || !*v->val) {
-+			error(ap->logopt, MODPREFIX
-+			     "failed to get value of ${host}");
-+			goto out;
-+		}
-+		host = v->val;
-+	}
-+
-+	res = expand_selectors(ap, s->func.arg1, &exp_arg1, sv);
-+	if (res)
-+		ret = innetgr(exp_arg1, host, NULL, NULL);
-+	else
-+		ret = innetgr(s->func.arg1, host, NULL, NULL);
-+
-+	if (s->compare == SEL_COMP_NOT)
-+		ret = !ret;
-+	if (ret) {
-+		if (!s->func.arg2)
-+			debug(ap->logopt, MODPREFIX
-+			      "matched selector %s(%s)",
-+			      s->sel->name, exp_arg1 ? exp_arg1 : s->func.arg1);
-+		else
-+			debug(ap->logopt, MODPREFIX
-+			      "matched selector %s(%s,%s)", s->sel->name,
-+			      exp_arg1 ? exp_arg1 : s->func.arg1,
-+			      exp_arg2 ? exp_arg2 : s->func.arg2);
-+	} else {
-+		if (!s->func.arg2)
-+			debug(ap->logopt, MODPREFIX
-+			      "did not match selector %s(%s)",
-+			      s->sel->name, exp_arg1 ? exp_arg1 : s->func.arg1);
-+		else
-+			debug(ap->logopt, MODPREFIX
-+			      "did not match selector %s(%s,%s)", s->sel->name,
-+			      exp_arg1 ? exp_arg1 : s->func.arg1,
-+			      exp_arg2 ? exp_arg2 : s->func.arg2);
-+	}
-+out:
-+	if (exp_arg1)
-+		free(exp_arg1);
-+	if (exp_arg2)
-+		free(exp_arg2);
-+
-+	return ret;
-+}
-+
-+static int eval_selector(struct autofs_point *ap,
- 			 struct amd_entry *this, struct substvar *sv)
- {
- 	struct selector *s = this->selector;
-+	unsigned int logopt = ap->logopt;
- 	const struct substvar *v;
- 	unsigned int s_type;
- 	unsigned int v_type;
--	struct stat st;
--	char *host;
- 	int res, val, ret = 0;
- 
- 	s_type = s->sel->flags & SEL_FLAGS_TYPE_MASK;
-@@ -339,26 +513,7 @@ static int eval_selector(unsigned int logopt,
- 
- 		switch (v_type) {
- 		case SEL_FLAG_STR:
--			res = strcmp(v->val, s->comp.value);
--			if (s->compare & SEL_COMP_EQUAL && !res) {
--				debug(logopt, MODPREFIX
--				      "matched selector %s(%s) == %s",
--				      v->def, v->val, s->comp.value);
--				ret = 1;
--				break;
--			} else if (s->compare & SEL_COMP_NOTEQUAL && res) {
--				debug(logopt, MODPREFIX
--				      "matched selector %s(%s) != %s",
--				      v->def, v->val, s->comp.value);
--				ret = 1;
--				break;
--			}
--
--			debug(logopt, MODPREFIX
--				      "did not match selector %s(%s) %s %s",
--				      v->def, v->val,
--				      (s->compare & SEL_COMP_EQUAL ? "==" : "!="),
--				      s->comp.value);
-+			ret = sel_strcmp(ap, v, s, sv);
- 			break;
- 
- 		case SEL_FLAG_NUM:
-@@ -434,7 +589,7 @@ static int eval_selector(unsigned int logopt,
- 			break;
- 
- 		case SEL_XHOST:
--			ret = match_my_name(logopt, s->func.arg1, sv);
-+			ret = match_my_name(ap, s->func.arg1, sv);
- 			if (s->compare == SEL_COMP_NOT)
- 				ret = !ret;
- 			if (ret)
-@@ -448,32 +603,11 @@ static int eval_selector(unsigned int logopt,
- 			break;
- 
- 		case SEL_EXISTS:
--			/* Sould be OK to fail on any error here */
--			ret = !lstat(s->func.arg1, &st);
--			if (s->compare == SEL_COMP_NOT)
--				ret = !ret;
--			if (ret)
--				debug(logopt, MODPREFIX
--				      "matched selector %s(%s)",
--				      s->sel->name, s->func.arg1);
--			else
--				debug(logopt, MODPREFIX
--				      "did not match selector %s(%s)",
--				      s->sel->name, s->func.arg1);
-+			ret = sel_lstat(ap, s, sv);
- 			break;
- 
- 		case SEL_IN_NETWORK:
--			ret = in_network(s->func.arg1);
--			if (s->compare == SEL_COMP_NOT)
--				ret = !ret;
--			if (ret)
--				debug(logopt, MODPREFIX
--				      "matched selector %s(%s)",
--				      s->sel->name, s->func.arg1);
--			else
--				debug(logopt, MODPREFIX
--				      "did not match selector %s(%s)",
--				      s->sel->name, s->func.arg1);
-+			ret = sel_in_network(ap, s, sv);
- 			break;
- 
- 		default:
-@@ -492,43 +626,7 @@ static int eval_selector(unsigned int logopt,
- 		switch (s->sel->selector) {
- 		case SEL_NETGRP:
- 		case SEL_NETGRPD:
--			if (s->func.arg2)
--				host = s->func.arg2;
--			else {
--				if (s->sel->selector == SEL_NETGRP)
--					v = macro_findvar(sv, "host", 4);
--				else
--					v = macro_findvar(sv, "hostd", 5);
--				if (!v || !*v->val) {
--					error(logopt, MODPREFIX
--					     "failed to get value of ${host}");
--					break;
--				}
--				host = v->val;
--			}
--			ret = innetgr(s->func.arg1, host, NULL, NULL);
--			if (s->compare == SEL_COMP_NOT)
--				ret = !ret;
--			if (ret) {
--				if (!s->func.arg2)
--					debug(logopt, MODPREFIX
--					      "matched selector %s(%s)",
--					      s->sel->name, s->func.arg1);
--				else
--					debug(logopt, MODPREFIX
--					      "matched selector %s(%s,%s)",
--					      s->sel->name, s->func.arg1,
--					      s->func.arg2);
--			} else {
--				if (!s->func.arg2)
--					debug(logopt, MODPREFIX
--					      "did not match selector %s(%s)",
--					      s->sel->name, s->func.arg1);
--				else
--					debug(logopt, MODPREFIX
--					      "did not match selector %s(%s,%s)",
--					      s->sel->name, s->func.arg1, s->func.arg2);
--			}
-+			ret = sel_netgrp(ap, s, sv);
- 			break;
- 
- 		default:
-@@ -1753,7 +1851,7 @@ static void update_prefix(struct autofs_point *ap,
- 	return;
- }
- 
--static int match_selectors(unsigned int logopt,
-+static int match_selectors(struct autofs_point *ap,
- 			   struct amd_entry *entry, struct substvar *sv)
- {
- 	struct selector *s = entry->selector;
-@@ -1761,7 +1859,7 @@ static int match_selectors(unsigned int logopt,
- 
- 	/* No selectors, always match */
- 	if (!s) {
--		debug(logopt, MODPREFIX "no selectors found in location");
-+		debug(ap->logopt, MODPREFIX "no selectors found in location");
- 		return 1;
- 	}
- 
-@@ -1769,7 +1867,7 @@ static int match_selectors(unsigned int logopt,
- 
- 	/* All selectors must match */
- 	while (s) {
--		ret = eval_selector(logopt, entry, sv);
-+		ret = eval_selector(ap, entry, sv);
- 		if (!ret)
- 			break;
- 		s = s->next;
-@@ -1939,7 +2037,7 @@ static struct amd_entry *select_default_entry(struct autofs_point *ap,
- 		if (!this->selector)
- 			continue;
- 
--		if (match_selectors(ap->logopt, this, sv)) {
-+		if (match_selectors(ap, this, sv)) {
- 			if (entry_default) {
- 				/*update_with_defaults(entry_default, this, sv);*/
- 				free_amd_entry(entry_default);
-@@ -2192,7 +2290,7 @@ int parse_mount(struct autofs_point *ap, const char *name,
- 			break;
- 		}
- 
--		if (!match_selectors(ap->logopt, this, sv))
-+		if (!match_selectors(ap, this, sv))
- 			continue;
- 
- 		at_least_one = 1;
+diff --git a/man/autofs.5 b/man/autofs.5
+index c2421272..2c224e18 100644
+--- a/man/autofs.5
++++ b/man/autofs.5
+@@ -304,32 +304,32 @@ The \fBselectors\fP that take no arguments are:
+ .TP
+ .B arch
+ .br
+-The machine architecture which, if not set in the confugration, is
++The machine architecture which, if not set in the configuration, is
+ obtained using uname(2).
+ .TP
+ .B karch
+ .br
+-The machine kernel architecture which, if not set in the confugration,
++The machine kernel architecture which, if not set in the configuration,
+ is obtained using uname(2).
+ .TP
+ .B os
+ .br
+-The operating system name, if not set in the confugration, is obtained
++The operating system name, if not set in the configuration, is obtained
+ using uname(2).
+ .TP
+ .B osver
+ .br
+-The operating system version, if not set in the confugration, is obtained
++The operating system version, if not set in the configuration, is obtained
+ using uname(2).
+ .TP
+ .B full_os
+ .br
+-The full operating system name, if not set in the confugration this selector
++The full operating system name, if not set in the configuration this selector
+ has no value.
+ .TP
+ .B vendor
+ .br
+-The operating system vendor name, if not set in the confugration this selector
++The operating system vendor name, if not set in the configuration this selector
+ has the value "unknown".
+ .TP
+ .B byte
+diff --git a/redhat/autofs.conf.default.in b/redhat/autofs.conf.default.in
+index 4b89a5f7..59b9dfdd 100644
+--- a/redhat/autofs.conf.default.in
++++ b/redhat/autofs.conf.default.in
+@@ -7,7 +7,7 @@
+ #
+ #master_map_name = auto.master
+ #
+-# timeout - set the default mount timeout in secons. The internal
++# timeout - set the default mount timeout in seconds. The internal
+ #	    program default is 10 minutes, but the default installed
+ #	    configuration overrides this and sets the timeout to 5
+ #	    minutes to be consistent with earlier autofs releases.
+@@ -51,13 +51,13 @@ timeout = 300
+ browse_mode = no
+ #
+ # mount_nfs_default_protocol - set the default protocol that mount.nfs(8)
+-# 			       uses when performing a mount. Autofs needs
+-# 			       to know the default NFS protocol that
+-# 			       mount.nfs(8) uses so it can do special case
+-# 			       handling for its availability probe for
+-# 			       different NFS protocols. Since we can't
+-# 			       identify the default automatically we need
+-# 			       to set it in our configuration.
++#			       uses when performing a mount. Autofs needs
++#			       to know the default NFS protocol that
++#			       mount.nfs(8) uses so it can do special case
++#			       handling for its availability probe for
++#			       different NFS protocols. Since we can't
++#			       identify the default automatically we need
++#			       to set it in our configuration.
+ #
+ #mount_nfs_default_protocol = 3
+ mount_nfs_default_protocol = 4
+@@ -71,9 +71,9 @@ mount_nfs_default_protocol = 4
+ #logging = none
+ #
+ # force_standard_program_map_env - disable the use of the "AUTOFS_"
+-#			prefix for standard environemt variables when
++#			prefix for standard environment variables when
+ #			executing a program map. Since program maps
+-#			are run as the privileded user this opens
++#			are run as the privileged user this opens
+ #			automount(8) to potential user privilege
+ #			escalation when the program map is written
+ #			in a language that  can load components from,
+@@ -92,7 +92,7 @@ mount_nfs_default_protocol = 4
+ #
+ # Define server URIs
+ #
+-# ldap_uri - space seperated list of server uris of the form
++# ldap_uri - space separated list of server uris of the form
+ # 	     <proto>://<server>[/] where <proto> can be ldap
+ # 	     or ldaps. The option can be given multiple times.
+ # 	     Map entries that include a server name override
+@@ -111,7 +111,7 @@ mount_nfs_default_protocol = 4
+ #
+ #ldap_uri = ""
+ #
+-# ldap_timeout - timeout value for the synchronous API  calls
++# ldap_timeout - timeout value for the synchronous API calls
+ #		  (default is LDAP library default).
+ #
+ #ldap_timeout = -1
+@@ -167,11 +167,11 @@ mount_nfs_default_protocol = 4
+ #map_hash_table_size = 1024
+ #
+ # use_hostname_for_mounts - nfs mounts where the host name resolves
+-# 			 to more than one IP address normally need
+-# 			 to use the IP address to esure a mount to
+-# 			 a host that isn't responding isn't done.
+-# 			 If that behaviour is not wanted then set
+-#			 ths to "yes", default is "no".
++# 			to more than one IP address normally need
++# 			to use the IP address to ensure a mount to
++# 			a host that isn't responding isn't done.
++# 			If that behaviour is not wanted then set
++#			ths to "yes", default is "no".
+ #
+ #use_hostname_for_mounts = "no"
+ #
+@@ -184,7 +184,7 @@ mount_nfs_default_protocol = 4
+ #disable_not_found_message = "no"
+ #
+ # sss_master_map_wait - When sssd is starting up it can sometimes return
+-# 			"no such entry" for a short time until it has read
++#			"no such entry" for a short time until it has read
+ # 			in the LDAP map information. Internal default is 0
+ # 			seconds, don't wait but if there is a problem with
+ # 			autofs not finding the master map at startup (when
+@@ -350,7 +350,7 @@ mount_nfs_default_protocol = 4
+ #	is translated in its official host name.
+ #
+ # domain_strip - if set to "yes" the domain name part of the host
+-# 	is strippped when normalizing hostnames. This can be useful
++# 	is stripped when normalizing hostnames. This can be useful
+ #	when using of the same maps in a multiple domain environment.
+ #
+ # normalize_slashes - is set to "yes" by default and will collapse
+@@ -395,8 +395,8 @@ dismount_interval = 300
+ #
+ # Overriding this can cause autofs to use less resources because
+ # it will use symlinks instead of bind mounts in certain cases.
+-# You should ensure that the autofs kernel module your using
+-# supports expration of symlinks for best results (although this
++# You should ensure that the autofs kernel module you are using
++# supports expiration of symlinks for best results (although this
+ # appears to work reasonably well most of the time without the
+ # update).
+ #
+diff --git a/samples/autofs.conf.default.in b/samples/autofs.conf.default.in
+index 2f155111..e0c5e320 100644
+--- a/samples/autofs.conf.default.in
++++ b/samples/autofs.conf.default.in
+@@ -7,7 +7,7 @@
+ #
+ #master_map_name = auto.master
+ #
+-# timeout - set the default mount timeout in secons. The internal
++# timeout - set the default mount timeout in seconds. The internal
+ #	    program default is 10 minutes, but the default installed
+ #	    configuration overrides this and sets the timeout to 5
+ #	    minutes to be consistent with earlier autofs releases.
+@@ -19,7 +19,7 @@ timeout = 300
+ # 		be read at program start (default 10, wait
+ # 		for 10 seconds then continue).
+ #
+-# master_wait = 10
++#master_wait = 10
+ #
+ # negative_timeout - set the default negative timeout for
+ # 		     failed mount attempts (default 60).
+@@ -70,9 +70,9 @@ browse_mode = no
+ #logging = none
+ #
+ # force_standard_program_map_env - disable the use of the "AUTOFS_"
+-#			prefix for standard environemt variables when
++#			prefix for standard environment variables when
+ #			executing a program map. Since program maps
+-#			are run as the privileded user this opens
++#			are run as the privileged user this opens
+ #			automount(8) to potential user privilege
+ #			escalation when the program map is written
+ #			in a language that  can load components from,
+@@ -91,7 +91,7 @@ browse_mode = no
+ #
+ # Define server URIs
+ #
+-# ldap_uri - space seperated list of server uris of the form
++# ldap_uri - space separated list of server uris of the form
+ # 	     <proto>://<server>[/] where <proto> can be ldap
+ # 	     or ldaps. The option can be given multiple times.
+ # 	     Map entries that include a server name override
+@@ -110,7 +110,7 @@ browse_mode = no
+ #
+ #ldap_uri = ""
+ #
+-# ldap_timeout - timeout value for the synchronous API  calls
++# ldap_timeout - timeout value for the synchronous API calls
+ #		  (default is LDAP library default).
+ #
+ #ldap_timeout = -1
+@@ -167,7 +167,7 @@ browse_mode = no
+ #
+ # use_hostname_for_mounts - nfs mounts where the host name resolves
+ # 			to more than one IP address normally need
+-# 			to use the IP address to esure a mount to
++# 			to use the IP address to ensure a mount to
+ # 			a host that isn't responding isn't done.
+ # 			If that behaviour is not wanted then set
+ #			ths to "yes", default is "no".
+@@ -349,7 +349,7 @@ browse_mode = no
+ #	is translated in its official host name.
+ #
+ # domain_strip - if set to "yes" the domain name part of the host
+-# 	is strippped when normalizing hostnames. This can be useful
++# 	is stripped when normalizing hostnames. This can be useful
+ #	when using of the same maps in a multiple domain environment.
+ #
+ # normalize_slashes - is set to "yes" by default and will collapse
+@@ -394,8 +394,8 @@ dismount_interval = 300
+ #
+ # Overriding this can cause autofs to use less resources because
+ # it will use symlinks instead of bind mounts in certain cases.
+-# You should ensure that the autofs kernel module your using
+-# supports expration of symlinks for best results (although this
++# You should ensure that the autofs kernel module you are using
++# supports expiration of symlinks for best results (although this
+ # appears to work reasonably well most of the time without the
+ # update).
+ #
+diff --git a/samples/autofs.init.conf b/samples/autofs.init.conf
+index 2ca53ffb..01716964 100644
+--- a/samples/autofs.init.conf
++++ b/samples/autofs.init.conf
+@@ -1,5 +1,5 @@
+ #
+-# Init syatem options
++# Init system options
+ #
+ # If the kernel supports using the autofs miscellanous device
+ # and you wish to use it you must set this configuration option
 
