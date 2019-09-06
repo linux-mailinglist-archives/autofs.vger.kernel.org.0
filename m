@@ -2,180 +2,430 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BF15FAAFD1
-	for <lists+autofs@lfdr.de>; Fri,  6 Sep 2019 02:24:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2A12AB0D5
+	for <lists+autofs@lfdr.de>; Fri,  6 Sep 2019 05:08:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390102AbfIFAYN (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 5 Sep 2019 20:24:13 -0400
-Received: from act-mtaout6.csiro.au ([150.229.7.43]:17557 "EHLO
-        act-MTAout6.csiro.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389986AbfIFAYM (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 5 Sep 2019 20:24:12 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Sep 2019 20:24:12 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=csiro.au; i=@csiro.au; q=dns/txt; s=dkim;
-  t=1567729452; x=1599265452;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=HJyDtLMfcf/g8sRHa7FEh6klxP5VnAKjxWTAa+6SyF4=;
-  b=BzzRSdx5dfftlzrtjDCB54naHfSEJ45hXWy8CZIpYBGijJ9vupInieP5
-   bQl8YZfH4d4gIyBDgkA/It6UOn99OmcD217Ya1VqW/KeGWVrZoW9hinaU
-   JgQTVQTr/jpWyCOPrWptmTwzNADv6uJa2QeruoZchrlzrZCKBWCzAQoY5
-   A=;
-IronPort-SDR: dC3AFYChvlGcXAoXebUOGWlAgYRHDp8b1hPFxr9kzm8nnopxna/XWgM05GRbm2YGMPAbVs0OwW
- sAA4JADOSFVw==
-X-SBRS: 4.0
-IronPort-PHdr: =?us-ascii?q?9a23=3A5LJVoRwyXdal6P/XCy+N+z0EezQntrPoPwUc9p?=
- =?us-ascii?q?sgjfdUf7+++4j5YhyN/u1j2VnOW4iTq+lJjebbqejBYSQB+t7A1RJKa5lQT1?=
- =?us-ascii?q?kAgMQSkRYnBZu7CEvwIfj2KQkxHcJeRUVo13qgMFJSXs/jNBXf?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A+HPBQAhpXFdjACwBSSwhIATAJKcgDF?=
- =?us-ascii?q?lHAEBAQQBAQcEAQGBZwKBQ1BcFHYENQqHXgOKdIJcmj4DGDwJAQEBDQEbEgI?=
- =?us-ascii?q?BAQKBAoIUgScCgjcjOBMCAwkBAQUBAQEBAQYEAgIQAQEBJoVeDEIBEAGCcTk?=
- =?us-ascii?q?xAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQUCMwU5AQE?=
- =?us-ascii?q?BAxIoBgEBNwEPAgEIDgoJFRAPIyUCBA4FIoMAAYFqAxwBAQICn1MCgTiIYAE?=
- =?us-ascii?q?BgiSCfQEBBXWEIhiCFgkJAYEqAYt3gVk+hCM+hESFY4xMij2VKwcDHYIChne?=
- =?us-ascii?q?NZQwbgjRvlVOELIsGkzGDdAIEAgQFAg4BAQWBaSCBWmyDQAmCORoegzqCVod?=
- =?us-ascii?q?9c4EphBuIZQGBIgEB?=
-X-IPAS-Result: =?us-ascii?q?A+HPBQAhpXFdjACwBSSwhIATAJKcgDFlHAEBAQQBAQcEA?=
- =?us-ascii?q?QGBZwKBQ1BcFHYENQqHXgOKdIJcmj4DGDwJAQEBDQEbEgIBAQKBAoIUgScCg?=
- =?us-ascii?q?jcjOBMCAwkBAQUBAQEBAQYEAgIQAQEBJoVeDEIBEAGCcTkxAQEBAQEBAQEBA?=
- =?us-ascii?q?QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQUCMwU5AQEBAxIoBgEBNwEPA?=
- =?us-ascii?q?gEIDgoJFRAPIyUCBA4FIoMAAYFqAxwBAQICn1MCgTiIYAEBgiSCfQEBBXWEI?=
- =?us-ascii?q?hiCFgkJAYEqAYt3gVk+hCM+hESFY4xMij2VKwcDHYIChneNZQwbgjRvlVOEL?=
- =?us-ascii?q?IsGkzGDdAIEAgQFAg4BAQWBaSCBWmyDQAmCORoegzqCVod9c4EphBuIZQGBI?=
- =?us-ascii?q?gEB?=
-Received: from exch1-cdc.nexus.csiro.au ([IPv6:2405:b000:601:13::247:31])
-  by act-ironport-int.csiro.au with ESMTP/TLS/ECDHE-RSA-AES256-SHA384; 06 Sep 2019 10:17:01 +1000
-Received: from exch1-cdc.nexus.csiro.au (2405:b000:601:13::247:31) by
- exch1-cdc.nexus.csiro.au (2405:b000:601:13::247:31) with Microsoft SMTP
- Server (TLS) id 15.0.1497.2; Fri, 6 Sep 2019 10:17:00 +1000
-Received: from ExEdge1.csiro.au (150.229.7.34) by exch1-cdc.nexus.csiro.au
- (152.83.247.31) with Microsoft SMTP Server (TLS) id 15.0.1497.2 via Frontend
- Transport; Fri, 6 Sep 2019 10:17:00 +1000
-Received: from AUS01-SY3-obe.outbound.protection.outlook.com (104.47.117.52)
- by ExEdge1.csiro.au (150.229.7.34) with Microsoft SMTP Server (TLS) id
- 15.0.1497.2; Fri, 6 Sep 2019 10:16:55 +1000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nqZnT5YmzcltQsVbERJ+DaA6nOS2inE5TrWy9mphY6ci29Bw4HWheeC9eu5KsHZpBoEBscmJSauwlviMACk4QjRLZwjp0x3JUi/qy3Ri64M8vCSMLA5HPF4tqrpQkT8VnS/Ad8SnDfWDRsRjpfDYmYyYgIzOtsEyhZbbzK97RHCtS2+cVzii16AEP14AC561TmhcdmqT/2ZAPDLdDA568BJKVAfdWE+AC3u5jHx+0kf6SWpqI5/toRMXiTt7MhDABFHj88u5eKb5wy3D2CVg0V275SPRH9w0QedktgG0F14Fc4QalCVOsr4O6BFJd2J4feA1MANBIDTM/p7FB/9paA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=raCwQm63gy3W0228OGwCooEBEvysSVrv89h8mDF5eI8=;
- b=hSgPSAzbORlWYKmFNdYCzK1Bf9vVNGyyf2GuS5VTQ23HyP3iRzJVZp9L5jeHQYXc/I9IrkSByingk8ek+iRGFACC7hvibbSKHtIpFCUbv2kZJ717b8r9vQRfMbDISHf46Z5oFf/vCPTEd74PUReDspRZTxMm/BSlt13tLZprUhbPPOT2xGjcNWFFBzH2Je36RFO5XUfyVDd4HNqgC/88pZif6mYYzmy65hWMoCvo9ODA7CiIB+t79uMhi3bk5fdvmXhCHhi7o0hEiv/MEy2QdWbw3gTLp0++bNDP4QPddzp64dldFQ3LvZHujfZ6ynizFffL6tnBAjxUTvPR8X8r9w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=csiro.au; dmarc=pass action=none header.from=csiro.au;
- dkim=pass header.d=csiro.au; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=CSIROAU.onmicrosoft.com; s=selector2-CSIROAU-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=raCwQm63gy3W0228OGwCooEBEvysSVrv89h8mDF5eI8=;
- b=KHGYBt+AgoTUnn9Zuou+FGswJ0LQPSASXke8u9i7W7u916HrOSn7w/FDMjHev103B3m87jMkStB7wfhPHRAQBVlfHG2kPj4I/r+d40jvB3zqZszKoTLvI/hBJ4rczVUdM8eY3fMXWqKFpNWfUmJAWaYh/Nd+Png3ltxlWWtQqV8=
-Received: from SYAPR01MB2526.ausprd01.prod.outlook.com (52.134.181.11) by
- SYAPR01MB2525.ausprd01.prod.outlook.com (52.134.183.17) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2220.20; Fri, 6 Sep 2019 00:17:00 +0000
-Received: from SYAPR01MB2526.ausprd01.prod.outlook.com
- ([fe80::d91e:cd8:4238:15e9]) by SYAPR01MB2526.ausprd01.prod.outlook.com
- ([fe80::d91e:cd8:4238:15e9%5]) with mapi id 15.20.2220.022; Fri, 6 Sep 2019
- 00:17:00 +0000
-From:   "McIntyre, Vincent (CASS, Marsfield)" <Vincent.Mcintyre@csiro.au>
-To:     Ian Kent <raven@themaw.net>
-CC:     autofs mailing list <autofs@vger.kernel.org>
-Subject: Re: [PATCH 09/32] autofs-5.1.5 - update autofs(8) offset map entry
- update description
-Thread-Topic: [PATCH 09/32] autofs-5.1.5 - update autofs(8) offset map entry
- update description
-Thread-Index: AQHVZETMa2OtZKRZg0WDH51z2X0wF6cdyEKA
-Date:   Fri, 6 Sep 2019 00:16:59 +0000
-Message-ID: <20190906001659.qkr2baeo6mburhzn@mayhem.atnf.CSIRO.AU>
+        id S2388687AbfIFDH7 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 5 Sep 2019 23:07:59 -0400
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:56429 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2388683AbfIFDH7 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 5 Sep 2019 23:07:59 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id DA46D21B2F;
+        Thu,  5 Sep 2019 23:07:57 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 05 Sep 2019 23:07:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=fm1; bh=
+        KwT9shoGm4qyYHB2EkksOS3i0q49iismsvx94Nid/vs=; b=qGE1X0s02qttnnpy
+        CMVwhusIGoov4dsovs9oF4Tp9zUmQU31QYQNAPgdM3ipUR7HOo9OLUbeHQbhKzOI
+        fkcbbGojyamDZbS4AIo1mxo+rj4tMHRUyR0frNvVJ4FipHeMJqcvTs0epxtNNNTp
+        DYpsCRPrRUy76AsK21G+MMRrWpUL7B5LefqcUTHeNYq6CLYgEgxeoVotIdLRm3ji
+        Q8LiGoidT3Q3PlLwuu6YOXGnvzEeoS5RdhGiN6H3H9JipVH+Uru8JQQWdwXdBNnV
+        uCVFAOdRJOV/gxcwaUS4Y0I4bwniTWK1l0X7zUB4Gno3JSTxtXyNBVaEJ6uu9U4h
+        Im/w7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; bh=KwT9shoGm4qyYHB2EkksOS3i0q49iismsvx94Nid/
+        vs=; b=Q9rFVwURJKit7d3EbY/ErycSPsY4EkLCaw5Qh9aTAUGT0uJ2rMrwnNOIR
+        euxk06br6a6Y+ZoRszx9jxa9BQ5Fs/Nqx0XBV/Nsd7wZ1Un24zqR2dVR7XUQJqhW
+        0fon8AxDKVu9NR2oV3G7iyX79SwE/aKI+2eRuGZqsculGQP2cBgzJpkc9eTgPJ4V
+        eQxCLyvVXsg5jbjcpMBqkIYHsTyVFSuX7FEquymkNQ/BmwpeR3WWbEicYZg9+dhU
+        RGMAILZYKUANjItqSD4x9SLFyw+/tKY4qJ3o5x1s7Vmxu3bCDMzU380dVkLXFDFS
+        duC9uddsP9ZQLv35TDnw7fl6TIyQg==
+X-ME-Sender: <xms:jc1xXaC2_6vMC31-hBUc3zreFFALFGiJIxndpRKtq4AXS9nNrSh3_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudejkedgfeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepkfgrnhcu
+    mfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucffohhmrghinheptghonh
+    hfrdhinhdpuggvfhgruhhlthdrihhnnecukfhppeduudekrddvtdelrddukeefrdelfeen
+    ucfrrghrrghmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvghmrgifrdhnvghtnecuve
+    hluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:jc1xXfGPXoOUJbsV9sZuAyx8JPT_FpiiICjjQaTWkrI66Vma_2KqBQ>
+    <xmx:jc1xXaLd4W0XeB0-Dy_L84zL-h9W7hAgzuCnWqsRZsF04jJ_rLTVBg>
+    <xmx:jc1xXbkf5DCJT3IeX0X9OoduNLkaVlcOOcPvcV6rJEKbkN07NAYmwA>
+    <xmx:jc1xXWD8YrNYgdo4DRkk33pabPGlEIlebsY3avwuK3oWES0XJIq5bw>
+Received: from mickey.themaw.net (unknown [118.209.183.93])
+        by mail.messagingengine.com (Postfix) with ESMTPA id A503B80060;
+        Thu,  5 Sep 2019 23:07:55 -0400 (EDT)
+Message-ID: <17bbf1101ede96b404bb7cf6266c48ebf452e006.camel@themaw.net>
+Subject: Re: [PATCH 04/32] autofs-5.1.5 - fix typing errors
+From:   Ian Kent <raven@themaw.net>
+To:     "McIntyre, Vincent (CASS, Marsfield)" <Vincent.Mcintyre@csiro.au>
+Cc:     autofs mailing list <autofs@vger.kernel.org>
+Date:   Fri, 06 Sep 2019 11:07:51 +0800
+In-Reply-To: <20190906001205.w3fagafcqddnfdrx@mayhem.atnf.CSIRO.AU>
 References: <156772672378.5865.3952237351056831247.stgit@mickey.themaw.net>
- <156772689839.5865.7283001077042699778.stgit@mickey.themaw.net>
-In-Reply-To: <156772689839.5865.7283001077042699778.stgit@mickey.themaw.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: NeoMutt/20170113 (1.7.2)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Vincent.Mcintyre@csiro.au; 
-x-originating-ip: [130.155.194.144]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0814c5b5-43c9-4ada-e1fb-08d7325f8924
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:SYAPR01MB2525;
-x-ms-traffictypediagnostic: SYAPR01MB2525:
-x-microsoft-antispam-prvs: <SYAPR01MB25250F0A73723E62944E0FDBF4BA0@SYAPR01MB2525.ausprd01.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5516;
-x-forefront-prvs: 0152EBA40F
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(396003)(346002)(366004)(39840400004)(136003)(376002)(54534003)(189003)(199004)(446003)(11346002)(14444005)(486006)(256004)(99286004)(81166006)(305945005)(8676002)(81156014)(8936002)(476003)(66066001)(7736002)(316002)(2906002)(76116006)(66946007)(66446008)(66556008)(71200400001)(229853002)(66476007)(6916009)(58126008)(71190400001)(76176011)(64756008)(3846002)(25786009)(102836004)(6116002)(4326008)(6506007)(6436002)(6512007)(26005)(186003)(6486002)(5660300002)(14454004)(478600001)(53936002)(6246003)(86362001)(1076003)(15650500001);DIR:OUT;SFP:1101;SCL:1;SRVR:SYAPR01MB2525;H:SYAPR01MB2526.ausprd01.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: bObPFK47EjAWVa3142SV4pToGASQjdOBVJKCDZ+CJwlX+LbAzdvA3WONwbDuf53WW0dutMIfj3fY2qWgivrjab+Pb7oAOGM40xc+8pxliDZLAhCxDRCRRCRdHfOKt8BoqHr1SiDLmtsqdpBAzcs1zTIG4Q3qD+u16bhgR9HcSP1ViH3SfKoNF3TSLQmFP03JqJ7hExk3sjw4+PLQfXri0VqHuOAeVlRyfV7c0m4tZt9kB7ARvuvZa1VYCdYH2H3Q/KPLU4WXmqFv8YGzgiDjVMK05KJcz/n+ymCvd0OrXt+rDY2/nTjgWBpOHAgTLRkdr0O1F/0oUzXp72U+Z3YhhCN3bUq7tiHKbPUxPAJ7Xw2lqziOtTtS7+Vz+1UwspmqySus0brsmK9zGLoqTebtu8mgypv5WJHXkVzmqDovo9k=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <0D651C522F0E9B4B9FBD67014BA80FA3@ausprd01.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+         <156772686966.5865.1649577308914702426.stgit@mickey.themaw.net>
+         <20190906001205.w3fagafcqddnfdrx@mayhem.atnf.CSIRO.AU>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.4 (3.32.4-1.fc30) 
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0814c5b5-43c9-4ada-e1fb-08d7325f8924
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Sep 2019 00:16:59.9542
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 0fe05593-19ac-4f98-adbf-0375fce7f160
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: G6xa66HoJSB8FYV8I22AoYjc9pvIwX4/GYRQMoB5RhqsZEnaV2orGbYxtn4etVVh
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SYAPR01MB2525
-X-OriginatorOrg: csiro.au
+Content-Transfer-Encoding: 7bit
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Fri, Sep 06, 2019 at 07:41:38AM +0800, Ian Kent wrote:
-> The autofs(8) man page imples that map entries that have offsets will
-> be updated in the ame way as top level map keys.
->=20
-> This isn't correct, if a map entry has offsets and is in use when the
-> map is updated the mount must expire before it will see the update.
->=20
-> Signed-off-by: Ian Kent <raven@themaw.net>
-> ---
->  CHANGELOG       |    1 +
->  man/autofs.8.in |    5 +++++
->  2 files changed, 6 insertions(+)
->=20
-> diff --git a/CHANGELOG b/CHANGELOG
-> index 89b1545b..64eb0926 100644
-> --- a/CHANGELOG
-> +++ b/CHANGELOG
-> @@ -15,6 +15,7 @@ xx/xx/2019 autofs-5.1.6
->  - plus map includes are only allowed in file sources.
->  - Update README.
->  - fix additional typing errors.
-> +- update autofs(8) offset map entry update description.
-> =20
->  30/10/2018 autofs-5.1.5
->  - fix flag file permission.
-> diff --git a/man/autofs.8.in b/man/autofs.8.in
-> index 9f03eada..909bdfd3 100644
-> --- a/man/autofs.8.in
-> +++ b/man/autofs.8.in
-> @@ -56,6 +56,11 @@ map is modified then the
->  .B autofs
->  service control reload action must be rerun to activate the changes.
->  .P
-> +However, if a map entry has offsets and is currently is use the offset
+On Fri, 2019-09-06 at 00:12 +0000, McIntyre, Vincent (CASS, Marsfield)
+wrote:
+> two tiny nitpicks
 
-s/is/in/:
+I'll fix those mistakes, thanks for looking at the patches.
 
-  +However, if a map entry has offsets and is currently in use the offset
+Ian
+> 
+> On Fri, Sep 06, 2019 at 07:41:10AM +0800, Ian Kent wrote:
+> > From: Andreas P <nurgrak@gmail.com>
+> > 
+> > Fix typing errors of various files.
+> > 
+> > Signed-off-by: Andreas P <nurgrak@gmail.com>
+> > Signed-off-by: Ian Kent <raven@themaw.net>
+> > ---
+> >  CHANGELOG                      |    1 +
+> >  Makefile.conf.in               |    2 +-
+> >  README.amd-maps                |    4 ++--
+> >  man/autofs.5                   |   12 ++++++-----
+> >  redhat/autofs.conf.default.in  |   42 ++++++++++++++++++++------
+> > --------------
+> >  samples/autofs.conf.default.in |   20 ++++++++++---------
+> >  samples/autofs.init.conf       |    2 +-
+> >  7 files changed, 42 insertions(+), 41 deletions(-)
+> > 
+> > diff --git a/CHANGELOG b/CHANGELOG
+> > index 956a33b7..44ce6b69 100644
+> > --- a/CHANGELOG
+> > +++ b/CHANGELOG
+> > @@ -10,6 +10,7 @@ xx/xx/2019 autofs-5.1.6
+> >  - make expire remaining log level debug.
+> >  - allow period following macro in selector value.
+> >  - fix macro expansion in selector values.
+> > +- fix typing errors.
+> >  
+> >  30/10/2018 autofs-5.1.5
+> >  - fix flag file permission.
+> > diff --git a/Makefile.conf.in b/Makefile.conf.in
+> > index ff9b18a1..a1e5eada 100644
+> > --- a/Makefile.conf.in
+> > +++ b/Makefile.conf.in
+> > @@ -72,7 +72,7 @@ RANLIB = @PATH_RANLIB@
+> >  TIRPCLIB = @TIRPC_LIBS@
+> >  TIRPCCFLAGS = @TIRPC_CFLAGS@
+> >  
+> > -# Use dmalloc for memory debuging
+> > +# Use dmalloc for memory debugging
+> >  DMALLOCLIB = @DMALLOCLIB@
+> >  
+> >  #
+> > diff --git a/README.amd-maps b/README.amd-maps
+> > index c7e22c8d..d933a678 100644
+> > --- a/README.amd-maps
+> > +++ b/README.amd-maps
+> > @@ -61,8 +61,8 @@ add it below the autofs configuration. Apart from
+> > changing the amd
+> >  changed. However, quite a few amd configuration options don't have
+> >  meaning within autofs. When these options are seen they are
+> > logged.
+> >  
+> > -Be aware that, if the an old configuration exists and the
+> > configuration
+> > -hasn't been updated after the installation, changes to the the old
+> > +Be aware that, if an old configuration exists and the
+> > configuration
+> > +hasn't been updated after the installation, changes to the old
+> >  configuration will override changes to the new configuration
+> > because
+> >  backward compatibility takes priority over the new implementation.
+> >  
+> > diff --git a/man/autofs.5 b/man/autofs.5
+> > index c2421272..2c224e18 100644
+> > --- a/man/autofs.5
+> > +++ b/man/autofs.5
+> > @@ -304,32 +304,32 @@ The \fBselectors\fP that take no arguments
+> > are:
+> >  .TP
+> >  .B arch
+> >  .br
+> > -The machine architecture which, if not set in the confugration, is
+> > +The machine architecture which, if not set in the configuration,
+> > is
+> >  obtained using uname(2).
+> >  .TP
+> >  .B karch
+> >  .br
+> > -The machine kernel architecture which, if not set in the
+> > confugration,
+> > +The machine kernel architecture which, if not set in the
+> > configuration,
+> >  is obtained using uname(2).
+> >  .TP
+> >  .B os
+> >  .br
+> > -The operating system name, if not set in the confugration, is
+> > obtained
+> > +The operating system name, if not set in the configuration, is
+> > obtained
+> >  using uname(2).
+> >  .TP
+> >  .B osver
+> >  .br
+> > -The operating system version, if not set in the confugration, is
+> > obtained
+> > +The operating system version, if not set in the configuration, is
+> > obtained
+> >  using uname(2).
+> >  .TP
+> >  .B full_os
+> >  .br
+> > -The full operating system name, if not set in the confugration
+> > this selector
+> > +The full operating system name, if not set in the configuration
+> > this selector
+> >  has no value.
+> >  .TP
+> >  .B vendor
+> >  .br
+> > -The operating system vendor name, if not set in the confugration
+> > this selector
+> > +The operating system vendor name, if not set in the configuration
+> > this selector
+> >  has the value "unknown".
+> >  .TP
+> >  .B byte
+> > diff --git a/redhat/autofs.conf.default.in
+> > b/redhat/autofs.conf.default.in
+> > index 4b89a5f7..59b9dfdd 100644
+> > --- a/redhat/autofs.conf.default.in
+> > +++ b/redhat/autofs.conf.default.in
+> > @@ -7,7 +7,7 @@
+> >  #
+> >  #master_map_name = auto.master
+> >  #
+> > -# timeout - set the default mount timeout in secons. The internal
+> > +# timeout - set the default mount timeout in seconds. The internal
+> >  #	    program default is 10 minutes, but the default installed
+> >  #	    configuration overrides this and sets the timeout to 5
+> >  #	    minutes to be consistent with earlier autofs releases.
+> > @@ -51,13 +51,13 @@ timeout = 300
+> >  browse_mode = no
+> >  #
+> >  # mount_nfs_default_protocol - set the default protocol that
+> > mount.nfs(8)
+> > -# 			       uses when performing a mount. Autofs
+> > needs
+> > -# 			       to know the default NFS protocol that
+> > -# 			       mount.nfs(8) uses so it can do special
+> > case
+> > -# 			       handling for its availability probe for
+> > -# 			       different NFS protocols. Since we can't
+> > -# 			       identify the default automatically we
+> > need
+> > -# 			       to set it in our configuration.
+> > +#			       uses when performing a mount. Autofs
+> > needs
+> > +#			       to know the default NFS protocol that
+> > +#			       mount.nfs(8) uses so it can do special
+> > case
+> > +#			       handling for its availability probe for
+> > +#			       different NFS protocols. Since we can't
+> > +#			       identify the default automatically we
+> > need
+> > +#			       to set it in our configuration.
+> >  #
+> >  #mount_nfs_default_protocol = 3
+> >  mount_nfs_default_protocol = 4
+> > @@ -71,9 +71,9 @@ mount_nfs_default_protocol = 4
+> >  #logging = none
+> >  #
+> >  # force_standard_program_map_env - disable the use of the
+> > "AUTOFS_"
+> > -#			prefix for standard environemt variables when
+> > +#			prefix for standard environment variables when
+> >  #			executing a program map. Since program maps
+> > -#			are run as the privileded user this opens
+> > +#			are run as the privileged user this opens
+> >  #			automount(8) to potential user privilege
+> >  #			escalation when the program map is written
+> >  #			in a language that  can load components from,
+> > @@ -92,7 +92,7 @@ mount_nfs_default_protocol = 4
+> >  #
+> >  # Define server URIs
+> >  #
+> > -# ldap_uri - space seperated list of server uris of the form
+> > +# ldap_uri - space separated list of server uris of the form
+> >  # 	     <proto>://<server>[/] where <proto> can be ldap
+> >  # 	     or ldaps. The option can be given multiple times.
+> >  # 	     Map entries that include a server name override
+> > @@ -111,7 +111,7 @@ mount_nfs_default_protocol = 4
+> >  #
+> >  #ldap_uri = ""
+> >  #
+> > -# ldap_timeout - timeout value for the synchronous API  calls
+> > +# ldap_timeout - timeout value for the synchronous API calls
+> >  #		  (default is LDAP library default).
+> >  #
+> >  #ldap_timeout = -1
+> > @@ -167,11 +167,11 @@ mount_nfs_default_protocol = 4
+> >  #map_hash_table_size = 1024
+> >  #
+> >  # use_hostname_for_mounts - nfs mounts where the host name
+> > resolves
+> > -# 			 to more than one IP address normally need
+> > -# 			 to use the IP address to esure a mount to
+> > -# 			 a host that isn't responding isn't done.
+> > -# 			 If that behaviour is not wanted then set
+> > -#			 ths to "yes", default is "no".
+> > +# 			to more than one IP address normally need
+> > +# 			to use the IP address to ensure a mount to
+> > +# 			a host that isn't responding isn't done.
+> > +# 			If that behaviour is not wanted then set
+> > +#			ths to "yes", default is "no".
+> 
+> s/ths/this/
+> 
+> >  #
+> >  #use_hostname_for_mounts = "no"
+> >  #
+> > @@ -184,7 +184,7 @@ mount_nfs_default_protocol = 4
+> >  #disable_not_found_message = "no"
+> >  #
+> >  # sss_master_map_wait - When sssd is starting up it can sometimes
+> > return
+> > -# 			"no such entry" for a short time until it has
+> > read
+> > +#			"no such entry" for a short time until it has
+> > read
+> >  # 			in the LDAP map information. Internal default
+> > is 0
+> >  # 			seconds, don't wait but if there is a problem
+> > with
+> >  # 			autofs not finding the master map at startup
+> > (when
+> > @@ -350,7 +350,7 @@ mount_nfs_default_protocol = 4
+> >  #	is translated in its official host name.
+> >  #
+> >  # domain_strip - if set to "yes" the domain name part of the host
+> > -# 	is strippped when normalizing hostnames. This can be useful
+> > +# 	is stripped when normalizing hostnames. This can be useful
+> >  #	when using of the same maps in a multiple domain environment.
+> >  #
+> >  # normalize_slashes - is set to "yes" by default and will collapse
+> > @@ -395,8 +395,8 @@ dismount_interval = 300
+> >  #
+> >  # Overriding this can cause autofs to use less resources because
+> >  # it will use symlinks instead of bind mounts in certain cases.
+> > -# You should ensure that the autofs kernel module your using
+> > -# supports expration of symlinks for best results (although this
+> > +# You should ensure that the autofs kernel module you are using
+> > +# supports expiration of symlinks for best results (although this
+> >  # appears to work reasonably well most of the time without the
+> >  # update).
+> >  #
+> > diff --git a/samples/autofs.conf.default.in
+> > b/samples/autofs.conf.default.in
+> > index 2f155111..e0c5e320 100644
+> > --- a/samples/autofs.conf.default.in
+> > +++ b/samples/autofs.conf.default.in
+> > @@ -7,7 +7,7 @@
+> >  #
+> >  #master_map_name = auto.master
+> >  #
+> > -# timeout - set the default mount timeout in secons. The internal
+> > +# timeout - set the default mount timeout in seconds. The internal
+> >  #	    program default is 10 minutes, but the default installed
+> >  #	    configuration overrides this and sets the timeout to 5
+> >  #	    minutes to be consistent with earlier autofs releases.
+> > @@ -19,7 +19,7 @@ timeout = 300
+> >  # 		be read at program start (default 10, wait
+> >  # 		for 10 seconds then continue).
+> >  #
+> > -# master_wait = 10
+> > +#master_wait = 10
+> >  #
+> >  # negative_timeout - set the default negative timeout for
+> >  # 		     failed mount attempts (default 60).
+> > @@ -70,9 +70,9 @@ browse_mode = no
+> >  #logging = none
+> >  #
+> >  # force_standard_program_map_env - disable the use of the
+> > "AUTOFS_"
+> > -#			prefix for standard environemt variables when
+> > +#			prefix for standard environment variables when
+> >  #			executing a program map. Since program maps
+> > -#			are run as the privileded user this opens
+> > +#			are run as the privileged user this opens
+> >  #			automount(8) to potential user privilege
+> >  #			escalation when the program map is written
+> >  #			in a language that  can load components from,
+> 
+> s/that  can/that can/
+> 
+> Regards
+> Vince
+> 
+> > @@ -91,7 +91,7 @@ browse_mode = no
+> >  #
+> >  # Define server URIs
+> >  #
+> > -# ldap_uri - space seperated list of server uris of the form
+> > +# ldap_uri - space separated list of server uris of the form
+> >  # 	     <proto>://<server>[/] where <proto> can be ldap
+> >  # 	     or ldaps. The option can be given multiple times.
+> >  # 	     Map entries that include a server name override
+> > @@ -110,7 +110,7 @@ browse_mode = no
+> >  #
+> >  #ldap_uri = ""
+> >  #
+> > -# ldap_timeout - timeout value for the synchronous API  calls
+> > +# ldap_timeout - timeout value for the synchronous API calls
+> >  #		  (default is LDAP library default).
+> >  #
+> >  #ldap_timeout = -1
+> > @@ -167,7 +167,7 @@ browse_mode = no
+> >  #
+> >  # use_hostname_for_mounts - nfs mounts where the host name
+> > resolves
+> >  # 			to more than one IP address normally need
+> > -# 			to use the IP address to esure a mount to
+> > +# 			to use the IP address to ensure a mount to
+> >  # 			a host that isn't responding isn't done.
+> >  # 			If that behaviour is not wanted then set
+> >  #			ths to "yes", default is "no".
+> > @@ -349,7 +349,7 @@ browse_mode = no
+> >  #	is translated in its official host name.
+> >  #
+> >  # domain_strip - if set to "yes" the domain name part of the host
+> > -# 	is strippped when normalizing hostnames. This can be useful
+> > +# 	is stripped when normalizing hostnames. This can be useful
+> >  #	when using of the same maps in a multiple domain environment.
+> >  #
+> >  # normalize_slashes - is set to "yes" by default and will collapse
+> > @@ -394,8 +394,8 @@ dismount_interval = 300
+> >  #
+> >  # Overriding this can cause autofs to use less resources because
+> >  # it will use symlinks instead of bind mounts in certain cases.
+> > -# You should ensure that the autofs kernel module your using
+> > -# supports expration of symlinks for best results (although this
+> > +# You should ensure that the autofs kernel module you are using
+> > +# supports expiration of symlinks for best results (although this
+> >  # appears to work reasonably well most of the time without the
+> >  # update).
+> >  #
+> > diff --git a/samples/autofs.init.conf b/samples/autofs.init.conf
+> > index 2ca53ffb..01716964 100644
+> > --- a/samples/autofs.init.conf
+> > +++ b/samples/autofs.init.conf
+> > @@ -1,5 +1,5 @@
+> >  #
+> > -# Init syatem options
+> > +# Init system options
+> >  #
+> >  # If the kernel supports using the autofs miscellanous device
+> >  # and you wish to use it you must set this configuration option
 
-> +mounts cannot be updated due to potential mount dependencies. In this
-> +case the map entry offsets will not be updated until after the map
-> +entry has expired.
-> +.P
->  .B @@initdir@@/autofs status
->  or
->  .B systemctl autofs.service status
->=20
-
--- =
