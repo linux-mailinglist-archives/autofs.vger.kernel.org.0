@@ -2,134 +2,105 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id AF9FDAB0EA
-	for <lists+autofs@lfdr.de>; Fri,  6 Sep 2019 05:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 333CEAC3F2
+	for <lists+autofs@lfdr.de>; Sat,  7 Sep 2019 03:35:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391312AbfIFDWn (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 5 Sep 2019 23:22:43 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:40615 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731938AbfIFDWn (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 5 Sep 2019 23:22:43 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 89A9521903;
-        Thu,  5 Sep 2019 23:22:42 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 05 Sep 2019 23:22:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:cc:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm1; bh=
-        anbBu7P/3h9DZc3n+mLlRRIFNP1Hq4N9h+BR+gLwzK8=; b=Zk2Ow0sd3ju4IJ6U
-        Ou6scfDzdufd7XsO6kXUmLRYpUYVCppPLiHBDfWktnQzfeaTlG96zJsuNDPZHJ5u
-        hSkWJhIz5B3b8jRrlutwZczZHC+kDlWUoF/RcR9ol+6l2/VQfby4t4YuUovm52NJ
-        GIfmAle/Z/jXdYhFDB4VGvQLmI8PgBN80E10W7+fDujx5ZBjuFiXTL3GxqvECMHg
-        ibHhQnpIe1TvFmHWJ7TDpJ+to5PmLvegjAPVkTPXyo+P7FJ+4gSvpSqcep8u71v9
-        dtC4Rk7XVAGTa4a8GW0jSxuurKf+geIfJ+T421Vmwp2lWTuGoXuGq79Sd+IYIbys
-        bymwiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=anbBu7P/3h9DZc3n+mLlRRIFNP1Hq4N9h+BR+gLwz
-        K8=; b=1S3318zeGt5b/ix0EtGp5OpGFKYqcyanDrNNqNX0a0iW06Uc4DoDuXspK
-        okSF9T9rcffKlvG3wzzDQBGAkc/6qavSLspu+s9Ycg88XuE6AO3+OjsRIlfJKdO8
-        JFHkdbwI6ORQ3DHPBkhHP1U/SzxtylSiWDm4Gg+250NB+8/CMHXwQKN/y4lz8n4v
-        IH6iU0YILI55NHPJZWLSYBcVxLnu+pWUR+FBciP6mIO6c/ZRsLARsInnikfWj4bv
-        n126QCPSg8IgvSKfBwrF1i6rNih+hkBY3C6a0n0IBzRiOGU/JDSVdgDyuqlCktPe
-        vJgG2C2gjCAZPzn/1JMCqSHBJZ9BQ==
-X-ME-Sender: <xms:AdFxXZtWZgBlFDnKKgotn86ubaWC77ID8NUXJqmaMXBBcnv7-ndyyQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudejkedggeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepkfgrnhcu
-    mfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucfkphepuddukedrvddtle
-    drudekfedrleefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgr
-    fidrnhgvthenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:AdFxXXppxo6t6UVMHvH-HK9xB752BdhP0aFUPgyhGN9r7r5nDFEe_g>
-    <xmx:AdFxXQINITUrUMAejGwmchM3C_x04BO2oLtHGxl2QVRrRNFCkOjXbg>
-    <xmx:AdFxXfuUuKgimFSKm5ID5O302c-rjK2WOdLw7AnaSRuwycz9SOLBMw>
-    <xmx:AtFxXd4w5E_9bUa9T1VvL7oAKUZnHXUuMylC66iGt6mYwjdAO1_1nQ>
-Received: from mickey.themaw.net (unknown [118.209.183.93])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 86B5E80060;
-        Thu,  5 Sep 2019 23:22:40 -0400 (EDT)
-Message-ID: <f9deab01025b1b57f6297fab44264a85c3814bef.camel@themaw.net>
-Subject: Re: [PATCH 09/32] autofs-5.1.5 - update autofs(8) offset map entry
- update description
-From:   Ian Kent <raven@themaw.net>
-To:     "McIntyre, Vincent (CASS, Marsfield)" <Vincent.Mcintyre@csiro.au>
-Cc:     autofs mailing list <autofs@vger.kernel.org>
-Date:   Fri, 06 Sep 2019 11:22:36 +0800
-In-Reply-To: <20190906001659.qkr2baeo6mburhzn@mayhem.atnf.CSIRO.AU>
-References: <156772672378.5865.3952237351056831247.stgit@mickey.themaw.net>
-         <156772689839.5865.7283001077042699778.stgit@mickey.themaw.net>
-         <20190906001659.qkr2baeo6mburhzn@mayhem.atnf.CSIRO.AU>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.4 (3.32.4-1.fc30) 
+        id S2406422AbfIGBfy (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Fri, 6 Sep 2019 21:35:54 -0400
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:46757 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406425AbfIGBfx (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Fri, 6 Sep 2019 21:35:53 -0400
+Received: by mail-vs1-f67.google.com with SMTP id z14so5259295vsz.13
+        for <autofs@vger.kernel.org>; Fri, 06 Sep 2019 18:35:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=C+0rVi6PzTMFYTcbcIBgVtgcdKuod3fbgGTlJ3s1Cbc=;
+        b=aAqX8GF3NxJfYWTz+7NIDPLIjo0XP9/JZPono8ypSM0neNSMZHUmzdkq2Se7OJFOh9
+         PoY/oOktOwroaWpUhvkh/0lVCpOy0KJOLjA7Oi/nzaXZuFlZGZbL/4747zKBrwwhtzas
+         gG/MLSk0D7meYg6rv72yzT1Ye0iKhsbuA3x7qNKl17C/ShWvLceuPesYJRB24JI3yF/d
+         RlQ1pN3llWGMGktA9M5mcCV2mXYnONq4mktjFBILLKDKqhDlfm3tts6F97UbE+dOxwKG
+         stLn6T4VogMt45OE5RvOA2uSkgh1bK36Tx1Z5lO8sum/OTUS4kxFqGu49PNKiFyRTNrp
+         8fGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=C+0rVi6PzTMFYTcbcIBgVtgcdKuod3fbgGTlJ3s1Cbc=;
+        b=tZAZQV/4u9byIMUVe9Rn2NFscPpDx7xd0IIzUIbCty3MXDmV1iuPGrN7SfcQWN0a7m
+         BDdMd8/nu2pGy0o2edRDZtc6eeVXHIlZTgJ5UV4yab/QchzmnzOXE+KPYZeVpCqBtx/v
+         iVcw3RgxfI3wil7gW3Acyt/SMS6GJ6wqdBUmoUh7xnzGv/BWnaQa7DWkMr/KB8R2rKUn
+         EdYR6OX1PhKxECvEt0tG6jah0evi81uY3rL4g+lR7tqBNrGJDvvCyyU7f5pDLI1/7TfT
+         AB+OiBN7gIR5FbqVvyDM1oATIbV+e9ciXlKE+TgY80k02m8iL0iz54wlv62CMqMLmxXt
+         5AhA==
+X-Gm-Message-State: APjAAAWXnXpOXNRIjL2ePZrXTyQDcDoEJn4z6mGMSs4tGORO7DUlXHPZ
+        t3Mb9UzgUUXrR0PB4G2o2BVahUaiW7PZapyDFxk=
+X-Google-Smtp-Source: APXvYqyTtP/aHSfYAfmSrs7MWIe/GTCmIy0j5/fOPaIGMbEKnvKQPW7B/2OIkBGdOM/ShGwFA2jh7u3jozMFI6xv0E8=
+X-Received: by 2002:a05:6102:15a:: with SMTP id a26mr6991278vsr.143.1567820152517;
+ Fri, 06 Sep 2019 18:35:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Received: by 2002:a1f:c545:0:0:0:0:0 with HTTP; Fri, 6 Sep 2019 18:35:52 -0700 (PDT)
+Reply-To: waltonalice41@gmail.com
+From:   Alice Walton <saraharmony501@gmail.com>
+Date:   Sat, 7 Sep 2019 02:35:52 +0100
+Message-ID: <CAHoQAbVi2eUJHHAx8-i6uv=tXXkdZbDQj+bGXrd4foXr+8goAQ@mail.gmail.com>
+Subject: Please forgive me
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Fri, 2019-09-06 at 00:16 +0000, McIntyre, Vincent (CASS, Marsfield)
-wrote:
+My Dearest,
 
-And again, thanks.
+Please forgive me for stressing you with my predicaments as I know
+that this letter may come to you as a big surprise.
 
-> On Fri, Sep 06, 2019 at 07:41:38AM +0800, Ian Kent wrote:
-> > The autofs(8) man page imples that map entries that have offsets
-> > will
-> > be updated in the ame way as top level map keys.
-> > 
-> > This isn't correct, if a map entry has offsets and is in use when
-> > the
-> > map is updated the mount must expire before it will see the update.
-> > 
-> > Signed-off-by: Ian Kent <raven@themaw.net>
-> > ---
-> >  CHANGELOG       |    1 +
-> >  man/autofs.8.in |    5 +++++
-> >  2 files changed, 6 insertions(+)
-> > 
-> > diff --git a/CHANGELOG b/CHANGELOG
-> > index 89b1545b..64eb0926 100644
-> > --- a/CHANGELOG
-> > +++ b/CHANGELOG
-> > @@ -15,6 +15,7 @@ xx/xx/2019 autofs-5.1.6
-> >  - plus map includes are only allowed in file sources.
-> >  - Update README.
-> >  - fix additional typing errors.
-> > +- update autofs(8) offset map entry update description.
-> >  
-> >  30/10/2018 autofs-5.1.5
-> >  - fix flag file permission.
-> > diff --git a/man/autofs.8.in b/man/autofs.8.in
-> > index 9f03eada..909bdfd3 100644
-> > --- a/man/autofs.8.in
-> > +++ b/man/autofs.8.in
-> > @@ -56,6 +56,11 @@ map is modified then the
-> >  .B autofs
-> >  service control reload action must be rerun to activate the
-> > changes.
-> >  .P
-> > +However, if a map entry has offsets and is currently is use the
-> > offset
-> 
-> s/is/in/:
-> 
->   +However, if a map entry has offsets and is currently in use the
-> offset
-> 
-> > +mounts cannot be updated due to potential mount dependencies. In
-> > this
-> > +case the map entry offsets will not be updated until after the map
-> > +entry has expired.
-> > +.P
-> >  .B @@initdir@@/autofs status
-> >  or
-> >  .B systemctl autofs.service status
-> > 
-> 
-> -- 
+Actually, I came across your E-mail from my personal search afterward
+I decided to email you directly believing that you will be honest to
+fulfil my final wish before anything happens to me. Meanwhile, I am
+Madam Alice Walton, 71 years old childless widow from France but i
+reside and doing Gold mining business in Africa before i fall sick.
 
+I am suffering from Adenocarcinoma Cancer of the lungs for the past 8
+years and from all indication my condition is really deteriorating as
+my doctors have confirmed and courageously advised me that I may not
+live beyond 3 weeks from now for the reason that my tumor has reached
+a critical stage which has defiled all forms of medical treatment.
+
+Since my days are numbered, I=E2=80=99ve decided willingly to fulfil my
+long-time vow to donate to the less privileges the sum of($18.5
+million dollars) I deposited in my offshore account over 7 years now
+because I have tried to handle this project by myself but I have seen
+that my health could not allow me to do so anymore.
+
+My promise to God includes building of well-equipped charity
+foundation/hospital and a technical school for the orphans and less
+privileges.
+
+Since i am not capable to handle this again myself due to my critical
+health condition,please i need your consent to help me receive my
+money from the bank and use it to do this divine works of God in your
+country in my name so that my soul can be at rest if anything happens
+to me.
+
+If you will be honest, kind and willing to assist me handle this
+charity project as I=E2=80=99ve mentioned here, I will like you to provide =
+me
+your personal data like,
+
+(1) Your full name:
+(2) country:
+(3) Occupation:
+(4) phone number:
+(5) Age:
+
+Let me have this data so that i can link you up with my bank as my
+representative and receiver of the funds now that i am still alive.
+
+Warmest Regards!
+Mrs. Alice Walton
