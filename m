@@ -2,74 +2,64 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AC0FDBEAA
-	for <lists+autofs@lfdr.de>; Fri, 18 Oct 2019 09:46:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A663E7619
+	for <lists+autofs@lfdr.de>; Mon, 28 Oct 2019 17:28:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392304AbfJRHqm (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Fri, 18 Oct 2019 03:46:42 -0400
-Received: from zaovasilisa.ru ([88.200.194.99]:34685 "EHLO usrv.lan"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1731319AbfJRHqm (ORCPT <rfc822;autofs@vger.kernel.org>);
-        Fri, 18 Oct 2019 03:46:42 -0400
-X-Greylist: delayed 40443 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Oct 2019 03:46:40 EDT
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-        by usrv.lan (Postfix) with SMTP id 816D11802E4;
-        Thu, 17 Oct 2019 17:00:43 +0400 (MSD)
-Received: from [229.44.223.24] by 127.0.0.1 id <4812049-90291>; Thu, 17 Oct 2019 17:54:46 +0500
-Message-ID: <0p$g$-8l$$$mxg2qv7@v15gch87>
-From:   "Mr Ekrem Bayraktar" <dave@dbsoundfactory.com>
-Reply-To: "Mr Ekrem Bayraktar" <dave@dbsoundfactory.com>
-To:     augustadampier@gmail.com
-Subject: MOTHERLESS CHILDREN IN YOUR CITY !!
-Date:   Thu, 17 Oct 19 17:54:46 GMT
-X-Mailer: The Bat! (v1.52f) Business
+        id S1729759AbfJ1Q2k (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 28 Oct 2019 12:28:40 -0400
+Received: from mx2.suse.de ([195.135.220.15]:40508 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729399AbfJ1Q2k (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Mon, 28 Oct 2019 12:28:40 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id C5C5FB17D;
+        Mon, 28 Oct 2019 16:28:38 +0000 (UTC)
+Date:   Mon, 28 Oct 2019 11:28:35 -0500
+From:   Goldwyn Rodrigues <rgoldwyn@suse.de>
+To:     Ian Kent <raven@themaw.net>
+Cc:     viro@zeniv.linux.org.uk, autofs@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org
+Subject: Re: [RFC] Don't propagate automount
+Message-ID: <20191028162835.dtyjwwv57xqxrpap@fiona>
+References: <20190926195234.bipqpw5sbk5ojcna@fiona>
+ <3468a81a09d13602c67007759593ddf450f8132c.camel@themaw.net>
+ <e5fbf32668aea1b8143d15ff47bd1e4309d03b17.camel@themaw.net>
+ <d163042ab8fffd975a6d460488f1539c5f619eaa.camel@themaw.net>
+ <7f31f0c2bf214334a8f7e855044c88a50e006f05.camel@themaw.net>
+ <b2443a28939d6fe79ec9aa9d983f516c8269448a.camel@themaw.net>
+ <20190927161643.ehahioerrlgehhud@fiona>
+ <f0849206eff7179c825061f4b96d56c106c4eb66.camel@themaw.net>
+ <20191001190916.fxko7vjcjsgzy6a2@fiona>
+ <5117fb99760cc52ca24b103b70e197f6a619bee0.camel@themaw.net>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-        boundary="EFA7_FB09FAD2"
-X-Priority: 3
-X-MSMail-Priority: Normal
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5117fb99760cc52ca24b103b70e197f6a619bee0.camel@themaw.net>
+User-Agent: NeoMutt/20180716
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
+Hi Ian,
 
---EFA7_FB09FAD2
-Content-Type: text/plain;
-Content-Transfer-Encoding: quoted-printable
+On 10:14 02/10, Ian Kent wrote:
+> On Tue, 2019-10-01 at 14:09 -0500, Goldwyn Rodrigues wrote:
+<snip>
 
-Dear Sir / Madam
-
-
-
-Since ever we left your country back to Canada , we have gotten Government=
- approval and we have been busying planning for the less privilege Childre=
-n projects.
-
-We are planning to release first batch of the funds $2,990,000.00 within 1=
-4 days for building an estate for motherless children in your city.
-
-I want you to use my mother;s company name to register this charity projec=
-t in your country after receiving the project funds.
-
-It must be registered as { Bayraktar Group Homeless Children Ltd }.
+> Anyway, it does sound like it's worth putting time into
+> your suggestion of a kernel change.
+> 
+> Unfortunately I think it's going to take a while to work
+> out what's actually going on with the propagation and I'm
+> in the middle of some other pressing work right now.
 
 
-Can you handle and supervise this big project ?
-Can you manager all the workers as a senior supervisor ?
-We want to be sure you can handle it before we proceed with this project.
+Have you have made any progress on this issue?
+As I mentioned, I am fine with a userspace solution of defaulting
+to slave mounts all of the time instead of this kernel patch.
 
 
-Please call me if you want to hear from us + 1-917 580 4919.
-Please can you manage such project please Kindly reply for further details=
-.
-
-Your full names-----------
-
-
-
-Ekrem Bayraktar.
-Bayraktar Shipping Group
-
---EFA7_FB09FAD2--
-
+-- 
+Goldwyn
