@@ -2,84 +2,61 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id 26395180D08
-	for <lists+autofs@lfdr.de>; Wed, 11 Mar 2020 01:56:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAEEB188306
+	for <lists+autofs@lfdr.de>; Tue, 17 Mar 2020 13:09:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727397AbgCKA40 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 10 Mar 2020 20:56:26 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:52739 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726380AbgCKA40 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 10 Mar 2020 20:56:26 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id E5532220CF;
-        Tue, 10 Mar 2020 20:56:24 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 10 Mar 2020 20:56:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm2; bh=
-        ztMyEeHWVTh/3NTxXZVvyV6IxRO/cI8WgTC3PhuJ2gk=; b=FACbEUARnftzFRwM
-        lum+aH1Lf7yAqbc9FSZ6QLoV59ocAWJGM78I3LLanVBlw4cqsFaZ77y+Y4quEQeM
-        6xAJUwb22mz3+gcI3tSBKp6PF+HsOyQOavh0m+FlvMSfEap0Cw1+CN1bBmsxuv6O
-        sHrgj0aoxVykvLV6FIoXaWnH4DELK05Vqh+lnyTLVZsAG2ZNHEZig2xKdnYZUGBt
-        ukEpCAF+h39k/9oANbYWcEAZHT84unn6lTUIe+kAvuyutBCFYyQhksHsBeUVry7x
-        3dlPeGkOn5hsM2yGTeE7+HdMo1ZnFIoDzGq2/42Yj/qu0qRG9NdU2Bz5PPiDe+HG
-        2iYsrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=ztMyEeHWVTh/3NTxXZVvyV6IxRO/cI8WgTC3PhuJ2
-        gk=; b=ZTwrhATVAf56mHDv854uu4n177bkmcL037FQDY3rZJKtc0tPiv1vOFdtT
-        90dxquxMIPbBxW+wC5YFjuhGgXIb/0sA3CSekJsY8+ItWHVmhu0wS6khC76YU1E/
-        IIPcQeZIccTQF6Gq40QTbX7ewhT0YqF3wNELtQD8dS8QASx4Fr3+mbmPeGAXs6JC
-        0V60Ng69mJGnSOqOy1koedmOLicF9hMdiYPxMhgwydYtM697PIScFiTurGjkg/qE
-        fpL7Mvi/fbfgApTunWlaGucBuy2fGE9NbZvDPkyLc1pZAiF1mXnUXQz+cV0rC5k4
-        Y7yJZmAeG50II11i+1p/rN1R+ChVA==
-X-ME-Sender: <xms:ODdoXqBNZLObNX4Z-9Q5Dx-hye44J6u9DmYeO2SPB2D85BHu0OqUhA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddvuddgvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepkfgrnhcu
-    mfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucfkphepuddukedrvddtke
-    drudekuddrieefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomheprhgrvhgvnhesthhhvghmrgifrdhnvght
-X-ME-Proxy: <xmx:ODdoXozCF3CHQf1WSsqhk7m0G5MeXCqEyiP_dP2BdNkOTuLL7pZU4Q>
-    <xmx:ODdoXomKopXfKPWuScxp71Uc_6dexddb-A1rtIO9b6pLBDDNmQU1ew>
-    <xmx:ODdoXtEb91FIChrpwNproCklbN8w7SNK2YFgUDdvmM_gwYEZDYmHTQ>
-    <xmx:ODdoXl7Y7RjPUkQmjM-FIccBMq2saApRlpNgRY2S4jfpDIsPRp_Yew>
-Received: from mickey.themaw.net (unknown [118.208.181.63])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 59FC030612AF;
-        Tue, 10 Mar 2020 20:56:23 -0400 (EDT)
-Message-ID: <abf255f4682a974eac02ce94b7006d9dc0413856.camel@themaw.net>
-Subject: Re: [PATCH] samples: fix Makefile targets' directory dependencies
-From:   Ian Kent <raven@themaw.net>
-To:     Kyle Russell <bkylerussell@gmail.com>, autofs@vger.kernel.org
-Date:   Wed, 11 Mar 2020 08:56:19 +0800
-In-Reply-To: <20200309155100.21961-1-bkylerussell@gmail.com>
-References: <20200309155100.21961-1-bkylerussell@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
+        id S1726877AbgCQMJP (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 17 Mar 2020 08:09:15 -0400
+Received: from sonic307-2.consmr.mail.ne1.yahoo.com ([66.163.190.121]:45828
+        "EHLO sonic307-2.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726716AbgCQMJP (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 17 Mar 2020 08:09:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1584446954; bh=kcevCRoll2+Bsa3FDERpIV72LVcB1A4YV1b5N2AWYBk=; h=Date:From:Reply-To:Subject:References:From:Subject; b=Rrbbl+lM61hZyf9c3JU3tad348/wC0rOJwEr5gQRL0rlhaLClQXTSp3OnqVJK6fQ7fur4yl3NBdmqehvK3pll+nCQWr1uf+fjEZr6KPSHYouVBbaolzgBW0/yNDr/VEUuOn5l4acACf1cwr1Y3fZwl/62Qo/yv1tE08FmnGmK5iwR6+8WSdROSFmXJVjm81FK+ML/ErXZZUPsmKW1GGu4qmuOrMyVAyQYBgIunmqBWL29cEbS+tHyhCiLnypUT8VMcwFVaYM9h1P7FDMc8SOt2ee5KPeFBvFaMiBZKmvxeEuIJIxSbP8SHTeztsqaEVoylC/DOfbHr+VDKxBAISd9g==
+X-YMail-OSG: t2pjGGUVM1kIKYq1Zp3_kkeUyzT4O0Q332.E8w7MbiE2rkt4VUZCbhvg4MYYgao
+ _8Suik9VHsy8mwx5i3ITvP2GRvswFmqne0BQigVcHJN_JlQ.jR0q2I2F9p2ftXLPVj0R_Bb83Vyv
+ 73llJpPkiO6WzRVkYmVZXVYYb5mC.aDG_Aji2wPUHBbVhl3.NhYpYEyH3Nuzu4afCu9ASmXBcyjS
+ xtsdoqMJV1fRI..vZNNrDFewsKV5oThTArSeLQTBdN.gsWahkgJH8nGdRRk3Jj05hEvPagkn_oWz
+ 9OiefMrwluoFF3crQHWAPqDSJtKAGz2rb9HL7lA.YcnLBuFE3TGsHg3oOuCnKF1hwtSy4VuXebPP
+ Kppw6O7p.n_6Bg5U5_iMS4TJMC549w0iPEwRJbqyr_ed7rTSyf3fCqrXiVLEBUbqa_qadstqzyC6
+ zLlMiXoM9FovWOjItNnqqtdIFy2Vg_uAKcy4ofibShpUqAwmyOl5F50sO3zlE6rU8QgDS2RQJmrr
+ gzchTgYv.Ly_fQWJUPHtaeYm4xZiskCGzefT1EIR2VLsBsTkkxIsWtIrs6vDYXqjgns9C.ojGLw4
+ 5hddiHwobj88qvMEimRcvQqi0SLsxPZ6uqrSmZ6ZdJVESZtavT08eAsHE5MR_IOxwcwqyOafIW.B
+ ulW8HISl8hF63yipztV7pxJkzoHFEYzw6d.f1baU9...IaKDasCoGw34z22Zb.f.rlo.LO1EjfH_
+ mN4bYLGSiuHZuU2zhaBnv.LaruVFnFa5AfUcrwmR8P4WmR0ba1t_XHKQbtv0g9SguPRMLA22OSzM
+ eCM4SvsO1jxr.vzgUB5lPvE9_sXFInrxgmHvYBFqGqcn68hv60JovQd7osQCaGzayt3sDfZmkFvV
+ pNqv0XhO4BDYnc0ltwpYmxm_30VsZWsg14O9FD0WH4YfgVhNeijpN7UKsvY0mgz8gE_BiCL6atPe
+ 64u0ZcM44fbyqiRv1ocqHJDv6BcoME0gdKlbHmyRR0Hl.Atg1gYM_zuwHDFDhC.ksrAPrrqX1_Rk
+ TrNU0z2svaPxfGqbh83SRzgohQx461n6PzMmrNSwE21wxV3oetyWeYQprFb7FMnx4f5t5kFd0rjO
+ wMONTbuY2o_idkdtux6P486bQvC.a9OPBB2AXr8oC.3BQuUelBFYC8UhozGlkSumqlzpsyb7tOA3
+ WX3AGjcYbXu7k7VuaMRC4L0kFTRpAtMkNTaG5cibM5xkzuQ32XNO8kzPEADp3qODQpFrrCx9SZpJ
+ RX55CIpE6Vzbz7iwiAajrZaMIuIbxE1F0BvAF1pxC0YjNP.JExyfUPxsxEjf2jTKNVDO4GAJMjvN
+ RqPBGdQZmxbDksuG1um22QpXn0bb_Ew--
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.ne1.yahoo.com with HTTP; Tue, 17 Mar 2020 12:09:14 +0000
+Date:   Tue, 17 Mar 2020 12:07:13 +0000 (UTC)
+From:   Stephen Li <stenn7@gabg.net>
+Reply-To: stephli947701@gmail.com
+Message-ID: <2078071840.1852905.1584446833663@mail.yahoo.com>
+Subject: REF
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+References: <2078071840.1852905.1584446833663.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.15342 YMailNodin Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36
+To:     unlisted-recipients:; (no To-header on input)
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Mon, 2020-03-09 at 11:51 -0400, Kyle Russell wrote:
-> Introduce an order-only prerequisite on dirs for targets that
-> actually
-> use these directories to guarantee they exist at install time;
-> otherwise,
-> the sample install commands can result in ENOENT in a parallelized
-> make
-> invocation.
 
-I've added the patch to my patch queue, I'll have closer look at it
-as time permits.
 
-Thanks
-Ian
-
+Greetings,
+I was searching through a local business directory when I found your
+profile. I am Soliciting On-Behalf of my private client who is
+interested in having a serious business investment in your country. If
+you have a valid business, investment or project he can invest
+back to me for more details. Your swift response is highly needed.
+Sincerely
+Stephen Li
+Please response back to me with is my private email below for more details
+stephli947701@gmail.com
