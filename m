@@ -2,57 +2,90 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.lfdr.de (Postfix) with ESMTP id BD9E219797C
-	for <lists+autofs@lfdr.de>; Mon, 30 Mar 2020 12:43:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 882091987C3
+	for <lists+autofs@lfdr.de>; Tue, 31 Mar 2020 01:07:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729305AbgC3Knw (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 30 Mar 2020 06:43:52 -0400
-Received: from mail.11d01.mspz7.gob.ec ([190.152.145.91]:40994 "EHLO
-        mail.11d01.mspz7.gob.ec" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729204AbgC3Knw (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 30 Mar 2020 06:43:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.11d01.mspz7.gob.ec (Postfix) with ESMTP id 4AFEC2F6ED03;
-        Mon, 30 Mar 2020 04:05:18 -0500 (-05)
-Received: from mail.11d01.mspz7.gob.ec ([127.0.0.1])
-        by localhost (mail.11d01.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id tSMLs2pE-Uoy; Mon, 30 Mar 2020 04:05:17 -0500 (-05)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.11d01.mspz7.gob.ec (Postfix) with ESMTP id BAF832F6ED01;
-        Mon, 30 Mar 2020 04:05:17 -0500 (-05)
-DKIM-Filter: OpenDKIM Filter v2.9.2 mail.11d01.mspz7.gob.ec BAF832F6ED01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=11d01.mspz7.gob.ec;
-        s=50CBC7E4-8BED-11E9-AF6C-F1A741A224D3; t=1585559117;
-        bh=cLQbOHa1aY+/FyDjaDQOZOnnnlZDxMu+rBX/cg5yps8=;
-        h=Content-Type:MIME-Version:Content-Transfer-Encoding:Subject:To:
-         From:Date:Reply-To:Message-Id;
-        b=hXxc4V/ym5c5cE+Gz3bpBCSeH20qbix0AvBv7YpP1csee2b6cKOk0nNzkMz1ITUL+
-         N2eKiMZNaSBaDdHlPvyHH+N6TaunYiUFq/+imUN1IMPO5c1aU25mZ3BuS0euXBblAb
-         HhDPXUzGddbdliGZrYgOJ7fOlA/c6xRMsM0735cg=
-X-Virus-Scanned: amavisd-new at 11d01.mspz7.gob.ec
-Received: from mail.11d01.mspz7.gob.ec ([127.0.0.1])
-        by localhost (mail.11d01.mspz7.gob.ec [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id X9EJ-9vTP24B; Mon, 30 Mar 2020 04:05:17 -0500 (-05)
-Received: from [10.121.152.251] (unknown [105.12.0.10])
-        by mail.11d01.mspz7.gob.ec (Postfix) with ESMTPSA id E8A9C2F6ECC4;
-        Mon, 30 Mar 2020 04:05:06 -0500 (-05)
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1729319AbgC3XHW (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 30 Mar 2020 19:07:22 -0400
+Received: from icp-osb-irony-out6.external.iinet.net.au ([203.59.1.106]:28018
+        "EHLO icp-osb-irony-out6.external.iinet.net.au" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728987AbgC3XHW (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 30 Mar 2020 19:07:22 -0400
+X-SMTP-MATCH: 0
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2BdHgD7eoJe/+im0XZmHgELHIFwCwK?=
+ =?us-ascii?q?CJ4FhEiqDUkiPTwEBAQEBAQaBEjiJaIUUij6BewoBAQEBAQEBAQEbGQECBAE?=
+ =?us-ascii?q?BhESCNCQ2Bw4CEAEBAQUBAQEBAQUDAW2FClhCAQwBhUoEUigNAhgOAkkWE4V?=
+ =?us-ascii?q?+JK4YfzMaAoovgQ4qAYwwGnmBB4FEA4E2gWaBF4ZJgl4EkHaHD0WYG4JGlxU?=
+ =?us-ascii?q?dj0IDjCctrHAMJoFYTS4KgydQGJx/NzCBBgEBhDWKCgEB?=
+X-IPAS-Result: =?us-ascii?q?A2BdHgD7eoJe/+im0XZmHgELHIFwCwKCJ4FhEiqDUkiPT?=
+ =?us-ascii?q?wEBAQEBAQaBEjiJaIUUij6BewoBAQEBAQEBAQEbGQECBAEBhESCNCQ2Bw4CE?=
+ =?us-ascii?q?AEBAQUBAQEBAQUDAW2FClhCAQwBhUoEUigNAhgOAkkWE4V+JK4YfzMaAoovg?=
+ =?us-ascii?q?Q4qAYwwGnmBB4FEA4E2gWaBF4ZJgl4EkHaHD0WYG4JGlxUdj0IDjCctrHAMJ?=
+ =?us-ascii?q?oFYTS4KgydQGJx/NzCBBgEBhDWKCgEB?=
+X-IronPort-AV: E=Sophos;i="5.72,326,1580745600"; 
+   d="scan'208";a="233609802"
+Received: from unknown (HELO mickey.themaw.net) ([118.209.166.232])
+  by icp-osb-irony-out6.iinet.net.au with ESMTP; 31 Mar 2020 07:06:52 +0800
+Subject: [PATCH 1/4] autofs: dont call do_expire_wait() in autofs_d_manage()
+From:   Ian Kent <raven@themaw.net>
+To:     Al Viro <viro@ZenIV.linux.org.uk>
+Cc:     autofs mailing list <autofs@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
+        Kernel Mailing List <linux-kernel@vger.kernel.org>
+Date:   Tue, 31 Mar 2020 07:06:51 +0800
+Message-ID: <158560961146.14841.14430383874338917674.stgit@mickey.themaw.net>
+User-Agent: StGit/unknown-version
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: spende von 2.000.000,00 Euro
-To:     Recipients <luis.sanchez@11d01.mspz7.gob.ec>
-From:   "Manuel Franco" <luis.sanchez@11d01.mspz7.gob.ec>
-Date:   Mon, 30 Mar 2020 11:36:20 +0200
-Reply-To: manuelfrancospende11@gmail.com
-Message-Id: <20200330090506.E8A9C2F6ECC4@mail.11d01.mspz7.gob.ec>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Ich bin Manuel Franco, ich spende Ihnen 2.000.000,00 Euro. Kontaktieren Sie=
- mich jetzt, damit wir fortfahren k=F6nnen.
+Calling do_expire_wait() in autofs_d_manage() isn't really necessary.
 
-I am Manuel Franco, I donate to you 2,000,000.00 euros. Contact me now so w=
-e can proceed.
+If in rcu-walk mode -ECHILD will be returned and if in ref-walk mode
+and the dentry might be picked for expire (or is expiring) 0 will be
+returned otherwise it waits for the expire.
+
+But waiting is meant to be done in autofs_d_automount() so simplify
+autofs_d_manage() by testing the expire status and returning only
+what's needed.
+
+Signed-off-by: Ian Kent <raven@themaw.net>
+---
+ fs/autofs/root.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/fs/autofs/root.c b/fs/autofs/root.c
+index 5aaa1732bf1e..a3b7c72a298d 100644
+--- a/fs/autofs/root.c
++++ b/fs/autofs/root.c
+@@ -410,9 +410,12 @@ static int autofs_d_manage(const struct path *path, bool rcu_walk)
+ 		return 0;
+ 	}
+ 
+-	/* Wait for pending expires */
+-	if (do_expire_wait(path, rcu_walk) == -ECHILD)
+-		return -ECHILD;
++	/* Check for (possible) pending expire */
++	if (ino->flags & AUTOFS_INF_WANT_EXPIRE) {
++		if (rcu_walk)
++			return -ECHILD;
++		return 0;
++	}
+ 
+ 	/*
+ 	 * This dentry may be under construction so wait on mount
+@@ -432,8 +435,6 @@ static int autofs_d_manage(const struct path *path, bool rcu_walk)
+ 		 */
+ 		struct inode *inode;
+ 
+-		if (ino->flags & AUTOFS_INF_WANT_EXPIRE)
+-			return 0;
+ 		if (path_is_mountpoint(path))
+ 			return 0;
+ 		inode = d_inode_rcu(dentry);
+
