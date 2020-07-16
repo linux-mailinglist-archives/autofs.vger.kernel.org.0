@@ -2,71 +2,103 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85D5A22196C
-	for <lists+autofs@lfdr.de>; Thu, 16 Jul 2020 03:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C7F5221A45
+	for <lists+autofs@lfdr.de>; Thu, 16 Jul 2020 04:46:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727939AbgGPB24 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 15 Jul 2020 21:28:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40094 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726776AbgGPB2z (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 15 Jul 2020 21:28:55 -0400
-Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340F4C061755;
-        Wed, 15 Jul 2020 18:28:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:Date:Message-ID:To:Subject:From:Sender:Reply-To:Cc:Content-ID:
-        Content-Description:In-Reply-To:References;
-        bh=Ivt/S2E26MMmfuGaOWJ4/5vbxsd/UYTBZ3TQCIqNLng=; b=MyQFx3UcYSKlzISyFpi1oast9v
-        AXcaUvG75KxTI6/bxqStU3uCRyw56lDwAEgtNFQGuGbd34h91cli8lIGkL+k9scQcgH/lyN8NLei8
-        l4qf3ULUQTTX4jFWPEcg4h0x4jzGYg/A462dAqNLQn+6IkwooqAUWGPmrKMAmje0jCmWlbGY5cnwj
-        ARoe6h4HOVVGFCcWKQ+PWdVTQ4bd7HGjYkc/50oaxFmPGUqGmXzgslTkFEKcsGz7RBxywoCICrRjX
-        +prYNKXS/7T0W1GNKlS63+yTm87gWJLoB+YGxSc/FR725efAA29o0ullXUf33URuf/EPrPbndOqNB
-        PfLut/xQ==;
-Received: from [2601:1c0:6280:3f0::19c2]
-        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
-        id 1jvshe-0000Ny-RU; Thu, 16 Jul 2020 01:28:51 +0000
-From:   Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH] autofs: fix doubled word
-To:     LKML <linux-kernel@vger.kernel.org>,
+        id S1727075AbgGPCqB (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 15 Jul 2020 22:46:01 -0400
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:33125 "EHLO
+        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726996AbgGPCqB (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 15 Jul 2020 22:46:01 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.west.internal (Postfix) with ESMTP id 80C59EC2;
+        Wed, 15 Jul 2020 22:46:00 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 15 Jul 2020 22:46:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
+        message-id:subject:from:to:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=fm3; bh=
+        RK6X2jS67N6+KCtzTA8njDUA4e35g7s8yrXJmhHU/FI=; b=J3BlXMnIIL+TSLgF
+        nH+atEKDOjZuUSq91An9c3SdEhta/0ejPupNmujChgartH1L7wzWv4jgKJwvGbxX
+        tKSMcmes5XL9tgZz5Ht5D83eR+B17fCfB0zYvkBR46/5u+FRC/NwF9eJDmJ6DQ51
+        Kh9llvfFBtI/h0Qzc+poc6fgt4j8ca2R1EmSnpJTnM+9vKfSY5CcHlzCOKXUDiL3
+        AR0jNHIT3fS3B2vlvcHvNM5Jc8XOYOK6ttsHgIRvXjuhrtdGHjAsGi3h7lwGIprY
+        YvdFSNhR/A7Bcjh5Kp7mY94w4REZsrIFWT7omFFoB+OI5y9dPQ/SQZ/lYZx5ze06
+        13We8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; bh=RK6X2jS67N6+KCtzTA8njDUA4e35g7s8yrXJmhHU/
+        FI=; b=RDAITSwL/AHinOHUg1RZrw/MBawTOOhNDKw+wsZ22JFCmqTGErjSNy/7b
+        aAK2+S9eo2kQ67fsqC8gZCDf84XNk4o4bjaPayKTNozdkBtJj8Wx5DHVitFCZaPC
+        L0egYKEs2monxOCKISTRf15CW0hZxPjug+PULRdtuOWAgNm0r6Krb2aEG3XRJGUZ
+        1LLg0QEvrJXwC3HTypTiB5rTfcmW/yAzWgA8KHPqh5v+/Ubd1zbMVpGd+piWIJxu
+        n7bsjevrOXa1U+Dkh03zxrYoQ0rJXOCUFlENWMD0/cOiBdnOgfGU0ktxT1ifcl0H
+        R7Q7afvJFtBt9gP1845tDwqYUPprw==
+X-ME-Sender: <xms:Z78PX-D_ENQneUQ6DuYAYCvjuIOMeHMTnFN0pziwzxf7AKgNizDeNQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrfeefgdeiudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefkuffhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpefkrghnucfm
+    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepfe
+    efteetvdeguddvveefveeftedtffduudehueeihfeuvefgveehffeludeggfejnecukfhp
+    peduudekrddvtdekrdehkedrledunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvghmrgifrdhnvght
+X-ME-Proxy: <xmx:Z78PX4hOlvvGDzt5FRraOPw3nJCoverLh5zZDum7nSegNs0ut2o9fg>
+    <xmx:Z78PXxn4TXZouCnVThr8A5a9SoGaGKTcQrJJMp3vEn2-VZOPoh7VnA>
+    <xmx:Z78PX8yECBYeO2IYuhmFeI8_lJThPAvqi7cf6uDxkB-9ZrTtaXTyGA>
+    <xmx:aL8PX2PKkgpSHezX33mcHhepQwypFAaLiB4OIH-BZgOx5ebKXjkHdQ>
+Received: from mickey.themaw.net (unknown [118.208.58.91])
+        by mail.messagingengine.com (Postfix) with ESMTPA id D8E803280066;
+        Wed, 15 Jul 2020 22:45:57 -0400 (EDT)
+Message-ID: <0b503a7ffb1d80b5f54bb73f360836ce326957b7.camel@themaw.net>
+Subject: Re: [PATCH] autofs: fix doubled word
+From:   Ian Kent <raven@themaw.net>
+To:     Randy Dunlap <rdunlap@infradead.org>,
+        LKML <linux-kernel@vger.kernel.org>,
         autofs mailing list <autofs@vger.kernel.org>,
-        Ian Kent <raven@themaw.net>,
         Andrew Morton <akpm@linux-foundation.org>
-Message-ID: <5a82befd-40f8-8dc0-3498-cbc0436cad9b@infradead.org>
-Date:   Wed, 15 Jul 2020 18:28:47 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+Date:   Thu, 16 Jul 2020 10:45:54 +0800
+In-Reply-To: <5a82befd-40f8-8dc0-3498-cbc0436cad9b@infradead.org>
+References: <5a82befd-40f8-8dc0-3498-cbc0436cad9b@infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-From: Randy Dunlap <rdunlap@infradead.org>
+On Wed, 2020-07-15 at 18:28 -0700, Randy Dunlap wrote:
+> From: Randy Dunlap <rdunlap@infradead.org>
+> 
+> Change doubled word "is" to "it is".
+> 
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Ian Kent <raven@themaw.net>
+> Cc: autofs@vger.kernel.org
+> Cc: Andrew Morton <akpm@linux-foundation.org>
 
-Change doubled word "is" to "it is".
+Acked-by: Ian Kent <raven@themaw.net>
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Ian Kent <raven@themaw.net>
-Cc: autofs@vger.kernel.org
-Cc: Andrew Morton <akpm@linux-foundation.org>
----
- include/uapi/linux/auto_dev-ioctl.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- linux-next-20200714.orig/include/uapi/linux/auto_dev-ioctl.h
-+++ linux-next-20200714/include/uapi/linux/auto_dev-ioctl.h
-@@ -82,7 +82,7 @@ struct args_ismountpoint {
- /*
-  * All the ioctls use this structure.
-  * When sending a path size must account for the total length
-- * of the chunk of memory otherwise is is the size of the
-+ * of the chunk of memory otherwise it is the size of the
-  * structure.
-  */
- 
+> ---
+>  include/uapi/linux/auto_dev-ioctl.h |    2 +-Acked-by: Ian Kent <
+> raven@themaw.net>
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> --- linux-next-20200714.orig/include/uapi/linux/auto_dev-ioctl.h
+> +++ linux-next-20200714/include/uapi/linux/auto_dev-ioctl.h
+> @@ -82,7 +82,7 @@ struct args_ismountpoint {
+>  /*
+>   * All the ioctls use this structure.
+>   * When sending a path size must account for the total length
+> - * of the chunk of memory otherwise is is the size of the
+> + * of the chunk of memory otherwise it is the size of the
+>   * structure.
+>   */
+>  
+> 
 
