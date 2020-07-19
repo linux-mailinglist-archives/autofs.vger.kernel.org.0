@@ -2,103 +2,85 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C7F5221A45
-	for <lists+autofs@lfdr.de>; Thu, 16 Jul 2020 04:46:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FE0D2250F3
+	for <lists+autofs@lfdr.de>; Sun, 19 Jul 2020 11:45:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727075AbgGPCqB (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 15 Jul 2020 22:46:01 -0400
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:33125 "EHLO
-        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726996AbgGPCqB (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 15 Jul 2020 22:46:01 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.west.internal (Postfix) with ESMTP id 80C59EC2;
-        Wed, 15 Jul 2020 22:46:00 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 15 Jul 2020 22:46:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm3; bh=
-        RK6X2jS67N6+KCtzTA8njDUA4e35g7s8yrXJmhHU/FI=; b=J3BlXMnIIL+TSLgF
-        nH+atEKDOjZuUSq91An9c3SdEhta/0ejPupNmujChgartH1L7wzWv4jgKJwvGbxX
-        tKSMcmes5XL9tgZz5Ht5D83eR+B17fCfB0zYvkBR46/5u+FRC/NwF9eJDmJ6DQ51
-        Kh9llvfFBtI/h0Qzc+poc6fgt4j8ca2R1EmSnpJTnM+9vKfSY5CcHlzCOKXUDiL3
-        AR0jNHIT3fS3B2vlvcHvNM5Jc8XOYOK6ttsHgIRvXjuhrtdGHjAsGi3h7lwGIprY
-        YvdFSNhR/A7Bcjh5Kp7mY94w4REZsrIFWT7omFFoB+OI5y9dPQ/SQZ/lYZx5ze06
-        13We8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=RK6X2jS67N6+KCtzTA8njDUA4e35g7s8yrXJmhHU/
-        FI=; b=RDAITSwL/AHinOHUg1RZrw/MBawTOOhNDKw+wsZ22JFCmqTGErjSNy/7b
-        aAK2+S9eo2kQ67fsqC8gZCDf84XNk4o4bjaPayKTNozdkBtJj8Wx5DHVitFCZaPC
-        L0egYKEs2monxOCKISTRf15CW0hZxPjug+PULRdtuOWAgNm0r6Krb2aEG3XRJGUZ
-        1LLg0QEvrJXwC3HTypTiB5rTfcmW/yAzWgA8KHPqh5v+/Ubd1zbMVpGd+piWIJxu
-        n7bsjevrOXa1U+Dkh03zxrYoQ0rJXOCUFlENWMD0/cOiBdnOgfGU0ktxT1ifcl0H
-        R7Q7afvJFtBt9gP1845tDwqYUPprw==
-X-ME-Sender: <xms:Z78PX-D_ENQneUQ6DuYAYCvjuIOMeHMTnFN0pziwzxf7AKgNizDeNQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrfeefgdeiudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkuffhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpefkrghnucfm
-    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepfe
-    efteetvdeguddvveefveeftedtffduudehueeihfeuvefgveehffeludeggfejnecukfhp
-    peduudekrddvtdekrdehkedrledunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvghmrgifrdhnvght
-X-ME-Proxy: <xmx:Z78PX4hOlvvGDzt5FRraOPw3nJCoverLh5zZDum7nSegNs0ut2o9fg>
-    <xmx:Z78PXxn4TXZouCnVThr8A5a9SoGaGKTcQrJJMp3vEn2-VZOPoh7VnA>
-    <xmx:Z78PX8yECBYeO2IYuhmFeI8_lJThPAvqi7cf6uDxkB-9ZrTtaXTyGA>
-    <xmx:aL8PX2PKkgpSHezX33mcHhepQwypFAaLiB4OIH-BZgOx5ebKXjkHdQ>
-Received: from mickey.themaw.net (unknown [118.208.58.91])
-        by mail.messagingengine.com (Postfix) with ESMTPA id D8E803280066;
-        Wed, 15 Jul 2020 22:45:57 -0400 (EDT)
-Message-ID: <0b503a7ffb1d80b5f54bb73f360836ce326957b7.camel@themaw.net>
-Subject: Re: [PATCH] autofs: fix doubled word
-From:   Ian Kent <raven@themaw.net>
-To:     Randy Dunlap <rdunlap@infradead.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        autofs mailing list <autofs@vger.kernel.org>,
-        Andrew Morton <akpm@linux-foundation.org>
-Date:   Thu, 16 Jul 2020 10:45:54 +0800
-In-Reply-To: <5a82befd-40f8-8dc0-3498-cbc0436cad9b@infradead.org>
-References: <5a82befd-40f8-8dc0-3498-cbc0436cad9b@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+        id S1726012AbgGSJpD (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sun, 19 Jul 2020 05:45:03 -0400
+Received: from us-smtp-delivery-1.mimecast.com ([207.211.31.120]:24418 "EHLO
+        us-smtp-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1725988AbgGSJpD (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sun, 19 Jul 2020 05:45:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1595151902;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+        bh=/sJ73GXItvYN/jd3P7PpglTKt+l+mA4Md25idAqHAqk=;
+        b=BLZgRXWWN3h8S6rN/ck2iCvLKYrjLsLSZnU7zAQJINjRAXTLraqKbRLqIdowoRQN+tmNCv
+        iwl7ovDxGVr1sEdPkcPoce5EdNDUfddl2lyMm7kZdy2fdbRtAN/lhe26T9zM63gSrUHbdO
+        C8dkJl2YwDra2SlFXa172IIUMM3AVAg=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-431-uiLq7WcBPxKEm7iPVQ7SPA-1; Sun, 19 Jul 2020 05:45:00 -0400
+X-MC-Unique: uiLq7WcBPxKEm7iPVQ7SPA-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 292E4107ACCA;
+        Sun, 19 Jul 2020 09:44:59 +0000 (UTC)
+Received: from nevermore.foobar.lan (unknown [10.74.8.34])
+        by smtp.corp.redhat.com (Postfix) with ESMTPS id F0ECD75579;
+        Sun, 19 Jul 2020 09:44:57 +0000 (UTC)
+Date:   Sun, 19 Jul 2020 15:14:54 +0530
+From:   Achilles Gaikwad <agaikwad@redhat.com>
+To:     autofs@vger.kernel.org
+Cc:     raven@themaw.net
+Subject: [PATCH] autofs: mount_nfs.c fix local rdma share not mounting
+Message-ID: <20200719094454.GA288362@nevermore.foobar.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Wed, 2020-07-15 at 18:28 -0700, Randy Dunlap wrote:
-> From: Randy Dunlap <rdunlap@infradead.org>
-> 
-> Change doubled word "is" to "it is".
-> 
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Ian Kent <raven@themaw.net>
-> Cc: autofs@vger.kernel.org
-> Cc: Andrew Morton <akpm@linux-foundation.org>
+When using the same system as nfs-server and nfs-client, and
+using `nobind` option for autofs we would fall to the code where
+we let `mount.nfs(8)` to handle the mount. However, when the
+nfs-server and the nfs-client is the same system we end up calling
+`rpc_ping` which gives negative return code. Due to this we fall to
+the label next: and never attempt a mount of nfs share.
+This patch fixes this BUG by not probing rpc_ping if we're
+using rdma.
 
-Acked-by: Ian Kent <raven@themaw.net>
+Signed-off-by: Achilles Gaikwad <agaikwad@redhat.com>
+---
+ modules/mount_nfs.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-> ---
->  include/uapi/linux/auto_dev-ioctl.h |    2 +-Acked-by: Ian Kent <
-> raven@themaw.net>
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> --- linux-next-20200714.orig/include/uapi/linux/auto_dev-ioctl.h
-> +++ linux-next-20200714/include/uapi/linux/auto_dev-ioctl.h
-> @@ -82,7 +82,7 @@ struct args_ismountpoint {
->  /*
->   * All the ioctls use this structure.
->   * When sending a path size must account for the total length
-> - * of the chunk of memory otherwise is is the size of the
-> + * of the chunk of memory otherwise it is the size of the
->   * structure.
->   */
->  
-> 
+diff --git a/modules/mount_nfs.c b/modules/mount_nfs.c
+index 4e3e703..5a8c3bf 100644
+--- a/modules/mount_nfs.c
++++ b/modules/mount_nfs.c
+@@ -375,9 +375,13 @@ dont_probe:
+ 		 */
+ 		if (this->proximity == PROXIMITY_LOCAL) {
+ 			char *host = this->name ? this->name : "localhost";
+-			int ret;
+-
+-			ret = rpc_ping(host, port, vers, 2, 0, RPC_CLOSE_DEFAULT);
++			/* If we're using RDMA, rpc_ping will fail
++			 * when nfs-server is local.
++			 * Therefore, don't probe when we're using RDMA
++			 */
++			int ret = 1;
++			if(!rdma)
++				ret = rpc_ping(host, port, vers, 2, 0, RPC_CLOSE_DEFAULT);
+ 			if (ret <= 0)
+ 				goto next;
+ 		}
+-- 
+2.26.2
 
