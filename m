@@ -2,105 +2,95 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93044241856
-	for <lists+autofs@lfdr.de>; Tue, 11 Aug 2020 10:36:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEB10241C96
+	for <lists+autofs@lfdr.de>; Tue, 11 Aug 2020 16:42:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728266AbgHKIg0 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 11 Aug 2020 04:36:26 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:57687 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728237AbgHKIg0 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 11 Aug 2020 04:36:26 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 654F55C00D0;
-        Tue, 11 Aug 2020 04:36:25 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 11 Aug 2020 04:36:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:cc:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm3; bh=
-        XmkOTDau3GA4XwOfKDAkmAamcy7pGy3Ial0qb8HMlms=; b=vi6BpXWYJtMTm5Hf
-        19E7qqoMJs/Q3bfqgUknAH/9oQl/znVXHDO7MjKpqHbnZlFLkdj6B/Eo2QCwa9ve
-        cnADb4ttKLgus55JqlPzel2K4v53c6B/9hGLgTdp7Ta5oHTiVpSFOkYi8LvHGL4i
-        1uM2PyEQnkgvLEFFP08afRPurP5KfeWJkXduVl9nl0kx6+P73W4G70Bn1AiKQEND
-        ZV58w0ALWuUfTxDpza4qnYyA4GdwiyWbT917OjgPyZT/8CvfQ6HEaxZjSZjmr7Tk
-        1F8XjXJ94mzIRLqdl1zyFNR53HRnaz6O7oNqLBq0Y3F7CFvRsKqAJ/v77YLEkkY2
-        PcEFSQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=XmkOTDau3GA4XwOfKDAkmAamcy7pGy3Ial0qb8HMl
-        ms=; b=IXJmmNKH0HQPxtPlxpnml0NXFCQHdZ7PlpuDGQS2rCWXceSJWsmGdFLzs
-        USoFcpA3r7lwtxDVQMb6Wk3owJdo4ICM2KLKW3QscsqxHiB0RaPik5AwXN8SQU/M
-        /UyOher5UPYYyF8gaakROT5Ids1ELU2dl5HXcd1HgYZXnkvoYZ0eNJRNCcNDrRMb
-        soj82EXXl8MF87L7rHTtURnEFAM6DbtbgRhgQEbiymhZiVipXd46bbM1n0kboC6A
-        veuUtPjzNktHJXzIKkBReq1sowVAcvGRRfyGa/euyRobG1TnBQNtvIhVJRMXJk5F
-        lNHkZuftnrSOaFv3CIskZY45kK9SA==
-X-ME-Sender: <xms:hlgyX6Z-HyEut2jhq-jqwW4SxaWz8XsFnQ2lB-llARYr3rhAFQG5hA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrledtgddtiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkuffhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpefkrghnucfm
-    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepfe
-    efteetvdeguddvveefveeftedtffduudehueeihfeuvefgveehffeludeggfejnecukfhp
-    peehkedrjedrvddtfedruddugeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvth
-X-ME-Proxy: <xmx:hlgyX9YsMGOWBMsaTs1_eHdDMvR-bMWkmTad6g8F8ns44w47c-kruQ>
-    <xmx:hlgyX0-zc2SrAzt-aAje5gQDYRePFB5CLYCJnvKi8vJexn6AxqcGwg>
-    <xmx:hlgyX8q-E8ykGbfUudosCG3hEoHdHD8zJy5meyDQPMYp-xsMmYOKjg>
-    <xmx:iVgyXy3YBsm-K8dxTSBZPJPgfRvLO2S28OHQaPi3SFv5e3OHaZkieA>
-Received: from mickey.themaw.net (58-7-203-114.dyn.iinet.net.au [58.7.203.114])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 57C9030600B7;
-        Tue, 11 Aug 2020 04:36:21 -0400 (EDT)
-Message-ID: <75e04b06be0561c3cec936cd3bbc44fe82ca73f4.camel@themaw.net>
+        id S1728829AbgHKOmv (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 11 Aug 2020 10:42:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52886 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728783AbgHKOmu (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 11 Aug 2020 10:42:50 -0400
+Received: from merlin.infradead.org (merlin.infradead.org [IPv6:2001:8b0:10b:1231::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FACEC061787;
+        Tue, 11 Aug 2020 07:42:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=merlin.20170209; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
+        :Reply-To:Content-ID:Content-Description;
+        bh=qDSQHCDBU4D3YRSldaGEKRiZu5f5C5HcKUrvXP1BRoo=; b=BIjSpO0jPg+gb45bDcxNRZ5Cvw
+        6TGXh918jACirRi/3Eo6jf/a9OrSgID5WPc9DYawF3ydNVOyu4YgdTblKd8HcyILobnac/x96bxeJ
+        tTAT+8GYuesYENvzgLd8tipOmbaw4V5NTuHn3EpMpFz+qSydXoGQ/PWDcPBLX8zmU5RR8kt3Q/ZhZ
+        uiuVgAi1f+STKDoAzmA1Xq7s/+qwntQftwuVrZrzTNawhyUW/V5/Z3Xc8yWkCnNpgwTOR46Y7/NQ9
+        tiR6XqCrcF6XWtN2yJG3iZAVG+moqBhIwTc1eEnSXVAonvU908HuZN/uxx/mvlVZMwPBMdeLQbcBH
+        oMMzoFeQ==;
+Received: from c-73-157-219-8.hsd1.or.comcast.net ([73.157.219.8] helo=[10.0.0.252])
+        by merlin.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1k5VUE-0000sS-UI; Tue, 11 Aug 2020 14:42:47 +0000
 Subject: Re: [PATCH] fs: autofs: delete repeated words in comments
-From:   Ian Kent <raven@themaw.net>
-To:     Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org
+To:     Ian Kent <raven@themaw.net>, linux-kernel@vger.kernel.org
 Cc:     autofs@vger.kernel.org
-Date:   Tue, 11 Aug 2020 16:36:17 +0800
-In-Reply-To: <20200811021817.24982-1-rdunlap@infradead.org>
 References: <20200811021817.24982-1-rdunlap@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+ <75e04b06be0561c3cec936cd3bbc44fe82ca73f4.camel@themaw.net>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <811e011e-2f45-87c3-d92d-729680da5917@infradead.org>
+Date:   Tue, 11 Aug 2020 07:42:39 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
+In-Reply-To: <75e04b06be0561c3cec936cd3bbc44fe82ca73f4.camel@themaw.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Mon, 2020-08-10 at 19:18 -0700, Randy Dunlap wrote:
-> Drop duplicated words {the, at} in comments.
+On 8/11/20 1:36 AM, Ian Kent wrote:
+> On Mon, 2020-08-10 at 19:18 -0700, Randy Dunlap wrote:
+>> Drop duplicated words {the, at} in comments.
+>>
+>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+>> Cc: Ian Kent <raven@themaw.net>
+>> Cc: autofs@vger.kernel.org
 > 
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Ian Kent <raven@themaw.net>
-> Cc: autofs@vger.kernel.org
+> Acked-by: Ian Kent <raven@themaw.net>
 
-Acked-by: Ian Kent <raven@themaw.net>
+Hi Ian,
 
-> ---
->  fs/autofs/dev-ioctl.c |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+Since you are the listed maintainer of this file, does this mean
+that you will be merging it?
+
+thanks.
+
 > 
-> --- linux-next-20200807.orig/fs/autofs/dev-ioctl.c
-> +++ linux-next-20200807/fs/autofs/dev-ioctl.c
-> @@ -20,7 +20,7 @@
->   * another mount. This situation arises when starting automount(8)
->   * or other user space daemon which uses direct mounts or offset
->   * mounts (used for autofs lazy mount/umount of nested mount trees),
-> - * which have been left busy at at service shutdown.
-> + * which have been left busy at service shutdown.
->   */
->  
->  typedef int (*ioctl_fn)(struct file *, struct autofs_sb_info *,
-> @@ -496,7 +496,7 @@ static int autofs_dev_ioctl_askumount(st
->   * located path is the root of a mount we return 1 along with
->   * the super magic of the mount or 0 otherwise.
->   *
-> - * In both cases the the device number (as returned by
-> + * In both cases the device number (as returned by
->   * new_encode_dev()) is also returned.
->   */
->  static int autofs_dev_ioctl_ismountpoint(struct file *fp,
+>> ---
+>>  fs/autofs/dev-ioctl.c |    4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> --- linux-next-20200807.orig/fs/autofs/dev-ioctl.c
+>> +++ linux-next-20200807/fs/autofs/dev-ioctl.c
+>> @@ -20,7 +20,7 @@
+>>   * another mount. This situation arises when starting automount(8)
+>>   * or other user space daemon which uses direct mounts or offset
+>>   * mounts (used for autofs lazy mount/umount of nested mount trees),
+>> - * which have been left busy at at service shutdown.
+>> + * which have been left busy at service shutdown.
+>>   */
+>>  
+>>  typedef int (*ioctl_fn)(struct file *, struct autofs_sb_info *,
+>> @@ -496,7 +496,7 @@ static int autofs_dev_ioctl_askumount(st
+>>   * located path is the root of a mount we return 1 along with
+>>   * the super magic of the mount or 0 otherwise.
+>>   *
+>> - * In both cases the the device number (as returned by
+>> + * In both cases the device number (as returned by
+>>   * new_encode_dev()) is also returned.
+>>   */
+>>  static int autofs_dev_ioctl_ismountpoint(struct file *fp,
+> 
+
+-- 
+~Randy
 
