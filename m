@@ -2,65 +2,72 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C18023CED3
-	for <lists+autofs@lfdr.de>; Wed,  5 Aug 2020 21:06:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B895F2414DB
+	for <lists+autofs@lfdr.de>; Tue, 11 Aug 2020 04:18:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728471AbgHETGs (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 5 Aug 2020 15:06:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39416 "EHLO
+        id S1727901AbgHKCSY (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 10 Aug 2020 22:18:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728493AbgHETAG (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 5 Aug 2020 15:00:06 -0400
-Received: from dockerbox (unknown [IPv6:2001:4800:7817:101:be76:4eff:fe04:a215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3367BC0617A3
-        for <autofs@vger.kernel.org>; Wed,  5 Aug 2020 11:53:42 -0700 (PDT)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-        by dockerbox (Postfix) with SMTP id B14DF5EAFD;
-        Mon,  7 Oct 2019 19:29:13 -0500 (CDT)
-Received: from [117.36.141.95] by 127.0.0.1 with ESMTP id <640256-66340>; Tue, 08 Oct 2019 01:21:18 +0100
-Message-ID: <o-6m76ppo0$6-$mc3$185v-$1fw$$1m@314xkt6ld1t>
-From:   "Mr Barrister Hans Erich" <dave@dbsoundfactory.com>
-Reply-To: "Mr Barrister Hans Erich" <dave@dbsoundfactory.com>
-To:     aundreastmarie@maildomination.com
-Subject: RE:PERSONAL LETTER FROM MRS RASHIA AMIRA
-Date:   Tue, 08 Oct 19 01:21:18 GMT
-X-Mailer: Microsoft Outlook Express 5.50.4133.2400
+        with ESMTP id S1726473AbgHKCSX (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 10 Aug 2020 22:18:23 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A788C06174A;
+        Mon, 10 Aug 2020 19:18:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
+        Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:In-Reply-To:References;
+        bh=KC4Xk9+BSS3xq+MetJHETebtbJQTzZeqEni3gSzxfmc=; b=mNTtX+BpXnpeDwddUKKjrnzwkX
+        6/Xv8r5K9M6I1W9KvQsuyr1pAErm2r2PSxN5xVmNHMy17n2fx/xxvdg/y8vVL2ppedhXd3Ob4pSKH
+        kTYcstXlJfj7jvZ9l3sVUMHjDGErpgp+SYFTMvm1eOZMHT31TqDPvraaYLIuqCqcMRGuKsgVhhSs9
+        4bwPopo7ywsLpdfvj6ygpRGIPuU9Ly7LkZcZX6CD0LLfMhxqIrTThjJWXXwfYxzgPZqE3F+ZDO9W6
+        fVEWWGhO2QLohI+tALpW4otDWWweCKdQFFbhJmP3KXuAHCfeANMAm3+qshCQmqWCneblbWmktOoz6
+        LVWvRxpQ==;
+Received: from [2601:1c0:6280:3f0::19c2] (helo=smtpauth.infradead.org)
+        by casper.infradead.org with esmtpsa (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1k5Jro-0006ot-8X; Tue, 11 Aug 2020 02:18:21 +0000
+From:   Randy Dunlap <rdunlap@infradead.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Randy Dunlap <rdunlap@infradead.org>, Ian Kent <raven@themaw.net>,
+        autofs@vger.kernel.org
+Subject: [PATCH] fs: autofs: delete repeated words in comments
+Date:   Mon, 10 Aug 2020 19:18:17 -0700
+Message-Id: <20200811021817.24982-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-        boundary="_.A4476ECDD73A3"
-X-Priority: 3
-X-MSMail-Priority: Normal
+Content-Transfer-Encoding: 8bit
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
+Drop duplicated words {the, at} in comments.
 
---_.A4476ECDD73A3
-Content-Type: text/plain;
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Ian Kent <raven@themaw.net>
+Cc: autofs@vger.kernel.org
+---
+ fs/autofs/dev-ioctl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Greetings
-
-My name is Barrister Hans Erich.
-
-I have a client who is interested to invest in your country, she is a well=
- known politician in her country and deserve a lucrative investment partne=
-rship with you outside her country without any delay   Please can you mana=
-ge such investment please Kindly reply for further details.
-
-Your full names --------
-
-
-Your urgent response will be appreciated
-
-Thank you and God bless you.
-
-Barrister Hans Erich
-
-Yours sincerely,
-Barrister Hans Erich
-CONTACT: hanserich9helmut@gmail.com
-
---_.A4476ECDD73A3--
-
+--- linux-next-20200807.orig/fs/autofs/dev-ioctl.c
++++ linux-next-20200807/fs/autofs/dev-ioctl.c
+@@ -20,7 +20,7 @@
+  * another mount. This situation arises when starting automount(8)
+  * or other user space daemon which uses direct mounts or offset
+  * mounts (used for autofs lazy mount/umount of nested mount trees),
+- * which have been left busy at at service shutdown.
++ * which have been left busy at service shutdown.
+  */
+ 
+ typedef int (*ioctl_fn)(struct file *, struct autofs_sb_info *,
+@@ -496,7 +496,7 @@ static int autofs_dev_ioctl_askumount(st
+  * located path is the root of a mount we return 1 along with
+  * the super magic of the mount or 0 otherwise.
+  *
+- * In both cases the the device number (as returned by
++ * In both cases the device number (as returned by
+  * new_encode_dev()) is also returned.
+  */
+ static int autofs_dev_ioctl_ismountpoint(struct file *fp,
