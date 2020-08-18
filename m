@@ -2,60 +2,80 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 567432445CC
-	for <lists+autofs@lfdr.de>; Fri, 14 Aug 2020 09:24:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A23BA2484A8
+	for <lists+autofs@lfdr.de>; Tue, 18 Aug 2020 14:22:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726228AbgHNHYB convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+autofs@lfdr.de>); Fri, 14 Aug 2020 03:24:01 -0400
-Received: from mail.munisurquillo.gob.pe ([190.187.155.157]:45820 "EHLO
-        mail.munisurquillo.gob.pe" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1726227AbgHNHYA (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Fri, 14 Aug 2020 03:24:00 -0400
-X-Greylist: delayed 1873 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Aug 2020 03:23:59 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.munisurquillo.gob.pe (Postfix) with ESMTP id C030840157E9E;
-        Fri, 14 Aug 2020 01:48:51 -0500 (-05)
-Received: from mail.munisurquillo.gob.pe ([127.0.0.1])
-        by localhost (mail.munisurquillo.gob.pe [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id CsUr8KLgKU1K; Fri, 14 Aug 2020 01:48:51 -0500 (-05)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mail.munisurquillo.gob.pe (Postfix) with ESMTP id 4FACB40157EB6;
-        Fri, 14 Aug 2020 01:48:51 -0500 (-05)
-X-Virus-Scanned: amavisd-new at munisurquillo.gob.pe
-Received: from mail.munisurquillo.gob.pe ([127.0.0.1])
-        by localhost (mail.munisurquillo.gob.pe [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id D_v1Fiov6mKZ; Fri, 14 Aug 2020 01:48:51 -0500 (-05)
-Received: from [10.54.17.114] (unknown [105.4.7.153])
-        by mail.munisurquillo.gob.pe (Postfix) with ESMTPSA id 4A99540157EA0;
-        Fri, 14 Aug 2020 01:48:40 -0500 (-05)
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1726391AbgHRMWL (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 18 Aug 2020 08:22:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59636 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbgHRMWJ (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 18 Aug 2020 08:22:09 -0400
+Received: from casper.infradead.org (casper.infradead.org [IPv6:2001:8b0:10b:1236::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C93C061389;
+        Tue, 18 Aug 2020 05:22:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=casper.20170209; h=Content-Type:MIME-Version:Message-ID:
+        Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:In-Reply-To:References;
+        bh=+TgE1JF1d6UB4sQBGOF/uowtc9cBOuBWtMOMxeYqtZE=; b=QDR+C2ZsGEXI1Md5uEzhyt12rB
+        wxfv99K4RX3S/Sm6bDwMNyKWKMGtv/py0zHaJC/knCmgpjQEmJzt/bu5uwDmbnu0iM1EBLEsTqLe/
+        b0VOfKDyXWZkT11IJ3r1GaF/ZPC2KAEwHx5s1wG/l+4Qv5YLs6oN/8uIsPxVpLZLSdZLEoLJKiu0G
+        1jAzlEzVdjQYtEXW4gCuml3TT58SQDpoKNtoZteS44eyVLL+DnwtR8iaOnLvaPMSMU9aYJs2Zb/cZ
+        QlOtVUubgBGtn2wr76F8kHMJkJBIhoAZh3rYBVh83LrT/7mzpmin/jcjgLUTCAS6zHjYLbVeuxc8x
+        oGoxueaA==;
+Received: from willy by casper.infradead.org with local (Exim 4.92.3 #3 (Red Hat Linux))
+        id 1k80ct-0008FN-SK; Tue, 18 Aug 2020 12:22:03 +0000
+Date:   Tue, 18 Aug 2020 13:22:03 +0100
+From:   Matthew Wilcox <willy@infradead.org>
+To:     Ian Kent <raven@themaw.net>, autofs@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] Harden autofs ioctl table
+Message-ID: <20200818122203.GO17456@casper.infradead.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: =?utf-8?q?Covid_19_Wohlt=C3=A4tigkeitsfonds?=
-To:     Recipients <lu.marin@munisurquillo.gob.pe>
-From:   ''charles jackson'' <lu.marin@munisurquillo.gob.pe>
-Date:   Fri, 14 Aug 2020 08:48:30 +0200
-Reply-To: charlesjacksonjr001@gmail.com
-Message-Id: <20200814064841.4A99540157EA0@mail.munisurquillo.gob.pe>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Hallo
+The table of ioctl functions should be marked const in order to put them
+in read-only memory, and we should use array_index_nospec() to avoid
+speculation disclosing the contents of kernel memory to userspace.
 
-Ich bin Charles W. Jackson aus North Carolina, Vereinigte Staaten von Amerika, und ich bin der Gewinner des Mega-Millionen-Jackpots von 344 Millionen US-Dollar. Ich spende die Summe von 2.000.000 Millionen Euro als Teil der Hilfsgelder für das Corona-Virus.
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-Dies ist Ihr Spendencode: [CJ530342019]
-
-www.youtube.com/watch?v=BSr8myiLPMQ
-
-Bitte antworten Sie auf diese E-Mail mit dem SPENDERCODE:
-
-charlesjacksonjr001@gmail.com
-
-Ich hoffe, dass Sie und Ihre Familie dies durchkommen
-
-
-Herr Charles Jackson
+diff --git a/fs/autofs/dev-ioctl.c b/fs/autofs/dev-ioctl.c
+index 75105f45c51a..322b7dfb4ea0 100644
+--- a/fs/autofs/dev-ioctl.c
++++ b/fs/autofs/dev-ioctl.c
+@@ -8,6 +8,7 @@
+ #include <linux/compat.h>
+ #include <linux/syscalls.h>
+ #include <linux/magic.h>
++#include <linux/nospec.h>
+ 
+ #include "autofs_i.h"
+ 
+@@ -563,7 +564,7 @@ static int autofs_dev_ioctl_ismountpoint(struct file *fp,
+ 
+ static ioctl_fn lookup_dev_ioctl(unsigned int cmd)
+ {
+-	static ioctl_fn _ioctls[] = {
++	static const ioctl_fn _ioctls[] = {
+ 		autofs_dev_ioctl_version,
+ 		autofs_dev_ioctl_protover,
+ 		autofs_dev_ioctl_protosubver,
+@@ -581,7 +582,10 @@ static ioctl_fn lookup_dev_ioctl(unsigned int cmd)
+ 	};
+ 	unsigned int idx = cmd_idx(cmd);
+ 
+-	return (idx >= ARRAY_SIZE(_ioctls)) ? NULL : _ioctls[idx];
++	if (idx >= ARRAY_SIZE(_ioctls))
++		return NULL;
++	idx = array_index_nospec(idx, ARRAY_SIZE(_ioctls));
++	return _ioctls[idx];
+ }
+ 
+ /* ioctl dispatcher */
