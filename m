@@ -2,64 +2,66 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47C2124AE2E
-	for <lists+autofs@lfdr.de>; Thu, 20 Aug 2020 07:02:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CCF824AE44
+	for <lists+autofs@lfdr.de>; Thu, 20 Aug 2020 07:11:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725778AbgHTFCC (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 20 Aug 2020 01:02:02 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:38451 "EHLO
+        id S1725778AbgHTFLS (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 20 Aug 2020 01:11:18 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:35707 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725768AbgHTFCC (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 20 Aug 2020 01:02:02 -0400
+        by vger.kernel.org with ESMTP id S1725768AbgHTFLR (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 20 Aug 2020 01:11:17 -0400
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id DF8465C0138;
-        Thu, 20 Aug 2020 01:02:00 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id AF7D35C0199;
+        Thu, 20 Aug 2020 01:11:16 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 20 Aug 2020 01:02:00 -0400
+  by compute2.internal (MEProxy); Thu, 20 Aug 2020 01:11:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
         message-id:subject:from:to:date:in-reply-to:references
         :content-type:mime-version:content-transfer-encoding; s=fm1; bh=
-        KbH55fn8s5Tw0HqsIqv22Aay3hkvZqxhFaXye+Y3Pwk=; b=R6Vei19T+5/jxYaL
-        s/thGABC+icSO4e3UOYmRVFWNFAyIgXXX5nK69FypJA0j6j1uRDNG3FPVSRAF4kG
-        GPvciIYs2hrrtIPcsnzcoIPlt6V8GZN174klIy48jI0L77hQD2/9lJxngfz3rNS/
-        wXU7I5g+15z8ejcn57AU8W0+cLFCUsdc55w0QHDQBkgUWB+2fhRfJYYq1kEe26jq
-        xu+gQhTSU+pjKRzpFh/7CGAsCSFDZlw3uaOLpYQTkXdJuEvl+jWNP8lM4OnaHVed
-        3Q8X+IGB0vCUKyD7zRmD6fPvBL4RuUB+68EzDwJaHqPyOWe9UelD1skAJj134u+5
-        3g1Ltg==
+        qb+mCp0+4Ji9umLMBVjHosMeZEnBLxEOXmbaqA2ZQjQ=; b=BH+HaXcoHeFz5Dqy
+        tyKn/5HBEEfS4dqi+GizBF3KgvQNb3P4/UFDyttp8qE9YNvGh5RYaLWeL8wZdm2H
+        Fu+srhCFN7j75dWeKKD3DxBXhnYNRyGT22GG91NgoARGkUX03d03EVraHKrdIvXo
+        0BZ4WAfQvzof4Zofgt05BE9i1BtnQBKWvZAJNp6N5T1Col3BLDxaojPWFxw1p+Nm
+        qJ4h9cNW9PnVdSmfkzOn3I6RfghFuv4QRCniHQoJeK3NM6trI0bZtiavRHLK0FXy
+        fBQTz4YOk4MzQFDJ/bP9FUyxdQ+uSLVVgFkqz1WldPM0uz2UHDajJJVMZ8CthwZc
+        /WJoWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=content-transfer-encoding:content-type
         :date:from:in-reply-to:message-id:mime-version:references
         :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=KbH55fn8s5Tw0HqsIqv22Aay3hkvZqxhFaXye+Y3P
-        wk=; b=pUEhWFTa+zqN7F9QGyYfDaXSVhe6FPgboZ8ZiSFOT11+hThbAAeQ+EOLJ
-        6zZwxVk7e76WWsoxAA5A1HUtTR9/K8gdseGqsofdyJwNAmRTo0HtIHyf5IDu90g1
-        3HgbsY/5qOekMw7AYSyDf8+kOJ8FkuApqCHjCw1IWMKabguO6rIQQC4zZL/ZeMyQ
-        oal4qNqXJk/5Ckn8QwmrSjgbw397K4KVgMGm2o4Dji9o4Q8TVXraIpaMRhxJJpYI
-        faaGnmzNz9XAZ5GmQyuKxBxIP1MD9AvMb6miFROmUlOwm5NG227ybxCdQEaMYr/4
-        5+e/XoZg6vERbONCWsrLYnE8cEzNQ==
-X-ME-Sender: <xms:yAM-X3GEEXKfeXktCn6C3w279SW110EOS0RSvtxSNiX5wuDkMQzEiw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddtledgjeefucetufdoteggodetrfdotf
+        :x-sasl-enc; s=fm3; bh=qb+mCp0+4Ji9umLMBVjHosMeZEnBLxEOXmbaqA2ZQ
+        jQ=; b=jR3R0+94F/5mjIWrx678KAZ7ht1yFrHkX9S+S6LefVNGMYYKiZaA4ooYB
+        wqzn8oQZrdQvgG7F/2yccF6SjDq5U3xAMwqrL51P3+HNbdsy4OW/AfDmnECXFIJT
+        SSeod6nL+Hs2OCISFHySAMqdU0DlJlTuum9mlYs+PveGYKiC26cmHP9Ovcii4YRG
+        yx91L+FlBxdQH1CRbfO85XQPh3e1ifNpFyotNsH9YttNMyedAZeUENJ+pXhzN6HF
+        M52wNHPH08pZXVk0Oe/cp96QtTtWxMTfJJgOb70IcnbSX8BVGOjnA5H+8bcdLtYs
+        8UL/Fu/Z837v/SWyrXBtQXgI+6KVA==
+X-ME-Sender: <xms:9AU-X3ptlZZdn5-BkLSwsmTe249-7mXKiVYNtrDhpgpddwY3unNtxw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddtledgjeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepkfgrnhcu
-    mfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucggtffrrghtthgvrhhnpe
-    effeettedvgeduvdevfeevfeettdffudduheeuiefhueevgfevheffledugefgjeenucfk
-    phepheekrdejrddvfeehrddvvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvth
-X-ME-Proxy: <xmx:yAM-X0UGlaz1sNBEgMd2Hf_vgm9iIssKq71e5xMq4rb3FYXLfyuKlw>
-    <xmx:yAM-X5IBEvQIfgA4ezdyVFG2fHi0TgGVsfGPaYO_pIZJCWak1_dkwQ>
-    <xmx:yAM-X1FDj2xbXHVqvxc2MTmslPD3sO5mmyCqRlwl27NWqCEjs-dYzA>
-    <xmx:yAM-XyUyl6OSIZjv3K0r8tzY4mpLF0j7Y7bW9LRSiH3HMio_-X7_AQ>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhvfffjghftggfggfgsehtje
+    ertddtreejnecuhfhrohhmpefkrghnucfmvghnthcuoehrrghvvghnsehthhgvmhgrfidr
+    nhgvtheqnecuggftrfgrthhtvghrnhepfeefteetvdeguddvveefveeftedtffduudehue
+    eihfeuvefgveehffeludeggfejnecukfhppeehkedrjedrvdefhedrvddvnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvg
+    hmrgifrdhnvght
+X-ME-Proxy: <xmx:9AU-XxpVaV51EDri7OTslzqP9M3ejTthQuAR2ca6XAiQqtj9YXd3Mw>
+    <xmx:9AU-X0PwpswZ9cY-oOSc71cakaYrfjRx_SVzp2CBVVtSGeUfUVH11A>
+    <xmx:9AU-X67ql_uPoS0jrsbruYXO38nJ1vlybSkVpnRthF-MAIuV8Yz7Bw>
+    <xmx:9AU-XzVR9XmviwHqe67wlpBmnqvLvD8yupN0G8HBp9X_VPo7HGzxww>
 Received: from mickey.themaw.net (58-7-235-22.dyn.iinet.net.au [58.7.235.22])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 269133060067;
-        Thu, 20 Aug 2020 01:01:58 -0400 (EDT)
-Message-ID: <713c2362e70e4024b5965bfd2995a855b510f549.camel@themaw.net>
-Subject: Re: Bug in samples/autofs.schema file
+        by mail.messagingengine.com (Postfix) with ESMTPA id 94AD630600A3;
+        Thu, 20 Aug 2020 01:11:14 -0400 (EDT)
+Message-ID: <5ce39603821b0108a58d3be547d97b65b9c31fdb.camel@themaw.net>
+Subject: Re: [PATCH] Harden autofs ioctl table
 From:   Ian Kent <raven@themaw.net>
-To:     Michael Peek <peek@nimbios.org>, autofs@vger.kernel.org
-Date:   Thu, 20 Aug 2020 13:01:54 +0800
-In-Reply-To: <7eea934d8fb01ffdef05fb61880cfd6dc767b36e.camel@nimbios.org>
-References: <7eea934d8fb01ffdef05fb61880cfd6dc767b36e.camel@nimbios.org>
+To:     Matthew Wilcox <willy@infradead.org>, autofs@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Andrew Morton <akpm@linux-foundation.org>
+Date:   Thu, 20 Aug 2020 13:11:11 +0800
+In-Reply-To: <20200818122203.GO17456@casper.infradead.org>
+References: <20200818122203.GO17456@casper.infradead.org>
 Content-Type: text/plain; charset="UTF-8"
 User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
 MIME-Version: 1.0
@@ -69,32 +71,61 @@ Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Wed, 2020-08-19 at 14:18 -0400, Michael Peek wrote:
-> This bug starts with version 5.1.3, and continues up to and including
-> the latest 5.1.6.  Version 5.1.2 was fine.
+On Tue, 2020-08-18 at 13:22 +0100, Matthew Wilcox wrote:
+> The table of ioctl functions should be marked const in order to put
+> them
+> in read-only memory, and we should use array_index_nospec() to avoid
+> speculation disclosing the contents of kernel memory to userspace.
 > 
-> When slapd is invoked while including the sample LDAP schema file
-> autofs.schema, slapd will crash with the following error:
-> 
-> 5f359370 /<path-to>/autofs.schema: line 14 attributetype: 
-> AttributeType inappropriate matching rule: "caseExactMatch"
-> 
-> The problem is on line 13, which reads:
-> 
->   EQUALITY caseExactMatch
-> 
-> It should read:
-> 
->   EQUALITY caseExactIA5Match
-> 
-> Attached is a patch that will make the necessary change to
-> samples/autofs.schema that works for all versions 5.1.3 to 5.1.6.
+> Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-I've added this to my patch queue so it will get pushed to the upstream
-repo. the next time I do a commit and push.
+Acked-by: Ian Kent <raven@themaw.net>
 
-Do you mind that I have set you as the author and added a
-Signed-off-by: Michael Peek <peek@nimbios.org> line as well?
+Thanks Matthew, I certainly want to know about changes to autofs
+made by others so thanks for sending this to me.
+
+At the same time I need to send my patches via someone else as
+Linus asked me to do ages ago now.
+
+So, once again Andrew, if you would be so kind as to include this
+in your tree please.
 
 Ian
+
+> 
+> diff --git a/fs/autofs/dev-ioctl.c b/fs/autofs/dev-ioctl.c
+> index 75105f45c51a..322b7dfb4ea0 100644
+> --- a/fs/autofs/dev-ioctl.c
+> +++ b/fs/autofs/dev-ioctl.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/compat.h>
+>  #include <linux/syscalls.h>
+>  #include <linux/magic.h>
+> +#include <linux/nospec.h>
+>  
+>  #include "autofs_i.h"
+>  
+> @@ -563,7 +564,7 @@ static int autofs_dev_ioctl_ismountpoint(struct
+> file *fp,
+>  
+>  static ioctl_fn lookup_dev_ioctl(unsigned int cmd)
+>  {
+> -	static ioctl_fn _ioctls[] = {
+> +	static const ioctl_fn _ioctls[] = {
+>  		autofs_dev_ioctl_version,
+>  		autofs_dev_ioctl_protover,
+>  		autofs_dev_ioctl_protosubver,
+> @@ -581,7 +582,10 @@ static ioctl_fn lookup_dev_ioctl(unsigned int
+> cmd)
+>  	};
+>  	unsigned int idx = cmd_idx(cmd);
+>  
+> -	return (idx >= ARRAY_SIZE(_ioctls)) ? NULL : _ioctls[idx];
+> +	if (idx >= ARRAY_SIZE(_ioctls))
+> +		return NULL;
+> +	idx = array_index_nospec(idx, ARRAY_SIZE(_ioctls));
+> +	return _ioctls[idx];
+>  }
+>  
+>  /* ioctl dispatcher */
 
