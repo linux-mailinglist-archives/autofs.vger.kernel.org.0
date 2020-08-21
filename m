@@ -2,130 +2,67 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CCF824AE44
-	for <lists+autofs@lfdr.de>; Thu, 20 Aug 2020 07:11:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E8F24E6CF
+	for <lists+autofs@lfdr.de>; Sat, 22 Aug 2020 12:01:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725778AbgHTFLS (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 20 Aug 2020 01:11:18 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:35707 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725768AbgHTFLR (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 20 Aug 2020 01:11:17 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id AF7D35C0199;
-        Thu, 20 Aug 2020 01:11:16 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 20 Aug 2020 01:11:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm1; bh=
-        qb+mCp0+4Ji9umLMBVjHosMeZEnBLxEOXmbaqA2ZQjQ=; b=BH+HaXcoHeFz5Dqy
-        tyKn/5HBEEfS4dqi+GizBF3KgvQNb3P4/UFDyttp8qE9YNvGh5RYaLWeL8wZdm2H
-        Fu+srhCFN7j75dWeKKD3DxBXhnYNRyGT22GG91NgoARGkUX03d03EVraHKrdIvXo
-        0BZ4WAfQvzof4Zofgt05BE9i1BtnQBKWvZAJNp6N5T1Col3BLDxaojPWFxw1p+Nm
-        qJ4h9cNW9PnVdSmfkzOn3I6RfghFuv4QRCniHQoJeK3NM6trI0bZtiavRHLK0FXy
-        fBQTz4YOk4MzQFDJ/bP9FUyxdQ+uSLVVgFkqz1WldPM0uz2UHDajJJVMZ8CthwZc
-        /WJoWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=qb+mCp0+4Ji9umLMBVjHosMeZEnBLxEOXmbaqA2ZQ
-        jQ=; b=jR3R0+94F/5mjIWrx678KAZ7ht1yFrHkX9S+S6LefVNGMYYKiZaA4ooYB
-        wqzn8oQZrdQvgG7F/2yccF6SjDq5U3xAMwqrL51P3+HNbdsy4OW/AfDmnECXFIJT
-        SSeod6nL+Hs2OCISFHySAMqdU0DlJlTuum9mlYs+PveGYKiC26cmHP9Ovcii4YRG
-        yx91L+FlBxdQH1CRbfO85XQPh3e1ifNpFyotNsH9YttNMyedAZeUENJ+pXhzN6HF
-        M52wNHPH08pZXVk0Oe/cp96QtTtWxMTfJJgOb70IcnbSX8BVGOjnA5H+8bcdLtYs
-        8UL/Fu/Z837v/SWyrXBtQXgI+6KVA==
-X-ME-Sender: <xms:9AU-X3ptlZZdn5-BkLSwsmTe249-7mXKiVYNtrDhpgpddwY3unNtxw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddtledgjeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhvfffjghftggfggfgsehtje
-    ertddtreejnecuhfhrohhmpefkrghnucfmvghnthcuoehrrghvvghnsehthhgvmhgrfidr
-    nhgvtheqnecuggftrfgrthhtvghrnhepfeefteetvdeguddvveefveeftedtffduudehue
-    eihfeuvefgveehffeludeggfejnecukfhppeehkedrjedrvdefhedrvddvnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvg
-    hmrgifrdhnvght
-X-ME-Proxy: <xmx:9AU-XxpVaV51EDri7OTslzqP9M3ejTthQuAR2ca6XAiQqtj9YXd3Mw>
-    <xmx:9AU-X0PwpswZ9cY-oOSc71cakaYrfjRx_SVzp2CBVVtSGeUfUVH11A>
-    <xmx:9AU-X67ql_uPoS0jrsbruYXO38nJ1vlybSkVpnRthF-MAIuV8Yz7Bw>
-    <xmx:9AU-XzVR9XmviwHqe67wlpBmnqvLvD8yupN0G8HBp9X_VPo7HGzxww>
-Received: from mickey.themaw.net (58-7-235-22.dyn.iinet.net.au [58.7.235.22])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 94AD630600A3;
-        Thu, 20 Aug 2020 01:11:14 -0400 (EDT)
-Message-ID: <5ce39603821b0108a58d3be547d97b65b9c31fdb.camel@themaw.net>
-Subject: Re: [PATCH] Harden autofs ioctl table
-From:   Ian Kent <raven@themaw.net>
-To:     Matthew Wilcox <willy@infradead.org>, autofs@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Andrew Morton <akpm@linux-foundation.org>
-Date:   Thu, 20 Aug 2020 13:11:11 +0800
-In-Reply-To: <20200818122203.GO17456@casper.infradead.org>
-References: <20200818122203.GO17456@casper.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+        id S1726169AbgHVKBQ (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sat, 22 Aug 2020 06:01:16 -0400
+Received: from [103.145.96.106] ([103.145.96.106]:52836 "EHLO
+        mail.peraturan.go.id" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1725991AbgHVKBP (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sat, 22 Aug 2020 06:01:15 -0400
+X-Greylist: delayed 46982 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Aug 2020 06:01:13 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by mail.peraturan.go.id (Postfix) with ESMTP id 6912A609EBEF1;
+        Sun, 26 Jul 2020 02:03:39 +0700 (+07)
+Received: from mail.peraturan.go.id ([127.0.0.1])
+        by localhost (mail.peraturan.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id X4hYgE4uzKPH; Sun, 26 Jul 2020 02:03:39 +0700 (+07)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.peraturan.go.id (Postfix) with ESMTP id A34C7609C66FB;
+        Sun, 26 Jul 2020 01:33:14 +0700 (+07)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.peraturan.go.id A34C7609C66FB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=peraturan.go.id;
+        s=5786568A-740E-11EA-92BD-675CCBC2581F; t=1595701994;
+        bh=dvMwzoc68s5ASGnCkjuvOmnHmNufUtfGARP54Ss1/bc=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=G3HrD04gsq+vHnAn0MvNrWDbKH7GuU7arwYcfTJ39Oh1zkEbeGK8xKaPQ1Lpvwr7d
+         qp1wm/SjAY25bb+lBJ/EH8JbZYfiqj5jRKcO4zf712GQ0vCyRKIbyCE5VuF8Fe8jAZ
+         56M5o9bbbgKnYfZIpvhNrNHKvhvT/7OWhSbNGLYVU1GEMBQ3wkDGU/oA3/dXlTF2Ba
+         ayhKPZ/l2Im6CidtCjAe1NU2koFzvc8L43VlJrIa+qppjd6C+NGbiYZPizh09tOnoc
+         e8IxIxP0ozio9vuukiy+VSh0X0JdOw4lsLEZ7jN9sp1hD5SakdEPB1cJ6EdpflrBnm
+         QwlGYJ4x8zyJw==
+X-Virus-Scanned: amavisd-new at mail.peraturan.go.id
+Received: from mail.peraturan.go.id ([127.0.0.1])
+        by localhost (mail.peraturan.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id OsopnGZDkTre; Sun, 26 Jul 2020 01:33:14 +0700 (+07)
+Received: from [216.198.95.216] (unknown [216.198.95.216])
+        by mail.peraturan.go.id (Postfix) with ESMTPSA id E037860D9B2F5;
+        Sun, 26 Jul 2020 01:07:00 +0700 (+07)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Low rate Loan offer  at 1.95%
+To:     Recipients <andre@peraturan.go.id>
+From:   "Mr. Ronan" <andre@peraturan.go.id>
+Date:   Fri, 21 Aug 2020 09:29:30 -0700
+Reply-To: ronan.owen.agent@bk.ru
+Message-Id: <20200725180700.E037860D9B2F5@mail.peraturan.go.id>
 Sender: autofs-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Tue, 2020-08-18 at 13:22 +0100, Matthew Wilcox wrote:
-> The table of ioctl functions should be marked const in order to put
-> them
-> in read-only memory, and we should use array_index_nospec() to avoid
-> speculation disclosing the contents of kernel memory to userspace.
-> 
-> Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Charity Loans is offering 51% off Prime Lending Rate at 1.95% Collateral an=
+d Non-Collateral Loans (traditional installment loans from $5000 to $1,000,=
+000) for your business start-up. If you are interested, please revert back =
+for the application. Thanks as we wait to wipe your debts.
 
-Acked-by: Ian Kent <raven@themaw.net>
+Marketing Team
 
-Thanks Matthew, I certainly want to know about changes to autofs
-made by others so thanks for sending this to me.
+Charity Loans
 
-At the same time I need to send my patches via someone else as
-Linus asked me to do ages ago now.
+Mr. Ronan Owen(Agent)
 
-So, once again Andrew, if you would be so kind as to include this
-in your tree please.
-
-Ian
-
-> 
-> diff --git a/fs/autofs/dev-ioctl.c b/fs/autofs/dev-ioctl.c
-> index 75105f45c51a..322b7dfb4ea0 100644
-> --- a/fs/autofs/dev-ioctl.c
-> +++ b/fs/autofs/dev-ioctl.c
-> @@ -8,6 +8,7 @@
->  #include <linux/compat.h>
->  #include <linux/syscalls.h>
->  #include <linux/magic.h>
-> +#include <linux/nospec.h>
->  
->  #include "autofs_i.h"
->  
-> @@ -563,7 +564,7 @@ static int autofs_dev_ioctl_ismountpoint(struct
-> file *fp,
->  
->  static ioctl_fn lookup_dev_ioctl(unsigned int cmd)
->  {
-> -	static ioctl_fn _ioctls[] = {
-> +	static const ioctl_fn _ioctls[] = {
->  		autofs_dev_ioctl_version,
->  		autofs_dev_ioctl_protover,
->  		autofs_dev_ioctl_protosubver,
-> @@ -581,7 +582,10 @@ static ioctl_fn lookup_dev_ioctl(unsigned int
-> cmd)
->  	};
->  	unsigned int idx = cmd_idx(cmd);
->  
-> -	return (idx >= ARRAY_SIZE(_ioctls)) ? NULL : _ioctls[idx];
-> +	if (idx >= ARRAY_SIZE(_ioctls))
-> +		return NULL;
-> +	idx = array_index_nospec(idx, ARRAY_SIZE(_ioctls));
-> +	return _ioctls[idx];
->  }
->  
->  /* ioctl dispatcher */
-
+Email: ronan.owen.agent@bk.ru
