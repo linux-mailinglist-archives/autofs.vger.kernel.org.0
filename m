@@ -2,117 +2,92 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2512720DD
-	for <lists+autofs@lfdr.de>; Mon, 21 Sep 2020 12:26:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 361A2272922
+	for <lists+autofs@lfdr.de>; Mon, 21 Sep 2020 16:51:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726918AbgIUKZ5 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 21 Sep 2020 06:25:57 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:45389 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726814AbgIUKZ5 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 21 Sep 2020 06:25:57 -0400
-X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2020 06:25:56 EDT
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id C2A025C01A5;
-        Mon, 21 Sep 2020 06:18:02 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 21 Sep 2020 06:18:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:cc:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm1; bh=
-        ceahJVW4+yuWF+kSG2r5lwdXzTSgR8vbAek/nrq8UjU=; b=l5ptg86bc5V/RHyE
-        pOAhxbkucHU4NEHF+mmUASzf2XvjYDStxvrhPsDI6z3e/bYofIAiNfH4bW+lSp4O
-        EaCZ82Exh5JttcUSVoMhZUM8RUZXtB4zId62yOOw1HK5lqaXK7Bkh0/dAA+WQnV7
-        aQEIpN5ae+YoufDDDMucT5IdWLbx1OLbUU16t3Jv2GU+TqLYK197fORudVcC4vzY
-        3j7mpUI1quAqWQ5dSx6OBmu8x3gY6+mno84VSMz/mFYHS/4Q+ooU253qvHxYH4Zj
-        RIhOHovFqz04VRWRrvR6UyG9GKKe2jTUYK3YAaPgkZHvPhuPFse74Rwss7QQdFji
-        dWz2yg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; bh=ceahJVW4+yuWF+kSG2r5lwdXzTSgR8vbAek/nrq8U
-        jU=; b=T7e1OpS5g8dHYozL+rnZxJBqAjtfteNvD6RsvzYYODsjF/RpUdWJ9TIWZ
-        SyvTsOIx7/LHFNc+ze4lim+DqHIa5l6VCIK/KT8wIiJzDA3zQCC8V7tP5hDkayYP
-        szEIi7z215Sra+TJCwUwOdbeVqnTyVKoCZgLgY1ah6Ij5ViJfrKBsVDwdPZSs3rK
-        QSA40LQg0OvQhJ34aQivzFdjj/fxB6Dii0oJ7FGqN/UDYSfl4DC/5L3sUYmCC2ra
-        8qMkAi2ToGsVXQQCaJj2TkukqjbqNWuW9mpycNykgw+OqeeRX+S1eoOiZAMH8QtO
-        yShyqyUnuv9Br88qgCr6nYHILcKNw==
-X-ME-Sender: <xms:2X1oXyd01bnnoOGBFQbWE9c2a_u0jWxQTCjwoFzmKLo0uepxIBThvQ>
-    <xme:2X1oX8OaJxS4-o5daBEQF3xBS_OAAkltqM5H7LwVlPMqHQ_2Hk5nyFYcEBNOTXuXV
-    2J-mEeQ07gD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddvgddvjecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkuffhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpefkrghnucfm
-    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepfe
-    efteetvdeguddvveefveeftedtffduudehueeihfeuvefgveehffeludeggfejnecukfhp
-    pedutdeirdeiledrvdefledrudegjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvth
-X-ME-Proxy: <xmx:2X1oXzhvDOea3j_0OnxOz7Wz6Gr_bv3T2KJoRrcmCgiakIabXrcwOw>
-    <xmx:2X1oX_8Wu-i6DZXnJwPfzYv8l-74KDmf-IKDkal8QU3IEnI6PL-EDA>
-    <xmx:2X1oX-uoqb-0f9ze2imiwN9ekwEMep1MpKM9t3iDBtcA0Dvpm8HkCw>
-    <xmx:2n1oX007E4WIJAFaDSQjS0TSoI2VIfhz91ToqMOlriLCNUHaRlPVBg>
-Received: from mickey.themaw.net (106-69-239-147.dyn.iinet.net.au [106.69.239.147])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 18F243064682;
-        Mon, 21 Sep 2020 06:17:59 -0400 (EDT)
-Message-ID: <3295700fa7b67ea0cd7122b68d92acb940ab8700.camel@themaw.net>
-Subject: Re: [PATCH] autofs-5.0.7: include linux/nfs.h directly in rpc_subs.h
-From:   Ian Kent <raven@themaw.net>
-To:     Fabrice Fontaine <fontaine.fabrice@gmail.com>,
-        autofs@vger.kernel.org
-Cc:     Andreas Oberritter <obi@opendreambox.org>,
-        Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
-Date:   Mon, 21 Sep 2020 18:17:55 +0800
-In-Reply-To: <20200921053305.1895230-1-fontaine.fabrice@gmail.com>
-References: <20200921053305.1895230-1-fontaine.fabrice@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.34.4 (3.34.4-1.fc31) 
+        id S1726641AbgIUOvv (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 21 Sep 2020 10:51:51 -0400
+Received: from us-smtp-2.mimecast.com ([205.139.110.61]:54518 "EHLO
+        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726592AbgIUOvv (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 21 Sep 2020 10:51:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1600699910;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+        bh=fS4tEIUXzLiN1infPPE8WhHFvu+7kD6d4GBJkxQpXVA=;
+        b=Y2oSJr10CDGKZF+K/mmGqUHyDA2dIXOBxeM0ibem2sBFN+yOASS5JGTm/KImdoWIiN6Gjm
+        lgsDSLUebW+ztmM30E6IcjydEHJDYXOsSVl+9Inhy3Z3f5mFQXIUfkTDva1Qhfam1VTokm
+        65H2CX5XXRG7NxSuKF9R8g2w6ccPQhk=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-278-lf9qloUsPOij3JI_RSfEwQ-1; Mon, 21 Sep 2020 10:51:48 -0400
+X-MC-Unique: lf9qloUsPOij3JI_RSfEwQ-1
+Received: by mail-lj1-f200.google.com with SMTP id q19so4228349ljp.13
+        for <autofs@vger.kernel.org>; Mon, 21 Sep 2020 07:51:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=fS4tEIUXzLiN1infPPE8WhHFvu+7kD6d4GBJkxQpXVA=;
+        b=YxGTHa4KMC+VKb3Hh7J0N7Vxpv8ZyfLZV+p3r9TIUd7pZ50AIw10QGYe71nly8bUG3
+         /YSdqlvyQAYW/rYKCsDjfbb6VSKQZ0X++059pmoAbTcsclRqF3ivufWUMbf9wRNENyOO
+         C4UJxTO40ZDm9CHhZKN9E207Mu7Sr1PC9ls9VfCSaf0ng3m4zjlFsTbgxmHl0dotVe5X
+         Y+P/HDuDsAumwAR3PiOXyenkzDiWukwEGHMSZ4bJ4aLLkupJEIv+P6sh1ym/kLylcXJT
+         bGkJlq9ytIyU2gnL94ofyyAfpkAheyOVI1Uwj4naJSW06KwPkZDly+4T+G+ocxa4cKcW
+         OrCw==
+X-Gm-Message-State: AOAM530cdzoIle7DrcTqsorViF5jhHhr2xwzYMwh8WI1WrZektdC5vLq
+        TAoPlHIg+WUVkrTHzca7GjPoxj4AwDLWKzk0TmTix6H6ik0z+YhJMFIBp52Vmrp7K3KXnXgYG7n
+        XUmbU6XRYzUh+5QMSMtQh3ZF1fKZ+SMh+
+X-Received: by 2002:a05:651c:38d:: with SMTP id e13mr45401ljp.38.1600699906824;
+        Mon, 21 Sep 2020 07:51:46 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzWDA/v70U48siYhVA/gEo8+KsPOGYyZfPRgMFWmKODx4TZj6mRHbwGLf09leGYyYHOxCYCfm3AB2zLCE926Vk=
+X-Received: by 2002:a05:651c:38d:: with SMTP id e13mr45395ljp.38.1600699906595;
+ Mon, 21 Sep 2020 07:51:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From:   Ondrej Mosnacek <omosnace@redhat.com>
+Date:   Mon, 21 Sep 2020 16:51:35 +0200
+Message-ID: <CAFqZXNsoXr1eA4C8==Nvujs5ONpRnuSqaOQQ0n78R=Dbm-EFGA@mail.gmail.com>
+Subject: Commit 13c164b1a186 - regression for LSMs/SELinux?
+To:     Christoph Hellwig <hch@lst.de>, Ian Kent <raven@themaw.net>
+Cc:     autofs@vger.kernel.org,
+        Linux Security Module list 
+        <linux-security-module@vger.kernel.org>,
+        SElinux list <selinux@vger.kernel.org>,
+        Zdenek Pytela <zpytela@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Mon, 2020-09-21 at 07:33 +0200, Fabrice Fontaine wrote:
-> From: Andreas Oberritter <obi@opendreambox.org>
+Hi folks,
 
-Thanks for the patch.
+It seems that after commit 13c164b1a186 ("autofs: switch to
+kernel_write") there is now an extra LSM permission required (for the
+current task to write to the automount pipe) for processes accessing
+some yet-to-to-be mounted directory on which an autofs mount is set
+up. The call chain is:
+[...]
+autofs_wait() ->
+autofs_notify_daemon() ->
+autofs_write() ->
+kernel_write() ->
+rw_verify_area() ->
+security_file_permission()
 
-> 
-> Fixes compile error with uclibc. Glibc's nfs/nfs.h contains
-> nothing but "#include linux/nfs.h". rpc_subs.h already includes
-> other linux/nfs*.h files directly.
+The bug report that led me to this commit is at [1].
 
-Sounds sensible and the patch applies cleanly to the current
-upstream repo.
+Technically, this is a regression for LSM users, since this is a
+kernel-internal operation and an LSM permission for the current task
+shouldn't be required. Can this patch be reverted? Perhaps
+__kernel_{read|write}() could instead be renamed to kernel_*_nocheck()
+so that the name is more descriptive?
 
-> 
-> Signed-off-by: Andreas Oberritter <obi@opendreambox.org>
-> Signed-off-by: Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
-> Upstream-Status: Pending
+Thanks,
 
-I've added this patch to my patch queue.
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1874338
 
-I'll likely be pushing my patch queue to the repo. fairly soon
-because I need to get release 5.1.7 out. But I do still need to
-carry out some more extensive testing before doing so.
-
-> ---
->  include/rpc_subs.h |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/rpc_subs.h b/include/rpc_subs.h
-> index b6d59f9..a2d9648 100644
-> --- a/include/rpc_subs.h
-> +++ b/include/rpc_subs.h
-> @@ -18,7 +18,7 @@
->  
->  #include <rpc/rpc.h>
->  #include <rpc/pmap_prot.h>
-> -#include <nfs/nfs.h>
-> +#include <linux/nfs.h>
->  #include <linux/nfs2.h>
->  #include <linux/nfs3.h>
->  
+-- 
+Ondrej Mosnacek
+Software Engineer, Platform Security - SELinux kernel
+Red Hat, Inc.
 
