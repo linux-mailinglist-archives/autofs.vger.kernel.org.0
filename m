@@ -2,117 +2,140 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02781278FBE
-	for <lists+autofs@lfdr.de>; Fri, 25 Sep 2020 19:38:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 392FE279DA4
+	for <lists+autofs@lfdr.de>; Sun, 27 Sep 2020 05:08:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727402AbgIYRid (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Fri, 25 Sep 2020 13:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55088 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbgIYRic (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Fri, 25 Sep 2020 13:38:32 -0400
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89A0BC0613CE
-        for <autofs@vger.kernel.org>; Fri, 25 Sep 2020 10:38:32 -0700 (PDT)
-Received: by mail-lf1-x143.google.com with SMTP id y2so3684329lfy.10
-        for <autofs@vger.kernel.org>; Fri, 25 Sep 2020 10:38:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xV1ixFKYBYzs9xQqtXfpj87vpxE9fe3bTqmPmwrmWRA=;
-        b=fx6QQkhaEaLL0IKUt52H3mzpFGb3zgZouYy5OWhuqmRYp9EJXuJxfucb1VNywFmJBp
-         z+VoiRTM4dfJhadiLfJOAFLLSWYu9fOPhVDXnKtf+Uut9p4/+eQ39wnmESomu2cg7F9e
-         jWPjxuon8GFrLiwrLCrEukW0y5tUfyxnjOFNA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xV1ixFKYBYzs9xQqtXfpj87vpxE9fe3bTqmPmwrmWRA=;
-        b=MM/Gbj6AG0zHShMmRzo6HNxbnMpwScem9Pltpa7FYB41reVjxSTdnlZ6UgUaohnFIi
-         tlFSRlL1vY3N+JsDgRQCgX0GYqnBfkuTVqtdjV+j5ZtZOvzBlPt7hFDJWPGRTHN6fk0R
-         +guiVl6Nb5Ql+NbWPMEmaZZAoKEa4wVq1q6g9nlfWWZhqplqsSyx3FgAW4Ybloh0Z9nV
-         Y6dgRiL6HfXwe9KT4hOh4B1rH9B2AeNFPfn1dZZbIK+owfeeoPDaT93hVKHSb0F5jcVW
-         nsR1U0Q11wrIUmh6I8W5pE7Pa/mDsLF3/cokeCuhIFixtNzimUq08j3yOq/VCVQbUjzq
-         f73w==
-X-Gm-Message-State: AOAM532mWmKirXcQGABFFLasi3OTaqJ6RY8E1Lj2BktbmBbi2nI7Mtzg
-        20gX2lb5FVmDxlOxOM5L3LzCh90Nxyl6DA==
-X-Google-Smtp-Source: ABdhPJwLdPxgKnR1cBFPufLT+n3qJenfSh6+nhzw/sh4wB9cmWFYUZEtcLh9HoNNMgg/H9Eq5UoFXQ==
-X-Received: by 2002:a05:6512:31d2:: with SMTP id j18mr1895432lfe.316.1601055510422;
-        Fri, 25 Sep 2020 10:38:30 -0700 (PDT)
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com. [209.85.208.172])
-        by smtp.gmail.com with ESMTPSA id 206sm2801881lfd.72.2020.09.25.10.38.29
-        for <autofs@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Sep 2020 10:38:29 -0700 (PDT)
-Received: by mail-lj1-f172.google.com with SMTP id u21so3132417ljl.6
-        for <autofs@vger.kernel.org>; Fri, 25 Sep 2020 10:38:29 -0700 (PDT)
-X-Received: by 2002:a2e:994a:: with SMTP id r10mr1638882ljj.102.1601055508689;
- Fri, 25 Sep 2020 10:38:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFqZXNsoXr1eA4C8==Nvujs5ONpRnuSqaOQQ0n78R=Dbm-EFGA@mail.gmail.com>
- <20200921160922.GA23870@lst.de> <20200921163011.GZ3421308@ZenIV.linux.org.uk>
- <CAFqZXNsBqvCj0NjEd9+C0H1EPjz7Fst296AA5eOFSVx=SKjfOg@mail.gmail.com>
- <0764629d33d151aee743d0429ac87a5b0c300235.camel@themaw.net>
- <CAFqZXNsqD73hptXxBn+g98ngbFd=Sx+CghtwVqM+NC47VFZhVQ@mail.gmail.com>
- <CAEjxPJ4oZvtqUpW0bMzoZwVsi9kDvL5LtouHQZAO7gM7_qyHMg@mail.gmail.com> <CAFqZXNs0oZ+_RNvwE-e62H2FSS=N4wbvJ+tgk0_dSn=5mbPhcw@mail.gmail.com>
-In-Reply-To: <CAFqZXNs0oZ+_RNvwE-e62H2FSS=N4wbvJ+tgk0_dSn=5mbPhcw@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri, 25 Sep 2020 10:38:12 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjYB+q1=3_x97VSNo5cPTL=eHnuMDXoKhGJOJvo+pbp9g@mail.gmail.com>
-Message-ID: <CAHk-=wjYB+q1=3_x97VSNo5cPTL=eHnuMDXoKhGJOJvo+pbp9g@mail.gmail.com>
+        id S1727263AbgI0DIG (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sat, 26 Sep 2020 23:08:06 -0400
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:57745 "EHLO
+        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726840AbgI0DIF (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sat, 26 Sep 2020 23:08:05 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.west.internal (Postfix) with ESMTP id CF2B752E;
+        Sat, 26 Sep 2020 23:08:04 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Sat, 26 Sep 2020 23:08:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=fm1; bh=
+        Toi4GKci6LJ4XuJVCZ1rchzevDUA6mJ5/+b5ClssVN4=; b=jn9iv+DFN0TRdLR7
+        sEO8BbO12zq+kE8bE8b56W7tpJ2ZAwF2PB4zLJ3W97hZzoHpQHL09zR5/h96ETzc
+        1BZLn4ImO8mbhseQomSU1L4AxeZ6qd0SydYX3J7yVj1FNHQp01YAH5lFN5vQlBei
+        HhOxiJoQLhx+QpN63F/e++/06ijjx+zG22Mol0j2UY1oB2M91uwmz5wf/6G7nRkG
+        SWBEcqfscNPG0SvB7lfgZUYsc+fCAgNfT1xEuUc4Kut1kpJjJJRFiwPyLmMfqoeN
+        46yYjARwgt9lyx7AHTLrNJ0Fa7KftmPTcCCoewhovOo/mTgu4wU4CrSBSFGIBeSA
+        5PD6Fg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; bh=Toi4GKci6LJ4XuJVCZ1rchzevDUA6mJ5/+b5ClssV
+        N4=; b=ZTNOgkNsd6BngHunVrfsn3Ls1dBeu4AYvf06a7Hs3+zKM2V0m/yPGDf3H
+        hyp/fo20KA6WhdwP/6TAZQG+NMj0V2YFKotNYz6DHwfFDRHzdp1MpMYoRQBbRrMp
+        GVqV5M2kXw9UHRyXDkOVHKdNBRuESjjonKkkYG9rGzULKP0RXRaCH7MEHiHRwjO4
+        Jhpu1naFi+mBy7IBYXJ6UpGeXCFsRWRVDr/4JuvZq5qyv0YSAYsyajBcJWO4EXzq
+        nro50t7Lyn4c/guDDC4tUzbBVGqyCc/Hmp5X/WMDKwOv+VjzxMi4qAUTtRH91xW1
+        7jTKV9uqrrAgPOu0N1ySAniKmO1Vg==
+X-ME-Sender: <xms:EwJwX8IGeE3vjbQB65HLOZOIqKPv6A5Z0lMVo70KHOCm8bf_4RD0_A>
+    <xme:EwJwX8JI-5ClQnnjFJGJ_Uf89lhYkUmJgvUr9PTiQuIPDHGjzshty9dGiDcYeQlrS
+    HUc2qprYjUc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdefgdeivdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefkuffhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpefkrghnucfm
+    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepgf
+    ffvedujefhgeduueehkeegueehteefhfeitefhteegteetvddtffegudfhhfdtnecuffho
+    mhgrihhnpehmohguuhhlvgdrnhhonecukfhppedutdeirdeiledrvdehgedrudehtdenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehrrghvvghn
+    sehthhgvmhgrfidrnhgvth
+X-ME-Proxy: <xmx:EwJwX8uelMTA9rIE6KxykpAJx5jio3MoAKY1fmOgAs94yjz5Bd6H-A>
+    <xmx:EwJwX5Zq-euYaRIIkzqJxwhgc1K6tGZt0QH8ItwPFCS_THNnidvKbg>
+    <xmx:EwJwXzbqgCEv2EUqSKd3DFPyTetCD6SEyMk6Pq1_9bCESTuZNN1WBw>
+    <xmx:FAJwX-y3vus1vWIWPG8T_cn8bPNqy4qc9rRsgOREb_g8fzWib2ghMw>
+Received: from mickey.themaw.net (106-69-254-150.dyn.iinet.net.au [106.69.254.150])
+        by mail.messagingengine.com (Postfix) with ESMTPA id B0BC13064610;
+        Sat, 26 Sep 2020 23:08:00 -0400 (EDT)
+Message-ID: <05c18390d485ae6d84c49f707d20b49e28f210a6.camel@themaw.net>
 Subject: Re: Commit 13c164b1a186 - regression for LSMs/SELinux?
-To:     Ondrej Mosnacek <omosnace@redhat.com>
+From:   Ian Kent <raven@themaw.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Ondrej Mosnacek <omosnace@redhat.com>
 Cc:     Stephen Smalley <stephen.smalley.work@gmail.com>,
-        Ian Kent <raven@themaw.net>, Al Viro <viro@zeniv.linux.org.uk>,
+        Al Viro <viro@zeniv.linux.org.uk>,
         Christoph Hellwig <hch@lst.de>, autofs@vger.kernel.org,
         Linux Security Module list 
         <linux-security-module@vger.kernel.org>,
         SElinux list <selinux@vger.kernel.org>,
         Zdenek Pytela <zpytela@redhat.com>
+Date:   Sun, 27 Sep 2020 11:07:56 +0800
+In-Reply-To: <CAHk-=wjYB+q1=3_x97VSNo5cPTL=eHnuMDXoKhGJOJvo+pbp9g@mail.gmail.com>
+References: <CAFqZXNsoXr1eA4C8==Nvujs5ONpRnuSqaOQQ0n78R=Dbm-EFGA@mail.gmail.com>
+         <20200921160922.GA23870@lst.de>
+         <20200921163011.GZ3421308@ZenIV.linux.org.uk>
+         <CAFqZXNsBqvCj0NjEd9+C0H1EPjz7Fst296AA5eOFSVx=SKjfOg@mail.gmail.com>
+         <0764629d33d151aee743d0429ac87a5b0c300235.camel@themaw.net>
+         <CAFqZXNsqD73hptXxBn+g98ngbFd=Sx+CghtwVqM+NC47VFZhVQ@mail.gmail.com>
+         <CAEjxPJ4oZvtqUpW0bMzoZwVsi9kDvL5LtouHQZAO7gM7_qyHMg@mail.gmail.com>
+         <CAFqZXNs0oZ+_RNvwE-e62H2FSS=N4wbvJ+tgk0_dSn=5mbPhcw@mail.gmail.com>
+         <CAHk-=wjYB+q1=3_x97VSNo5cPTL=eHnuMDXoKhGJOJvo+pbp9g@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 (3.36.5-1.fc32) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Fri, Sep 25, 2020 at 6:38 AM Ondrej Mosnacek <omosnace@redhat.com> wrote:
->
-> On Thu, Sep 24, 2020 at 4:16 PM Stephen Smalley
-> <stephen.smalley.work@gmail.com> wrote:
-> >
-> > Up-thread I thought Linus indicated he didn't really want a flag to
-> > disable pemission checking due to potential abuse (and I agree).
->
-> IIUC he was against adding an FMODE flag, while I was rather
-> suggesting a new function parameter (I realize it probably wasn't
-> clear from what I wrote).
+On Fri, 2020-09-25 at 10:38 -0700, Linus Torvalds wrote:
+> On Fri, Sep 25, 2020 at 6:38 AM Ondrej Mosnacek <omosnace@redhat.com>
+> wrote:
+> > On Thu, Sep 24, 2020 at 4:16 PM Stephen Smalley
+> > <stephen.smalley.work@gmail.com> wrote:
+> > > Up-thread I thought Linus indicated he didn't really want a flag
+> > > to
+> > > disable pemission checking due to potential abuse (and I agree).
+> > 
+> > IIUC he was against adding an FMODE flag, while I was rather
+> > suggesting a new function parameter (I realize it probably wasn't
+> > clear from what I wrote).
+> 
+> I really would prefer neither.
+> 
+> Any kind of dynamic behavior that depends on a flag is generally
+> worse
+> than something that can be statically seen.
+> 
+> Now, if the flag is _purely_ a constant argument in every single
+> user,
+> and there's no complex flow through multiple different layers, an
+> argument flag is certainly fairly close to just having two different
+> functions for two different behaviors.
+> 
+> But I don't really see much of an advantage to adding a new argument
+> to kernel_write() for this - because absolutely *nobody* should ever
+> use it apart from this very special autofs case.
+> 
+> So I'd rather just re-export the old __kernel_write() (or whatever it
+> was that broke autofs) that didn't do that particular check. We
+> already use it for splice and core dumping.
+> 
+> autofs isn't that different from those two, and I think the only real
+> difference is that autofs is a module. No?
 
-I really would prefer neither.
+It can be, yes, many distro builds compile it in.
 
-Any kind of dynamic behavior that depends on a flag is generally worse
-than something that can be statically seen.
+> 
+> So I think the fix is as simple as exporting __kernel_write() again -
+> and let's just make it a GPL-only export since we really don't want
+> anybody to use it - and revert  commit 13c164b1a186 ("autofs: switch
+> to kernel_write").
 
-Now, if the flag is _purely_ a constant argument in every single user,
-and there's no complex flow through multiple different layers, an
-argument flag is certainly fairly close to just having two different
-functions for two different behaviors.
+Yes, sorry I missed this initially.
 
-But I don't really see much of an advantage to adding a new argument
-to kernel_write() for this - because absolutely *nobody* should ever
-use it apart from this very special autofs case.
+There are a couple of other sanity checks in kern_write() but since
+__kern_write() is meant to be for internal use that's not really
+an issue IMHO. 
 
-So I'd rather just re-export the old __kernel_write() (or whatever it
-was that broke autofs) that didn't do that particular check. We
-already use it for splice and core dumping.
+Ian
 
-autofs isn't that different from those two, and I think the only real
-difference is that autofs is a module. No?
-
-So I think the fix is as simple as exporting __kernel_write() again -
-and let's just make it a GPL-only export since we really don't want
-anybody to use it - and revert  commit 13c164b1a186 ("autofs: switch
-to kernel_write").
-
-Hmm?
-
-             Linus
