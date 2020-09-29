@@ -2,63 +2,45 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 225D327D54D
-	for <lists+autofs@lfdr.de>; Tue, 29 Sep 2020 20:00:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CDF327D793
+	for <lists+autofs@lfdr.de>; Tue, 29 Sep 2020 22:06:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727836AbgI2SAl (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 29 Sep 2020 14:00:41 -0400
-Received: from verein.lst.de ([213.95.11.211]:41188 "EHLO verein.lst.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725320AbgI2SAl (ORCPT <rfc822;autofs@vger.kernel.org>);
-        Tue, 29 Sep 2020 14:00:41 -0400
-Received: by verein.lst.de (Postfix, from userid 2407)
-        id E781267373; Tue, 29 Sep 2020 20:00:37 +0200 (CEST)
-Date:   Tue, 29 Sep 2020 20:00:37 +0200
-From:   Christoph Hellwig <hch@lst.de>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Ondrej Mosnacek <omosnace@redhat.com>, Ian Kent <raven@themaw.net>,
-        Stephen Smalley <stephen.smalley.work@gmail.com>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Christoph Hellwig <hch@lst.de>, autofs@vger.kernel.org,
-        Linux Security Module list 
-        <linux-security-module@vger.kernel.org>,
-        SElinux list <selinux@vger.kernel.org>,
-        Zdenek Pytela <zpytela@redhat.com>
-Subject: Re: Commit 13c164b1a186 - regression for LSMs/SELinux?
-Message-ID: <20200929180037.GA12447@lst.de>
-References: <20200921163011.GZ3421308@ZenIV.linux.org.uk> <CAFqZXNsBqvCj0NjEd9+C0H1EPjz7Fst296AA5eOFSVx=SKjfOg@mail.gmail.com> <0764629d33d151aee743d0429ac87a5b0c300235.camel@themaw.net> <CAFqZXNsqD73hptXxBn+g98ngbFd=Sx+CghtwVqM+NC47VFZhVQ@mail.gmail.com> <CAEjxPJ4oZvtqUpW0bMzoZwVsi9kDvL5LtouHQZAO7gM7_qyHMg@mail.gmail.com> <CAFqZXNs0oZ+_RNvwE-e62H2FSS=N4wbvJ+tgk0_dSn=5mbPhcw@mail.gmail.com> <CAHk-=wjYB+q1=3_x97VSNo5cPTL=eHnuMDXoKhGJOJvo+pbp9g@mail.gmail.com> <05c18390d485ae6d84c49f707d20b49e28f210a6.camel@themaw.net> <CAFqZXNt2pWwRnnzB0KfZfZy-dJuXfKkJeejpuXcHCBLq1htA8w@mail.gmail.com> <CAHk-=wi3+AhZ0Q3nvGJCgdL0Vq8b_soy8rhS5_HE79VBP7Q-LQ@mail.gmail.com>
+        id S1728952AbgI2UGz (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 29 Sep 2020 16:06:55 -0400
+Received: from [110.74.151.213] ([110.74.151.213]:28129 "EHLO
+        mail.bless.gov.my" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1728367AbgI2UGy (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 29 Sep 2020 16:06:54 -0400
+X-Greylist: delayed 17480 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Sep 2020 16:06:54 EDT
+Received: from User (unknown [172.20.84.1])
+        by mail.bless.gov.my (Postfix) with SMTP id 6BC1543E9556;
+        Tue, 29 Sep 2020 22:14:41 +0800 (MYT)
+Reply-To: <iinfo446@gmail.com>
+From:   "Mrs. Susan Carter" <test@mail.bless.gov.my>
+Subject: Good day,    
+Date:   Tue, 29 Sep 2020 15:15:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wi3+AhZ0Q3nvGJCgdL0Vq8b_soy8rhS5_HE79VBP7Q-LQ@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+Message-Id: <20200929141442.6BC1543E9556@mail.bless.gov.my>
+To:     undisclosed-recipients:;
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Tue, Sep 29, 2020 at 10:23:50AM -0700, Linus Torvalds wrote:
-> On Tue, Sep 29, 2020 at 5:16 AM Ondrej Mosnacek <omosnace@redhat.com> wrote:
-> >
-> > OK, so it seems that reverting comes out as the best choice here.
-> 
-> Yeah.
-> 
-> > BTW, I'm looking at rw_verify_area() and I see this "If (ppos)" check
-> > and the comment above it... And then I look at autofs_write(), which
-> > passes &file->f_pos, while ksys_write() passes file_ppos(file)
-> 
-> Ok, that doesn't matter for the security_file_permission() issue, but
-> yes, autofs is doing the traditional thing, and it's pointless. Using
-> file_ppos(file) isn't an option since it's an inline to read_write.c,
-> but it could just pass in NULL these days and avoid that too.
-> 
-> So how about we just do the appended patch? Can whoever sees this
-> problem just verify, even though it looks trivially correct...
+Good day,
 
-This looks sensible to me.  I'd throw in a
+My name are Mrs. Susan Carter an America but a United Kingdom Citizen, I???m 57 years old, widow, married to late Eng Martins Carter who is a British, who until his death worked with Dutch Filtration for Twenty-Six years before he died in the year 2015 after a brief illness that lasted only five days.
 
-/* only for autofs, don't use in new code */
+When my late husband was alive he deposited the sum of US$50 Million in bank USA through his Financial Lawyer in the United State of America and we all agreed as a couple to donate all of that to charity. Following my health (Lung Cancer), my Doctor told me that I may not live longer than required due to my health condition.
 
-near the export, but users of these kind of functions tend to be
-blind copy and paste code anyway, so the comment probably isn't
-even read by the relevant parties..
+Looking forward to seeing someone who can use the money for charitable work.
+
+Best Regards
+Yours sincerely
+Mrs. Susan Carter
