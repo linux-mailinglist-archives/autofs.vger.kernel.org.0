@@ -2,39 +2,67 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2985328550F
-	for <lists+autofs@lfdr.de>; Wed,  7 Oct 2020 02:01:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC04F285D75
+	for <lists+autofs@lfdr.de>; Wed,  7 Oct 2020 12:52:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726702AbgJGABd convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+autofs@lfdr.de>); Tue, 6 Oct 2020 20:01:33 -0400
-Received: from ex2016-02.tversu.net ([82.179.130.112]:40385 "EHLO
-        mail.tversu.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726073AbgJGABc (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 6 Oct 2020 20:01:32 -0400
-X-Greylist: delayed 912 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Oct 2020 20:01:32 EDT
-Received: from [192.168.43.238] (129.205.113.225) by ex2013mbx01.tversu.net
- (192.168.21.12) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Wed, 7 Oct
- 2020 02:46:16 +0300
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1728258AbgJGKwK convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+autofs@lfdr.de>); Wed, 7 Oct 2020 06:52:10 -0400
+Received: from mx.metalurgs.lv ([81.198.125.103]:61424 "EHLO mx.metalurgs.lv"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728254AbgJGKwK (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Wed, 7 Oct 2020 06:52:10 -0400
+Received: from mx.metalurgs.lv (localhost [127.0.0.1])
+        by mx.metalurgs.lv (Postfix) with ESMTP id 988A862C05
+        for <autofs@vger.kernel.org>; Wed,  7 Oct 2020 13:51:11 +0300 (EEST)
+Received: from kas30pipe.localhost (localhost [127.0.0.1])
+        by mx.metalurgs.lv (Postfix) with ESMTP id 7C7E262AF0
+        for <autofs@vger.kernel.org>; Wed,  7 Oct 2020 13:51:11 +0300 (EEST)
+Received: by mx.metalurgs.lv (Postfix, from userid 1005)
+        id 7D1886203B; Wed,  7 Oct 2020 13:51:10 +0300 (EEST)
+Received: from [100.64.1.74] (unknown [190.15.125.55])
+        (Authenticated sender: admin)
+        by mx.metalurgs.lv (Postfix) with ESMTPA id 3816C5E76F;
+        Wed,  7 Oct 2020 13:51:02 +0300 (EEST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
 Content-Description: Mail message body
-Subject: Spende
-To:     Recipients <Yakhfufi.TN@tversu.ru>
-From:   Spende <Yakhfufi.TN@tversu.ru>
-Date:   Wed, 7 Oct 2020 00:46:12 +0100
-Reply-To: <charitydonations247@gmail.com>
-Message-ID: <a9b7fe01e2534f6eb387e17141b01449@ex2013mbx01.tversu.net>
-X-Originating-IP: [129.205.113.225]
-X-ClientProxiedBy: ex2013cas01.tversu.net (82.179.131.67) To
- ex2013mbx01.tversu.net (192.168.21.12)
-X-KSE-AntiSpam-Interceptor-Info: trusted connection
-X-KSE-ServerInfo: ex2013mbx01.tversu.net, 9
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean
-X-KSE-Dlp-Interceptor-Info: license violation
+To:     Recipients <financialcapability6@gmail.com>
+From:   "Mr. Hashim Bin" <financialcapability6@gmail.com>
+Date:   Wed, 07 Oct 2020 07:50:54 -0300
+Reply-To: hmurrah39@gmail.com
+X-SpamTest-Envelope-From: financialcapability6@gmail.com
+X-SpamTest-Group-ID: 00000000
+X-SpamTest-Info: Profiles 71303 [Jan 01 2015]
+X-SpamTest-Info: {TO: forged address, i.e. recipient, investors, public, etc.}
+X-SpamTest-Info: {DATE: unreal year}
+X-SpamTest-Method: none
+X-SpamTest-Rate: 55
+X-SpamTest-Status: Not detected
+X-SpamTest-Status-Extended: not_detected
+X-SpamTest-Version: SMTP-Filter Version 3.0.0 [0284], KAS30/Release
+Message-ID: <20201007105110.7D1886203B@mx.metalurgs.lv>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+Subject: Low Rate Loan./mmm,
+X-Anti-Virus: Kaspersky Anti-Virus for Linux Mail Server 5.6.39/RELEASE,
+         bases: 20140401 #7726142, check: 20201007 notchecked
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Ihre E-Mail wurde für eine Spende ausgewählt ...
+Hello Dear,
+
+
+We are Base Investment Company offering Corporate and Personal Loan at 3% Interest Rate for a duration of 10Years.
+
+
+We also pay 1% commission to brokers, who introduce project owners for finance or other opportunities.
+
+
+Please get back to me if you are interested for more
+
+details.
+
+
+Yours faithfully,
+
+Hashim Murrah
