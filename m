@@ -2,78 +2,200 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 05744286484
-	for <lists+autofs@lfdr.de>; Wed,  7 Oct 2020 18:34:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DF20286B98
+	for <lists+autofs@lfdr.de>; Thu,  8 Oct 2020 01:46:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727518AbgJGQeg (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 7 Oct 2020 12:34:36 -0400
-Received: from sonic307-9.consmr.mail.ne1.yahoo.com ([66.163.190.32]:37889
-        "EHLO sonic307-9.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727140AbgJGQeg (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 7 Oct 2020 12:34:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1602088475; bh=PxMwWzXvs+dqOoH0/FHvFmQpYH2JguaCUHYAVLLmaiw=; h=Date:From:Reply-To:Subject:References:From:Subject; b=om5tBXO1MUE4f6+f4xnFN9x5d2/5IYIAeIBMswjaEIwtW089yQDuSG/luF+tDoD+zd6Oi+rxTTe8mG6tSRMXscN5stxwJEP9yKEixmX5EqORKyM466AkyQa3/EzRxjvsu+OHn16DyB8ejdKdM3DDJnx0K0y6vReB07SmQ3mHKSaOyHtEptDDeP0gMBKEkLBxIMXT3pHpgYdMnyDt6VFqkd3xEUgYKPLJlyCN/EEsV8F5DvarMgisqtALGla8pfwuJJRnAsnrUxI/rO7bon0BITFvuaO2I16IxJ6VX1JVMgpwBNzskpj4HcduhiIKA5utm66RRMLtQ1v2MGJ5X4JXrg==
-X-YMail-OSG: jToXWE0VM1nzLfnAi.fh_JvlF083PZNrtGPwwm6dXilaodfraqrw2aNCX2v_k3_
- DK_O.X0e3tsrRqX3bLwtH7FUqOvAmQRZrkuXDkVU3i25inZj9YBMhLuUD8JfZuJ4RB5yS8K3lhC4
- .AOZny2akjMtg_D6ZfhJAfmdaRC3jyiiAF5nrbOskapSEWLCOeEVuh9VYHUCpGLSabcqmifT2C1y
- RSNqkMGtbHoOUqFs2NC.tGLppW2CuyuGcbZTP.kAriMyPAD_A_E7v91uErDEX5z6c3w_kImZLMmf
- .f0S4jiBdE4tr696RmlNImu8NvXT8xWmGaoca0GTeTploOXPYGuRAAtPLljjd4nInlEc3kg5DoXj
- Ff5DwMVrJXPDF.xrLbMi.cLxFdHFBZSylBPyR9ZbXPy1gZSVWojE7QZ5ooRy5ok7ECsc_0uA0V55
- O7.dBhhR8ZMiPETMLzWHjiOGQwMPIyBNfc.1LIxKssJMm_pKpM_g9_wTl4DMey5CKFMuFCqpmJpc
- cRoj7JtRLNVH0By0icyx_X9s.R5XeNdayNoMCU0_1zC42dz33K.z6e4JdCAUwebhxYPrWxLHe26z
- 7xbaYPEq2nLCu3FluX_8K9oe16K9q8_PWXA6LLmuPWefh_tPPZIlWGepIjZqvybV5Q2eugSO6hKW
- 7lPsLYt748eKlqpT321x03HM71Qda1MkyvAzqh.uCwtLhGBlYpvKs1_BEEbW2FRN.rD9hJqOAGho
- WEELp_AgSNArM_zpr3x0WiINWQguROCLDUtSE0bY4d1TgZJpiyT79akjcnghn8AZm5Rpa9T8.b1e
- 7TmNMpkj0RrCXMjmeZY5muGCnfYVaulaMsBvPiQ4NLQHCYWygOJmJs7kMXgx6gF0.z89lksCb4wa
- Y2RgymIt8P9pMZNHLspFXc70L8WREprbcZw6T4gPkxkLYOV33GQWSN6pb8o7t2TX8D9myQ4LIf7I
- fUBljmypUyAatjFr14vs2T18O.BVH3W.0AzOGIHRKpLhXEt5ltUaT2BQyMj7adPOeRi.VzjRbZLM
- UceRmcgUtnye.cs.qniwsyq0fI.73zsGI.F4ME3d6xTD1Gtk2PtkNlyiU87Q_AjzbTHnhr3MNQTU
- wURzQ2drltpwdLDlgBCV1yyiH_Ojj_UMBxce_e0FfuVG1xz0M1Rkq0.JPx.1Y.mQQ7oP4wIwfov5
- jdUB9ndPTwui2gpq87gzYt_nVrpatGagYD1ne3kwAve2EzBGNuriD3a6FM4L0IeKx1fWK.YFM1V8
- KauSQxtA6HechEs_UAVht3gpya7JFkX7Eskk456NCu9pXvficeZDZgdmimgGmyW0y8QuPbQa2OHN
- JgA8t7a2_Zse3FMTitlYRDelY0T3HW0sdQnRVTlwX_iCK6oSbKCYviDcOfNkOFH3vS.SQBjKE3n3
- 1Kj9pM18U_2Zqrm8FBiFeqftV3cJ.alZ2Tok9iQ--
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.ne1.yahoo.com with HTTP; Wed, 7 Oct 2020 16:34:35 +0000
-Date:   Wed, 7 Oct 2020 16:34:32 +0000 (UTC)
-From:   Marilyn Robert <fredodinga22@gmail.com>
-Reply-To: marilyobert@gmail.com
-Message-ID: <632062844.281145.1602088472450@mail.yahoo.com>
-Subject: =?UTF-8?B?0J3QsNGY0LzQuNC70LAg0LrQsNGYINCz0L7RgdC/0L7QtNCw0YDQvtGC?=
+        id S1728260AbgJGXqb (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 7 Oct 2020 19:46:31 -0400
+Received: from esa10.utexas.iphmx.com ([216.71.150.156]:44238 "EHLO
+        esa10.utexas.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728082AbgJGXqb (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 7 Oct 2020 19:46:31 -0400
+X-Greylist: delayed 424 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Oct 2020 19:46:31 EDT
+IronPort-SDR: F3nzdGNFwwqJSM/ZIpFdopgCB4p8zey8OssW8nm+31U75890hv1NG1MUYBqQuern8kjUlEViKI
+ IWzeXhKxiGxF6bw/dtx15En64AkoYmefN0TYujWoMCkb7Mm4Pi64XuzrpDgzW2IcBO5F/njDcD
+ YOLpv6i5tY1iDtkXVBzZi+kLMzZueWchJep9hnWijXzb30YvWyc7UvS6SvXNAtwnjwD6vBvtA8
+ 03I7ckaQUMsxJ33Nbk7ynBUNbPeyxGkuKHve7+Sjl3RVoXxE8VIfY8IqqJXjy3EcGZf+6B6IdV
+ H7U=
+X-Utexas-Sender-Group: RELAYLIST-O365
+X-IronPort-MID: 246532705
+X-IPAS-Result: =?us-ascii?q?A2EPAwBKUH5fhzYkL2hggQmDIVF3gTQKhDODRwEBhTmID?=
+ =?us-ascii?q?pkpglMDGD0CCQEBAQEBAQEBAQcCEwwOAgQBAQKESDeBVCY4EwIDAQEBAwIDA?=
+ =?us-ascii?q?QEBAQYBAQEBAQEFBAICEAEBAYV5OQyDVEk5AQEBAQEBAQEBAQEBAQEBAQEBA?=
+ =?us-ascii?q?QEBAQEBAQEBAQEBAQEBAQEBAQUCgQxWERUIAQE4KAwCEgETAjQrAQwIAQEeg?=
+ =?us-ascii?q?wQBgksDLgGbVAGBKD4CIwE/AQELgQUpiVeBMoMBAQEFe4FRglgYQQkNgTkJC?=
+ =?us-ascii?q?QGBBCqCcohugW6BQT+BEScPgiqFEzEvAoJNgmCQIQeLX1ObAoJyiQCGWoR4H?=
+ =?us-ascii?q?4VqBQcDH4NMjmGPAJMaoBsCBAIEBQIOAQEFgWuBezMaCB0TgyQJRxcCDY4rD?=
+ =?us-ascii?q?gmDTop0VjcCBgoBAQMJfIsID4EkAYEQAQE?=
+IronPort-PHdr: =?us-ascii?q?9a23=3A1/l2uRVAiXqLGQvbnq8zNr8m1AbV8LGuZFwc94?=
+ =?us-ascii?q?YnhrRSc6+q45XlOgnF6O5wiEPSBN6HuexLhvCQsK36X2EEp5GbvyNKfJ9NUk?=
+ =?us-ascii?q?oDjsMb10wlDdWeAEL2ZPjtc2QhHctEWVMkmhPzMUVcFMvkIVGHpHq04G0MFR?=
+ =?us-ascii?q?jlcwl4POL4HsjVlcvkn+y38ofYNgNPgjf1aLhuLRKw+APWsMRz48NiJ689xw?=
+ =?us-ascii?q?GPrGFPfrFTzH9oY0+Pkgb1/YG98IMw/g=3D=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="5.77,348,1596517200"; 
+   d="scan'208";a="246532705"
+X-Utexas-Seen-Outbound: true
+Received: from mail-sn1nam02lp2054.outbound.protection.outlook.com (HELO NAM02-SN1-obe.outbound.protection.outlook.com) ([104.47.36.54])
+  by esa10.utexas.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2020 18:39:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LsXz8hpeMnwt9skgG7ZMOHDxT5ZGj7fOWuduIZ8mIoBy/dM3SW+EAqWhqB0dkFfpNwUroTm/edDO6Aa1lZB1V2dNMeqH58x9Mc+4zalXSCEeGiLw1Qv2iw91YAOAsER1MdWFLSvFO67uUQLkcgV/d6x/eFSgrphxDFOY0IJIVLcSdr2S+MKOCemOKaOHE/DLKR3Tesdz6QmEbC6O0SXvt+7r2ea8TjzsayXaWXzZGU4jBj6Nv2xETBtL06iIsVxX/c2WZd6qD0HY5yUYdt3tf2SlI/UT+hyx/ELAfJ8C3bW43dNW45SrFqcl5pUyyYjyeMvTDI8HVLt+rIwkJ/P+Xw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bjMzGuu7Khp9PYpIhbliRS6lfcLt5qO6qz9ZDqh6g7o=;
+ b=iWwCBPZrOj021voEpyTPN+tx/S1j+Tkk5l+7pvJMpmbs83+v0dI25Qp4wj5stLde2MUXDJZYHSOW9kkItcnLJ2S9c+PDAjL4K0n++4pWWo+TjwfScCrk9h+GGZPgsLN5mbqTg4E+Yrkzqouaouh9Pd/zi1eKc+IfFodfIzxPiuq/C1W8KmRqNQXD26HmcgQv/Z/RHHVoNwuVk8ldSdSUhhf50nQt9WtiKW9b2sAgzslYOINbvj03So35WPVE0NYmH5cu0Bw1w96H1edbACTNL0UmdA7uRrOadzO+fpGfaGDQGA6FX/sz/JYcdWm6zpb2HGH/paeLo56ketAnVslc6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=math.utexas.edu; dmarc=pass action=none
+ header.from=math.utexas.edu; dkim=pass header.d=math.utexas.edu; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=utexas.onmicrosoft.com; s=selector1-utexas-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bjMzGuu7Khp9PYpIhbliRS6lfcLt5qO6qz9ZDqh6g7o=;
+ b=L5HyEdkKFcWfkKpkq4GyTYzAAI9Uwv9GcavbTbqy0B35ggJEW0vIGNXhpX/OUOosUi74SPwhi2rF4xr2naNxeXh435iuiZ7gzJvzialTodj6+PhscxLpQ6h1B57yNcWmC3AiL0grwjTQXDTNO+1dzPtqgU75KCzAkuALQiCx8TA=
+Authentication-Results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none
+ header.from=math.utexas.edu;
+Received: from BYAPR06MB3848.namprd06.prod.outlook.com (2603:10b6:a02:8c::15)
+ by BYAPR06MB3942.namprd06.prod.outlook.com (2603:10b6:a02:87::31) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3455.22; Wed, 7 Oct
+ 2020 23:39:25 +0000
+Received: from BYAPR06MB3848.namprd06.prod.outlook.com
+ ([fe80::145b:33d4:e2d3:ad59]) by BYAPR06MB3848.namprd06.prod.outlook.com
+ ([fe80::145b:33d4:e2d3:ad59%5]) with mapi id 15.20.3433.046; Wed, 7 Oct 2020
+ 23:39:25 +0000
+To:     Ian Kent <raven@themaw.net>,
+        "autofs@vger.kernel.org" <autofs@vger.kernel.org>
+From:   Patrick Goetz <pgoetz@math.utexas.edu>
+Subject: A puzzling timing issue with automounted home directories
+Message-ID: <61ce4c86-caee-6c91-6e04-09e6939d48f1@math.utexas.edu>
+Date:   Wed, 7 Oct 2020 18:39:22 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [67.198.113.142]
+X-ClientProxiedBy: DM5PR20CA0002.namprd20.prod.outlook.com
+ (2603:10b6:3:93::12) To BYAPR06MB3848.namprd06.prod.outlook.com
+ (2603:10b6:a02:8c::15)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-References: <632062844.281145.1602088472450.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.16795 YMailNodin Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36
-To:     unlisted-recipients:; (no To-header on input)
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [192.168.1.7] (67.198.113.142) by DM5PR20CA0002.namprd20.prod.outlook.com (2603:10b6:3:93::12) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3455.22 via Frontend Transport; Wed, 7 Oct 2020 23:39:24 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 006f72c4-622a-48e6-1ef8-08d86b1a395a
+X-MS-TrafficTypeDiagnostic: BYAPR06MB3942:
+X-Microsoft-Antispam-PRVS: <BYAPR06MB3942115D04D4A4F0A5D880E6830A0@BYAPR06MB3942.namprd06.prod.outlook.com>
+X-Utexas-From-ExO: true
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: IIKvXNmms8V9KSSGkL6aSm/bMGjbolv/lefO63gRLqJp9g67qVQVQ+BWZYz/PP5AqNaYr7T++c5qpKZprckoYvDuoEeTYGe9Hmlr1OpT5Per0qIOPJ2HthNwpvDhWQ3RSZ98TnHgyTSbhh6OwrW9u+mxLpZkTt2R81MjEwX7duwFhAoIsj9lmpyO2P6G7X3gwH9Rz4U1kakuUCY4S/qZ3V2zVnQr3HIC7YsOp48jOdNVPBMVIemef8rpYfY4ztiiA/4vicZaOr7aWA/XAmgqBj9t3KOapTO3YCA8Io/asb5U2AEmhA7UqIm1/PH5YU8FPziRd1hz7cGCxECB3cf2KwtqMhVbqs96uLbLK+ZDKDdpbggAuLw/ox8Hmy60HDTT
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR06MB3848.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(396003)(366004)(136003)(39860400002)(376002)(346002)(956004)(2616005)(86362001)(75432002)(83380400001)(26005)(2906002)(45080400002)(66476007)(66556008)(6486002)(316002)(786003)(16576012)(66946007)(31686004)(5660300002)(16526019)(8676002)(52116002)(31696002)(186003)(8936002)(478600001)(110136005)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData: QV4VHHrjoKzv8/SHDX/GHyDNAGMNN3ZmabhsOtHQT4wUgXchUEE8ZD+8w4F9mgZCvAOO6Ie+ENugCvAqxgbcymAHfW23STtACNJhnfYBDs/2QE/H9LE7yzX6+EyowNUkSPY8iE3F+1Owr/uoJoCDwgXQ5E5cb83Lgka5GGyy/wVfvkUY4woldAIPUJk/NWHDPit3CxRNeAe2Gi6SX5z5oV+G1BmMeCqPaVwDs3Pucw+s94niji4BnI1Wdce1ClvO3rIl0gvB7t+nfFiR7rGQGcXLm8d67lPEzkdUs95Oe0IznWGkjlr77W8HA8QLc3PiI7DIjaF6wquHlvLpo/aAsPgH4JWAzO95m9o7nEQWLeR9aNzRDgvnxTg/cLjzz0B83xZqJ7bOrkztJiut69QzhDm42vjkhSYMqgX2XY2hyX3OFaJrrb/erX5GsSbghEcHQAvkF+a9zGL2L7D98V8vzn6Ie+9usrjfzpHbDnIlMgi5j5B5yfjEu/G/99z83s/22C/9dvP3jtsSkKm1R8QYssNdJWoKyS47U8ULSpALxLv+yoJ2Quq67T0O/kThGyFaJueGdLirf+AtzpnaeTF3O6Cx4CCs/EvKQuPU77qvv7y/Ug9RlXUQMpguf819DI9uqWgmTMmcKiT+79y8W8F8CA==
+X-OriginatorOrg: math.utexas.edu
+X-MS-Exchange-CrossTenant-Network-Message-Id: 006f72c4-622a-48e6-1ef8-08d86b1a395a
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR06MB3848.namprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2020 23:39:25.0892
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 31d7e2a5-bdd8-414e-9e97-bea998ebdfe1
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xgFyWvcjik4FL/DTxACCXj4jRo/nMYYXifYppYTLUIcRt8XGS3qUFRp+XLjmm+NpxDzYq28ARcZnbhGoiunkgQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR06MB3942
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-DQoNCtCd0LDRmNC80LjQu9CwINC60LDRmCDQs9C+0YHQv9C+0LTQsNGA0L7Rgg0KDQrQiNCw0YEg
-0YHRg9C8IDY4LdCz0L7QtNC40YjQvdCwINC20LXQvdCwLCDQutC+0ZjQsCDRgdGC0YDQsNC00LAg
-0L7QtCDQv9GA0L7QtNC+0LvQttC10L0g0LrQsNGA0YbQuNC90L7QvCDQvdCwINC00L7RmNC60LAs
-INC+0LQg0YHQuNGC0LUg0LzQtdC00LjRhtC40L3RgdC60Lgg0LjQvdC00LjQutCw0YbQuNC4LCDQ
-vNC+0ZjQsNGC0LAg0YHQvtGB0YLQvtGY0LHQsCDQvdCw0LLQuNGB0YLQuNC90LAg0YHQtSDQstC7
-0L7RiNC4INC4INC+0YfQuNCz0LvQtdC00L3QviDQtSDQtNC10LrQsCDQvNC+0LbQtdCx0Lgg0L3Q
-tdC80LAg0LTQsCDQttC40LLQtdCw0Lwg0L/QvtCy0LXRnNC1INC+0LQg0YjQtdGB0YIg0LzQtdGB
-0LXRhtC4INC60LDQutC+INGA0LXQt9GD0LvRgtCw0YIg0L3QsCDQsdGA0LfQuNC+0YIg0YDQsNGB
-0YIg0Lgg0LHQvtC70LrQsNGC0LAg0YjRgtC+INGB0LUg0ZjQsNCy0YPQstCwINC60LDRmCDQvdC1
-0LAuINCc0L7RmNC+0YIg0YHQvtC/0YDRg9CzINC/0L7Rh9C40L3QsCDQvdC10LrQvtC70LrRgyDQ
-s9C+0LTQuNC90Lgg0L3QsNC90LDQt9Cw0LQg0Lgg0L3QsNGI0LjRgtC1INC00L7Qu9Cz0Lgg0LPQ
-vtC00LjQvdC4INCx0YDQsNC6INC90LUg0LHQtdCwINCx0LvQsNCz0L7RgdC70L7QstC10L3QuCDR
-gdC+INC90LjRgtGDINC10LTQvdC+INC00LXRgtC1LCDQv9C+INC90LXQs9C+0LLQsNGC0LAg0YHQ
-vNGA0YIg0LPQviDQvdCw0YHQu9C10LTQuNCyINGG0LXQu9C+0YLQviDQvdC10LPQvtCy0L4g0LHQ
-vtCz0LDRgtGB0YLQstC+Lg0KDQrQlNC+0LDRk9Cw0Lwg0LrQsNGYINCy0LDRgSDQvtGC0LrQsNC6
-0L4g0YHQtSDQv9C+0LzQvtC70LjQsiDQt9CwINGC0L7QsCwg0L/QvtC00LPQvtGC0LLQtdC9INGB
-0YPQvCDQtNCwINC00L7QvdC40YDQsNC8INGB0YPQvNCwINC+0LQgMiwgMzAwLCAwMDAg0LXQstGA
-0LAg0LfQsCDQv9C+0LzQvtGIINC90LAg0YHQuNGA0L7QvNCw0YjQvdC40YLQtSwg0YHQuNGA0L7Q
-vNCw0YjQvdC40YLQtSDQuCDQv9C+0LzQsNC70LrRgyDQv9GA0LjQstC40LvQtdCz0LjRgNCw0L3Q
-uNGC0LUg0LzQtdGT0YMg0LLQsNGI0LjRgtC1INGB0L7QsdGA0LDQvdC40ZjQsCAvINC+0L/RiNGC
-0LXRgdGC0LLQvi4g0JfQsNCx0LXQu9C10LbQtdGC0LUg0LTQtdC60LAg0L7QstC+0Zgg0YTQvtC9
-0LQg0LUg0LTQtdC/0L7QvdC40YDQsNC9INCy0L4g0LHQsNC90LrQsCDQutCw0LTQtSDRiNGC0L4g
-0YDQsNCx0L7RgtC10YjQtSDQvNC+0ZjQvtGCINGB0L7Qv9GA0YPQsy4gQXBwcmVjaWF0ZdC1INGG
-0LXQvdCw0Lwg0LDQutC+INC+0LHRgNC90LXRgtC1INCy0L3QuNC80LDQvdC40LUg0L3QsCDQvNC+
-0LXRgtC+INCx0LDRgNCw0ZrQtSDQt9CwINC/0YDQvtC/0LDQs9C40YDQsNGa0LUg0L3QsCDQvNCw
-0YHQsNC20LDRgtCwINC90LAg0LrRgNCw0LvRgdGC0LLQvtGC0L4sINGc0LUg0LLQuCDQtNCw0LTQ
-sNC8INC/0L7QstC10ZzQtSDQtNC10YLQsNC70Lgg0LfQsCDRgtC+0LAg0LrQsNC60L4g0LTQsCDQ
-v9C+0YHRgtCw0L/QuNGC0LUuDQoNCtCR0LvQsNCz0L7QtNCw0YDQsNC8DQrQky3Rk9CwINCc0LXR
-gNC40LvQuNC9INCg0L7QsdC10YDRgg==
+
+I have a rather puzzling timing issue which I hope someone can shed some 
+light on. We are using a centralized authentication service (Microsoft 
+AD) with authorization restricted to members of a particular security 
+group.  Home directories are housed on an NFS server (Ubuntu 20.04) and 
+automounted to a collection of compute workstations (currently a mixture 
+of Ubuntu 18.04 and 20.04 systems).
+
+Because there is a reasonably high level of turnover (grad students and 
+postdocs) and because I don't want people to login directly to the NFS 
+server any more (hence can't use pam_mkhomedir without compromising 
+security by setting no_root_squash on the NFS server) I decided to try 
+and automate the creation of home directories a different way. To wit, I 
+run a pam_exec script in the session configuration:
+
+/etc/pam.d/common-session:
+-------------------------
+session	optional  pam_exec.so log=/tmp/pam_exec.log 
+/usr/local/sbin/make-nfs_homedir.sh
+
+Which runs this script:
+
+-----------------------------------------------
+#!/bin/bash
+
+if [ $PAM_TYPE = "open_session" ]; then
+
+    UTEID="$(cut -d'@' -f1 <<<"$PAM_USER")"
+    USERGID=$(id -g $UTEID)
+    PROC=$$
+    TEMPDIR=$UTEID$PROC
+
+    if (($USERGID > 100000)); then
+
+       mkdir /tmp/$TEMPDIR
+       mount helios:/home /tmp/$TEMPDIR
+
+
+       if [ ! -d /tmp/$TEMPDIR/$UTEID ]; then
+          mkdir /tmp/$TEMPDIR/temp/$UTEID
+          sleep 70
+       fi
+
+       cd /
+       umount /tmp/$TEMPDIR
+       rmdir  /tmp/$TEMPDIR
+    fi
+fi
+-----------------------------------------------
+
+A brief explanation is in order.  nfs_server:/home is mounted to 
+/tmp/$uid$pid on the client workstation and the script checks to see if 
+the user's home directory already exists.  If so do nothing.  If not, 
+create it in /home/temp.  On the NFS server, the /home/temp directory 
+has 1777 permissions, so anyone can write to it, including the nobody 
+user from the workstations.
+
+Now for some systemd black magic.  On the NFS server there is a systemd 
+path unit file and accompanying service file.  Whenever a directory is 
+created in /home/temp, there's an NFS server script which moves it to 
+/home and sets the appropriate user permissions.  This process is nearly 
+instantaneous; i.e. if I type `mkdir stuff` in /home/temp on the NFS 
+server, I don't have time to type `ls` before the directory is moved to 
+/home with appropriate user permissions set.
+
+One last detail:  /etc/auto.home on the workstation:
+
+   * -tcp,vers=4.2 helios.biosci.utexas.edu:/home/&
+
+
+OK, now for the puzzling part.  Notice the
+
+   sleep 70
+
+directive in the client side pam_exec script.  I've fiddled around with 
+this quite a bit and anything less results in a message of
+
+   Could not chdir to home directory /home/pgoetz: No such file or directory
+
+on first log in. I've checked, and indeed the directory is not mounted. 
+If you hang around in / long enough (roughly 70 seconds) you can 
+eventually cd to your automounted home directory.
+
+So, Question: Why the delay?  The home directory on the NFS server is 
+created nearly instantly, so it can't be that.  And as mentioned, if I 
+sleep for say, 60 seconds, the home directory isn't immediately 
+accessible on login, although one can cd to it a few seconds later.  I 
+can't fathom why the required delay.
+
+
