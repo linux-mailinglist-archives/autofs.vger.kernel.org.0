@@ -2,92 +2,82 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44B8B298873
-	for <lists+autofs@lfdr.de>; Mon, 26 Oct 2020 09:38:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFFFA2A074C
+	for <lists+autofs@lfdr.de>; Fri, 30 Oct 2020 15:01:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1771859AbgJZIil (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 26 Oct 2020 04:38:41 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:38814 "EHLO
-        jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1771843AbgJZIik (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 26 Oct 2020 04:38:40 -0400
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 6233E1C0B96; Mon, 26 Oct 2020 09:38:37 +0100 (CET)
-Date:   Mon, 26 Oct 2020 09:38:37 +0100
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Ian Kent <raven@themaw.net>, Ondrej Mosnacek <omosnace@redhat.com>,
-        Christoph Hellwig <hch@lst.de>,
-        kernel list <linux-kernel@vger.kernel.org>,
-        autofs@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>,
-        Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-        the arch/x86 maintainers <x86@kernel.org>,
-        Peter Anvin <hpa@zytor.com>
-Subject: Re: autofs: use __kernel_write() for the autofs pipe writing causes
- regression in -next was Re: 5.9.0-next-20201015: autofs oops in
- update-binfmts
-Message-ID: <20201026083836.GA24911@duo.ucw.cz>
-References: <20201016123530.GA30444@duo.ucw.cz>
- <bfac7ed28d79b8696cb8576790b27027a78cd3b7.camel@themaw.net>
- <20201017100234.GA3797@amd>
- <CAHk-=whFVYJabpFsSRL-t7PjDfisvNU=kUMPQUh=SDtLtT587w@mail.gmail.com>
- <20201017194758.GA9904@duo.ucw.cz>
- <CAHk-=wikZkCGVkeuDUb6jvz7xyeO4RsH3zQU4bCCnP=MBrd95g@mail.gmail.com>
+        id S1726814AbgJ3OBC (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Fri, 30 Oct 2020 10:01:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58282 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726811AbgJ3OBA (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Fri, 30 Oct 2020 10:01:00 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F79FC0613CF
+        for <autofs@vger.kernel.org>; Fri, 30 Oct 2020 07:01:00 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id m65so4077022qte.11
+        for <autofs@vger.kernel.org>; Fri, 30 Oct 2020 07:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=9fkQXWnoPSypfyxvIrXWSyd1r4Ua0eeDJczOBpIf/BU=;
+        b=J4/Mj6Vty/Qv1ZLQ9x9/2Wdoq4NPdCLORqDCcsulAJkWbbOFq5lOAqvBC8q0lBsLPQ
+         2YRYuaWzuVWHFuecqpOCymUCA4ibh32l3Zl36shF6GKZw6/pz+LXSC5hfPAUfEr1/Own
+         YxHtNJ6kTQTBOUnWeORL/3Ehyk74RIGsbIkJtY6k2XQavq7LY6HD+KNzrDQ1kkfinEO7
+         BNBG2efXihCfQAmvxl7SYlTWCu7BppCmd5VG/9lcmWgzcV4R/KCQTVVemVp5iqIF3A1j
+         /AbRkmHafPCGThBMnktOYw9JPd/NgKDcYAtmUByEWlva5DTqJttU7ctKE5aBtMEaP5gZ
+         EnDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=9fkQXWnoPSypfyxvIrXWSyd1r4Ua0eeDJczOBpIf/BU=;
+        b=DQhO57b6XhxFVw79UuSlFXnAVjRFWnJnGbmK/LkVHOlKQvfU2hqPCErrPCPjTSx228
+         gnfRipmjvrRcA4vYkQqUctJeBiPnyTb1QjG5WbAxiDOqp3z9aZ4Uvz3v94QveOSymeQG
+         nlUuGh1e9bZYm2t659NkvULYlhnB/JR4wIu1IJwmthmJurtN23CEjyNUJn1GAJlYxJOs
+         VDxIrCPWQQ4uPakVsOzxpoKLSCTxz60XCzfWcrJARZqOz98boQI2NE99PZ+szltwTssi
+         DhlUx2xtafyQRlJaaTZ5y08c7bjA2tFfrwew0BcsUpVTbCRfkGde6RU13hButbrgVBAj
+         I/Ww==
+X-Gm-Message-State: AOAM532TsvrygBnyQgE5FldGHfZq2mr5hBw6/odeAFVp+WyU4O2uEhLV
+        416FkpUEiwgvkOM6P0k98Oo7VQyawTqj6yBjrNc=
+X-Google-Smtp-Source: ABdhPJwU5/PazUzOUQ3io1P+dz+g7q1c/HmBzmeugrWcoZEd7mDCp1obJKEMSHpVppHQ15zmKhpna/HUYXJefvpNur0=
+X-Received: by 2002:ac8:3452:: with SMTP id v18mr2209600qtb.177.1604066459393;
+ Fri, 30 Oct 2020 07:00:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="FCuugMFkClbJLl1L"
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wikZkCGVkeuDUb6jvz7xyeO4RsH3zQU4bCCnP=MBrd95g@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Received: by 2002:a37:9f8b:0:0:0:0:0 with HTTP; Fri, 30 Oct 2020 07:00:58
+ -0700 (PDT)
+Reply-To: li.anable85@gmail.com
+From:   Liliane Abel <waynegrigsby0001@gmail.com>
+Date:   Fri, 30 Oct 2020 15:00:58 +0100
+Message-ID: <CAHqwDVaPWXK=WK1v8FBtsu1z175Khvq6yA988GVZH1hSevy5xA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
+Dearest
 
---FCuugMFkClbJLl1L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Greeting my dear, I am Liliane Abel by name, The only daughter of late
+Mr.Benson Abel. My father is one of the top Politician in our country
+and my mother is a farmers and cocoa merchant when they were both
+alive. After the death of my mother, long ago, my father was
+controlling their business until he was poisoned by his business
+associates which he suffered and died.
 
-On Sat 2020-10-17 17:13:20, Linus Torvalds wrote:
-> On Sat, Oct 17, 2020 at 12:48 PM Pavel Machek <pavel@ucw.cz> wrote:
-> >
-> > But: you are the last one to sign it off, so I assume committed it to
-> > git, and you are the one to talk to about fixing it.
->=20
-> The thing is, the commit you point to - and the one I signed off on - is =
-fine.
->=20
-> The buggy one is in linux-next, which breaks that whole "NULL means no
-> position" thing.
->=20
-> IOW, the real bug is in commit 4d03e3cc5982 ("fs: don't allow kernel
-> reads and writes without iter ops"), which does that bogus
->=20
->         kiocb.ki_pos =3D *pos;
->=20
-> and no, I never signed off on that.
->=20
-> Get it? Stop confusing people. This bug does not exist in mainline,
-> and never will. Because I'm not pulling that buggy commit.
-
-And I guess that's a good thing. It is now fixed in -next, too. Sorry
-for the noise.
-
-Best regards,
-								Pavel
-
---=20
-http://www.livejournal.com/~pavelmachek
-
---FCuugMFkClbJLl1L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCX5aLDAAKCRAw5/Bqldv6
-8l3iAKDA9QgXwAVJMYPECRYiZvls/4K58wCfQVKE+alumoUT3rMzunV+vN1L8Jk=
-=r+i9
------END PGP SIGNATURE-----
-
---FCuugMFkClbJLl1L--
+Before the death of my father, He told me about (two million five
+hundred thousand united states dollars) which he deposited in the bank
+in Lome-Togo, It was the money he intended to transfer overseas for
+investment before he was poisoned. He also instructed me that I should
+seek for foreign partners in any country of my choice who will assist
+me transfer this money in overseas account where the money will be
+wisely invested.
+I am seeking for your kind assistance in the following ways:  (1) to
+provide a safe bank account into where the money will be transferred
+for investment. (2) To serve as a guardian of this fund since I am a
+girl of 19 years old. (3) To make arrangement for me to come over to
+your country to further my education. This is my reason for writing to
+you. Please if you are willing to assist me I will offer you 25% of
+the total money. Reply if  you are interested
+Best regards.
+Liliane Abel.
