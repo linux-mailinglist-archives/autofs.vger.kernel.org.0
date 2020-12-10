@@ -2,24 +2,25 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0BFF2D5A72
-	for <lists+autofs@lfdr.de>; Thu, 10 Dec 2020 13:25:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E92B2D5A73
+	for <lists+autofs@lfdr.de>; Thu, 10 Dec 2020 13:25:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726253AbgLJMYu (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 10 Dec 2020 07:24:50 -0500
-Received: from server.kenspensetc.com ([185.148.128.76]:37822 "EHLO
+        id S1728631AbgLJMY7 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 10 Dec 2020 07:24:59 -0500
+Received: from server.kenspensetc.com ([185.148.128.76]:37312 "EHLO
         server.kenspensetc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729324AbgLJMYf (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 10 Dec 2020 07:24:35 -0500
-Received: from localhost ([127.0.0.1]:56460 helo=server.kenspensetc.com)
+        with ESMTP id S1730966AbgLJMX4 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 10 Dec 2020 07:23:56 -0500
+X-Greylist: delayed 2731 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Dec 2020 07:23:56 EST
+Received: from localhost ([127.0.0.1]:57142 helo=server.kenspensetc.com)
         by server.kenspensetc.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
         (Exim 4.93)
         (envelope-from <sender@ridecals.com>)
-        id 1knKFZ-0003rI-Kh; Thu, 10 Dec 2020 06:36:45 -0500
+        id 1knKFm-0003ul-HM; Thu, 10 Dec 2020 06:36:58 -0500
 Received: from [70.32.0.46] ([70.32.0.46]) by ridecals.com (Horde Framework)
- with HTTPS; Thu, 10 Dec 2020 06:36:45 -0500
-Date:   Thu, 10 Dec 2020 06:36:45 -0500
-Message-ID: <20201210063645.Horde.sWicAqVr2nqTsDb1mGNgDXY@ridecals.com>
+ with HTTPS; Thu, 10 Dec 2020 06:36:58 -0500
+Date:   Thu, 10 Dec 2020 06:36:58 -0500
+Message-ID: <20201210063658.Horde.JqKKSDtdEBCDG3cPzlCp_RT@ridecals.com>
 From:   Russell Branting <sender@ridecals.com>
 Subject: vital
 Reply-to: Goodagent01@gmail.com
