@@ -2,126 +2,99 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C0863067CB
-	for <lists+autofs@lfdr.de>; Thu, 28 Jan 2021 00:26:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E971F307E2A
+	for <lists+autofs@lfdr.de>; Thu, 28 Jan 2021 19:39:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234531AbhA0XXv (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 27 Jan 2021 18:23:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46400 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234030AbhA0XWq (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 27 Jan 2021 18:22:46 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E03E4C061573
-        for <autofs@vger.kernel.org>; Wed, 27 Jan 2021 15:22:04 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id n42so3434492ota.12
-        for <autofs@vger.kernel.org>; Wed, 27 Jan 2021 15:22:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=DVyFeQYkmPhaCEE7jP8AvoJAXSPSJQ7WbBPBSkOzXOg=;
-        b=o+iqmkxl/D1yw7wDN7x99rrPBVfWTUM11DI2/CAsQBFGMhaA9J2lNuyKqDlgBYWiVj
-         WJJozV6y7prP3Lo4BG1d6NaNym7suZt+Yg6G3hlZRy0a+sljYE+hQs2/MoPaq5gnD1Ie
-         kgRoUchcoB9f6cZML7ySXPDZ3i1Gkl/t6LPFO4s56n4TlqFOULtUocUJ1yxUp4AZImX3
-         WZ6OpUBc6VM0txC8JjPVn8grP70kCovsnN/7rbgDgnXioYCXNUlMV4g62ajwd3nI65nC
-         9SXmN2IfNEu9mZI8JIqu9JwOx3TYCUWcOhWPD36Co/Ur+eQc3IcxovX2sWGWOLwn1CAs
-         FBwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=DVyFeQYkmPhaCEE7jP8AvoJAXSPSJQ7WbBPBSkOzXOg=;
-        b=dgMygGYladV3Z4mroMiNknnMeZ60TCnOyrDFZzQU5o7SMBbZ+hpev4pwsZLeJFREuD
-         AHt9cu7yaXuV+GEk2xQldd27Yb36h+Sihg2BrHlu0xp3DqdaxbgzibALriSMMPGdSBKn
-         qiDNcJ1j9YGhPVLvMMQW0P/L3R0qbV1US6qzXFEdy9XfUzVaLVF4Iw3sTQI6IyMIAtbA
-         G7K8UACj7Ydf7b4OsupVp0CDN0shDJnI3NzMU4Sw+Zds3MQLmor5kFsUQY0241Ijje6S
-         qKX9Vmou33LKlfN1pupxRGBL+KoOJzYW5DgAXyTj077gk4L/SWsecCPnaNe9yXIgQfaO
-         lA2w==
-X-Gm-Message-State: AOAM530R54Phrvi/fSanCuRntLL5V42qJ1NL2JIb6BkEBOJyDHfYyr9U
-        fOfAVURqGGI60Gnla2EMqb6Ip22mo9PZITx31ek=
-X-Google-Smtp-Source: ABdhPJysq3NsqSjLFY9p9hBPIKunYZMZtTBSt+FHd2KFQp/uZ2Lvti0TgoY8/xE9vWfRfi3jox0GlT6EabLXUCqM90c=
-X-Received: by 2002:a05:6830:1d42:: with SMTP id p2mr9342525oth.232.1611789723923;
- Wed, 27 Jan 2021 15:22:03 -0800 (PST)
+        id S232095AbhA1Sia (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 28 Jan 2021 13:38:30 -0500
+Received: from spe8-2.ucebox.co.za ([197.242.156.207]:33013 "EHLO
+        spe8-2.ucebox.co.za" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231730AbhA1ShI (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 28 Jan 2021 13:37:08 -0500
+X-Greylist: delayed 1090 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Jan 2021 13:36:34 EST
+Received: from cornucopia.aserv.co.za ([154.0.175.203])
+        by spe8.ucebox.co.za with esmtps (TLSv1.2:AES128-GCM-SHA256:128)
+        (Exim 4.92)
+        (envelope-from <manornutgrovemanor@gmail.com>)
+        id 1l5Bpi-0007LJ-Au; Thu, 28 Jan 2021 20:16:15 +0200
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by cornucopia.aserv.co.za (Postfix) with ESMTPA id CF403C1250;
+        Thu, 28 Jan 2021 20:14:51 +0200 (SAST)
 MIME-Version: 1.0
-Received: by 2002:a05:6830:1e8b:0:0:0:0 with HTTP; Wed, 27 Jan 2021 15:22:03
- -0800 (PST)
-Reply-To: monikasing1971@gmail.com
-From:   Mrs Monika Singh <carlosaaron185@gmail.com>
-Date:   Wed, 27 Jan 2021 15:22:03 -0800
-Message-ID: <CANib1iP5cR+439f=-WsoPAWU+4GeBYXb0xTVYeLd0a5A0dGy_w@mail.gmail.com>
-Subject: Ich erwarte Ihre dringende Antwort
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 28 Jan 2021 20:14:51 +0200
+From:   Nut Grove Manor <manornutgrovemanor@gmail.com>
 To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Invitation To Quote
+User-Agent: Roundcube Webmail/1.4.1
+Message-ID: <f4df241716ca77b03e15c5275364cf84@gmail.com>
+X-Sender: manornutgrovemanor@gmail.com
+X-Originating-IP: 154.0.175.203
+X-Afrihost-Domain: pesci.aserv.co.za
+X-Afrihost-Username: 154.0.175.203
+Authentication-Results: ucebox.co.za; auth=pass smtp.auth=154.0.175.203@pesci.aserv.co.za
+X-Afrihost-Outgoing-Class: unsure
+X-Afrihost-Outgoing-Evidence: Combined (0.71)
+X-Recommended-Action: accept
+X-Filter-ID: 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
+X-Report-Abuse-To: spam@spe1.ucebox.co.za
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Lieber geliebter
-Ich m=C3=B6chte, dass Sie diesen Brief sehr sorgf=C3=A4ltig lesen, und ich =
-muss
-mich daf=C3=BCr entschuldigen, dass Sie diese Massage ohne formelle
-Einf=C3=BChrung erhalten haben, da diese Angelegenheit dringend vertraulich
-behandelt wird ...
-Ich bin gl=C3=BCcklich dich zu kennen. Aber der allm=C3=A4chtige Herr kennt=
- dich
-besser und wei=C3=9F, warum er mich an dieser Stelle an dich verwiesen hat.
-Zun=C3=A4chst bin ich auf der Suche nach einem guten n=C3=A4chsten Verwandt=
-en im
-Internet, da ich dringend meinen letzten Wunsch in die Realit=C3=A4t
-umsetzen muss, bevor ich bald sterbe.
-Ich schreibe Ihnen diese Mail mit schweren Tr=C3=A4nen In meinen Augen und
-gro=C3=9Fer Trauer in meinem Herzen. Mein Name ist Frau Monika Singh. Ich
-komme aus Indien. Ich m=C3=B6chte Ihnen dies sagen, weil ich keine andere
-Wahl habe als Als ich ber=C3=BChrt wurde, um mich Ihnen zu =C3=B6ffnen, war=
- ich
-mit Herrn Peter Singh verheiratet, der neun Jahre lang mit der
-tunesischen Botschaft in Madrid, Spanien, zusammengearbeitet hatte,
-bevor er im Jahr 2005 starb. Wir waren elf Jahre lang ohne Kind
-verheiratet.
+Good Day Sir
 
-Er starb nach einer kurzen Krankheit, die nur f=C3=BCnf Tage dauerte. Seit
-seinem Tod habe ich beschlossen, nicht wieder zu heiraten. Als mein
-verstorbener Ehemann am Leben war, hat er den Betrag von 27.850.000,00
-=E2=82=AC (27 Millionen achthundertf=C3=BCnfzigtausend Euro) bei einer Bank=
- in
-Indien, Neu-Delhi, der Hauptstadt von Neu-Delhi, Indien, hinterlegt.
-Derzeit ist dieses Geld noch auf der Bank, er stellte dieses Geld f=C3=BCr
-den Export von Gold aus dem Bergbau in Madrid, Spanien, vor seinem
-pl=C3=B6tzlichen Tod zur Verf=C3=BCgung. K=C3=BCrzlich sagte mir mein Arzt,=
- dass ich
-wegen eines Krebsproblems nicht 3 Monate durchhalten w=C3=BCrde. Das, was
-mich am meisten st=C3=B6rt, ist meine Schlaganfallkrankheit. Nachdem ich
-meinen Zustand gekannt habe, habe ich beschlossen, Ihnen dieses Geld
-zu =C3=BCbergeben, um sich um die weniger privilegierten Menschen zu
-k=C3=BCmmern. Sie werden dieses Geld so verwenden, wie ich es hier anweisen
-werde.
+We are please to invite you/your company to quote the following item
+listed
+below:
 
-Ich m=C3=B6chte, dass Sie 30 Prozent des Gesamtgeldes f=C3=BCr Ihren
-pers=C3=B6nlichen Gebrauch und f=C3=BCr Ihre Bem=C3=BChungen und Ihr Engage=
-ment f=C3=BCr
-die Arbeit des Wohlt=C3=A4tigkeitsprojekts verwenden. 70% des Geldes
-flie=C3=9Fen in die Arbeit des Wohlt=C3=A4tigkeitsprojekts, bed=C3=BCrftige=
- Menschen
-von der Stra=C3=9Fe und helfen der Waisenhaus auch, ich bin als Waisenkind
-aufgewachsen und ich habe keinen K=C3=B6rper als mein Familienmitglied.
-Stellen Sie auch sicher, dass das Haus Gottes aus den Mitteln erhalten
-bleibt. Tue dies, damit Gott meine S=C3=BCnden vergibt und meine Seele
-akzeptiert, weil diese Krankheiten mich so sehr gelitten haben. Sobald
-ich Ihre Antwort erhalten habe, werde ich Ihnen den Kontakt der Bank
-in Delhi, Indien, geben und den Bankmanager anweisen, Ihnen ein
-Vollmachtsschreiben auszustellen, das Ihnen den gegenw=C3=A4rtigen
-Beg=C3=BCnstigten des Geldes in der Bank nachweist, wenn dies der Fall ist
-Sie versichern mir, dass Sie entsprechend handeln werden, wie ich es
-hier angegeben habe.
+Product/Model No: TM9653 PRESSURE REGULATOR
+Product Name:MEKO
+Qty. 30 units
 
-In der Hoffnung, Ihre Antwort zu erhalten, werde ich mit Ihnen zur
-Bank gehen, damit das Geld so schnell wie m=C3=B6glich auf Ihr Bankkonto
-=C3=BCberwiesen wird.
-Das ist, wenn Sie ernst genug sind, um das Projekt zu bearbeiten und
-sich auch daf=C3=BCr einzusetzen, weil ich glaube, dass ich Ihnen ehrlich
-vertrauen kann.
+Compulsory,Kindly send your quotation
+for immediate approval.
 
-Hochachtungsvoll.
-Frau Monika Singh
+Kind Regards,
+Albert Bourla
+PFIZER B.V Supply Chain Manager
+Tel: +31(0)208080 880
+ADDRESS: Rivium Westlaan 142, 2909 LD
+Capelle aan den IJssel, Netherlands
