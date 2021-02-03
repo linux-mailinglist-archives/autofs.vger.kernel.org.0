@@ -2,68 +2,70 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14B5230DB37
-	for <lists+autofs@lfdr.de>; Wed,  3 Feb 2021 14:30:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 683DE30DEA3
+	for <lists+autofs@lfdr.de>; Wed,  3 Feb 2021 16:49:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231646AbhBCN2D (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 3 Feb 2021 08:28:03 -0500
-Received: from 198-20-226-115.unifiedlayer.com ([198.20.226.115]:51174 "EHLO
-        198-20-226-115.unifiedlayer.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S231886AbhBCN2C (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 3 Feb 2021 08:28:02 -0500
-X-Greylist: delayed 21682 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2021 08:27:03 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=carnivalassure.com.bd; s=default; h=Content-Transfer-Encoding:Content-Type:
-        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=miRpAdBSO5eDo01VDX+EK9bqGCmqMjXHS3kO16T6iWw=; b=oR9DBi73zWrpNptVGG8joD1q3D
-        a2vFVnixMQAUcmehD6fgJOQ9JP9N27NiM2NuC8HmaSTuyc4tIbd8kMLlSjPNy8b19j5i4Yecn4k41
-        d2L53GGQ3KAYNm9cTjTcF00G/e0wgveF66KZo4CFoHY+VyQWZpnDvHs7YXjdM1k0LGC10SnlZJnOf
-        hyfuxn41TeLbFp37bqri+jK8o3wb0VHiGKRxBfijUx18MCanoqvAna1IaS7ccBxFfbvZdTXygBXlc
-        j3LFBSU0eQazmqTdBY+jvtCMEdlAV/WbBykAUBZA45AnMWlIO1A8LzPVfVBXCEwNqNeODasQNIR6+
-        B0GfR5SA==;
-Received: from [127.0.0.1] (port=46664 helo=dot.dotlines.com.sg)
-        by dot.dotlines.com.sg with esmtpa (Exim 4.93)
-        (envelope-from <noreply@carnivalassure.com.bd>)
-        id 1l7CVp-0005bM-9S; Wed, 03 Feb 2021 01:23:41 -0600
+        id S234590AbhBCPtV (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 3 Feb 2021 10:49:21 -0500
+Received: from mx2.suse.de ([195.135.220.15]:41990 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233001AbhBCPsy (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Wed, 3 Feb 2021 10:48:54 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.221.27])
+        by mx2.suse.de (Postfix) with ESMTP id 099A6AC55;
+        Wed,  3 Feb 2021 15:48:13 +0000 (UTC)
+Date:   Wed, 3 Feb 2021 09:48:23 -0600
+From:   Goldwyn Rodrigues <rgoldwyn@suse.de>
+To:     autofs@vger.kernel.org, raven@themaw.net
+Subject: Re: [PATCH] Fix option for master read wait
+Message-ID: <20210203154823.2ylti4ksqbpvpesh@fiona>
+References: <20201023135941.ednsszxsvgwv65k2@fiona>
 MIME-Version: 1.0
-Date:   Wed, 03 Feb 2021 01:23:40 -0600
-From:   Francois Pinault <noreply@carnivalassure.com.bd>
-To:     undisclosed-recipients:;
-Subject: Hello/Hallo
-Organization: Donation
-Reply-To: francoispinault1936@outlook.com
-Mail-Reply-To: francoispinault1936@outlook.com
-Message-ID: <02cc13f2661d3cb7582fa6695be089c9@carnivalassure.com.bd>
-X-Sender: noreply@carnivalassure.com.bd
-User-Agent: Roundcube Webmail/1.3.15
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - dot.dotlines.com.sg
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - carnivalassure.com.bd
-X-Get-Message-Sender-Via: dot.dotlines.com.sg: authenticated_id: noreply@carnivalassure.com.bd
-X-Authenticated-Sender: dot.dotlines.com.sg: noreply@carnivalassure.com.bd
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201023135941.ednsszxsvgwv65k2@fiona>
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
+Hi Ian,
 
+Any feedback on this? The fix is not included in 5.1.7.
+
+Reproduction scenario:
+
+# automount -M 2 -d -f
+Segmentation fault (core dumped)
+
+On  8:59 23/10, Goldwyn Rodrigues wrote:
+> master wait expects a value, and if provided automount crashes with the
+> following trace:
+> 
+> #0  __GI_____strtoul_l_internal (nptr=0x0, endptr=0x7fffffffe120, base=0, group=<optimized out>,
+>     loc=0x7ffff77a63a0 <_nl_global_locale>) at ../stdlib/strtol_l.c:292
+> #1  0x0000555555562c52 in getnumopt ()
+> #2  0x0000555555564ec0 in main ()
+> 
+> This is because the options string is not correct and does not expect
+> an argument for master wait (M), which sets optarg to NULL
+> 
+> Fixes: e68f07f ("autofs-5.1.2 - add master read wait option")
+> Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+> 
+> diff --git a/daemon/automount.c b/daemon/automount.c
+> index 0391bfb..c2a0f58 100644
+> --- a/daemon/automount.c
+> +++ b/daemon/automount.c
+> @@ -2219,7 +2219,7 @@ int main(int argc, char *argv[])
+>  	time_t timeout;
+>  	time_t age = monotonic_time(NULL);
+>  	struct rlimit rlim;
+> -	const char *options = "+hp:t:vmdD:SfVrO:l:n:CFM";
+> +	const char *options = "+hp:t:vmdD:SfVrO:l:n:CFM:";
+>  	static const struct option long_options[] = {
+>  		{"help", 0, 0, 'h'},
+>  		{"pid-file", 1, 0, 'p'},
 
 -- 
-Hallo, ich bin Herr Francois Pinault, ich habe Ihnen gespendet. Sie 
-können mein Profil auf Wikipedia, Google oder Forbes überprüfen.
-
-Für Ihren Spendenanspruch und weitere Informationen kontaktieren Sie 
-mich umgehend unter francoispinault1936@outlook.com
-
-Mit freundlichen Grüßen,
-Herr Francois Pinault
+Goldwyn
