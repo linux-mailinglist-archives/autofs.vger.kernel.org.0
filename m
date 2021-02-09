@@ -2,65 +2,78 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5EA7312DA3
-	for <lists+autofs@lfdr.de>; Mon,  8 Feb 2021 10:46:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFD083160AD
+	for <lists+autofs@lfdr.de>; Wed, 10 Feb 2021 09:13:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231858AbhBHJpj (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 8 Feb 2021 04:45:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231878AbhBHJmn (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 8 Feb 2021 04:42:43 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59660C06174A
-        for <autofs@vger.kernel.org>; Mon,  8 Feb 2021 01:42:02 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id m13so16207568wro.12
-        for <autofs@vger.kernel.org>; Mon, 08 Feb 2021 01:42:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=z7Z/JdX0RhrlgqchmamXWMY47TIIKUp5Zm0+e0J1lMs=;
-        b=L7DAM2LHaitM1G9bySdtuSeuKY7Xlp9tTsr/L2xA4hUTwb87nkg2uZX4VGqQ2Aw4g7
-         cukNpJDhWVHWZKpbBdjsqBQIH3631Q22DKfgZ+Dp5itKezNnFlLZ3fX6Hsvw4dPtRGt8
-         24BFw8pksmup88lijwZIRn21ifZirrmgzWkt1qAuH3hoJWl6AX4drfebfqoIKELohpmO
-         QaEVwViqJXyPWRUXNjhWmFYC/yQRc1XQsbvyVPw/ltELqP19gg03Lx2vqzZ6c2iziHCN
-         7kx+XXrpzs/hFBWqIysXZiu9AYNn+SDEuc8DIovN0L7KhdFNZFLMgV1DDquYhRyIDUtN
-         joug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=z7Z/JdX0RhrlgqchmamXWMY47TIIKUp5Zm0+e0J1lMs=;
-        b=B8JxMIq46vGLk5HQyPyjkQBZ3rtybQVJ7u/Uq0U7Y7FteYh8NsYSe2uzo/kGwukrh1
-         k6x4xqP3f53iF3cgVoCf2F1uP8imXpheSSCim5kMnzW3dv5chs1oeEGhzyugi4vr8xRd
-         wRuAiSoG/kcd0MwIdUN5XokkBSxUPpJ2JThEpvSraPFLIKX5Jbr61Gf+okhvWkwOaqXY
-         c7KwiRKkJk7d+xLY4+iah0gZKJ41Fcuy2uo2IkU80H6u++oITn+mOe2eqPaVrPsthRkD
-         dh14MTkIginE3rXbcnMoX08xXztBYoq2GZ/l3J8FpkNW3buDSt+0yA75aN/LlTVIxQPJ
-         OshQ==
-X-Gm-Message-State: AOAM533nFbUSjZv9g9w26G7EHBHHBvDzKk2I9bKCadw3gKoGowNJgvI4
-        ASTEYsdHTxn5g+EwikAmz8HRih54z+V1vj7e0Rw=
-X-Google-Smtp-Source: ABdhPJyr3Y81ssDQpcUDmpiptiRLScyR/fSTzQNzrR3Gd0RGI3VMg83+gRpTrLK9cF0Tr9wm5i4a+LXW35HzmEVfz7I=
-X-Received: by 2002:a5d:5544:: with SMTP id g4mr18559441wrw.59.1612777321091;
- Mon, 08 Feb 2021 01:42:01 -0800 (PST)
+        id S233733AbhBJIM2 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+autofs@lfdr.de>); Wed, 10 Feb 2021 03:12:28 -0500
+Received: from spam.auroraoh.com ([24.56.89.101]:54780 "EHLO
+        barracuda.auroraoh.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S233738AbhBJIMT (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 10 Feb 2021 03:12:19 -0500
+X-ASG-Debug-ID: 1612944670-112c0d6a799cb90001-cuW1XA
+Received: from COASRV-MAIL2.auroraoh.loc (coasrv-mail2.auroraoh.loc [10.3.1.15]) by barracuda.auroraoh.com with ESMTP id jJ81a9DkExpcgPkc; Wed, 10 Feb 2021 03:11:10 -0500 (EST)
+X-Barracuda-Envelope-From: JanuskaD@auroraoh.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.3.1.15
+Received: from [172.20.10.5] (197.210.29.8) by COASRV-MAIL2.auroraoh.loc
+ (10.3.1.15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Tue, 9 Feb 2021
+ 02:45:33 -0500
+Content-Type: text/plain; charset="iso-8859-1"
+X-Barracuda-RBL-Trusted-Forwarder: 172.20.10.5
 MIME-Version: 1.0
-Received: by 2002:a1c:2c82:0:0:0:0:0 with HTTP; Mon, 8 Feb 2021 01:42:00 -0800 (PST)
-Reply-To: infowebb@citromail.hu
-From:   "Mr. Richard Thomas" <rictthhomas@gmail.com>
-Date:   Mon, 8 Feb 2021 01:42:00 -0800
-Message-ID: <CAHG73zw_EnJiTjZN7fUKntPUDtimZZgOf0WHg35kxhOSgzd0GQ@mail.gmail.com>
-Subject: Re Thanks.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: We are a registered Private Loan Investment Company in the United Kingdom,
+ we also registered with the Turkish British Chamber of Commerce and Industry
+ (TBCCI) we have operations in Europe and Asia.
+To:     Recipients <januskad@auroraoh.com>
+X-ASG-Orig-Subj: We are a registered Private Loan Investment Company in the United Kingdom,
+ we also registered with the Turkish British Chamber of Commerce and Industry
+ (TBCCI) we have operations in Europe and Asia.
+From:   <januskad@auroraoh.com>
+Date:   Tue, 9 Feb 2021 15:44:47 +0800
+Reply-To: <cfolimiited@gmail.com>
+X-Priority: 1 (High)
+X-Antivirus: Avast (VPS 210207-2, 02/07/2021), Outbound message
+X-Antivirus-Status: Clean
+Message-ID: <04dad0e2-2f3b-46a3-bb30-cab23ca007d4@COASRV-MAIL2.auroraoh.loc>
+X-Originating-IP: [197.210.29.8]
+X-ClientProxiedBy: COASRV-MAIL3.auroraoh.loc (10.3.1.13) To
+ COASRV-MAIL2.auroraoh.loc (10.3.1.15)
+X-Barracuda-Connect: coasrv-mail2.auroraoh.loc[10.3.1.15]
+X-Barracuda-Start-Time: 1612944670
+X-Barracuda-URL: https://10.3.1.12:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at auroraoh.com
+X-Barracuda-Scan-Msg-Size: 755
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 1.61
+X-Barracuda-Spam-Status: No, SCORE=1.61 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=BSF_SC0_SA609_NRN, BSF_SC0_SA912_RP_FR, BSF_SC0_SA_TO_FROM_ADDR_MATCH, NO_REAL_NAME
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.87880
+        Rule breakdown below
+         pts rule name              description
+        ---- ---------------------- --------------------------------------------------
+        0.00 NO_REAL_NAME           From: does not include a real name
+        0.01 BSF_SC0_SA912_RP_FR    Custom Rule BSF_SC0_SA912_RP_FR
+        0.50 BSF_SC0_SA_TO_FROM_ADDR_MATCH Sender Address Matches Recipient
+                                   Address
+        1.10 BSF_SC0_SA609_NRN      Custom Rule SA609_NRN
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Dear Friend,
-I will be pleased if you can allow me to invest $104M Dollars in
-Estate Management,in your company or any area you best that will be
-of good profit to both of us
+We are seeking for beneficiaries who source for fund to expand/relocating their business interest abroad. We are ready to fund projects outside Turkey and United Kingdom in the form of Soft Loan. We grant loans to both corporate and private entities at a low interest rate of 2% R.O.I per annul.
 
-Please do well to respond including your information for more details.
+We like to grant loan in the following sectors: oil/Gas, banking, real estate, stock speculation and mining, transportation, health sector and tobacco, Communication Services, Agriculture Forestry & Fishing, thus any sector. The terms are very flexible and interesting.
 
-Thanks.
-Mr.Richard Thomas
+Please contact us for more details;
+
+
+Kind regards,
+
+Paul McCann
+
+-- 
+This email has been checked for viruses by Avast antivirus software.
+https://www.avast.com/antivirus
+
