@@ -2,48 +2,60 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 427B9320A12
-	for <lists+autofs@lfdr.de>; Sun, 21 Feb 2021 12:46:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41DB2321E20
+	for <lists+autofs@lfdr.de>; Mon, 22 Feb 2021 18:31:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229863AbhBULql (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sun, 21 Feb 2021 06:46:41 -0500
-Received: from mpcb.gov.in ([125.17.249.59]:37766 "EHLO
-        fortimail.email.mpcb.gov.in" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S229817AbhBULql (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sun, 21 Feb 2021 06:46:41 -0500
-Received: from User (rain-197-185-103-30.rain.network [197.185.103.30])
-        (user=feedback.consent@mpcb.gov.in mech=LOGIN bits=0)
-        by fortimail.email.mpcb.gov.in  with ESMTP id 11K6aHe8001491-11K6aHeA001491;
-        Sat, 20 Feb 2021 12:06:20 +0530
-Message-Id: <202102200636.11K6aHe8001491-11K6aHeA001491@fortimail.email.mpcb.gov.in>
-Reply-To: <brightwayfinanceloan01@protonmail.com>
-From:   "Brightway Finance Loan" <brightwayfinanceloan@gmail.com>
-Subject: Apply for loan at 5% interest rate per year
-Date:   Sat, 20 Feb 2021 08:36:17 +0200
+        id S230447AbhBVRa2 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 22 Feb 2021 12:30:28 -0500
+Received: from mail.jvpinto.com ([65.49.11.60]:34622 "EHLO mail.JVPinto.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230083AbhBVRaZ (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Mon, 22 Feb 2021 12:30:25 -0500
+Received: from RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) by
+ RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.2; Mon, 22 Feb 2021 09:29:39 -0800
+Received: from User (52.231.198.195) by RW-EXC1.JVPinto.com (172.32.1.13) with
+ Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Mon, 22 Feb 2021
+ 09:29:25 -0800
+Reply-To: <ms.reem@yandex.com>
+From:   "Ms. Reem" <johnpinto@jvpinto.com>
+Subject: Hello okay
+Date:   Mon, 22 Feb 2021 17:29:38 +0000
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
+Content-Type: text/plain; charset="Windows-1251"
 Content-Transfer-Encoding: 7bit
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2600.0000
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-X-FEAS-Auth-User: feedback.consent@mpcb.gov.in
-X-FE-Policy-ID: 0:1:2:SYSTEM
-To:     unlisted-recipients:; (no To-header on input)
+Message-ID: <ebbda112ad304ded9bf3ad93f76b6de0@RW-EXC1.JVPinto.com>
+To:     Undisclosed recipients:;
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-BrightWay Finance offers Loans ranging from (R10, 000.00 - R60, 000,000.00). Loan duration is from 1 to 20 years (Maximum) No collateral,
-No ITC CHECK and Blacklisted are welcome. If you wish to apply kindly send your full names, ID number, 
-email address and cellphone number to brightwayfinanceloan01@protonmail.com
+Hello,
 
+My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
+and Petroleum" also "Minister of State for International Cooperation"
+in UAE. I write to you on behalf of my other "three (3) colleagues"
+who has approved me to solicit for your "partnership in claiming of
+{us$47=Million}" from a Financial Home in Cambodia on their behalf and
+for our "Mutual Benefits".
 
-Yours in Service,
+The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
+deal with Cambodian/Vietnam Government within 2013/2014, however, we
+don't want our government to know about the fund. If this proposal
+interests you, let me know, by sending me an email and I will send to
+you detailed information on how this business would be successfully
+transacted. Be informed that nobody knows about the secret of this
+fund except us, and we know how to carry out the entire transaction.
+So I am compelled to ask, that you will stand on our behalf and
+receive this fund into any account that is solely controlled by you.
 
-Jane Cooper
-MARKETING TEAM
-Tel No: +27(0)622541582
-BrightWay Finance Loan(PTY) LTD.
-brightwayfinanceloan01@protonmail.com
+We will compensate you with 15% of the total amount involved as
+gratification for being our partner in this transaction. Reply to:
+ms.reem@yandex.com
+
+Regards,
+Ms. Reem.
