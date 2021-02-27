@@ -2,25 +2,25 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41DB2321E20
-	for <lists+autofs@lfdr.de>; Mon, 22 Feb 2021 18:31:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EC99326C07
+	for <lists+autofs@lfdr.de>; Sat, 27 Feb 2021 07:51:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbhBVRa2 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 22 Feb 2021 12:30:28 -0500
-Received: from mail.jvpinto.com ([65.49.11.60]:34622 "EHLO mail.JVPinto.com"
+        id S229752AbhB0Gvf (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sat, 27 Feb 2021 01:51:35 -0500
+Received: from mail.jvpinto.com ([65.49.11.60]:19780 "EHLO mail.JVPinto.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230083AbhBVRaZ (ORCPT <rfc822;autofs@vger.kernel.org>);
-        Mon, 22 Feb 2021 12:30:25 -0500
+        id S229554AbhB0Gvf (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Sat, 27 Feb 2021 01:51:35 -0500
 Received: from RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) by
  RW-EXC1.JVPinto.com (2002:ac20:10d::ac20:10d) with Microsoft SMTP Server
- (TLS) id 15.0.1497.2; Mon, 22 Feb 2021 09:29:39 -0800
+ (TLS) id 15.0.1497.2; Fri, 26 Feb 2021 22:50:49 -0800
 Received: from User (52.231.198.195) by RW-EXC1.JVPinto.com (172.32.1.13) with
- Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Mon, 22 Feb 2021
- 09:29:25 -0800
+ Microsoft SMTP Server id 15.0.1497.2 via Frontend Transport; Fri, 26 Feb 2021
+ 22:50:34 -0800
 Reply-To: <ms.reem@yandex.com>
 From:   "Ms. Reem" <johnpinto@jvpinto.com>
 Subject: Hello okay
-Date:   Mon, 22 Feb 2021 17:29:38 +0000
+Date:   Sat, 27 Feb 2021 06:50:48 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset="Windows-1251"
 Content-Transfer-Encoding: 7bit
@@ -28,7 +28,7 @@ X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2600.0000
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <ebbda112ad304ded9bf3ad93f76b6de0@RW-EXC1.JVPinto.com>
+Message-ID: <95ffdc20b6c54cfbb88a3a27aed487be@RW-EXC1.JVPinto.com>
 To:     Undisclosed recipients:;
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
