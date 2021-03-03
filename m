@@ -2,25 +2,25 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CA9332C285
+	by mail.lfdr.de (Postfix) with ESMTP id D015F32C288
 	for <lists+autofs@lfdr.de>; Thu,  4 Mar 2021 01:04:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233773AbhCCUy2 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 3 Mar 2021 15:54:28 -0500
-Received: from relay.sw.ru ([185.231.240.75]:38106 "EHLO relay.sw.ru"
+        id S234677AbhCCUyd (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 3 Mar 2021 15:54:33 -0500
+Received: from relay.sw.ru ([185.231.240.75]:34926 "EHLO relay.sw.ru"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1381470AbhCCPdD (ORCPT <rfc822;autofs@vger.kernel.org>);
-        Wed, 3 Mar 2021 10:33:03 -0500
+        id S1445187AbhCCQSc (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Wed, 3 Mar 2021 11:18:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
-        Content-Type; bh=ytMuFTYJbOuVzYAB8UcxHSbHYeMMy8+JvA85KaeMmIU=; b=vZqwYNQG/blc
-        IfoK6sw52c+h/GJYjxXDQjk48bIVzjekeInDmLslNCZ+1EgrF3xv2YtIjH9E/YUdZTtR9Tp1m/Hk+
-        owbOhv3CbY6w8mjTwzMRl0gS7vdEs8mYAazsfr1J8p5whUx1qDEgSCVm2bLsZXgnsBTt27k8AE3lu
-        iU7TI=;
+        Content-Type; bh=ytMuFTYJbOuVzYAB8UcxHSbHYeMMy8+JvA85KaeMmIU=; b=g8uozpPqx1C0
+        3iniseSFPsuNf9qb1sPPVJB3Vos6T9/wmyTzMZE2dvgS8Fz9f3a6O8ojrRyrOwr1T9xACeFKkmEqo
+        mKsdzX5yAaUM4hDDYdsIzhJQ/rG6RqoLCSMxWR/BaU0KlrpWxy+oiPXMsytOVWCDqW2INy9iNWXsM
+        fnAoI=;
 Received: from amikhalitsyn.sw.ru ([10.93.0.33] helo=dhcp-172-16-24-175.sw.ru)
         by relay.sw.ru with esmtp (Exim 4.94)
         (envelope-from <alexander.mikhalitsyn@virtuozzo.com>)
-        id 1lHTS9-002fSH-DP; Wed, 03 Mar 2021 18:30:21 +0300
+        id 1lHUBd-002fYQ-MF; Wed, 03 Mar 2021 19:17:21 +0300
 From:   Alexander Mikhalitsyn <alexander.mikhalitsyn@virtuozzo.com>
 To:     raven@themaw.net
 Cc:     Alexander Mikhalitsyn <alexander.mikhalitsyn@virtuozzo.com>,
@@ -36,8 +36,8 @@ Cc:     Alexander Mikhalitsyn <alexander.mikhalitsyn@virtuozzo.com>,
         Mattias Nissler <mnissler@chromium.org>,
         linux-fsdevel@vger.kernel.org
 Subject: [RFC PATCH] autofs: find_autofs_mount overmounted parent support
-Date:   Wed,  3 Mar 2021 18:28:59 +0300
-Message-Id: <20210303152931.771996-1-alexander.mikhalitsyn@virtuozzo.com>
+Date:   Wed,  3 Mar 2021 19:17:03 +0300
+Message-Id: <20210303161705.776241-1-alexander.mikhalitsyn@virtuozzo.com>
 X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
