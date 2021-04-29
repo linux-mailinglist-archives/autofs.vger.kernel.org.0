@@ -2,79 +2,68 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA07136389C
-	for <lists+autofs@lfdr.de>; Mon, 19 Apr 2021 01:52:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB4E036E278
+	for <lists+autofs@lfdr.de>; Thu, 29 Apr 2021 02:15:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232288AbhDRXxL (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sun, 18 Apr 2021 19:53:11 -0400
-Received: from mbox.abcom.al ([217.73.143.249]:52984 "EHLO mbox.abcom.al"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231489AbhDRXxL (ORCPT <rfc822;autofs@vger.kernel.org>);
-        Sun, 18 Apr 2021 19:53:11 -0400
-X-Greylist: delayed 696 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Apr 2021 19:53:10 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mbox.abcom.al (Postfix) with ESMTP id 3107B12040D50;
-        Mon, 19 Apr 2021 01:40:33 +0200 (CEST)
-Received: from mbox.abcom.al ([127.0.0.1])
-        by localhost (mbox.abcom.al [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id Nn_TUAh1lFC3; Mon, 19 Apr 2021 01:40:33 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by mbox.abcom.al (Postfix) with ESMTP id D71F112021482;
-        Mon, 19 Apr 2021 01:40:32 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mbox.abcom.al D71F112021482
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=abcom.al;
-        s=0F3BA0EE-D5D4-11E8-9596-F9115129F2F4; t=1618789233;
-        bh=p2Sn/5BeV1TeOpE0g2OnXyVNOPHFXRN2kak+hb1GY3o=;
-        h=MIME-Version:To:From:Date:Message-Id;
-        b=WzVDsytDxE9ejop+zy0/+u2pTkLsaCRkUDh7J0UBwqmxcR7y/cBplsGr5nsSm329b
-         iZNvfdWlKl0vc0trIP/d/+2terBhlrayhithhYME7ObS2FWEV5TJLApq0GveFQT4KU
-         A3BtDcU2ZfE/L/p9E5pu6jJamBXYQtHCF/RL0fa/gctYTSGkqlqIuoVntKqoBsTf87
-         /zEFFWts/I53wY8YjJ+K0AHERRLBUvNqs1GHojPJ+p8F1Idf31TWoDXMyzuygQDax7
-         ChhlMZOZGPDjuprjvn9mx6IiRPDsZLDsI3ESlXj8IT1otj4l3trlk9tHew/fNVgIdu
-         d1cdBnc50st5w==
-X-Virus-Scanned: amavisd-new at mbox.abcom.al
-Received: from mbox.abcom.al ([127.0.0.1])
-        by localhost (mbox.abcom.al [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id lqrtH03Sp7Qc; Mon, 19 Apr 2021 01:40:32 +0200 (CEST)
-Received: from [192.168.43.60] (unknown [105.4.4.115])
-        by mbox.abcom.al (Postfix) with ESMTPSA id CA73211DF4ACB;
-        Mon, 19 Apr 2021 01:40:21 +0200 (CEST)
-Content-Type: text/plain; charset="utf-8"
+        id S230075AbhD2AQ0 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 28 Apr 2021 20:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229488AbhD2AQX (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 28 Apr 2021 20:16:23 -0400
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56266C06138B
+        for <autofs@vger.kernel.org>; Wed, 28 Apr 2021 17:15:37 -0700 (PDT)
+Received: by mail-pf1-x441.google.com with SMTP id d124so2109812pfa.13
+        for <autofs@vger.kernel.org>; Wed, 28 Apr 2021 17:15:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=TvDH0Ufqq951p1SmGaor3zZZi0JBju1aRHwGT5Ex+6c=;
+        b=FD0ohVbyzoZbOTJc7gpaukzvlMEZ4ko4pUSOF5OpN4CCsRiQxfRfDoat6cMJOIR/U0
+         CBneh41M2UB+u6eb2r/B8Wmt+BXMQZdVsShro+DKWZ7xXPE58p2N+98bU5l1IIMXCSEO
+         dLNd2qYHTj4BrSF3PS394TCvK49HjLBDwaOeYZFcS0WqvcftxM3gcLl66Hhz5aFpXkaX
+         6JyYv07KgaZDJteTTiDaQO1VkYJ7e6XvG2tWQc/jVumvpb674H1Wqzo33ukRxpfz4TTl
+         WyLupPFRH/43cBdim1/MHAo1eO1XpoLK+2XiCiyvij4I3y95q8HEetFeH9FKst0PLi+l
+         evig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=TvDH0Ufqq951p1SmGaor3zZZi0JBju1aRHwGT5Ex+6c=;
+        b=QhiTRCXxrUN5GwXairf941qQBcdcC2EzHtqlDnVJ7Glfehi1Zw8yx8bNPvqRAvMQaV
+         bZ69D9hOiWwqTVUvda7TBFClB9YH0QYNDhtOi+ID9eYVRfA6fSUhoLVZ1k2zmAXhF4+0
+         /nX3dl8OEL59M0z4x1a6zVC8xvmSbkbsNYLEcQ+UKK/zzrCbxJwQTtVWc2o6IpivOh/3
+         45Y49tm+njJ4rR2J4rYZZ1jpceOJcswptQ+EcW5XtijFuTYijOXFbdgM+TjXIJWozG5A
+         6VFsF2dhWHKm0ho9Bncg5EYysiJgGD55GddEwfdkq1Ska/BcwwWaSeqNj7mTGEt6gHvs
+         0GTQ==
+X-Gm-Message-State: AOAM5318q9zr3jmWvwSt3P4g+639Vhf/7kWPMqh27IBEHtth9ORL6cJv
+        NHxssGGGXAGM7JBs2062+/KvwwGc7ALC4j3bu3Q=
+X-Google-Smtp-Source: ABdhPJyMtnO3kbu665lwjylW4ZTFMe3ffNP0jcmIe2zyga16Pps2qxNRYrKaHtUnlCJy6fHWgBNTYdsqdMBNX3CWtTI=
+X-Received: by 2002:aa7:9696:0:b029:259:efef:e1e0 with SMTP id
+ f22-20020aa796960000b0290259efefe1e0mr31684776pfk.0.1619655336983; Wed, 28
+ Apr 2021 17:15:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: =?utf-8?q?Hallo=2C_Sie_haben_eine_Spende_von_=E2=82=AC_2=2E000=2E000=2C00?=
-To:     Recipients <abashi@abcom.al>
-From:   <abashi@abcom.al>
-Date:   Mon, 19 Apr 2021 01:39:45 +0200
-Reply-To: billlawrencedonationorg@yahoo.com
-Message-Id: <20210418234021.CA73211DF4ACB@mbox.abcom.al>
+Received: by 2002:a05:7300:6426:b029:19:764e:b00a with HTTP; Wed, 28 Apr 2021
+ 17:15:36 -0700 (PDT)
+Reply-To: bwalysam@gmail.com
+From:   Mr Kingsley Obiora <maryclove123@gmail.com>
+Date:   Thu, 29 Apr 2021 01:15:36 +0100
+Message-ID: <CAFBdPmec3ib5nPNU6-wrLJoYVDfwMFgzXJ-UC3CN87fsSyk4wg@mail.gmail.com>
+Subject: Hello From Dr Kingsley Obiora
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Sehr geehrter Herr / Frau
-Ich gr=C3=BC=C3=9Fe Sie im Namen des Herrn. Diese Nachricht wird Ihnen als =
-Benachrichtigung gesendet, dass Sie ausgew=C3=A4hlt wurden, um von meinem W=
-ohlt=C3=A4tigkeitsprojekt zu profitieren, das darauf abzielt, Leben zu ber=
-=C3=BChren und denen zu helfen, die ich auf der ganzen Welt kann, wie Gott =
-mich gesegnet hat.
-Ich habe die Powerball-Lotterie in H=C3=B6he von 150 Millionen USD am 16. D=
-ezember 2019 gewonnen und ich habe mich freiwillig entschlossen, Ihnen eine=
-n Betrag von (2.000.000,00 =E2=82=AC) als Wohlt=C3=A4tigkeitsorganisation z=
-u spenden. Ich versuche, zuf=C3=A4llige Menschen aus verschiedenen Quellen =
-und Moden zu erreichen, um das Leben aus verschiedenen Quellen zu ber=C3=BC=
-hren Winkel. Deshalb erhalten Sie hier die Nachricht.
-Sie wurden als einer der gl=C3=BCcklichen Empf=C3=A4nger registriert, die 2=
- Millionen Euro erhalten haben. Diese Spende wird Ihnen gegeben, damit Sie =
-Ihre pers=C3=B6nlichen Probleme versch=C3=A4rfen und uns zum gro=C3=9Fen Te=
-il gro=C3=9Fz=C3=BCgig dabei helfen k=C3=B6nnen, die weniger gl=C3=BCcklich=
-en Waisen und gemeinn=C3=BCtzigen Organisationen in Ihrem Land zu unterst=
-=C3=BCtzen Nachbarschaftslokalit=C3=A4t
-Zur =C3=9Cberpr=C3=BCfung: //www.powerball.com/winner-story/150-million-pow=
-erball-ticket-claimed
+Dear Sir,
 
-Kontaktieren Sie mich erneut, um Spenden zu erhalten. E-Mail: billlawrenced=
-onationorg@yahoo.com
+After our meeting held today based on your funds, the management want
+to bring to your notice that we are making a special arrangement to
+bring your said fund by cash through diplomatic Immunity to your
+country home. Further details of this arrangement will be given to you
+once you acknowledged this idea.
 
-Vielen Dank, Bill Lawrence
+Waiting for your soonest response.
+Kingsley Obiora
