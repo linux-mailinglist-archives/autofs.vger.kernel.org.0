@@ -2,83 +2,103 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4EE23A9505
-	for <lists+autofs@lfdr.de>; Wed, 16 Jun 2021 10:28:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C4643ADE98
+	for <lists+autofs@lfdr.de>; Sun, 20 Jun 2021 15:32:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbhFPIag (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 16 Jun 2021 04:30:36 -0400
-Received: from mail.oss.com.pe ([161.132.100.45]:39590 "EHLO
-        mail.consorciolp.com.pe" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232130AbhFPIaf (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 16 Jun 2021 04:30:35 -0400
-X-Greylist: delayed 6114 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jun 2021 04:30:35 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by mail.consorciolp.com.pe (Postfix) with ESMTP id 4359D31A3F7DD;
-        Wed, 16 Jun 2021 01:27:19 -0500 (-05)
-Received: from mail.consorciolp.com.pe ([127.0.0.1])
-        by localhost (mail.consorciolp.com.pe [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id XpgHuaXsygm2; Wed, 16 Jun 2021 01:27:19 -0500 (-05)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.consorciolp.com.pe (Postfix) with ESMTP id 22A2E33953AA6;
-        Wed, 16 Jun 2021 01:26:19 -0500 (-05)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.consorciolp.com.pe 22A2E33953AA6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oss.com.pe;
-        s=675A380C-4679-11E8-96E4-C0788CA36BC0; t=1623824779;
-        bh=7Y6RtNhSVAIVHdJEU2gHHWYvaP8LRgEAhMNj0EoKaAA=;
-        h=MIME-Version:To:From:Date:Message-Id;
-        b=GkiQtJchvagUQjcUef0vGEtcrUFXlcczrBamnka/DS7A32p3g8LeEc1XV3PGDI7cr
-         wctp/isptCz58ruDZMkiWuJf1o2OB1zZ7tQBrWpeI0l3yLmlo3Qljc0zx0VhM+cbVF
-         cwI0QvJVpZVmerd35161gU6XpfUi7xNhxI+CH0AoWHvd+mwAhvgmLN6ZxKZvHNArLv
-         SEVFpah9uL2QZ+XfXZVG6sUMpKgh8rVqfLndcJKtZeDURADT12/WcRshV/pinUq5Rq
-         FeF1Q4Gd6HELQDQFiV1Ry6afEXkqMroItGni/8RpIcitAg1xiI515GJHerVBJN2S/i
-         JpMwJYGdGbKKw==
-X-Virus-Scanned: amavisd-new at consorciolp.com.pe
-Received: from mail.consorciolp.com.pe ([127.0.0.1])
-        by localhost (mail.consorciolp.com.pe [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id iQSYjckUpBU4; Wed, 16 Jun 2021 01:26:19 -0500 (-05)
-Received: from cris-PC.wifi (unknown [105.9.118.225])
-        by mail.consorciolp.com.pe (Postfix) with ESMTPSA id 9183033A87C7D;
-        Wed, 16 Jun 2021 01:25:18 -0500 (-05)
-Content-Type: text/plain; charset="utf-8"
+        id S229742AbhFTNej (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sun, 20 Jun 2021 09:34:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39560 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229806AbhFTNeh (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sun, 20 Jun 2021 09:34:37 -0400
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69FA1C0617A6
+        for <autofs@vger.kernel.org>; Sun, 20 Jun 2021 06:32:23 -0700 (PDT)
+Received: by mail-pl1-x641.google.com with SMTP id v13so7090359ple.9
+        for <autofs@vger.kernel.org>; Sun, 20 Jun 2021 06:32:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
+        b=uI1HWktzNInUfptyhQFOCbHHsuWvfBePpTiQHONWTknKmYIIUTT/ScT2sm1pOtQghT
+         w4l7bggcvaIzRVYhJEw54i/j5C7uIjPI+rfKYj9eLBMMnUvVanHWJD5X8UwiF2eAuA3/
+         e7PIhGGhjecJswE1As0nWUL/TgoPBhYR8WAQ7oBplZUX7d0Wepvtu1ONc4udpFogWhnD
+         wfj5M1ULsJD5vk1emm3Wq8VNf8cpaJUJ+x7F8A8GyxSaKLBaPRKzZKjV9q/K4ntDcKgg
+         Y77ITXRVMOooid3W4tLnX41RorPGOLZ8bjpANE36HhxEjObG5cj4VLtNebY4L3rZku0x
+         CmtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
+        b=qr8xL/y9ryywOgoJC3yPhq6vk5l1LIxCDLcSN9YZ6t0zDap5LHWHri1jLv0DAFpDBh
+         WezKWs+ZS9OuQqHSGHi22zGY1TauA8YQt15462VuqksStRamxOrW5ep6x0v6wFfJguoo
+         FHuUYgAAbhAvGFQE8/5Zt6czCPq83S9EnuR5ZgzQR1x11nN8g1qqfc8IUuGWOtkjed/m
+         nj9OBrBIZORy6pd/aAYsHoFicKReFU/VZ+GwQ2aNQqf0d+csTAgH+2G/9Kssk0Eclctl
+         YwF79CKcqLaGgT4UsvxpbWv3r9FQZxEV2uN9r2DRNwN14wq98uS3c0XMwP2TxFJK5knM
+         PiZg==
+X-Gm-Message-State: AOAM531wHRRW25wWcBmQZyZ1oCuAd0Y+KjWHdidS6P1EFn7ma1LO7Gme
+        fmZv1WdjqFi+7WdwuchI6f0P7flTkaIETjJhmqg=
+X-Google-Smtp-Source: ABdhPJyYTDfw4WVraS3KISSU5caoRyl92iwUfjQnfIf+bxuqEIclu8S5RViUF+VzGyie0yN6ygWa0XSQXBXCovJskeo=
+X-Received: by 2002:a17:90a:3c8d:: with SMTP id g13mr14988365pjc.229.1624195942801;
+ Sun, 20 Jun 2021 06:32:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: spende von 2,000,000 euro
-To:     Recipients <sechegaray@oss.com.pe>
-From:   ''Tayeb souami'' <sechegaray@oss.com.pe>
-Date:   Wed, 16 Jun 2021 08:26:54 +0200
-Reply-To: Tayebsouam.spende@gmail.com
-Message-Id: <20210616062518.9183033A87C7D@mail.consorciolp.com.pe>
+Received: by 2002:a17:90b:38c4:0:0:0:0 with HTTP; Sun, 20 Jun 2021 06:32:22
+ -0700 (PDT)
+Reply-To: sarahkoffi389@yahoo.co.jp
+From:   Sarah Koffi <william.p15179@gmail.com>
+Date:   Sun, 20 Jun 2021 15:32:22 +0200
+Message-ID: <CAGDeiXEqqpFdLqbGJcZw6bD1HkUarPFWxx6wXc9qQzJYnE16zA@mail.gmail.com>
+Subject: Greetings From Mrs. Sarah Koffi
+To:     sarahkoffi389@yahoo.co.jp
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Lieber Freund,
+Greetings From Mrs. Sarah Koffi
 
-Ich bin Herr Tayeb Souami, New Jersey, Vereinigte Staaten von Amerika, der =
-Mega-Gewinner von $ 315million In Mega Millions Jackpot, spende ich an 5 zu=
-f=C3=A4llige Personen, wenn Sie diese E-Mail erhalten, dann wurde Ihre E-Ma=
-il nach einem Spinball ausgew=C3=A4hlt.Ich habe den gr=C3=B6=C3=9Ften Teil =
-meines Verm=C3=B6gens auf eine Reihe von Wohlt=C3=A4tigkeitsorganisationen =
-und Organisationen verteilt.Ich habe mich freiwillig dazu entschieden, die =
-Summe von =E2=82=AC 2.000.000,00 an Sie als eine der ausgew=C3=A4hlten 5 zu=
- spenden, um meine Gewinne zu =C3=BCberpr=C3=BCfen, sehen Sie bitte meine Y=
-ou Tube Seite unten.
+I'm contacting you based on your good profiles I read and for a good
+reasons, I am in search of a property to buy in your country as I
+intended to come over to your
+country for investment, Though I have not meet with you before but I
+believe that one has to risk confiding in someone to succeed sometimes
+in life.
 
-UHR MICH HIER: https://www.youtube.com/watch?v=3DZ6ui8ZDQ6Ks
+My name is Mrs. Sarah Koffi. My late husband deals on Crude Oil with
+Federal Government of Sudan and he has a personal Oil firm in Bentiu
+Oil zone town and Upper
+Nile city. What I have experience physically, I don't wish to
+experience it again in my life due to the recent civil Ethnic war
+cause by our President Mr. Salva Kiir
+and the rebel leader Mr Riek Machar, I have been Under United Nation
+refuge camp in chad to save my life and that of my little daughter.
 
+Though, I do not know how you will feel to my proposal, but the truth
+is that I sneaked into Chad our neighboring country where I am living
+now as a refugee.
+I escaped with my little daughter when the rebels bust into our house
+and killed my husband as one of the big oil dealers in the country,
+ever since then, I have being on the run.
 
+I left my country and move to Chad our neighboring country with the
+little ceasefire we had, due to the face to face peace meeting accord
+coordinated by the US Secretary of State, Mr John Kerry and United
+Nations in Ethiopia (Addis Ababa) between our President Mr Salva Kiir
+and the rebel leader Mr Riek Machar to stop this war.
 
-Das ist dein Spendencode: [TS530342018]
+I want to solicit for your partnership with trust to invest the $8
+million dollars deposited by my late husband in Bank because my life
+is no longer safe in our country, since the rebels are looking for the
+families of all the oil business men in the country to kill, saying
+that they are they one that is milking the country dry.
 
+I will offer you 20% of the total fund for your help while I will
+partner with you for the investment in your country.
+If I get your reply.
 
+I will wait to hear from you so as to give you details.With love from
 
-Antworten Sie mit dem SPENDE-CODE an diese
+ i need you to contact me here sarahkoffi389@yahoo.co.jp
 
-E-Mail:Tayebsouam.spende@gmail.com
-
-
-Ich hoffe, Sie und Ihre Familie gl=C3=BCcklich zu machen.
-
-Gr=C3=BC=C3=9Fe
-Herr Tayeb Souami
+Mrs. Sarah Koffi
