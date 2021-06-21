@@ -2,103 +2,41 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C4643ADE98
-	for <lists+autofs@lfdr.de>; Sun, 20 Jun 2021 15:32:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E62773AE49C
+	for <lists+autofs@lfdr.de>; Mon, 21 Jun 2021 10:16:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbhFTNej (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sun, 20 Jun 2021 09:34:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39560 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229806AbhFTNeh (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sun, 20 Jun 2021 09:34:37 -0400
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69FA1C0617A6
-        for <autofs@vger.kernel.org>; Sun, 20 Jun 2021 06:32:23 -0700 (PDT)
-Received: by mail-pl1-x641.google.com with SMTP id v13so7090359ple.9
-        for <autofs@vger.kernel.org>; Sun, 20 Jun 2021 06:32:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
-        b=uI1HWktzNInUfptyhQFOCbHHsuWvfBePpTiQHONWTknKmYIIUTT/ScT2sm1pOtQghT
-         w4l7bggcvaIzRVYhJEw54i/j5C7uIjPI+rfKYj9eLBMMnUvVanHWJD5X8UwiF2eAuA3/
-         e7PIhGGhjecJswE1As0nWUL/TgoPBhYR8WAQ7oBplZUX7d0Wepvtu1ONc4udpFogWhnD
-         wfj5M1ULsJD5vk1emm3Wq8VNf8cpaJUJ+x7F8A8GyxSaKLBaPRKzZKjV9q/K4ntDcKgg
-         Y77ITXRVMOooid3W4tLnX41RorPGOLZ8bjpANE36HhxEjObG5cj4VLtNebY4L3rZku0x
-         CmtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
-        b=qr8xL/y9ryywOgoJC3yPhq6vk5l1LIxCDLcSN9YZ6t0zDap5LHWHri1jLv0DAFpDBh
-         WezKWs+ZS9OuQqHSGHi22zGY1TauA8YQt15462VuqksStRamxOrW5ep6x0v6wFfJguoo
-         FHuUYgAAbhAvGFQE8/5Zt6czCPq83S9EnuR5ZgzQR1x11nN8g1qqfc8IUuGWOtkjed/m
-         nj9OBrBIZORy6pd/aAYsHoFicKReFU/VZ+GwQ2aNQqf0d+csTAgH+2G/9Kssk0Eclctl
-         YwF79CKcqLaGgT4UsvxpbWv3r9FQZxEV2uN9r2DRNwN14wq98uS3c0XMwP2TxFJK5knM
-         PiZg==
-X-Gm-Message-State: AOAM531wHRRW25wWcBmQZyZ1oCuAd0Y+KjWHdidS6P1EFn7ma1LO7Gme
-        fmZv1WdjqFi+7WdwuchI6f0P7flTkaIETjJhmqg=
-X-Google-Smtp-Source: ABdhPJyYTDfw4WVraS3KISSU5caoRyl92iwUfjQnfIf+bxuqEIclu8S5RViUF+VzGyie0yN6ygWa0XSQXBXCovJskeo=
-X-Received: by 2002:a17:90a:3c8d:: with SMTP id g13mr14988365pjc.229.1624195942801;
- Sun, 20 Jun 2021 06:32:22 -0700 (PDT)
+        id S229641AbhFUISr (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 21 Jun 2021 04:18:47 -0400
+Received: from m1398.mail.163.com ([220.181.13.98]:4102 "EHLO
+        m1398.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229618AbhFUISq (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 21 Jun 2021 04:18:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=7ihNi
+        id6GtuOfNWrGOlK1cI15jsPaujA7xKFhOMfGVI=; b=QKtwtPd+Oi1UMfHubE97e
+        ZuKWGQEqJM374V1u0uio4rtYCwiT3nF3aIv9x5odSZ71ir6C/9lsg5rFe7p0xDCz
+        Me4DNy+WD5w8EJ/NCzio6Hf77GJGFp9v/1XT+9QdVeBkcnqR+wyzUWRpJuQy39d2
+        OS0UlgW4g23NgMaTyGeZTY=
+Received: from sunguoshuai2021$163.com ( [183.129.171.133] ) by
+ ajax-webmail-wmsvr98 (Coremail) ; Mon, 21 Jun 2021 16:16:30 +0800 (CST)
+X-Originating-IP: [183.129.171.133]
+Date:   Mon, 21 Jun 2021 16:16:30 +0800 (CST)
+From:   sunguoshuai <sunguoshuai2021@163.com>
+To:     autofs@vger.kernel.org
+Subject: =?GBK?Q?=C0=B4=D7=D4sunguoshuai=B5=C4=D3=CA=BC=FE?=
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
+ Copyright (c) 2002-2021 www.mailtech.cn 163com
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-Received: by 2002:a17:90b:38c4:0:0:0:0 with HTTP; Sun, 20 Jun 2021 06:32:22
- -0700 (PDT)
-Reply-To: sarahkoffi389@yahoo.co.jp
-From:   Sarah Koffi <william.p15179@gmail.com>
-Date:   Sun, 20 Jun 2021 15:32:22 +0200
-Message-ID: <CAGDeiXEqqpFdLqbGJcZw6bD1HkUarPFWxx6wXc9qQzJYnE16zA@mail.gmail.com>
-Subject: Greetings From Mrs. Sarah Koffi
-To:     sarahkoffi389@yahoo.co.jp
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <2ccae861.57a3.17a2da47447.Coremail.sunguoshuai2021@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: YsGowAC3vw_eStBgK9vxAA--.2144W
+X-CM-SenderInfo: 5vxqw35rvk3trlsqjii6rwjhhfrp/xtbBER64v1aEEznbpwAAsM
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Greetings From Mrs. Sarah Koffi
-
-I'm contacting you based on your good profiles I read and for a good
-reasons, I am in search of a property to buy in your country as I
-intended to come over to your
-country for investment, Though I have not meet with you before but I
-believe that one has to risk confiding in someone to succeed sometimes
-in life.
-
-My name is Mrs. Sarah Koffi. My late husband deals on Crude Oil with
-Federal Government of Sudan and he has a personal Oil firm in Bentiu
-Oil zone town and Upper
-Nile city. What I have experience physically, I don't wish to
-experience it again in my life due to the recent civil Ethnic war
-cause by our President Mr. Salva Kiir
-and the rebel leader Mr Riek Machar, I have been Under United Nation
-refuge camp in chad to save my life and that of my little daughter.
-
-Though, I do not know how you will feel to my proposal, but the truth
-is that I sneaked into Chad our neighboring country where I am living
-now as a refugee.
-I escaped with my little daughter when the rebels bust into our house
-and killed my husband as one of the big oil dealers in the country,
-ever since then, I have being on the run.
-
-I left my country and move to Chad our neighboring country with the
-little ceasefire we had, due to the face to face peace meeting accord
-coordinated by the US Secretary of State, Mr John Kerry and United
-Nations in Ethiopia (Addis Ababa) between our President Mr Salva Kiir
-and the rebel leader Mr Riek Machar to stop this war.
-
-I want to solicit for your partnership with trust to invest the $8
-million dollars deposited by my late husband in Bank because my life
-is no longer safe in our country, since the rebels are looking for the
-families of all the oil business men in the country to kill, saying
-that they are they one that is milking the country dry.
-
-I will offer you 20% of the total fund for your help while I will
-partner with you for the investment in your country.
-If I get your reply.
-
-I will wait to hear from you so as to give you details.With love from
-
- i need you to contact me here sarahkoffi389@yahoo.co.jp
-
-Mrs. Sarah Koffi
+subscribe autofs
