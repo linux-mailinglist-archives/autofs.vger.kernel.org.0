@@ -2,41 +2,66 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E62773AE49C
-	for <lists+autofs@lfdr.de>; Mon, 21 Jun 2021 10:16:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68EDB3B180B
+	for <lists+autofs@lfdr.de>; Wed, 23 Jun 2021 12:23:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbhFUISr (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 21 Jun 2021 04:18:47 -0400
-Received: from m1398.mail.163.com ([220.181.13.98]:4102 "EHLO
-        m1398.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbhFUISq (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 21 Jun 2021 04:18:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=7ihNi
-        id6GtuOfNWrGOlK1cI15jsPaujA7xKFhOMfGVI=; b=QKtwtPd+Oi1UMfHubE97e
-        ZuKWGQEqJM374V1u0uio4rtYCwiT3nF3aIv9x5odSZ71ir6C/9lsg5rFe7p0xDCz
-        Me4DNy+WD5w8EJ/NCzio6Hf77GJGFp9v/1XT+9QdVeBkcnqR+wyzUWRpJuQy39d2
-        OS0UlgW4g23NgMaTyGeZTY=
-Received: from sunguoshuai2021$163.com ( [183.129.171.133] ) by
- ajax-webmail-wmsvr98 (Coremail) ; Mon, 21 Jun 2021 16:16:30 +0800 (CST)
-X-Originating-IP: [183.129.171.133]
-Date:   Mon, 21 Jun 2021 16:16:30 +0800 (CST)
-From:   sunguoshuai <sunguoshuai2021@163.com>
+        id S230061AbhFWK0F convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+autofs@lfdr.de>); Wed, 23 Jun 2021 06:26:05 -0400
+Received: from [183.90.58.236] ([183.90.58.236]:59140 "EHLO ns1.zackeruz.tk"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S229833AbhFWK0E (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Wed, 23 Jun 2021 06:26:04 -0400
+Received: from johnlewis.com (unknown [192.168.20.1])
+        by ns1.zackeruz.tk (Postfix) with ESMTPSA id D304E84223B
+        for <autofs@vger.kernel.org>; Wed, 23 Jun 2021 18:23:44 +0800 (+08)
+Reply-To: robert_turner@johnlewis-trading.com,
+          pippawicks.sales@johnlewis-trading.com
+From:   John Lewis & Partnersip <robert.turner107@johnlewis.com>
 To:     autofs@vger.kernel.org
-Subject: =?GBK?Q?=C0=B4=D7=D4sunguoshuai=B5=C4=D3=CA=BC=FE?=
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
- Copyright (c) 2002-2021 www.mailtech.cn 163com
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=GBK
+Subject: 6/23/2021 Product Inquiry 
+Date:   23 Jun 2021 10:23:44 +0000
+Message-ID: <20210623094107.4F54955662752884@johnlewis.com>
 MIME-Version: 1.0
-Message-ID: <2ccae861.57a3.17a2da47447.Coremail.sunguoshuai2021@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: YsGowAC3vw_eStBgK9vxAA--.2144W
-X-CM-SenderInfo: 5vxqw35rvk3trlsqjii6rwjhhfrp/xtbBER64v1aEEznbpwAAsM
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-subscribe autofs
+Dear autofs
+
+The famous brand John Lewis Partnership, is UK's largest multi-
+channel retailer with over 126 shops and multiple expansion in 
+Africa furnished by European/Asian/American products. We are 
+sourcing new products to attract new customers and also retain 
+our existing ones, create new partnerships with companies dealing 
+with different kinds of goods globally.
+
+Your company's products are of interest to our market as we have 
+an amazing market for your products.
+
+Provide us your current catalog through email to review more. We 
+hope to be able to order with you and start a long-term friendly,
+respectable and solid business partnership. Please we would 
+appreciate it if you could send us your stock availability via 
+email if any.
+
+Our payment terms are 15 days net in Europe, 30 days Net in UK 
+and 30 days net in Asia/USA as we operate with over 5297 
+suppliers around the globe for the past 50 years now. For 
+immediate response Send your reply to robert_turner@johnlewis-
+trading.com for us to be able to 
+treat with care and urgency.
+
+
+Best Regards
+
+Rob Turner
+Head Of Procurement Operations
+John Lewis & Partners.
+robert_turner@johnlewis-trading.com
+Tel: +44-7451-274090
+WhatsApp: +447497483925
+www.johnlewis.com
+REGISTERED OFFICE: 171 VICTORIA STREET, LONDON SW1E 5NN 
