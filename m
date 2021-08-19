@@ -2,63 +2,101 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C62D3E5AF8
-	for <lists+autofs@lfdr.de>; Tue, 10 Aug 2021 15:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98E6E3F1C7E
+	for <lists+autofs@lfdr.de>; Thu, 19 Aug 2021 17:18:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241181AbhHJNUg (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 10 Aug 2021 09:20:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
+        id S233416AbhHSPSo (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 19 Aug 2021 11:18:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240499AbhHJNUf (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 10 Aug 2021 09:20:35 -0400
-Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925E1C06179B
-        for <autofs@vger.kernel.org>; Tue, 10 Aug 2021 06:20:13 -0700 (PDT)
-Received: by mail-ua1-x933.google.com with SMTP id t26so8529701uao.12
-        for <autofs@vger.kernel.org>; Tue, 10 Aug 2021 06:20:13 -0700 (PDT)
+        with ESMTP id S232821AbhHSPSn (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 19 Aug 2021 11:18:43 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F55C061575
+        for <autofs@vger.kernel.org>; Thu, 19 Aug 2021 08:18:06 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id q10so9689146wro.2
+        for <autofs@vger.kernel.org>; Thu, 19 Aug 2021 08:18:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=2tvLhkad0w+Mh63WhnFJkmRFgYsLXsJmUqGVjzUAFIo=;
-        b=r56fIwbJz5SklG4JA6EP+FkmERPm8EjuNIz1zvYA0Tpmfsnzkuj9Mr9ilB+4O1t4iF
-         TJSaAiRseAeimWXIoiZ/aojR4w1dbcHsNBujLSCuMuiKaLluyvcgUi/JEQJlj70o9IEd
-         Yl/0OOPV9kllRbjD3zoBaFd2ApzxJDEEHzY9ZJTfL4UXq1/r4AobRJH0IUhbnGDv8HVX
-         yiVUloxSQKlbYb1M7BZgm8fAZ9m20jI1slKm68o1oKxPbw8XzrEgPc9oJSx/4tHQe2x8
-         HrZw5WHEF9bREO+R7wsyO2DExoyYmOVp3UFrXNeckA4TksY0PWoEs1kePiLiiulK2ynd
-         oMVw==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=ovRohL0S09O0g2yqlE9MP24xrDvA30mKbGD9YeR3sEY=;
+        b=SYZ8yHMInXpgiOtdnPGcnOTUJSIx0JpP5cqwYBkIOu7AwCppyVBgsNhUuh38ELpLfg
+         +kTXpnyXGTmTA52nY4eopGyCCwF4MP/ke/ZZFKpTiMZWnL+GQT27TZfNH4havd1aazG9
+         5BKsPOD/i0T02ZLuyGl/oKh5pP6fXlKfkKposQywqM23n8PCAxVWtMbesIPfyi+xZRD0
+         RD2rxZZm0RZooQrEwCYhgii33Kq3jb9HJ7ycGZziqdC/xDBWB3qGydc7cWbX5BISFN/h
+         kkvdstG/TQ9uaF2RurYNyMpsNc7qV8Sr7O3D90sG9+7a9y1GBQizLScjHxV6pD2YGudf
+         4aJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=2tvLhkad0w+Mh63WhnFJkmRFgYsLXsJmUqGVjzUAFIo=;
-        b=PW3stwgWgydKbzR7nNSz3YY9+UM2rdML1YSu0R6Zquv2U4TjmZLJ5FCsrBVzeqeFzg
-         1blJoAwSW31rRUo82ivmgjuiTAhIybUHDeIrkX8MDMD2G5oSs3mA+uJTeHyUmritWXxz
-         NACgqDzzxQfsENkTuRrIWq/dZmjrbjtssRFIrtGU5MyW1bGNTXp5BBC8YpEagJbGzNa4
-         DrjFopA46eVUXhO9xQ4Z/qwsqwZ3RcIofNgER7puRtxRVIXBlZhvXOqXVpqWeC5gNxZR
-         1WYIBPOLUQELco/DepFtMl7qya9koRJpd53izy+IJvNPRxIJNxK6zhyr1imYC5mjd50T
-         mm0A==
-X-Gm-Message-State: AOAM532QA1ASpnICBuBeqVF9IU7RmkrC+/YvX30XyeAuT4k/ve3dQUq1
-        yUzuOsjU/Q1QHngBf5LbQQXy0KkQDVSauwGuzjA=
-X-Google-Smtp-Source: ABdhPJzvGsx1vfv3zDD0ahziTo63ivIbwfZEjzIqeDHBCiEzkGEl++4p3okNueaG6Xo6XFnebs4VnqPzJeE4UcTii44=
-X-Received: by 2002:a9f:2c93:: with SMTP id w19mr9591949uaj.26.1628601612739;
- Tue, 10 Aug 2021 06:20:12 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=ovRohL0S09O0g2yqlE9MP24xrDvA30mKbGD9YeR3sEY=;
+        b=ny+xT+T2/uXcEyNxZWwjyxlwBf9Kx2N/t8WkclUTxbcqGLpvWrtzVZPdnTx8PMH5NP
+         xepziQipxEhAXEjfD7oBs6pkGIzK1dyDire9cjzxtqvkhFh0eHUEPuWgOxIoilZavOhs
+         eOOc1tIJHP/ApZ1dKB0S7p9u8IFd+mkbtI9F/U4AdjC4Adeo9C2bNd3smIFmthcOAT9j
+         eD2Eiu5Fxm1SK1r5UBTT/Mce+neEZvTgW6zqaghzBCmMQc8vJLG4Qhw1gieuvDVMkHWX
+         0cq1nRa2AToWC+cMFSU+/SQvrWSetY+HHlbmPKZKrVme753ZW5+ggE1wcjErusZh/GK2
+         ER1g==
+X-Gm-Message-State: AOAM530A7HPVohG/2xD+cAYZIfyyJAFKBMOGT4/hlUNZyD7FWf19ZrO6
+        ttrS/H1ft4YE4doTVbV36XE5ApsilOTXFtrmPCo=
+X-Google-Smtp-Source: ABdhPJygHLYY6m2kkHuTDErLMSSR8w/YA3BWmUPjQnq20xNKGnsI2g4tB0DjVZh2LFAEAZ9yZxG7bjF+iahO3dAhfTk=
+X-Received: by 2002:adf:ba0d:: with SMTP id o13mr4458568wrg.134.1629386285340;
+ Thu, 19 Aug 2021 08:18:05 -0700 (PDT)
 MIME-Version: 1.0
-Sender: immeublesourou@gmail.com
-Received: by 2002:ab0:3903:0:0:0:0:0 with HTTP; Tue, 10 Aug 2021 06:20:12
- -0700 (PDT)
-From:   John Kumor <owo219901@gmail.com>
-Date:   Wed, 11 Aug 2021 01:20:12 +1200
-X-Google-Sender-Auth: zdxQGkl3dqzssRDPO2oW64CMnKw
-Message-ID: <CAHdg_cRt+TWqdUjK3Xf84mj5+AwgMtamTmu9J8c3d6u2KdArLQ@mail.gmail.com>
-Subject: Urgent
-To:     undisclosed-recipients:;
+Received: by 2002:a1c:4d:0:0:0:0:0 with HTTP; Thu, 19 Aug 2021 08:18:04 -0700 (PDT)
+Reply-To: rraya9989@gmail.com
+From:   Louisa Besson <len66086@gmail.com>
+Date:   Thu, 19 Aug 2021 15:18:04 +0000
+Message-ID: <CAAM5jAwhWBLrbpCksfgYP0iO+jzqzdUaX3tg5TEmBvHX4bMGrA@mail.gmail.com>
+Subject: CONFIDENTIAL
+To:     rraya9989@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-My dear,
-Greetings! I trust that all is well with you and your family. Did you
-receive my previous email?
-Regards
-John Kumor.
+MY SINCERE GREETINGS,
+
+HOW ARE YOU DOING TODAY? I AM MRS.LOUISA BESSON FROM FRANCE; I HAVE
+DECIDED TO DONATE WHAT I HAVE TO YOU /CHURCHES/ MOTHERLESS BABIES/LESS
+PRIVILEGED/WIDOWS' BECAUSE I AM DYING AND DIAGNOSED WITH CANCER. I
+HAVE BEEN TOUCHED BY GOD ALMIGHTY TO DONATE FROM WHAT I HAVE INHERITED
+FROM MY LATE HUSBAND TO YOU FOR THE GOOD WORK OF GOD ALMIGHTY. I HAVE
+ASKED ALMIGHTY GOD TO FORGIVE ME AND BELIEVE HE HAS, BECAUSE HE IS A
+MERCIFUL GOD I WILL BE GOING IN FOR AN OPERATION SOON.
+
+I DECIDED TO DONATE THE SUM OF ($8.5 MILLION DOLLARS) TO YOU FOR THE
+GOOD WORK OF GOD ALMIGHTY, AND ALSO TO HELP THE MOTHERLESS AND LESS
+PRIVILEGED AND ALSO FOR ASSISTANCE OF THE WIDOWS. AS SOON AS I READ
+FROM YOU, I SHALL GIVE YOU INFO ON WHAT I NEED FROM YOU, THEN YOU WILL
+CONTACT THE BANK AND TELL THEM I HAVE WILLED MY INHERITANCE TO YOU BY
+QUOTING MY PERSONAL FILE ROUTING AND ACCOUNT INFORMATION TO YOU FOR
+GOOD, EFFECTIVE AND PRUDENT WORK. I KNOW I DON'T KNOW YOU BUT I HAVE
+BEEN DIRECTED TO DO THIS BY GOD ALMIGHTY.
+
+PLEASE I WILL NEED YOU TO RESPECT MY DECISION AND KEEP EVERY PROCESS
+OF THIS TRANSFER CONFIDENTIAL / TOP SECRET UNTIL EVERY PROCESS IS
+FINALIZED, BEFORE TAKING FAMILY AND FRIENDS FOR THANKSGIVING. IF YOU
+ARE INTERESTED IN CARRYING OUT THIS TASK, I WILL NEED YOU TO GET BACK
+TO ME AND ANSWER THE BELOW QUESTIONS,
+
+1). THAT YOU ARE IN A POSITION TO BE TRUSTED WITH SUCH A LARGE AMOUNT
+OF FUNDS, AND THAT YOU HAVE A HEART FOR CHARITY AND THUS WOULD NOT
+HAVE ANY PROBLEMS LOCATING THE RIGHT CHARITY AND HUMAN AID GROUPS TO
+DISBURSE THE FUND TO. IT WOULD BE NICE TO KNOW WHAT CHARITIES YOU HAVE
+IN MIND TO DONATE THE MONEY TO?
+
+2). THAT YOU ARE WILLING TO CONTACT THE BANK HOLDING THE DEPOSIT TO
+DISCUSS THE TERMS OF RELEASING THE FUNDS TO YOU?
+
+3). THAT YOU PROMISE TO RESPECT MY DECISION AND KEEP EVERY PROCESS OF
+THIS TRANSFER CONFIDENTIAL / TOP SECRET UNTIL EVERY PROCESS IS
+FINALIZED?
+
+4). THAT YOU FULLY UNDERSTAND THIS TRANSACTION AND YOU ARE READY TO
+PROCEED UNDER THESE TERMS?
+
+I WISH YOU ALL THE BEST AND MAY THE GOOD LORD BLESS YOU ABUNDANTLY.
+
+YOURS FAITHFULLY,
+MRS.LOUISA BESSON
