@@ -2,101 +2,91 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98E6E3F1C7E
-	for <lists+autofs@lfdr.de>; Thu, 19 Aug 2021 17:18:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED8583FE1C1
+	for <lists+autofs@lfdr.de>; Wed,  1 Sep 2021 20:07:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233416AbhHSPSo (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 19 Aug 2021 11:18:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54948 "EHLO
+        id S236877AbhIASIQ (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 1 Sep 2021 14:08:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232821AbhHSPSn (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 19 Aug 2021 11:18:43 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F55C061575
-        for <autofs@vger.kernel.org>; Thu, 19 Aug 2021 08:18:06 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id q10so9689146wro.2
-        for <autofs@vger.kernel.org>; Thu, 19 Aug 2021 08:18:06 -0700 (PDT)
+        with ESMTP id S236657AbhIASIP (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 1 Sep 2021 14:08:15 -0400
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A514FC061575
+        for <autofs@vger.kernel.org>; Wed,  1 Sep 2021 11:07:18 -0700 (PDT)
+Received: by mail-ua1-x92e.google.com with SMTP id g2so342300uad.4
+        for <autofs@vger.kernel.org>; Wed, 01 Sep 2021 11:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=ovRohL0S09O0g2yqlE9MP24xrDvA30mKbGD9YeR3sEY=;
-        b=SYZ8yHMInXpgiOtdnPGcnOTUJSIx0JpP5cqwYBkIOu7AwCppyVBgsNhUuh38ELpLfg
-         +kTXpnyXGTmTA52nY4eopGyCCwF4MP/ke/ZZFKpTiMZWnL+GQT27TZfNH4havd1aazG9
-         5BKsPOD/i0T02ZLuyGl/oKh5pP6fXlKfkKposQywqM23n8PCAxVWtMbesIPfyi+xZRD0
-         RD2rxZZm0RZooQrEwCYhgii33Kq3jb9HJ7ycGZziqdC/xDBWB3qGydc7cWbX5BISFN/h
-         kkvdstG/TQ9uaF2RurYNyMpsNc7qV8Sr7O3D90sG9+7a9y1GBQizLScjHxV6pD2YGudf
-         4aJg==
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2joGkq8i8C5vglZO1FYNTlWqLyr4vSiCXKQYXBVnv4Q=;
+        b=oAq1Dxb0lSFcl5Ywb2s5aqrGkl3f4s/UAqfcRk1fAP84Tr8sVr/tYS7qWs9CKtUYl9
+         HKdyI8oYznyHjLvhh+VhXUokGpZ3F7hdPlVNjC2bF5DMdcyRL+KTCusjdD113CYNcKKq
+         aFMhgS3ETXx6DQg0VTE5ooa32Bsh0T/unPV+r0WgDwQNamcXfohp1NT45BAlnSnzTbFt
+         3N9tGAIi2z1KruQyopvX0r1uMgZe6LPg7lKYusUYAvPzVciSzRU2Bcf3SQcie+9LK+2H
+         kPlBWkbKKSo+wLGt1K+8oAKfp8hdYhWbSTl2qZD/kwT3Nzy4/4cGOWDoPVja6ywB74cA
+         xWYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=ovRohL0S09O0g2yqlE9MP24xrDvA30mKbGD9YeR3sEY=;
-        b=ny+xT+T2/uXcEyNxZWwjyxlwBf9Kx2N/t8WkclUTxbcqGLpvWrtzVZPdnTx8PMH5NP
-         xepziQipxEhAXEjfD7oBs6pkGIzK1dyDire9cjzxtqvkhFh0eHUEPuWgOxIoilZavOhs
-         eOOc1tIJHP/ApZ1dKB0S7p9u8IFd+mkbtI9F/U4AdjC4Adeo9C2bNd3smIFmthcOAT9j
-         eD2Eiu5Fxm1SK1r5UBTT/Mce+neEZvTgW6zqaghzBCmMQc8vJLG4Qhw1gieuvDVMkHWX
-         0cq1nRa2AToWC+cMFSU+/SQvrWSetY+HHlbmPKZKrVme753ZW5+ggE1wcjErusZh/GK2
-         ER1g==
-X-Gm-Message-State: AOAM530A7HPVohG/2xD+cAYZIfyyJAFKBMOGT4/hlUNZyD7FWf19ZrO6
-        ttrS/H1ft4YE4doTVbV36XE5ApsilOTXFtrmPCo=
-X-Google-Smtp-Source: ABdhPJygHLYY6m2kkHuTDErLMSSR8w/YA3BWmUPjQnq20xNKGnsI2g4tB0DjVZh2LFAEAZ9yZxG7bjF+iahO3dAhfTk=
-X-Received: by 2002:adf:ba0d:: with SMTP id o13mr4458568wrg.134.1629386285340;
- Thu, 19 Aug 2021 08:18:05 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2joGkq8i8C5vglZO1FYNTlWqLyr4vSiCXKQYXBVnv4Q=;
+        b=nmv247rAaQWbt+RbXKvi9tpBslSk4ItFZ203hjlYBauV6ydxwV/a2ELVcz3HjQ+fHc
+         V2wKWqe7pVS7ewxRMT3p4t5qvs04MasYQQZ3CkH6wkl27P/TBMIvkuhZJQjdWdRk49qt
+         0DDyxqGK66aiegVT2PnTV9NJnpX/1H5/7fLgwSjBuwet7F5UdxHInL6BeQvUBFYwWXpU
+         fHswqVMtEVtWFd78fSEij7dKpHPNlV7R0IkFVeNFLiy7H1E9cHRx+8vdGRbcAmNT5+v3
+         6QfgcoHYdVvTogylUWDPY3QCkhxl9L+hJePQdK3VaXbuJ8uvi1Yjukauz5hWwnCP1nHo
+         DKIw==
+X-Gm-Message-State: AOAM533ULBoPboia0cic0McLEO7xdGo6N3vesK8lRXX7WQYUu+RtW+JO
+        NsKd1iCk2CrwqnsWUCSVg1j2uX42pLtf7H409l0=
+X-Google-Smtp-Source: ABdhPJxdvAMhojjezfHIEPwIoMHSDgYBaSYxAwBJYLKbdoTGq4TKDNCFejIfRpomqv1zZz1LzC0CbLJQyZRGAMti+6E=
+X-Received: by 2002:ab0:5a32:: with SMTP id l47mr982625uad.0.1630519636432;
+ Wed, 01 Sep 2021 11:07:16 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a1c:4d:0:0:0:0:0 with HTTP; Thu, 19 Aug 2021 08:18:04 -0700 (PDT)
-Reply-To: rraya9989@gmail.com
-From:   Louisa Besson <len66086@gmail.com>
-Date:   Thu, 19 Aug 2021 15:18:04 +0000
-Message-ID: <CAAM5jAwhWBLrbpCksfgYP0iO+jzqzdUaX3tg5TEmBvHX4bMGrA@mail.gmail.com>
-Subject: CONFIDENTIAL
-To:     rraya9989@gmail.com
+Received: by 2002:ab0:740d:0:0:0:0:0 with HTTP; Wed, 1 Sep 2021 11:07:15 -0700 (PDT)
+From:   CorisBank International <corisbankintlbf@gmail.com>
+Date:   Wed, 1 Sep 2021 11:07:15 -0700
+Message-ID: <CA+25hwzuO-QxHf_c4OAemTc1TyO8sctb64S4ykVZtF7h0BPzdA@mail.gmail.com>
+Subject: CORISBANK INTERNATIONAL OFFICIAL NOTIFICATION
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-MY SINCERE GREETINGS,
+Att: Client
 
-HOW ARE YOU DOING TODAY? I AM MRS.LOUISA BESSON FROM FRANCE; I HAVE
-DECIDED TO DONATE WHAT I HAVE TO YOU /CHURCHES/ MOTHERLESS BABIES/LESS
-PRIVILEGED/WIDOWS' BECAUSE I AM DYING AND DIAGNOSED WITH CANCER. I
-HAVE BEEN TOUCHED BY GOD ALMIGHTY TO DONATE FROM WHAT I HAVE INHERITED
-FROM MY LATE HUSBAND TO YOU FOR THE GOOD WORK OF GOD ALMIGHTY. I HAVE
-ASKED ALMIGHTY GOD TO FORGIVE ME AND BELIEVE HE HAS, BECAUSE HE IS A
-MERCIFUL GOD I WILL BE GOING IN FOR AN OPERATION SOON.
 
-I DECIDED TO DONATE THE SUM OF ($8.5 MILLION DOLLARS) TO YOU FOR THE
-GOOD WORK OF GOD ALMIGHTY, AND ALSO TO HELP THE MOTHERLESS AND LESS
-PRIVILEGED AND ALSO FOR ASSISTANCE OF THE WIDOWS. AS SOON AS I READ
-FROM YOU, I SHALL GIVE YOU INFO ON WHAT I NEED FROM YOU, THEN YOU WILL
-CONTACT THE BANK AND TELL THEM I HAVE WILLED MY INHERITANCE TO YOU BY
-QUOTING MY PERSONAL FILE ROUTING AND ACCOUNT INFORMATION TO YOU FOR
-GOOD, EFFECTIVE AND PRUDENT WORK. I KNOW I DON'T KNOW YOU BUT I HAVE
-BEEN DIRECTED TO DO THIS BY GOD ALMIGHTY.
+CORISBANK INTERNATIONAL URGENT NOTIFICATION
 
-PLEASE I WILL NEED YOU TO RESPECT MY DECISION AND KEEP EVERY PROCESS
-OF THIS TRANSFER CONFIDENTIAL / TOP SECRET UNTIL EVERY PROCESS IS
-FINALIZED, BEFORE TAKING FAMILY AND FRIENDS FOR THANKSGIVING. IF YOU
-ARE INTERESTED IN CARRYING OUT THIS TASK, I WILL NEED YOU TO GET BACK
-TO ME AND ANSWER THE BELOW QUESTIONS,
+Notification / Notification/ Notification
 
-1). THAT YOU ARE IN A POSITION TO BE TRUSTED WITH SUCH A LARGE AMOUNT
-OF FUNDS, AND THAT YOU HAVE A HEART FOR CHARITY AND THUS WOULD NOT
-HAVE ANY PROBLEMS LOCATING THE RIGHT CHARITY AND HUMAN AID GROUPS TO
-DISBURSE THE FUND TO. IT WOULD BE NICE TO KNOW WHAT CHARITIES YOU HAVE
-IN MIND TO DONATE THE MONEY TO?
+Note, We are writing to inform you officially that Finally the Central
+Bank Financial Authority have approved to transfer your $8.2Million
+which was signed by late Mrs Rose Banneth the COVID.19 victim to
+transfer to you, Late Mrs Rose Banneth the France Lady contacted us to
+transfer her fund in our bank to you for Orphanage work before she
+died by the COVID.19
+and as it is now, you will receive your fund through our corresponding
+bank in Dubai [Emirate Investment Bank ] for security reason. Please
+you should reconfirm your details to receive the $8.2Million.
 
-2). THAT YOU ARE WILLING TO CONTACT THE BANK HOLDING THE DEPOSIT TO
-DISCUSS THE TERMS OF RELEASING THE FUNDS TO YOU?
+Name, Country, Address, occupations, Age, Telephone number, account
+Details so that we can immediately forward to the World Bank to
+transfer the fund.
+You are advised to comply on timely manner to permit this esteem bank
+transfer your fund as scheduled.
 
-3). THAT YOU PROMISE TO RESPECT MY DECISION AND KEEP EVERY PROCESS OF
-THIS TRANSFER CONFIDENTIAL / TOP SECRET UNTIL EVERY PROCESS IS
-FINALIZED?
+We look forward to serving you better
+Your Financial Comfort Is A Priority
+Thank you for choosing Corisbank International.
 
-4). THAT YOU FULLY UNDERSTAND THIS TRANSACTION AND YOU ARE READY TO
-PROCEED UNDER THESE TERMS?
+Sincerely,
 
-I WISH YOU ALL THE BEST AND MAY THE GOOD LORD BLESS YOU ABUNDANTLY.
+----
 
-YOURS FAITHFULLY,
-MRS.LOUISA BESSON
+Mr Diakarya Ouattara
+Managing Director
+Bank Coris
+Burkina Faso
++226 556 163 37
+financial_bf_info@accountant.com
