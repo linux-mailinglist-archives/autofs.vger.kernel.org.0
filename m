@@ -2,85 +2,102 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0189F4158F3
-	for <lists+autofs@lfdr.de>; Thu, 23 Sep 2021 09:20:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CC0541DFCB
+	for <lists+autofs@lfdr.de>; Thu, 30 Sep 2021 19:09:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239466AbhIWHVn (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 23 Sep 2021 03:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32782 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234343AbhIWHVn (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 23 Sep 2021 03:21:43 -0400
-X-Greylist: delayed 387 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 23 Sep 2021 00:20:12 PDT
-Received: from smtp01.aussiebb.com.au (smtp01.aussiebb.com.au [IPv6:2403:5800:3:25::1001])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31156C061574;
-        Thu, 23 Sep 2021 00:20:12 -0700 (PDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 7F7CA100266;
-        Thu, 23 Sep 2021 17:13:40 +1000 (AEST)
-X-Virus-Scanned: Debian amavisd-new at smtp01.aussiebb.com.au
-Received: from smtp01.aussiebb.com.au ([127.0.0.1])
-        by localhost (smtp01.aussiebb.com.au [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id uORAQQHh4x1W; Thu, 23 Sep 2021 17:13:40 +1000 (AEST)
-Received: by smtp01.aussiebb.com.au (Postfix, from userid 116)
-        id 6D4D9100278; Thu, 23 Sep 2021 17:13:40 +1000 (AEST)
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
-        smtp01.aussiebb.com.au
-X-Spam-Level: *
-X-Spam-Status: No, score=1.3 required=10.0 tests=RDNS_NONE,URIBL_BLOCKED
-        autolearn=disabled version=3.4.2
-Received: from mickey.themaw.net (unknown [100.72.131.210])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id C556C100266;
-        Thu, 23 Sep 2021 17:13:39 +1000 (AEST)
-Subject: [PATCH] autofs: fix wait name hash calculation in autofs_wait()
-From:   Ian Kent <raven@themaw.net>
-To:     Al Viro <viro@ZenIV.linux.org.uk>,
-        autofs mailing list <autofs@vger.kernel.org>,
-        Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Date:   Thu, 23 Sep 2021 15:13:39 +0800
-Message-ID: <163238121836.315941.18066358755443618960.stgit@mickey.themaw.net>
-User-Agent: StGit/0.23
+        id S1348830AbhI3RLW (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 30 Sep 2021 13:11:22 -0400
+Received: from avasout02.plus.net ([212.159.14.17]:36300 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344773AbhI3RLV (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 30 Sep 2021 13:11:21 -0400
+X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Sep 2021 13:11:21 EDT
+Received: from webmail08.plus.net ([84.93.228.98])
+        by smtp with ESMTP
+        id VzRTmZmDmrasdVzRUmTWMO; Thu, 30 Sep 2021 18:02:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1633021325; bh=Z0gXWrEzgOsDyKGrbmcljtoaXKSKzTQ+XSVvTe4bAX8=;
+        h=Date:Subject:From:To:Reply-To;
+        b=gZPKZQ/8G8rxthFJr2lWmULgSuF1sWMyIywPXS0HWegCE4h/ush0nb9kC+o+Fcqj8
+         DZcTALOzu3IUBznoKH/dP2TO3eJ6uLBJdbIvkyGmrsDlX2n8y28YofytYoS6I0dQoa
+         P9zU5viQlqUSGjMVft8yS1R9/HRHHVr3j4o6YZMsfF3oM6YfN/dwXS8BndE9Ht5vs2
+         GWtSN2P1lUE5+LQC9Rq5bmXMYSKj17ZD5P0n4Pc1ZJd6yNVLxG9EzKBZFOlxqeh+yJ
+         yA9Dqfph8cYLMw+1XLIvEC9RNUuf7BwFMmXSwEsZahHVvUjlJJd8MILR5h+L48myet
+         QnV7tijOgqGIQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=dIE9ZNRb c=1 sm=1 tr=0
+ a=pzTCteyy/2ocFa3QFZhXMg==:117 a=4hDWCWnfyXC43K0/vgV9fg==:17
+ a=8nJEP1OIZ-IA:10 a=7QKq2e-ADPsA:10 a=RxWcVVJPpmChVC3msAYA:9
+ a=wPNLvfGTeEIA:10 a=oK7I2yiXPX0A:10
+Received: from [127.0.0.1] (helo=webmail.plus.net)
+        by webmail08.plus.net with esmtp (Exim 4.89)
+        (envelope-from <madelynn@madelynn.plus.com>)
+        id 1mVxr6-00039r-DK; Thu, 30 Sep 2021 16:20:16 +0100
+Received: from 41.216.201.2
+        (SquirrelMail authenticated user madelynn)
+        by webmail.plus.net with HTTP;
+        Thu, 30 Sep 2021 16:20:16 +0100
+Message-ID: <4adb4d102413d2d2c9eb7d00e4eec355.squirrel@webmail.plus.net>
+Date:   Thu, 30 Sep 2021 16:20:16 +0100
+Subject: Ref..Payment
+From:   "1 M" <madelynn@madelynn.plus.com>
+To:     TT2@biznetvigator.com
+Reply-To: manager201@workmail.co.za
+User-Agent: SquirrelMail
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+X-Priority: 3 (Normal)
+Importance: Normal
+X-CMAE-Envelope: MS4wfJo/s5qm+rVtsWHE9yemTisZ6qC79rVuTF1e6w9Tt9cLWB2+9DBgYGmV/hXQdGL3nZGajDOD4MziaPQqP9XI9haC2nWg6JOxb9loMQ9BR4E5WNh0A/EA
+ 7gddefEiw+brX16PHT8qHAt3kPxb2N+86ZpygSXljujJqFffGFWqhNhrzV2BfwNDBxW8CvQy5BRg2A==
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-There's a mistake in commit 2be7828c9fefc ("get rid of autofs_getpath()")
-that affects kernels from v5.13.0, basically missed because of me not
-fully testing the change for Al.
+From: Bernard Arnault Foundation,
+No.: NCRCP11490 Legal
+Registration No.: 2021/457988/07
 
-The problem is that the hash calculation for the wait name qstr hasn't
-been updated to account for the change to use dentry_path_raw(). This
-prevents the correct matching an existing wait resulting in multiple
-notifications being sent to the daemon for the same mount which must
-not occur.
+Dear Beneficiary,
 
-The problem wasn't discovered earlier because it only occurs when
-multiple processes trigger a request for the same mount concurrently
-so it only shows up in more aggressive testing.
+This message is directed to inform you that the Department of the fund
+recovery has investigated your fund, which has been on transfer process
+for some period of time. During the second quarter of the Bernard Arnault
+Foundation, the recovery unit has recovered your fund at the tune of ZAR
+I, 000,000.00 (One Million Rand), which was to be paid to you as the
+beneficiary.
 
-Fixes: 2be7828c9fefc ("get rid of autofs_getpath()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ian Kent <raven@themaw.net>
----
- fs/autofs/waitq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+And it has been understood by our investigating team that this fund was
+acquired by you as a result of the initial inheritance of the fund, which
+your partner was supposed to remit the fund into your bank account some
+past years. After the auditing, the recovery unit decides that the entire
+recovered and returned fund should be paid to the beneficiary owners
+within 2 weeks. This decision was taken by the Board of the auditors in
+the recovery department, and at present the fund is in the escrow account.
 
-diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
-index 16b5fca0626e..54c1f8b8b075 100644
---- a/fs/autofs/waitq.c
-+++ b/fs/autofs/waitq.c
-@@ -358,7 +358,7 @@ int autofs_wait(struct autofs_sb_info *sbi,
- 		qstr.len = strlen(p);
- 		offset = p - name;
- 	}
--	qstr.hash = full_name_hash(dentry, name, qstr.len);
-+	qstr.hash = full_name_hash(dentry, qstr.name, qstr.len);
- 
- 	if (mutex_lock_interruptible(&sbi->wq_mutex)) {
- 		kfree(name);
+The recovery unit has approved the release of your fund, and it has also
+decided that your fund should be transferred to you without any further
+delay. For your full identification and authorization of your payment, you
+are hereby advised to send to our approval department/manager your full
+information as stated below:
 
+1. Full Name:
+2. Your Alternative Email:
+3. Country:
+4. Contact Telephone Number:
+
+Please email the below manager with all your information details regarding
+these developments to enable us to proceed.
+
+Mr. James Morgan
+Phone: +27 60 420 2455
+N/B: Please reply directly to this email address: manager@workmail.co.za
+
+We wait for your urgent responds before the end of today.
+
+Yours sincerely,
+Ms. Delphine Arnault
+Secretary General (Bernard Arnault Foundation)
 
