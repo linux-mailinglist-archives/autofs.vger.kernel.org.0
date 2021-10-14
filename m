@@ -2,80 +2,101 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E64E9428B42
-	for <lists+autofs@lfdr.de>; Mon, 11 Oct 2021 12:54:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15C7642DDC3
+	for <lists+autofs@lfdr.de>; Thu, 14 Oct 2021 17:12:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235970AbhJKK4K (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 11 Oct 2021 06:56:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51004 "EHLO
+        id S233153AbhJNPOw (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 14 Oct 2021 11:14:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235963AbhJKK4K (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 11 Oct 2021 06:56:10 -0400
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8986AC061570
-        for <autofs@vger.kernel.org>; Mon, 11 Oct 2021 03:54:10 -0700 (PDT)
-Received: by mail-wr1-x442.google.com with SMTP id e12so54805673wra.4
-        for <autofs@vger.kernel.org>; Mon, 11 Oct 2021 03:54:10 -0700 (PDT)
+        with ESMTP id S232204AbhJNPOv (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 14 Oct 2021 11:14:51 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 219B2C061753
+        for <autofs@vger.kernel.org>; Thu, 14 Oct 2021 08:12:46 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id d3so25424738edp.3
+        for <autofs@vger.kernel.org>; Thu, 14 Oct 2021 08:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=DOxN63QWnl4dBNWQl+LufsBrewR+8VuPJnGph7ijSeE=;
-        b=Rmnfeyren4oVPh//M5LrkGiuTpbKg55JHUPRDiYK57KMNB2Mjrl5P7ERihHS5Wbo6C
-         09AkCGuI8Q23pVM1YWsxgC9G7ac95tExoJCavT+3lxLC3EusLby9iU9bNvfDa6zYZF6Q
-         FI5JDr3IXRBbZ65X6WAv9/BHOVykeWNcWqNkOQNUmpg4WU9FKm4OyQZLM/H+/D8djSbR
-         OH37tn1YqVLy1qYLknxScG2O0FQShGBgGyBVGlF8Lws4c3XOJOOB65fMVpXbSaD6u+aV
-         90rAfqw1uZa2JRHOaR8ct9Fo0J8GBhmeXq0uZQwAtTcJFR3RL5aYB3JM95WKVXvbTs8a
-         u5PA==
+        d=linuxtx.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=w45cBwWuxt9fV0sH92Mj0nap7150VQi8dWHb0aDrKOs=;
+        b=YRiavibCQ5dBpR8sEKXV0lV/aSByGm8aH6pXObxa96UKqW2Xp1TgT8UGf5o3j2jT/t
+         jXFZUixi63N0FP3Ws+XLyyvnKGZpUghoP0ahHvAw6VC7pjQcj1jJyHHYr5ise4ey/pRz
+         Z5M9nrJ+4T1D4CggdaoFf9LfYJzN+ShVVq6ug=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=DOxN63QWnl4dBNWQl+LufsBrewR+8VuPJnGph7ijSeE=;
-        b=p4HDEiqRIjVudRqfA5S/8jh/gfYsBgY2snEPkSnO2hnO4M2FqJaUvD4EADnVAdGOSq
-         J6ArFu7fhoqC7pZAjgijvMnewABVU/3/VDk2/scUGA3keQ/wVdzhRdVythVvcsVlvHKI
-         b0SQ0vljTuWchwYBaGlM7L5gQiw0xlUO3rv/ao36BT2nNpC6UmbpusxChewAVGzNGhds
-         oHzFKE+yfqDJK/iCk3a20WIBKzXviWbmshWmIofiXUTAn81tXygD6G5Aysa26PrrdN3k
-         TTz0trl29LLJXPdSoBi62UZHufPbswJTBxXOfAmYwzHB+x/sPpZ/TS/YLeq7zNxzVham
-         joIg==
-X-Gm-Message-State: AOAM532KebA8tpFBRtfOrkHAJOJJf+fZmsM63px0YCEgppHl/4j4iY72
-        cBUcaHJUEMJVcx6pVCLguiccAGNhRPTMaupWayU=
-X-Google-Smtp-Source: ABdhPJyDvzxOmBo4m3G7I+0tI0Y+giQ8voS4x9m94iUEvQK60qSV5245otSnQKb38z7GX8EYvioo3BBhgSWgjeaJm2o=
-X-Received: by 2002:a1c:e906:: with SMTP id q6mr20809680wmc.126.1633949649021;
- Mon, 11 Oct 2021 03:54:09 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=w45cBwWuxt9fV0sH92Mj0nap7150VQi8dWHb0aDrKOs=;
+        b=m5uzGoiVg4W8LEPM5Rb4wzqpwkZMgAycfWHrLNxJsUChZ3IdfkgOGA8bmlEYS+pnKJ
+         SWWgdbxTv00bIL2TnzElPQKF+l12JLeemZyhJxxoGna3nzcn3Mbma0/xzHPTf8tHCBop
+         pg1Gmli9QLLD4Fd76kY0m3MChAKDYn+YSgxE2ZpboqDKlqxrue2BT0RPOyxErgNkISyL
+         Gl7GKT4cGxB8QJbOF2bZjL9UMdtEjXMiPU4KIA7rZNWJZ9b/iKRuQlpEC6+kosePrbD+
+         patst7Vxw7cMEXChMieZtrTT63QnV9tahwRTEUwt1y3/tPDKiBxOM29OzXqeMlJcZ2EC
+         gDcw==
+X-Gm-Message-State: AOAM530q4t8SKKGechMgF5kuPUK5Q/+SsoEjmkeaM/GhhfWyGCsHld78
+        0gtw1pWCaqzFbP0N0u8/i35SB5q5ca8G1YwANrO6gA==
+X-Google-Smtp-Source: ABdhPJztOK9YaOX30AT6nvALG6RtdQ68Gh/4hLbQNEaGCI4Bs6r5KjWBzetHRYs7WH5ROQK5mxa/IEUBo/AlCydTWlw=
+X-Received: by 2002:a05:6402:35d1:: with SMTP id z17mr9678857edc.174.1634224293743;
+ Thu, 14 Oct 2021 08:11:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:adf:dd8c:0:0:0:0:0 with HTTP; Mon, 11 Oct 2021 03:54:08
- -0700 (PDT)
-Reply-To: ramcharan9910@outlook.com
-From:   "Cr.David Ramcharan" <convy0101@gmail.com>
-Date:   Mon, 11 Oct 2021 03:54:08 -0700
-Message-ID: <CADDRs95ZcV8RiDv4tBWTO02+eXF=6i==kt9dht8OLiGH9Ttx-w@mail.gmail.com>
-Subject: Thank You
-To:     undisclosed-recipients:;
+References: <163238121836.315941.18066358755443618960.stgit@mickey.themaw.net>
+In-Reply-To: <163238121836.315941.18066358755443618960.stgit@mickey.themaw.net>
+From:   Justin Forbes <jmforbes@linuxtx.org>
+Date:   Thu, 14 Oct 2021 10:11:22 -0500
+Message-ID: <CAFxkdAraAe37_5bGLJtTtxZCaKTqgVPh4hTbcVC=08vRt-Zizg@mail.gmail.com>
+Subject: Re: [PATCH] autofs: fix wait name hash calculation in autofs_wait()
+To:     Ian Kent <raven@themaw.net>
+Cc:     Al Viro <viro@zeniv.linux.org.uk>,
+        autofs mailing list <autofs@vger.kernel.org>,
+        Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Please I am writing to notify you again on my intention to list your
-name as a beneficiary to the total sum of GBP6.350 million (Six
-million, Three hundred and fifty thousand British Pounds Sterlings) in
-the intent of the deceased (name now withheld since this is my second
-letter to you).
+On Thu, Sep 23, 2021 at 2:20 AM Ian Kent <raven@themaw.net> wrote:
+>
+> There's a mistake in commit 2be7828c9fefc ("get rid of autofs_getpath()")
+> that affects kernels from v5.13.0, basically missed because of me not
+> fully testing the change for Al.
+>
+> The problem is that the hash calculation for the wait name qstr hasn't
+> been updated to account for the change to use dentry_path_raw(). This
+> prevents the correct matching an existing wait resulting in multiple
+> notifications being sent to the daemon for the same mount which must
+> not occur.
+>
+> The problem wasn't discovered earlier because it only occurs when
+> multiple processes trigger a request for the same mount concurrently
+> so it only shows up in more aggressive testing.
 
-I contacted you because you bear the surname identity and therefore
-can present you as the beneficiary to inherit the account proceeds of
-the deceased since there is no written "WILL" or trace to the deceased
-family relatives. My aim is to present you to my Bank Authorities as
-the Next of Kin to our deceased client. I will guide you all through
-the Claim procedure by providing all relevant Information and guiding
-you in your decisions and response to the Bank Management. All the
-papers will be processed after your acceptance.
+I suppose it shows up in more than just testing, as we have a bug
+where this is impacting a user doing regular desktop things.
 
-In your acceptance of this deal, I request that you kindly forward to
-me your letter of acceptance; your current telephone and fax numbers
-,age, occupational status and a forwarding address to enable me submit
-to the Bank Management the details as the Next of Kin to their
-deceased customer. Reply strictly through: ramcharancrdavid@gmail.com
+Justin
 
-Yours faithfully,
-Cr.David Ramcharan
+> Fixes: 2be7828c9fefc ("get rid of autofs_getpath()")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Ian Kent <raven@themaw.net>
+> ---
+>  fs/autofs/waitq.c |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
+> index 16b5fca0626e..54c1f8b8b075 100644
+> --- a/fs/autofs/waitq.c
+> +++ b/fs/autofs/waitq.c
+> @@ -358,7 +358,7 @@ int autofs_wait(struct autofs_sb_info *sbi,
+>                 qstr.len = strlen(p);
+>                 offset = p - name;
+>         }
+> -       qstr.hash = full_name_hash(dentry, name, qstr.len);
+> +       qstr.hash = full_name_hash(dentry, qstr.name, qstr.len);
+>
+>         if (mutex_lock_interruptible(&sbi->wq_mutex)) {
+>                 kfree(name);
+>
+>
