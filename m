@@ -2,92 +2,60 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E4AF458F2E
-	for <lists+autofs@lfdr.de>; Mon, 22 Nov 2021 14:11:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BAC4460B74
+	for <lists+autofs@lfdr.de>; Mon, 29 Nov 2021 01:13:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbhKVNO2 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 22 Nov 2021 08:14:28 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:51983 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230322AbhKVNO2 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 22 Nov 2021 08:14:28 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 615E15C0043;
-        Mon, 22 Nov 2021 08:11:21 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 22 Nov 2021 08:11:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
-        message-id:subject:from:to:date:in-reply-to:references
-        :content-type:mime-version:content-transfer-encoding; s=fm1; bh=
-        bDVRdKGhy/R+l1LJ79/7ohgdCKLpI69lpsrLYLaT0r0=; b=RolzW7mhw0l+29P3
-        Qrk9kxAvP/kT7syM+wUSA7kYLwCjrlGE8Tn74PuK97yIlPPqsTyt6i9i730jHEwr
-        BJ4OoNHNir7WDbFjeDO4huOHu7+FooT6RtrdRgXtj6K58VNi3Ad+/1WWehxOprsu
-        ncAuJFCHjnHPkCs72//4Ik3w7eu7c9Dl4VS1KAkVk+nZDA5CcY5UBsZ1KMt69gcl
-        5EaFGwVcTKvB9AzCsAGJ5mZ6vOaPmda8sA7xoZJybhNKMr1c0yKJE3EvGiD3Oe47
-        aqLBVk4KqbZnQWOeSscH+mNW6Lcal6DCdsBeN3BGbxkVBO776sRtmgmCBrWfY0v4
-        CUW8OQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=bDVRdKGhy/R+l1LJ79/7ohgdCKLpI69lpsrLYLaT0
-        r0=; b=moxxF76GVxmMJtXRvLUMwsFUlMqadAGfEC2J4RNfZYmR2hcS+faSpSd34
-        YcSAHXhNdEZX/mMvT4vhIdv3fwmsegZf4PFDBZo6WrBOH2/fpsCaDLxMQF5PnyKe
-        Nf4tF+ufSGJpH9A31SAOnsII9uJa6j0ThNKSy5f+9o/jr5g8HdyW0nhMuSyOb7UN
-        kc6aWZUI/JIyD/e2JXU+aMnifHtD7R/YpLWBQWf3ESus4Xkyex7IlNNaXRhpHOXV
-        LhAIFZEsLY470vJu9rKJqWOG3KSi4gA6vCMSCBCkSD8Fl5zibT8Jf7dD+jwAUy6S
-        IPqTF+7G3iz5UN3iRUyQEtbi4yvnQ==
-X-ME-Sender: <xms:-JabYWAIvqHkN-6Wrl8Xis6UDio-2hs26sXQIbSwOxsw33401101rQ>
-    <xme:-JabYQjt5dmC-69Y0157uakc0K-RaLJhe9JimVGVweheYm17N3YtodvRucUwBtohz
-    lAncXwHiVPL>
-X-ME-Received: <xmr:-JabYZl0m8S2uBMMvaVDaovgx0_mnbXSLvbgv3ayTYrdjE0Asri4O-yPbcaUs-XuhJDJPbA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrgeeggdehtdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkuffhvfffjghftggfggfgsehtkeertddtreejnecuhfhrohhmpefkrghnucfm
-    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepgf
-    elleekteehleegheeujeeuudfhueffgfelhefgvedthefhhffhhfdtudfgfeehnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhgrvhgvnhesth
-    hhvghmrgifrdhnvght
-X-ME-Proxy: <xmx:-ZabYUyH4dDcKdMLAJ0ZW_zrLklTa7VznBsZ9JE0Wni1aXPIu7-nWg>
-    <xmx:-ZabYbSn6G0oouyDrQNnQNeJEV4siF3YQYIdK-YrjwRuHGaZnlbw_g>
-    <xmx:-ZabYfa7kQUeqfumnXqMwrIBTzqXSQnqYVY44CqueXZ4CiT4JzVyBA>
-    <xmx:-ZabYeO4x44qt5FfdfI5bQXrhaJpJhP7vb1mWK_ZghQllozt2v6o_g>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Nov 2021 08:11:19 -0500 (EST)
-Message-ID: <ac3cb951784202d5cb61993715838e96191954de.camel@themaw.net>
-Subject: Re: autofs 5.1.8 and TCP_REQUESTED
-From:   Ian Kent <raven@themaw.net>
-To:     Stanislav Levin <slev@altlinux.org>, autofs@vger.kernel.org
-Date:   Mon, 22 Nov 2021 21:11:15 +0800
-In-Reply-To: <a4a4facf-ad90-9f4c-6a38-b7ac132df34c@altlinux.org>
-References: <76446ac4-04e1-85d2-1cb2-d7264142cdaa@altlinux.org>
-         <7550afb574d26b09ce68b39462a778ed244ece02.camel@themaw.net>
-         <12697fd2f212d6be9658df6d5f56b34b854cf4c6.camel@themaw.net>
-         <a4a4facf-ad90-9f4c-6a38-b7ac132df34c@altlinux.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+        id S234257AbhK2AQd (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sun, 28 Nov 2021 19:16:33 -0500
+Received: from mail.vallenar.cl ([200.54.241.89]:33096 "EHLO mail.vallenar.cl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S244756AbhK2AOd (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Sun, 28 Nov 2021 19:14:33 -0500
+X-Greylist: delayed 20836 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Nov 2021 19:14:32 EST
+Received: from localhost (localhost [127.0.0.1])
+        by mail.vallenar.cl (Postfix) with ESMTP id B4D8F1CAC1BF;
+        Sun, 28 Nov 2021 12:57:36 -0300 (-03)
+Received: from mail.vallenar.cl ([127.0.0.1])
+        by localhost (mail.vallenar.cl [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 1CrbgW5COOf8; Sun, 28 Nov 2021 12:57:36 -0300 (-03)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.vallenar.cl (Postfix) with ESMTP id 9D5811D0A6D9;
+        Sun, 28 Nov 2021 12:11:15 -0300 (-03)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.vallenar.cl 9D5811D0A6D9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vallenar.cl;
+        s=EC098874-C7DE-11E7-B3B1-1A9A6030413E; t=1638112275;
+        bh=IQxUcKgLaEia+DMrVj9OEHbWOH8TffrzQMeZgAxYubI=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=fSE7hIgyNB3y2d4ydAylocT5BqbshLbiLTPNFuSrd7EOCVCOrouCb4tK5Mr9x0nkV
+         IJBk+YgYqviL5f+XBvfyO9nVDXUxAJpszJ/YLQZ50ktwLq6lePn/9FaVIcEcaLG5m/
+         yvYOfu2B+wb81rvvde2Hu74Up5jnuxcH9cG467TIDeUseLbP5yC31I7mktqk6+v2+f
+         a6GH/Lk8gdxaLpfwJYW3L7fdSadSnXWzjPhQQfSjx7DKIUrCEIMBY9C3L0lLzb6E8z
+         ulz/vdLLu2rgp3uNIRd2vocqPoFodWo0Wrz0V3JCQBvgeO4N+3M1xkUDr3F4SrAnxV
+         ENEOxkldMNGLQ==
+X-Virus-Scanned: amavisd-new at vallenar.cl
+Received: from mail.vallenar.cl ([127.0.0.1])
+        by localhost (mail.vallenar.cl [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id L3jnVy7_OOQI; Sun, 28 Nov 2021 12:11:15 -0300 (-03)
+Received: from [192.168.8.101] (unknown [105.0.3.102])
+        by mail.vallenar.cl (Postfix) with ESMTPSA id 2E2451CEB2CA;
+        Sun, 28 Nov 2021 11:12:43 -0300 (-03)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: 2.000.000,00. Euro
+To:     Recipients <yperez@vallenar.cl>
+From:   "manuel franco" <yperez@vallenar.cl>
+Date:   Sun, 28 Nov 2021 16:20:13 +0200
+Reply-To: manuelfrancospende00@gmail.com
+Message-Id: <20211128141245.2E2451CEB2CA@mail.vallenar.cl>
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Mon, 2021-11-22 at 13:44 +0300, Stanislav Levin wrote:
-> Hello,
-> 
-> 18.11.2021 07:08, Ian Kent пишет:
-> > On Sun, 2021-10-31 at 07:35 +0800, Ian Kent wrote:
-> > 
-> > Does this patch fix the problem you are seeing (note the CHANGELOG
-> > hunk won't apply but should be straight forward to fix)?
-> > 
-> 
-> The fix is verified.
-> Thank you!
+Sie haben eine Spende von 2.000.000,00. Euro
 
-I'll get to committing it to the repo. soonish.
-
-Thanks,
-Ian
-
+Mein Name ist Manuel Franco aus den Vereinigten Staaten.
+Ich habe die Amerika-Lotterie im Wert von 768 Millionen US-Dollar gewonnen =
+und spende einen Teil davon an nur 5 gl=FCckliche Menschen und ein paar Wai=
+senh=E4user als Wohlwollen f=FCr die Menschheit.
