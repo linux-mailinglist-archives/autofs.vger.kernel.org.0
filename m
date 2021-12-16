@@ -2,60 +2,85 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BBB847383C
-	for <lists+autofs@lfdr.de>; Tue, 14 Dec 2021 00:00:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 915D44770A8
+	for <lists+autofs@lfdr.de>; Thu, 16 Dec 2021 12:42:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237263AbhLMXAh (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 13 Dec 2021 18:00:37 -0500
-Received: from ds072-101.domainserver.ne.jp ([103.241.128.174]:60558 "EHLO
-        ds072-101.domainserver.ne.jp" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237816AbhLMXAd (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 13 Dec 2021 18:00:33 -0500
-X-Greylist: delayed 414 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Dec 2021 18:00:33 EST
-Received: by ds072-101.domainserver.ne.jp (Postfix, from userid 10170)
-        id D426562DEC7; Tue, 14 Dec 2021 07:53:36 +0900 (JST)
-To:     autofs@vger.kernel.org
-Subject: =?ISO-2022-JP?B?GyRCIVoyWiVVJSElXyVqITwlOyVzJT8hPCFbJCpMZCQkOWckbyQ7JCIkaiQsJEgkJiQ0JDYkJCReJDkhSjwrRjBKVj8uJWEhPCVrIUsbKEI=?=
-Date:   Mon, 13 Dec 2021 22:53:36 +0000
-From:   =?ISO-2022-JP?B?GyRCMlolVSUhJV8laiE8JTslcyU/ITwbKEI=?= 
-        <info@hanafc.jp>
-Reply-To: info@hanafc.jp
-Message-ID: <7e034435a629b5d84e52590a247fad5e@hanafc.jp>
-X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
+        id S233452AbhLPLmo (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 16 Dec 2021 06:42:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60210 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233102AbhLPLmk (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 16 Dec 2021 06:42:40 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B33BEC061394
+        for <autofs@vger.kernel.org>; Thu, 16 Dec 2021 03:42:29 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id p19so25043946qtw.12
+        for <autofs@vger.kernel.org>; Thu, 16 Dec 2021 03:42:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=xre5um49Rnqa1tZMCD58Cd6UlD4MleswKAp3tzt2gjo=;
+        b=XAiY5JQCbKhUV3kfV68NxknTY8076aQ+jZiIG+NNSnrj8SbWsLA5ZyVis9Hv7MDsX5
+         Wp1aJ8rEmDfQ1U3vhA+W5Q6fUW0sQxhqwaHiosPbQFbyYijHt4Icvm/T0vEK5/kKmBc+
+         QqELCOAj0es+5TzRQyWwGBhwQGehjbOewfhMN3/S4hQw7QoR6Y3+tDzh1TbUcqm1TT9t
+         NYT2/qpfB6ahTcpnyVYoBu/0br0EmuZ66fyA68h0ieuZcBkGcxPgfheRqd2GHCJMPyzP
+         6QgpFUXd/uCVTtz1/hZUUGudKd9Q0ZImcSJeB1tjd8lIsCPvJkt1eKVnbTcB60Kk9v0/
+         CoRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=xre5um49Rnqa1tZMCD58Cd6UlD4MleswKAp3tzt2gjo=;
+        b=ox3XCHCVZ0SdGt/scppgHwxkgouPzpX+rlrcusvxdMm5/i5+h6PiobmT2DhUcPxOJs
+         tE02HpXuYG5HF32JwmydUKTgwFXBCklMsnFL/kXjPbqTbwCMDri2pWQt2ohikwAUsZn1
+         s6ckLlectImcI+PC+qikzArumXf1ENw8iep1+HyXpFUGOOgKhH82/9uWgIwYln2wJrhm
+         ZLCOuTgj4VzbDguTo7AB3KGFRSxDgUOIniD/YzHk2QoVvuw7ur7pebG3Q0Fu3BTKFQfn
+         XVYhCXSv5UrO9v9kvRPOdcv3+1GyAZ+XrYHVbxN+Vnblu6vBtXaK55qik8sJc5ASEEXJ
+         vKRg==
+X-Gm-Message-State: AOAM531OykCQbLfynSS9p48JR87EIYDl76tZw92H9U+xJx1nwUsGCaCv
+        CG3wQBkT0Guv4KpnCoAHwfExAUsWoYoWo/L84os=
+X-Google-Smtp-Source: ABdhPJxzAaV5DauAecsJzqBWmheSvDxk3ghiLfb6YRovClVg4kL4yUlGwYUFAnV+1q8jYrfo3AT6l8iJutzsg/2jTPA=
+X-Received: by 2002:a05:622a:1d4:: with SMTP id t20mr16497208qtw.84.1639654948506;
+ Thu, 16 Dec 2021 03:42:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-2022-JP
-X-PPP-Message-ID: <20211213225336.13877.66273@localhost.localdomain>
-X-PPP-Vhost: hanafc.jp
+Received: by 2002:a05:622a:199c:0:0:0:0 with HTTP; Thu, 16 Dec 2021 03:42:28
+ -0800 (PST)
+Reply-To: selviasantiago1@gmail.com
+From:   Selvia Santiago <mariamatinez119@gmail.com>
+Date:   Thu, 16 Dec 2021 11:42:28 +0000
+Message-ID: <CAONDhKOtxcgjB1YEPd0RXNOVbbQ8k-9k32v_cdFxEKFzk62kJg@mail.gmail.com>
+Subject: Urgent
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-華ファミリーセンターへのお問い合わせありがとうございます。
-以下の内容でお問い合わせを受け付けました。
+-- 
+Urgent
 
-■お名前
-?? Carol is interested in your profile! Click Here: http://bit.do/fSRRK?0uf ??様
+I am Mrs. Selvia Santiago from Abidjan, Cote D'Ivoire, I am a widow
+suffering from long time illness (Cancer), there is funds I inherited
+from my late loving husband Mr. Santiago Carlos, the sum of (US$2.7
+Million Dollars) which he deposited in bank before his death, I need a
+honest and Faithful person that can use these funds for humanity work.
 
-■郵便番号
-58849
+I took this decision because I don't have any child that will inherit
+this money and I don't want a situation where this money will be used
+in an ungodly way. That is why I am taking this decision, and my
+doctor has confirmed to me that I have less than two weeks to live,
+having known my condition I decided to donate this fund to a charity
+or individual that will utilize this money to assist the poor and the
+needy in accordance to my instructions.
 
-■ご住所
-沖縄県
-rieh6j7
-gsxrr7x
+I want you to use 70% of this funds for orphanages, school, church,
+widows, propagating the word and other humanity works,The remaining
+30% should be yours for your efforts as the new beneficiary.
 
-■電話番号
-328122176066
+Please if you would be able to use these funds for humanity work
+kindly reply me. As soon as I have received your response, I will give
+you further directives on how you are to go about the claims of the
+said funds.
 
-■メールアドレス
-autofs@vger.kernel.org
-
-■お問い合わせ内容
-fw3t4w5
-
-─────────────────────────────────────────────────────
-華ファミリーセンター
-〒862-0909 熊本県熊本市東区湖東2丁目19-6
-TEL　096-214-7020　/　FAX　096-214-7030
-─────────────────────────────────────────────────────
-
+Remain blessed.
+Mrs Selvia Santiago.
