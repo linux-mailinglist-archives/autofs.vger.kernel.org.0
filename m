@@ -2,82 +2,76 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFA0F4921C1
-	for <lists+autofs@lfdr.de>; Tue, 18 Jan 2022 10:00:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E50354921DF
+	for <lists+autofs@lfdr.de>; Tue, 18 Jan 2022 10:04:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231951AbiARJAl (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 18 Jan 2022 04:00:41 -0500
-Received: from woodpecker.gentoo.org ([140.211.166.183]:50148 "EHLO
-        smtp.gentoo.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231869AbiARJAk (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 18 Jan 2022 04:00:40 -0500
-Date:   Tue, 18 Jan 2022 17:00:38 +0800
-From:   Yixun Lan <dlan@gentoo.org>
-To:     Ian Kent <raven@themaw.net>
-Cc:     autofs@vger.kernel.org, Fabian Groffen <grobian@gentoo.org>
-Subject: Re: autofs-5.1.8: fail to mount certain /net shares
-Message-ID: <YeaBtjNlovM5gez4@ofant>
-References: <YeZ51EWg85akR6Ig@ofant>
- <13e80402c9602053148da44664204b22dcd70645.camel@themaw.net>
+        id S1345168AbiARJEE (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 18 Jan 2022 04:04:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37736 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240386AbiARJDz (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 18 Jan 2022 04:03:55 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B30CC06174E
+        for <autofs@vger.kernel.org>; Tue, 18 Jan 2022 01:03:51 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id p5so53585438ybd.13
+        for <autofs@vger.kernel.org>; Tue, 18 Jan 2022 01:03:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=IAamEH5Xu1dJ3X0trVcFTPIrL7aTtcDGn5mUS4vw1a8=;
+        b=MKVoGuH84JEqwH7FLePXiHWn749zPRU0NdtP8Sm2JMhUl9c1iVyWjbwz6g8cfGp/lf
+         wGwjovvsv0mdzOrkruLS7VCe5a7nqOLOAOguQfLlO7KlNogBFH31ts7TJnJIMROay93O
+         zLFD2FXmAbjh/mANJwaPSceaNEIBY2ial/GMPVceYyFjbk49spZ6usuG0YECL34rgvGB
+         iei5o2VJiTWPHrHs+06yeYgSnvm3Lro4YfCcKClwdqQV0oHYRRf0rSUvau/jSGUGIY/g
+         PIq25ry8zIUYTR1kpaKtOSp5p5QnPiBRoNfQN58gXlJM4igUY1pzRJNojXS4U/9SVgkd
+         1m4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=IAamEH5Xu1dJ3X0trVcFTPIrL7aTtcDGn5mUS4vw1a8=;
+        b=uq3idPtzbidU3bHDI3gVLLKLyHinAPvKWpnTImFhhf5NYw65JEoRnbqH3/M52JtyqT
+         dA7kvS2HhmDNCfEZU9ofmtitDk/wCX5Bq/3jdDFyUPihhVd9CDWThuoYAcpqNlnkRc+7
+         jBx68RQPo9mdNvNoMqmL7Uo40evTiDBm5XqAS5y5YFwW0OD2a2EvPfF1AI9uiPPxcdHl
+         JG9PCRS15MISFIV80LI7Hzd9CG0wby6hGNIlMVJp8NSgAvmgACxTRr8yMUzPYaPi1Jk9
+         o+g/AdOAh90mtCCW4DZIyO+o3pVS+VC1/GVH9lNU4bbllZ8Xr9nsnQy8+5MFxmRP8Fxl
+         xAKw==
+X-Gm-Message-State: AOAM530vdT6h3VH6EVL8KOw6mRVqpr9P0O/15fkI4nWye5xg7N7wIIUn
+        3PYmPBv0znn2AH6mR+KErcUPM881697rNDK0hWU=
+X-Google-Smtp-Source: ABdhPJy6S8YpzyetQz5KgFrhfh63qx4z5C4Z/Y2SVI8oau6/Qt6fRl+454Z9GiaGeU2dYh9fMxr8ktnL9Tw7RDFSq4I=
+X-Received: by 2002:a25:7287:: with SMTP id n129mr30710797ybc.351.1642496630031;
+ Tue, 18 Jan 2022 01:03:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <13e80402c9602053148da44664204b22dcd70645.camel@themaw.net>
+Received: by 2002:a05:7108:3655:0:0:0:0 with HTTP; Tue, 18 Jan 2022 01:03:49
+ -0800 (PST)
+Reply-To: asil.ajwad@gmail.com
+From:   Asil Ajwad <graceyaogokamboule@gmail.com>
+Date:   Mon, 17 Jan 2022 21:03:49 -1200
+Message-ID: <CA+Yy_gAHH8Aue7iwiH_cJ4+g8NkHKK3sLYXeb_HRC+HesC70HA@mail.gmail.com>
+Subject: Greetings,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Hi Ian Kent:
-
-thanks for your quick reply
-
-On 16:44 Tue 18 Jan     , Ian Kent wrote:
-> On Tue, 2022-01-18 at 16:27 +0800, Yixun Lan wrote:
-> > Hi Ian Kent:
-> > 
-> > Fabian reported a bug about failing to mount /net with autofs-5.1.8,
-> > but have no problem with previous 5.1.6
-> > 
-> > I'm not able to reproduce this error (need more info about the
-> > settings)
-> > So write to the mailinglist to see if you can shed some light on
-> > this..
-> > 
-> > 
-> > The most verbose error messages like this:
-> > 
-> > Jan 11 13:53:09 khnum automount[3614]: mount_autofs_offset: failed to
-> > mount offset trigger  at 
-> > Jan 11 13:56:24 khnum automount[3614]: set_tsd_user_vars: failed to
-> > get
-> > buffer size for getpwuid_r
-> > Jan 11 14:56:52 khnum kernel: autofs4:pid:10191:validate_dev_ioctl:
-> > invalid path supplied for cmd(0xc018937e)
-> 
-> I've had several bug reports which have been mostly fixed now but these
-> log entries don't look like anything I have seen so far.
-> 
-> I haven't yet pushed those changes to the repository either.
-> How would you like to proceed?
-> I could post a patch series to you or the list to try if you wish.
-either way work for me, but I need to be able to reproduce this first
-I will leave Fabian for comments..
-
-> 
-> That user vars log entry is in code that hasn't changed for quite a
-> long time, that's odd.
-> 
-> 
-> > 
-> > 
-> > detail of the bug report:
-> >  https://bugs.gentoo.org/831014
-> > 
-> > 
-> 
-
 -- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Greetings,
+
+I am Mr.Asil Ajwad, I work with United Bank of Africa, can you use
+an ATM Visa Card to withdraw money at, ATM Cash Machine in your
+country, if yes I want to transfer abounded fund the sum of $10.5million
+US-Dollars, to you from my country, this is part of the money that was
+abounded by our late old client a politician who unfortunately lost
+his life and was forced out of power Du to greedy act, the bank will
+
+change the account details to your name, and apply for a Visa Card
+with your details, the Visa Card will be send to you, and you can be
+withdrawing money with it always, whatever any amount you withdraw
+daily, you will send 60% to me and you will take 40%, the Visa Card
+and the bank account will be on your name, I will be waiting for your
+response for more details, thanks to you a lot for giving me your time.
+
+regards,
+Mr.Asil Ajwad.
