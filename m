@@ -2,91 +2,96 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19D87492525
-	for <lists+autofs@lfdr.de>; Tue, 18 Jan 2022 12:45:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6132E493254
+	for <lists+autofs@lfdr.de>; Wed, 19 Jan 2022 02:27:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234192AbiARLp4 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 18 Jan 2022 06:45:56 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:47058
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240991AbiARLpy (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 18 Jan 2022 06:45:54 -0500
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id E8F703F211
-        for <autofs@vger.kernel.org>; Tue, 18 Jan 2022 11:45:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1642506352;
-        bh=DhUoF4775HIS0s2ajEPggKLHzhs6IflJ/uyhdhMLkL4=;
-        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-         To:Content-Type;
-        b=llSriyCClnr2tqG3ToidEIVAa+o8dy/6yK7aXs51exEdBvgE3G7Usbhtvsb1aUJz6
-         +5SDlls67xooirW5umvpqgbMErHbk12u9IoZKbaWMhMtH0ot84h2oeDKkUNHZCMkva
-         18mt+7PgnHqDYssJVc9cIxL6KYZG/aFvKmhJ+b4DiKQ0Dxz+D6xpelxqhj6njOZbnI
-         wk6aYSGNyWH6xUjuOOrqkXdeSfoUnWn2nns4fUHNCsjLXu0QYKfVA3otRf2qv4I1Xf
-         qkTW3RncbvRYBSUhVjiyPRVj/ANx3kJCHj3MDpOIxPrtHSrjF6HwUu0SxdrK3cEZCk
-         Ncmzr7ySXFjjQ==
-Received: by mail-ed1-f72.google.com with SMTP id ej6-20020a056402368600b00402b6f12c3fso5330779edb.8
-        for <autofs@vger.kernel.org>; Tue, 18 Jan 2022 03:45:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=DhUoF4775HIS0s2ajEPggKLHzhs6IflJ/uyhdhMLkL4=;
-        b=zcWJC41E/CJfTs//iQFsV2zI5pwIYNFchu5vFgEjIHfL+jS9qwrztQhQ3+eJnTVB9h
-         Tlm+slWMdWaIPJ5DJjConbT2vD5xIGEZifh3QeKMhhrIK3hYxprlkJz5Fn+ccdmyyLnk
-         2fietXkLCYCoIFwuz4SHPx98MqqDBeMRnpNrGEdCEc03XECF5TcpNJzCZzKT8+U0hGTp
-         tGmTbFrQL7arVaLdyYgsQw1hiTU2yhfDF3IpWtRkN68vamc2mElMo+hKqJHSKQ0UZHW7
-         bu1L3R7sT8b9EtCZVoXjEyEizpZLqQZRpLQWXjO3aw5Iz3XMSu4vi/OEHYtq0b1jDi2G
-         JtBQ==
-X-Gm-Message-State: AOAM531/jyypn9Kq+v8moZuPIxgBxCF4QxC8UG/h8DkSdyH4XtmWflcV
-        f4Wi5wb0a3pCW1Jkm0tRzKmMuzb8vF1k3pqqVAlWZSOFDG4L6Pu3cTUd1kHgO4jCCkxwgxll1uf
-        U45ssJ0cufDU9twU/45mV70hd/YdlynBSDAG1dpZUkSOBXSybYg==
-X-Received: by 2002:a17:906:3894:: with SMTP id q20mr18354170ejd.768.1642506352668;
-        Tue, 18 Jan 2022 03:45:52 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJx1DuBmGYJeOLN7+ZIYrxkpgGVoQPfhib4HIGgh6C911eo9fOlFcrws1bKfjlVYujly/OKal8kv8wSwIzwJBuk=
-X-Received: by 2002:a17:906:3894:: with SMTP id q20mr18354165ejd.768.1642506352494;
- Tue, 18 Jan 2022 03:45:52 -0800 (PST)
-MIME-Version: 1.0
-References: <YeZ51EWg85akR6Ig@ofant>
-In-Reply-To: <YeZ51EWg85akR6Ig@ofant>
-From:   Andreas Hasenack <andreas@canonical.com>
-Date:   Tue, 18 Jan 2022 08:45:41 -0300
-Message-ID: <CANYNYEHsGO-e8TbBVykQSL8no1voNAK8arEwtv_37f5D5DJPgw@mail.gmail.com>
+        id S1350588AbiASB1f (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 18 Jan 2022 20:27:35 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:60451 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1344934AbiASB1e (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 18 Jan 2022 20:27:34 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 270015C02E7;
+        Tue, 18 Jan 2022 20:27:34 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Tue, 18 Jan 2022 20:27:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=
+        message-id:subject:from:to:cc:date:in-reply-to:references
+        :content-type:mime-version:content-transfer-encoding; s=fm2; bh=
+        OdOfS9YuHQdrF9ipA5HXdd/JC1LB8DEgKsU5N6LvurU=; b=AJP8e055dGe8AW04
+        WKIcaUj8aeUQ6WW6te/1EyD0CO3RPy6SZTGV4G9DqTVX+J+8MsDy1qXqJRpWcHyX
+        ElsbVgwFdeu6djtza7GAhUx4GAcO6Og4x/G9JSgA/kBdDCxG+8+wCSNDvm5ppwbL
+        AVE3ncP9WfMpV9cFY318Vo+wHfMVFKaUbhMjYMOe0CK/0urdCEOZPisaECYubfFJ
+        3ERZe1o6Nj/O/DdKytGVDt2NQENKIO4/bqDGNM95oA2kV6CHCG4j0gkqcXTQXf0l
+        bzx+HRY1cCSNcjOizuoeZ/SXI/ExQbx6eDtH1B6dR2lN1t97avh+CWHvIkloVUNp
+        VvrNag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=OdOfS9YuHQdrF9ipA5HXdd/JC1LB8DEgKsU5N6Lvu
+        rU=; b=UpIbcinHD47LMVCesq8pB7AA4PAIxpPdV0Rw4bkZibKSyUlayXW2/oQPn
+        MHdjJWHReHDHcNKTUeJQLDAZ/3O7PFUJfS0ThZSS+vMULitG1JByga65uFThXoLY
+        DwTPL1V7XgGL9BYcJOr2o9Nd/zfgWXVPwXO4zc8MvAocySDkkp/qCveN3byxv60D
+        QVdOqGRL26uHAYDHZK2T5VNGfMBeJNUCj0DEfL29tlqFw2Vn9AKgzBXIBaj1yKk0
+        fvUh+7iMQOafgypTSk6BJSdGldmdwyrIybbh1ripbD6r09ee8N9qEzAJaHcceWBG
+        CuUu1SKscslAesuNZGTSXEPu8Xkiw==
+X-ME-Sender: <xms:BmnnYaLlTDfpZ-jcE-Ppiqsf1vzwHHuJIoIZUxzOJisa3j_vzhXdTw>
+    <xme:BmnnYSJuWxdzrsci8qGti4X0Y2bftGSj06wXz3j5BpASz0gliz_PQtXD_yCk_Vqci
+    236bl2UQhKg>
+X-ME-Received: <xmr:BmnnYavImBF4hQ7E2fERXDCdmN5HIrM1GVuhZRuaaqt9Ia7e8uQl_PzZMrZeGtjpgL4v5_raqcgs9UgTYN-bNi1czNEpk3zMYzxwYx4_-ebk5xrhcbpQ-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudeggdeffecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfggggfesthejre
+    dttderudenucfhrhhomhepkfgrnhcumfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhn
+    vghtqeenucggtffrrghtthgvrhhnpeffteefteeifeevvdfgffeiffejfeegkeekhfdtge
+    dufeeukefgieekffekgeeufeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvth
+X-ME-Proxy: <xmx:BmnnYfZ-3k7tL8CqFWgcX2QhfUjU31bOksZHSpK7Guoy3nGkW1JUog>
+    <xmx:BmnnYRbX2BVel8p_qFtZEActz3aZUbrvPM8npP0mwZbqK7fwWrSC1Q>
+    <xmx:BmnnYbD0v_uvi6pxhQ573NLMzgioVDMsqrsn7tWw8zh41DpfQ1cfMw>
+    <xmx:BmnnYSAwWIenLWxIhuyFmnbP7-QL0ijAGI0VART8d_S6X5AC8tx7cQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Jan 2022 20:27:32 -0500 (EST)
+Message-ID: <78fdc849f556c5c0a56560a2d54f3cd7c086d561.camel@themaw.net>
 Subject: Re: autofs-5.1.8: fail to mount certain /net shares
-To:     autofs@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From:   Ian Kent <raven@themaw.net>
+To:     Fabian Groffen <grobian@gentoo.org>
+Cc:     Yixun Lan <dlan@gentoo.org>, autofs@vger.kernel.org
+Date:   Wed, 19 Jan 2022 09:27:26 +0800
+In-Reply-To: <YeaWIKm/9szaWHIA@gentoo.org>
+References: <YeZ51EWg85akR6Ig@ofant>
+         <13e80402c9602053148da44664204b22dcd70645.camel@themaw.net>
+         <YeaBtjNlovM5gez4@ofant>
+         <7ace29a11ae22c5704dc59b42ed83ec71b7643be.camel@themaw.net>
+         <YeaWIKm/9szaWHIA@gentoo.org>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.40.4 (3.40.4-2.fc34) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Hi,
+On Tue, 2022-01-18 at 11:27 +0100, Fabian Groffen wrote:
+> On 18-01-2022 18:24:11 +0800, Ian Kent wrote:
+> > A debug log is almost always what I ask for.
+> > 
+> > Setting "logging = debug" in /etc/autofs.conf will do it.
+> > You need to get a log from start of automount to after the problem
+> > occurs.
+> 
+> Let me try this and come back to you.
 
-On Tue, Jan 18, 2022 at 5:27 AM Yixun Lan <dlan@gentoo.org> wrote:
->
-> Hi Ian Kent:
->
-> Fabian reported a bug about failing to mount /net with autofs-5.1.8,
-> but have no problem with previous 5.1.6
->
-> I'm not able to reproduce this error (need more info about the settings)
-> So write to the mailinglist to see if you can shed some light on this..
->
->
-> The most verbose error messages like this:
->
-> Jan 11 13:53:09 khnum automount[3614]: mount_autofs_offset: failed to
-> mount offset trigger  at
+You might need to take some care doing this.
 
-I get this error too with 5.1.8
+If your using systemd then a simple "journalctl | grep automount"
+usually gets what we need.
 
-> Jan 11 13:56:24 khnum automount[3614]: set_tsd_user_vars: failed to get
-> buffer size for getpwuid_r
-> Jan 11 14:56:52 khnum kernel: autofs4:pid:10191:validate_dev_ioctl:
-> invalid path supplied for cmd(0xc018937e)
+But if your relying on syslog often the log level setting won't
+record debug logging so it needs to be changed. Otherwise we don't
+get a full log.
 
-And this "invalid path" one too. Also with 5.1.8, not with 5.1.7. I
-sent an email with debug logs a few days ago (and I can't find the
-mailing list archive now to verify it got through, ugh).
+Ian
+
