@@ -2,105 +2,220 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 195D14932C2
-	for <lists+autofs@lfdr.de>; Wed, 19 Jan 2022 03:13:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BDD24935C1
+	for <lists+autofs@lfdr.de>; Wed, 19 Jan 2022 08:46:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348509AbiASCNw (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 18 Jan 2022 21:13:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48214 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348360AbiASCNv (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 18 Jan 2022 21:13:51 -0500
-Received: from smtp01.aussiebb.com.au (smtp01.aussiebb.com.au [IPv6:2403:5800:3:25::1001])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9CE6C061574
-        for <autofs@vger.kernel.org>; Tue, 18 Jan 2022 18:13:51 -0800 (PST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 59075100066
-        for <autofs@vger.kernel.org>; Wed, 19 Jan 2022 13:13:50 +1100 (AEDT)
-X-Virus-Scanned: Debian amavisd-new at smtp01.aussiebb.com.au
-Received: from smtp01.aussiebb.com.au ([127.0.0.1])
-        by localhost (smtp01.aussiebb.com.au [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id N_1JT6j_150a for <autofs@vger.kernel.org>;
-        Wed, 19 Jan 2022 13:13:50 +1100 (AEDT)
-Received: by smtp01.aussiebb.com.au (Postfix, from userid 116)
-        id 50C8310029D; Wed, 19 Jan 2022 13:13:50 +1100 (AEDT)
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        smtp01.aussiebb.com.au
-X-Spam-Level: *
-X-Spam-Status: No, score=1.4 required=10.0 tests=KHOP_HELO_FCRDNS,RDNS_DYNAMIC,
-        SPF_HELO_NONE autolearn=disabled version=3.4.4
-Received: from mickey.themaw.net (180-150-90-198.b4965a.per.nbn.aussiebb.net [180.150.90.198])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 6D7DF100066;
-        Wed, 19 Jan 2022 13:13:49 +1100 (AEDT)
-Subject: [PATCH 19/19] autofs-5.1.8 - define _SWORD_TYPE for musl
-From:   Ian Kent <raven@themaw.net>
-To:     Yixun Lan <dlan@gentoo.org>, Fabian Groffen <grobian@gentoo.org>
-Cc:     autofs mailing list <autofs@vger.kernel.org>
-Date:   Wed, 19 Jan 2022 10:13:49 +0800
-Message-ID: <164255842899.27570.14413137613777345350.stgit@mickey.themaw.net>
-In-Reply-To: <164255793534.27570.512543721628420491.stgit@mickey.themaw.net>
-References: <164255793534.27570.512543721628420491.stgit@mickey.themaw.net>
-User-Agent: StGit/0.23
+        id S1351959AbiASHq0 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 19 Jan 2022 02:46:26 -0500
+Received: from woodpecker.gentoo.org ([140.211.166.183]:38850 "EHLO
+        smtp.gentoo.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245700AbiASHqZ (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 19 Jan 2022 02:46:25 -0500
+Date:   Wed, 19 Jan 2022 08:46:16 +0100
+From:   Fabian Groffen <grobian@gentoo.org>
+To:     Ian Kent <raven@themaw.net>
+Cc:     Yixun Lan <dlan@gentoo.org>, autofs@vger.kernel.org
+Subject: Re: autofs-5.1.8: fail to mount certain /net shares
+Message-ID: <YefByA5Ep6HqrPpA@gentoo.org>
+References: <YeZ51EWg85akR6Ig@ofant>
+ <13e80402c9602053148da44664204b22dcd70645.camel@themaw.net>
+ <YeaBtjNlovM5gez4@ofant>
+ <7ace29a11ae22c5704dc59b42ed83ec71b7643be.camel@themaw.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ekmi4XT+QV3UYNl7"
+Content-Disposition: inline
+In-Reply-To: <7ace29a11ae22c5704dc59b42ed83ec71b7643be.camel@themaw.net>
+User-Agent: Mutt/2.1.5 (Darwin 17.7.0, VIM - Vi IMproved 8.2)
+Organization: Gentoo Foundation, Inc.
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-From: Sam James <sam@gentoo.org>
 
-Copy the definition from glibc. Fixes build failures like:
-```
-automount.c:280:35: error: '__SWORD_TYPE' undeclared (first use in this function)
-  280 |                 if (fs.f_type != (__SWORD_TYPE) AUTOFS_SUPER_MAGIC) {
-      |                                   ^~~~~~~~~~~~
-automount.c:280:35: note: each undeclared identifier is reported only once for each function it appears in
-automount.c:280:48: error: expected ')' before numeric constant
-  280 |                 if (fs.f_type != (__SWORD_TYPE) AUTOFS_SUPER_MAGIC) {
-      |                    ~                           ^
-      |                                                )
-```
+--ekmi4XT+QV3UYNl7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Yixun Lan <dlan@gentoo.org>
-Signed-off-by: Sam James <sam@gentoo.org>
----
- CHANGELOG          |    1 +
- daemon/automount.c |   10 ++++++++++
- 2 files changed, 11 insertions(+)
+Hmmm, so I did this, and the only thing I see:
 
-diff --git a/CHANGELOG b/CHANGELOG
-index 762d3d1c..410df3ae 100644
---- a/CHANGELOG
-+++ b/CHANGELOG
-@@ -15,6 +15,7 @@
- - musl: avoid internal stat.h definitions.
- - musl: add missing include to hash.h for _WORDSIZE.
- - musl: add missing include to log.h for pid_t.
-+- musl: define _SWORD_TYPE.
- 
- 19/10/2021 autofs-5.1.8
- - add xdr_exports().
-diff --git a/daemon/automount.c b/daemon/automount.c
-index b47c485b..e59ef65d 100644
---- a/daemon/automount.c
-+++ b/daemon/automount.c
-@@ -48,6 +48,16 @@
- #endif
- #endif
- 
-+#ifndef __SWORD_TYPE
-+#if __WORDSIZE == 32
-+# define __SWORD_TYPE	int
-+#elif __WORDSIZE == 64
-+# define __SWORD_TYPE	long int
-+#else
-+#error
-+#endif
-+#endif
-+
- const char *program;		/* Initialized with argv[0] */
- const char *version = VERSION_STRING;	/* Program version */
- const char *libdir = AUTOFS_LIB_DIR;	/* Location of library modules */
+Jan 19 08:40:38 hera automount[15228]: Starting automounter version
+5.1.8, master map auto.master
+Jan 19 08:40:38 hera automount[15228]: using kernel protocol version
+5.05
+Jan 19 08:40:38 hera automount[15228]: lookup_nss_read_master: reading
+master files auto.master
+Jan 19 08:40:38 hera automount[15228]: do_init: parse(sun): init
+gathered global options: (null)
+Jan 19 08:40:38 hera automount[15228]: spawn_mount: mtab link detected,
+passing -n to mount
+Jan 19 08:40:38 hera automount[15228]: spawn_umount: mtab link detected,
+passing -n to mount
+Jan 19 08:40:38 hera automount[15228]: no mounts in table
 
+then:
 
+# mount | grep autofs
+/etc/autofs/auto.home on /home type autofs
+(rw,relatime,fd=3D-1,pgrp=3D29000,timeout=3D300,minproto=3D5,maxproto=3D5,i=
+ndirect)
+
+the /net isn't mounted at all
+
+reverting back to 5.1.6, I see this:
+
+Jan 19 08:43:30 hera automount[16125]: Starting automounter version 5.1.6, =
+master map auto.master
+Jan 19 08:43:30 hera automount[16125]: using kernel protocol version 5.05
+Jan 19 08:43:30 hera automount[16125]: lookup_nss_read_master: reading mast=
+er files auto.master
+Jan 19 08:43:30 hera automount[16125]: do_init: parse(sun): init gathered g=
+lobal options: (null)
+Jan 19 08:43:30 hera automount[16125]: spawn_mount: mtab link detected, pas=
+sing -n to mount
+Jan 19 08:43:30 hera automount[16125]: spawn_umount: mtab link detected, pa=
+ssing -n to mount
+Jan 19 08:43:30 hera automount[16125]: lookup_read_master: lookup(file): re=
+ad entry /home
+Jan 19 08:43:30 hera automount[16125]: lookup_read_master: lookup(file): re=
+ad entry /net
+Jan 19 08:43:30 hera automount[16125]: master_do_mount: mounting /home
+Jan 19 08:43:30 hera automount[16125]: automount_path_to_fifo: fifo name /r=
+un/autofs.fifo-home
+Jan 19 08:43:30 hera automount[16125]: lookup_nss_read_map: reading map fil=
+e /etc/autofs/auto.home
+Jan 19 08:43:30 hera automount[16125]: do_init: parse(sun): init gathered g=
+lobal options: (null)
+Jan 19 08:43:30 hera automount[16125]: spawn_mount: mtab link detected, pas=
+sing -n to mount
+Jan 19 08:43:30 hera automount[16125]: spawn_umount: mtab link detected, pa=
+ssing -n to mount
+Jan 19 08:43:30 hera automount[16125]: remount_active_mount: trying to re-c=
+onnect to mount /home
+Jan 19 08:43:30 hera automount[16125]: mounted indirect on /home with timeo=
+ut 300, freq 75 seconds
+Jan 19 08:43:30 hera automount[16125]: lookup_mount: lookup(program): looki=
+ng up user
+Jan 19 08:43:30 hera automount[16125]: lookup_mount: lookup(program): user =
+-> -fstype=3Dnfs4,hard,sec=3Dsys,nodev,nosuid,wsize=3D32768,rsize=3D32768 /=
+ hera:/export/home/user
+Jan 19 08:43:30 hera automount[16125]: parse_mount: parse(sun): expanded en=
+try: -fstype=3Dnfs4,hard,sec=3Dsys,nodev,nosuid,wsize=3D32768,rsize=3D32768=
+ / hera:/export/home/user
+Jan 19 08:43:30 hera automount[16125]: parse_mount: parse(sun): gathered op=
+tions: fstype=3Dnfs4,hard,sec=3Dsys,nodev,nosuid,wsize=3D32768,rsize=3D32768
+Jan 19 08:43:30 hera automount[16125]: parse_mount: parse(sun): dequote("/"=
+) -> /
+Jan 19 08:43:30 hera automount[16125]: parse_mapent: parse(sun): gathered o=
+ptions: fstype=3Dnfs4,hard,sec=3Dsys,nodev,nosuid,wsize=3D32768,rsize=3D327=
+68
+Jan 19 08:43:30 hera automount[16125]: parse_mapent: parse(sun): dequote("h=
+era:/export/home/user") -> hera:/export/home/user
+Jan 19 08:43:30 hera automount[16125]: update_offset_entry: parse(sun): upd=
+ated multi-mount offset / -> -fstype=3Dnfs4,hard,sec=3Dsys,nodev,nosuid,wsi=
+ze=3D32768,rsize=3D32768 hera:/export/home/user
+Jan 19 08:43:30 hera automount[16125]: parse_mapent: parse(sun): gathered o=
+ptions: fstype=3Dnfs4,hard,sec=3Dsys,nodev,nosuid,wsize=3D32768,rsize=3D327=
+68
+Jan 19 08:43:30 hera automount[16125]: parse_mapent: parse(sun): dequote("h=
+era:/export/home/user") -> hera:/export/home/user
+Jan 19 08:43:30 hera automount[16125]: sun_mount: parse(sun): mounting root=
+ /home/user/, mountpoint user, what hera:/export/home/user, fstype nfs4, op=
+tions hard,sec=3Dsys,nodev,nosuid,wsize=3D32768,rsize=3D32768
+Jan 19 08:43:30 hera automount[16125]: re-connected to /home/user
+Jan 19 08:43:30 hera automount[16125]: remount_active_mount: re-connected t=
+o mount /home
+Jan 19 08:43:30 hera automount[16125]: st_ready: st_ready(): state =3D 0 pa=
+th /home
+Jan 19 08:43:30 hera automount[16125]: master_do_mount: mounting /net
+Jan 19 08:43:30 hera automount[16125]: automount_path_to_fifo: fifo name /r=
+un/autofs.fifo-net
+Jan 19 08:43:30 hera automount[16125]: lookup_nss_read_map: reading map fil=
+e /etc/autofs/auto.net
+Jan 19 08:43:30 hera automount[16125]: do_init: parse(sun): init gathered g=
+lobal options: (null)
+Jan 19 08:43:30 hera automount[16125]: mounted indirect on /net with timeou=
+t 300, freq 75 seconds
+Jan 19 08:43:30 hera automount[16125]: st_ready: st_ready(): state =3D 0 pa=
+th /net
+
+So it appears that 5.1.8 for some reason doesn't eat my auto.net at all?
+
+I posted my conf in https://bugs.gentoo.org/831014
+
+Fabian
+
+On 18-01-2022 18:24:11 +0800, Ian Kent wrote:
+> On Tue, 2022-01-18 at 17:00 +0800, Yixun Lan wrote:
+> > Hi Ian Kent:
+> >=20
+> > thanks for your quick reply
+> >=20
+> > On 16:44 Tue 18 Jan=C2=A0=C2=A0=C2=A0=C2=A0 , Ian Kent wrote:
+> > > On Tue, 2022-01-18 at 16:27 +0800, Yixun Lan wrote:
+> > > > Hi Ian Kent:
+> > > >=20
+> > > > Fabian reported a bug about failing to mount /net with autofs-
+> > > > 5.1.8,
+> > > > but have no problem with previous 5.1.6
+> > > >=20
+> > > > I'm not able to reproduce this error (need more info about the
+> > > > settings)
+> > > > So write to the mailinglist to see if you can shed some light on
+> > > > this..
+> > > >=20
+> > > >=20
+> > > > The most verbose error messages like this:
+> > > >=20
+> > > > Jan 11 13:53:09 khnum automount[3614]: mount_autofs_offset:
+> > > > failed to
+> > > > mount offset trigger=C2=A0 at=20
+> > > > Jan 11 13:56:24 khnum automount[3614]: set_tsd_user_vars: failed
+> > > > to
+> > > > get
+> > > > buffer size for getpwuid_r
+> > > > Jan 11 14:56:52 khnum kernel:
+> > > > autofs4:pid:10191:validate_dev_ioctl:
+> > > > invalid path supplied for cmd(0xc018937e)
+> > >=20
+> > > I've had several bug reports which have been mostly fixed now but
+> > > these
+> > > log entries don't look like anything I have seen so far.
+> > >=20
+> > > I haven't yet pushed those changes to the repository either.
+> > > How would you like to proceed?
+> > > I could post a patch series to you or the list to try if you wish.
+> > either way work for me, but I need to be able to reproduce this first
+> > I will leave Fabian for comments..
+>=20
+> A debug log is almost always what I ask for.
+>=20
+> Setting "logging =3D debug" in /etc/autofs.conf will do it.
+> You need to get a log from start of automount to after the problem
+> occurs.
+>=20
+>=20
+> Ian
+>=20
+
+--=20
+Fabian Groffen
+Gentoo on a different level
+
+--ekmi4XT+QV3UYNl7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEELUvHd/Gtp7LaU1vuzpXahU5EQpMFAmHnwcgACgkQzpXahU5E
+QpMV4wf+KbtiguHF4zLf16M8J9My6cdIEcKVQIv22I2HtM6ZdpV5aJiC+mx+lzad
+H5uZJkfH5dHitZWIGncvEQR3ylxKPYQv9cmhtHQWfn3hQ8EhXLoMElg09VqF0t7Q
+VQzKT/I/BDtGFgygch4d30UiN+CVBWB6C7a2FWer+jCeDtFs6vBucRGvTLLrKRMK
+hMpCy4x+RZ5z9UZ+hXmO9tKQUWCI4+XCnc9MeH6q7pTV7ppSH44EGCKM5bl50mz1
+eTchVOWMN6aF/SVateLzu37WvNWLIux+xJXxjUwG1irXcybl+hvluwcUwIujenfV
+m7TU95Aqx2wR6ZVOoKkgbl0WYmasIw==
+=A7kp
+-----END PGP SIGNATURE-----
+
+--ekmi4XT+QV3UYNl7--
