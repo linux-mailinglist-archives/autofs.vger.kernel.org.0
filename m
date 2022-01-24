@@ -2,80 +2,98 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC8EB495F10
-	for <lists+autofs@lfdr.de>; Fri, 21 Jan 2022 13:35:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5615649777E
+	for <lists+autofs@lfdr.de>; Mon, 24 Jan 2022 03:42:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350464AbiAUMfb (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Fri, 21 Jan 2022 07:35:31 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:41734
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1350502AbiAUMfb (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Fri, 21 Jan 2022 07:35:31 -0500
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 2F9A83F1C9
-        for <autofs@vger.kernel.org>; Fri, 21 Jan 2022 12:35:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1642768530;
-        bh=ge4fc+rCbW57IEBtcy4ecz/BQRgS5JeiDYpuI8ol0ho=;
-        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-         To:Content-Type;
-        b=nQ/558gmzvTdOcnnU3Ct1HdZjFPyWNplvxyoXm1TfZ2/eNlihDKivrQs/Kf34JRpB
-         Ecw+aPbiAXIZYhNNIvD2C0SSuqeAtEyYlRDqk2ucP/jb63kosCreA7YzG+ij5YxH6u
-         1wMUK6q/SoECW2bGSrqsSmWaO9Tlty6Q/itkuISpBGjd7qWGHu8CmS+6fm8fvrngZX
-         UgHuWnYBELFtRh+OWV9QAWZBKMUWjPh2rP66iv03yUgWBB26wkw87Ns9IHnCOBqNiM
-         3K6TTsM4yGqL4lTb883ZYPxBx4nhOlIVt5qm67osoHC+KIsj0W2y5RhzJ9e0Sh3rkj
-         DESTEhz+9QmXg==
-Received: by mail-ed1-f70.google.com with SMTP id i9-20020a05640242c900b003fe97faab62so8923174edc.9
-        for <autofs@vger.kernel.org>; Fri, 21 Jan 2022 04:35:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=ge4fc+rCbW57IEBtcy4ecz/BQRgS5JeiDYpuI8ol0ho=;
-        b=IKn59aSVH3/SiBKYo781RX7TgFq21YfjBaFrDchek9T2wLpM9URmBBoatuve1Goveo
-         Mh25xxi3Y24GtSBnjN/yvdoE0sIUQOpcy9/zmca0SRBRbDh2hgGDPfqxhZpqYudbcUP1
-         Ep00UoWOBhKZcksD6z7AJuEJnDOuPez1LlkeBZ0/UWm5W5gNmg8zD6wSpv+UjvnEh+Q5
-         waAyBDNm6JxtnWpZSUczlzFSgfsyrXNH5zjb8q4QA/qd8Vs7k5tLxARiQvmsJksKNDHU
-         yeJ5aSbedCEdDm4xwPyZoNrXRqMU0ll7yx6F2kWbvd4DhhBOs4Z2vuxPx2ca9MKaAac+
-         6vlg==
-X-Gm-Message-State: AOAM531XCiV7JsFYz4oGJto/n1ZffFAZzJ/YXgpNG90DxC+DNshcbmbe
-        8zrCYFiXUfUSZjnognQ4p5C7eAJYx9GUjtUhC+YOguvoF7APRoSDOIZdITIzRGilCOZNIFbMDkY
-        FL0FtOMl3eb24rh9DVLtw0MBUbyfssazc2OgACH1uwFbXxh+T3Q==
-X-Received: by 2002:a17:907:2d10:: with SMTP id gs16mr3202652ejc.100.1642768529868;
-        Fri, 21 Jan 2022 04:35:29 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJz9ydMaKv6kVF97IQOjWdP4Miw97ziBnTbvqvHk/eNPuHFQjCG7C88X3ujsYXq/TtSkgTEw11Enopd8B6hh5Jc=
-X-Received: by 2002:a17:907:2d10:: with SMTP id gs16mr3202643ejc.100.1642768529688;
- Fri, 21 Jan 2022 04:35:29 -0800 (PST)
-MIME-Version: 1.0
-References: <CANYNYEGXa6Kp82nmpSieCzRs4iipSkQKq-tLqaLyFWxW1HgUSA@mail.gmail.com>
- <28d69ccef58b083a9726c8e7cc602cd938dd0c49.camel@themaw.net>
- <CANYNYEF46JrOAhozU=nCmqvKS2UwVOF0_yNXejvq9V83yQumhA@mail.gmail.com>
- <CANYNYEEbkztqHfs4hGngOV4qrxKZn3gsXbNZP5X79Ljcx862Fw@mail.gmail.com>
- <CANYNYEFVX4cNBXnB4iR1w_sgAi-NgEYz7_5-ad1c_-vzvvEtuQ@mail.gmail.com>
- <25f3fdb0fff76a6d347c5e6e1f12d6c6dac40916.camel@themaw.net> <7967061ccfa8de983f7a0c0320547011228cd1f8.camel@themaw.net>
-In-Reply-To: <7967061ccfa8de983f7a0c0320547011228cd1f8.camel@themaw.net>
-From:   Andreas Hasenack <andreas@canonical.com>
-Date:   Fri, 21 Jan 2022 09:35:18 -0300
-Message-ID: <CANYNYEG4uA8Tp5+W3=XHkXzaBWv1f9Sq5Re+oahGB4jNwYa6BQ@mail.gmail.com>
+        id S240892AbiAXCmb (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sun, 23 Jan 2022 21:42:31 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54759 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235357AbiAXCmb (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sun, 23 Jan 2022 21:42:31 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 825685C0124;
+        Sun, 23 Jan 2022 21:42:30 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Sun, 23 Jan 2022 21:42:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
+        :content-transfer-encoding:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm2; bh=ZO5pALWSBBxAZp
+        0zRO7y/TLsLwYFgxzcgn8wq7VXaxM=; b=hn9nli6lt3Ckjh4dBNGmU5SnVBZYcx
+        eh03wCA0pkpjB1R7dpx8DMGCYorWh4WDn0A/X38EKY5BQo5Pxco0DxYZms4g0GXe
+        Ri+JNW9Cp9hQ08JHs8MCbRywZG3lk4hsCZDnX6JYjRA7gADAbp6b2x/ZIPhAv+/5
+        oLv0INryEzgj5mUvrEgHfRNyap05xHQMCJ9svKAZMxvxn0z+cka+dh4SjmSqrRrN
+        XDc0FAzW0c2J1F43VbMLebGicgJLLJX61cAg1NygjEFVCWmovZ7LtyocprDWXHBp
+        J3mK10AplkmUrBXAlI3qUwbyteUixgCJdhYdl8RELHrI8nhUy4ZD8GQw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; bh=ZO5pALWSBBxAZp0zRO7y/TLsLwYFgxzcgn8wq7VXaxM=; b=WJhlIm3a
+        lRDV2MEsQf2mctI4KPtosd+nhan8GxDMFgfL+1TLfFx3+CnVJgtRRahqNLpRESlC
+        N9/IY/XZJv9BYuTqkSexDFkTN0toXnai76cRqMUXStELnv5lRJWMTg52iC92yDKV
+        4i2ldTFb8yDgjCdWrF5iw2aOGL2lsttkbccfSjTs+Crgecmxh1iVJXZkjw838IVA
+        T4o+KFEQvXj3xJOcGewGe/U4Bw5L1gPUWQa9enokpkc92agLJB8F45eXBqKDcRZh
+        bXUGtCs+UWGPk4Hghj5X0gy7nesECeQZGDuVW8pkpNgPEgZDpH3ivK1+nGCWdYYh
+        mKUYEadXfOZiIA==
+X-ME-Sender: <xms:FhLuYfeqQpQxuIzuC0Vae4LGHTm732paP72gOzZLIqskt_9OoN8q1Q>
+    <xme:FhLuYVPRphs2MIscgd-0Qdbrw5eqrbnXf3swSZlherUBcoQZoji-AUf2j_JKKElcj
+    DJbJTXLb-04>
+X-ME-Received: <xmr:FhLuYYgK_I9-HSC1tn-gjLXki-ujdmzA9hF5pBw5OF2UYUKic8vUJtLheFrDazu0qNJWzuCnug5CjymVdk_OG4VLdm9xQgD-zCGqBTQsdwEN4lVlrQyhgA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrvdehgdehtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefkuffhvfffjghftggfggfgsehtjeertddtredunecuhfhrohhmpefkrghnucfm
+    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepff
+    etfeetieefvedvgfffieffjeefgeekkefhtdegudefueekgfeikeffkeegueefnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhgrvhgvnhesth
+    hhvghmrgifrdhnvght
+X-ME-Proxy: <xmx:FhLuYQ8YCqqzaHlDEpN620TVdugHuHQ80lGqBHU-QjCoCRZjKgQtFg>
+    <xmx:FhLuYbt8AeR4HVPRFwBO7NQnFb1NPOeqnwKYjrcSy_XnrSw26Vd2LQ>
+    <xmx:FhLuYfG5_BGAjc7CmPwiCToRFs89RtwK_Lq95y1ErAt7ViplXW18Xg>
+    <xmx:FhLuYY67RmqO4REyx0ixqUDbBbFalN-yz7cmP40rO14idUI12V2BWA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 23 Jan 2022 21:42:28 -0500 (EST)
+Message-ID: <aca5cb6920b313953289db25adc8d63703af6b38.camel@themaw.net>
 Subject: Re: 5.1.8 s390x error: invalid path supplied for cmd(0xc018937e)
-To:     autofs@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From:   Ian Kent <raven@themaw.net>
+To:     Andreas Hasenack <andreas@canonical.com>, autofs@vger.kernel.org
+Date:   Mon, 24 Jan 2022 10:42:25 +0800
+In-Reply-To: <CANYNYEG4uA8Tp5+W3=XHkXzaBWv1f9Sq5Re+oahGB4jNwYa6BQ@mail.gmail.com>
+References: <CANYNYEGXa6Kp82nmpSieCzRs4iipSkQKq-tLqaLyFWxW1HgUSA@mail.gmail.com>
+         <28d69ccef58b083a9726c8e7cc602cd938dd0c49.camel@themaw.net>
+         <CANYNYEF46JrOAhozU=nCmqvKS2UwVOF0_yNXejvq9V83yQumhA@mail.gmail.com>
+         <CANYNYEEbkztqHfs4hGngOV4qrxKZn3gsXbNZP5X79Ljcx862Fw@mail.gmail.com>
+         <CANYNYEFVX4cNBXnB4iR1w_sgAi-NgEYz7_5-ad1c_-vzvvEtuQ@mail.gmail.com>
+         <25f3fdb0fff76a6d347c5e6e1f12d6c6dac40916.camel@themaw.net>
+         <7967061ccfa8de983f7a0c0320547011228cd1f8.camel@themaw.net>
+         <CANYNYEG4uA8Tp5+W3=XHkXzaBWv1f9Sq5Re+oahGB4jNwYa6BQ@mail.gmail.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.40.4 (3.40.4-2.fc34) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Hello,
+On Fri, 2022-01-21 at 09:35 -0300, Andreas Hasenack wrote:
+> Hello,
+> 
+> On Fri, Jan 21, 2022 at 5:08 AM Ian Kent <raven@themaw.net> wrote:
+> 
+> > I think this patch might help with that hang.
+> > I may merge that into the original patch but it's separate for now
+> > to facilitate testing.
+> > 
+> > autofs-5.1.8 - fix fix root offset error handling
+> 
+> 
+> This indeed fixes the hang after patch 5, thanks! \o/
 
-On Fri, Jan 21, 2022 at 5:08 AM Ian Kent <raven@themaw.net> wrote:
+btw, I will fold that into the above patch since this is all being
+done as development, hence the mistakes we are seeing.
 
-> I think this patch might help with that hang.
-> I may merge that into the original patch but it's separate for now
-> to facilitate testing.
->
-> autofs-5.1.8 - fix fix root offset error handling
+Ian
 
-
-This indeed fixes the hang after patch 5, thanks! \o/
