@@ -2,135 +2,98 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A7B649C5DA
-	for <lists+autofs@lfdr.de>; Wed, 26 Jan 2022 10:10:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C31D449C5F8
+	for <lists+autofs@lfdr.de>; Wed, 26 Jan 2022 10:14:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238773AbiAZJJ7 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 26 Jan 2022 04:09:59 -0500
-Received: from woodpecker.gentoo.org ([140.211.166.183]:48976 "EHLO
+        id S238870AbiAZJOq (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 26 Jan 2022 04:14:46 -0500
+Received: from woodpecker.gentoo.org ([140.211.166.183]:49796 "EHLO
         smtp.gentoo.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230425AbiAZJJ7 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 26 Jan 2022 04:09:59 -0500
-Date:   Wed, 26 Jan 2022 17:09:48 +0800
+        with ESMTP id S231387AbiAZJOq (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 26 Jan 2022 04:14:46 -0500
+Date:   Wed, 26 Jan 2022 17:14:44 +0800
 From:   Yixun Lan <dlan@gentoo.org>
 To:     Ian Kent <raven@themaw.net>
-Cc:     Fabian Groffen <grobian@gentoo.org>, autofs@vger.kernel.org
-Subject: Re: autofs-5.1.8: fail to mount certain /net shares
-Message-ID: <YfEP3K3xwluSg8RR@ofant>
-References: <7ace29a11ae22c5704dc59b42ed83ec71b7643be.camel@themaw.net>
- <YeaWIKm/9szaWHIA@gentoo.org>
- <78fdc849f556c5c0a56560a2d54f3cd7c086d561.camel@themaw.net>
- <YehQdqiLSz6LMPVi@gentoo.org>
- <ea50cca1178e47671c6e84204a1ca0d2ada647e8.camel@themaw.net>
- <YekOscjFLNMjggd7@gentoo.org>
- <c445c06805b04cd5df591ec2d35cc2bda50cc781.camel@themaw.net>
- <846b94880cd4f3b9521b4cabdc8638d2cc785986.camel@themaw.net>
- <YepbqFeUBns+KRbj@gentoo.org>
- <533443bba593e6d7a9cfdbfb8bb4fb95edb010d6.camel@themaw.net>
+Cc:     Fabian Groffen <grobian@gentoo.org>,
+        autofs mailing list <autofs@vger.kernel.org>
+Subject: Re: [PATCH 00/19] My current patch queue
+Message-ID: <YfERBDDV3lYqPg85@ofant>
+References: <164255793534.27570.512543721628420491.stgit@mickey.themaw.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <533443bba593e6d7a9cfdbfb8bb4fb95edb010d6.camel@themaw.net>
+In-Reply-To: <164255793534.27570.512543721628420491.stgit@mickey.themaw.net>
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-
-On 20:24 Fri 21 Jan     , Ian Kent wrote:
-> On Fri, 2022-01-21 at 08:07 +0100, Fabian Groffen wrote:
-> > On 20-01-2022 19:41:11 +0800, Ian Kent wrote:
-> > > > If it's not using the expected location for autofs.conf that's a
-> > > > build
-> > > > problem.
-> > > > 
-> > > > Can you get me a build log.
-> > > 
-> > > And what does "automount -V" say?
-> > 
-> > Linux automount version 5.1.8
-> > 
-> > Directories:
-> >         config dir:     /etc/conf.d
-> >         maps dir:       /etc/autofs
-> >         modules dir:    /usr/lib64/autofs
-> > 
-> > Compile options:
-> >   DISABLE_MOUNT_LOCKING ENABLE_FORCED_SHUTDOWN
-> > ENABLE_IGNORE_BUSY_MOUNTS 
-> >   LIBXML2_WORKAROUND WITH_LIBTIRPC 
-> > 
-> > (this is identical to the 5.1.6 output)
-> > 
-> > build-log attached
+Hi Ian
+On 10:11 Wed 19 Jan     , Ian Kent wrote:
+> Hi,
 > 
-> That all looks good, including the build log.
+> Here is my current patch queue.
 > 
-> How about we try stopping the autofs service and run automount
-> manually and see what we get.
+> There have been a few problems I didn't catch in testing with the
+> map entry offset handling (the internal hosts map and things like
+> auto.net, auto.smb and map entries that have offsets use) rewrite.
 > 
-> Stop the service then run "automount -fd | tee autofs.log".
+> So it's worth trying some or all of these patches to see if they help
+> with the problem your seeing.
+> ---
 > 
-> It might be useful to add a stderr redirect too but I usually
-> don't need it, eg. "automount -fd 2>&1 | tee autofs.log".
+> Frank Sorenson (1):
+>       autofs-5.1.8 - fix loop under run in cache_get_offset_parent()
 > 
+> Ian Kent (11):
+>       autofs-5.1.8 - fix kernel mount status notification
+>       autofs-5.1.8 - fix fedfs build flags
+>       autofs-5.1.8 - fix set open file limit
+>       autofs-5.1.8 - improve descriptor open error reporting
+>       autofs-5.1.8 - fix root offset error handling
+>       autofs-5.1.8 - fix nonstrict fail handling of last offset mount
+>       autofs-5.1.8 - dont fail on duplicate host export entry
+>       autofs-5.1.8 - bailout on rpc systemerror
+>       autofs-5.1.8 - fix nfsv4 only mounts should not use rpcbind
+>       autofs-5.1.8 - simplify cache_add() a little
+>       autofs-5.1.8 - fix use after free in tree_mapent_delete_offset_tree()
+> 
+> Sam James (7):
+>       autofs-5.1.8 - fix bashism in configure
+>       autofs-5.1.8 - fix missing include in hash.h
+>       autofs-5.1.8 - define fallback dummy NSS config path
+>       autofs-5.1.8 - avoid internal stat.h definitions
+>       autofs-5.1.8 - add missing include to hash.h for _WORDSIZE
+>       autofs-5.1.8 - add missing include to log.h for pid_t
+>       autofs-5.1.8 - define _SWORD_TYPE for musl
+> 
+> 
+>  CHANGELOG                | 17 +++++++++++++++++
+>  configure.in             |  6 +++---
+>  daemon/automount.c       | 20 ++++++++++++++------
+>  daemon/direct.c          | 10 +++++++++-
+>  daemon/lookup.c          |  6 +++---
+>  daemon/spawn.c           | 29 +++++++++++++++++++++++++++++
+>  fedfs/Makefile           |  4 ++--
+>  include/hash.h           |  6 ++++++
+>  include/log.h            |  2 ++
+>  include/nsswitch.h       |  4 ++++
+>  include/replicated.h     |  2 ++
+>  lib/cache.c              |  4 ++--
+>  lib/mounts.c             | 34 ++++++++++++++++++++--------------
+>  lib/rpc_subs.c           |  2 ++
+>  modules/lookup_multi.c   |  4 ++--
+>  modules/lookup_program.c |  5 +----
+>  modules/mount_nfs.c      | 13 +++++++------
+>  modules/parse_sun.c      |  6 ++++++
+>  modules/replicated.c     |  4 ++--
+>  19 files changed, 133 insertions(+), 45 deletions(-)
+> 
+> --
 > Ian
-Hi Fabian:
-  Any update on this?
+can you also take a look of the dmalloc build error?
+which I reported here :
+  https://www.spinics.net/lists/autofs/msg02394.html
 
-Hi ALL:
-  I've also give it a shot locally, and still can't reproduce this..
-
-=========== here is logs
-
-$ sudo rc-service autofs start
-  * Starting automounter ... [ ok ]
-
-$ sudo  grep automount /var/log/messages | tee automout.log
-Jan 26 16:47:30 serv0 automount[21256]: Starting automounter version 5.1.8, master map auto.master
-Jan 26 16:47:30 serv0 automount[21256]: using kernel protocol version 5.05
-Jan 26 16:47:30 serv0 automount[21256]: lookup_nss_read_master: reading master files auto.master
-Jan 26 16:47:30 serv0 automount[21256]: do_init: parse(sun): init gathered global options: (null)
-Jan 26 16:47:30 serv0 automount[21256]: spawn_mount: mtab link detected, passing -n to mount
-Jan 26 16:47:30 serv0 automount[21256]: spawn_umount: mtab link detected, passing -n to mount
-Jan 26 16:47:30 serv0 automount[21256]: lookup_read_master: lookup(file): read entry /net
-Jan 26 16:47:30 serv0 automount[21256]: master_do_mount: mounting /net
-Jan 26 16:47:30 serv0 automount[21256]: automount_path_to_fifo: fifo name /run/autofs.fifo-net
-Jan 26 16:47:30 serv0 automount[21256]: lookup_nss_read_map: reading map file /etc/autofs/auto.net
-Jan 26 16:47:30 serv0 automount[21256]: do_init: parse(sun): init gathered global options: (null)
-Jan 26 16:47:30 serv0 automount[21256]: spawn_mount: mtab link detected, passing -n to mount
-Jan 26 16:47:30 serv0 automount[21256]: spawn_umount: mtab link detected, passing -n to mount
-Jan 26 16:47:30 serv0 automount[21256]: mounted indirect on /net with timeout 300, freq 75 seconds
-Jan 26 16:47:30 serv0 automount[21256]: st_ready: st_ready(): state = 0 path /net
-
-serv0 ~ $ grep  "^opts" /etc/autofs/auto.net
-opts="-fstype=nfs4,hard,sec=sys,nodev,nosuid,wsize=32768,rsize=32768"
-
-serv0 ~ $ mount |grep net
-net_cls on /sys/fs/cgroup/net_cls type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls)
-net_prio on /sys/fs/cgroup/net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_prio)
-/etc/autofs/auto.net on /net type autofs (rw,relatime,fd=7,pgrp=21256,timeout=300,minproto=5,maxproto=5,indirect,pipe_ino=11850419)
-serv0 ~ $ ls /net/serv2/home/gentoo
-distfiles 
-serv0 ~ $ mount |grep net
-net_cls on /sys/fs/cgroup/net_cls type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls)
-net_prio on /sys/fs/cgroup/net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_prio)
-/etc/autofs/auto.net on /net type autofs (rw,relatime,fd=7,pgrp=21256,timeout=300,minproto=5,maxproto=5,indirect,pipe_ino=11850419)
-/etc/autofs/auto.net on /net/serv2/home/gentoo type autofs (rw,relatime,fd=7,pgrp=21256,timeout=300,minproto=5,maxproto=5,offset,pipe_ino=11850419)
-serv2:/home/gentoo on /net/serv2/home/gentoo type nfs4 (rw,nosuid,nodev,relatime,vers=4.1,rsize=32768,wsize=32768,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.90.150,local_lock=none,addr=192.168.90.159)
-
-$ automount -V
-
-Linux automount version 5.1.8
-
-Directories:
-        config dir:     /etc/conf.d
-        maps dir:       /etc/autofs
-        modules dir:    /usr/lib64/autofs
-
-Compile options:
-  DISABLE_MOUNT_LOCKING ENABLE_FORCED_SHUTDOWN ENABLE_IGNORE_BUSY_MOUNTS
-  LIBXML2_WORKAROUND WITH_LIBTIRPC
 -- 
 Yixun Lan (dlan)
 Gentoo Linux Developer
