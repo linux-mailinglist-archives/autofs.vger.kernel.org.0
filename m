@@ -2,78 +2,63 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 419054A87BA
-	for <lists+autofs@lfdr.de>; Thu,  3 Feb 2022 16:35:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF62F4A9B5D
+	for <lists+autofs@lfdr.de>; Fri,  4 Feb 2022 15:47:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237478AbiBCPfu (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 3 Feb 2022 10:35:50 -0500
-Received: from [106.75.187.126] ([106.75.187.126]:49519 "EHLO ts3card.com"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233431AbiBCPft (ORCPT <rfc822;autofs@vger.kernel.org>);
-        Thu, 3 Feb 2022 10:35:49 -0500
-Message-ID: <20220203233549855708@ts3card.com>
-From:   =?utf-8?B?44OI44Oo44K/44OV44Kh44Kk44OK44Oz44K55qCq5byP5Lya56S+?= 
-        <info@ts3card.com>
+        id S1348061AbiBDOrH (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Fri, 4 Feb 2022 09:47:07 -0500
+Received: from 6g3be3.cn ([106.75.138.117]:52638 "EHLO mail.uccard.co.jp"
+        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231160AbiBDOrH (ORCPT <rfc822;autofs@vger.kernel.org>);
+        Fri, 4 Feb 2022 09:47:07 -0500
+Date:   Fri, 4 Feb 2022 22:46:57 +0800
+From:   =?utf-8?B?44Ki44OD44OI44Om44O844ON44OD44OI?= 
+        <atu@mail.uccard.co.jp>
 To:     <autofs@vger.kernel.org>
-Subject: =?utf-8?B?44CQVFMzIFRTIENVQklDQ0FSROOAkemHjeimgQ==?=
-        =?utf-8?B?OuW/heOBmuOBiuiqreOBv+OBj+OBoOOBleOBhA==?=
-Date:   Thu, 3 Feb 2022 23:35:35 +0800
-MIME-Version: 1.0
+Subject: =?utf-8?B?44CQ44Om44O844K344O844Kr44O844OJ44CR44GU5pys5Lq65qeY56K66KqN5a6M5LqG44Gu44GU6YCj?=
+        =?utf-8?B?57Wh?=
+Message-ID: <20220204224707331838@mail.uccard.co.jp>
+X-mailer: Foxmail 6, 13, 102, 15 [en]
+Mime-Version: 1.0
 Content-Type: text/plain;
         charset="utf-8"
 Content-Transfer-Encoding: base64
-X-mailer: Upvkng 2
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
-4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
-4pSB4pSBDQoNCuKYheOAgi46KjpUUyBDVUJJQyBDQVJE5Lya5ZOh5YCL5Lq65oOF5aCx5aSJ5pu0
-44CC4piF44CCLjoqOg0KDQrilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHi
-lIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHi
-lIHilIHilIHilIHilIHilIHilIHilIENCg0KDQpUUyBDVUJJQyBDQVJE5Lya5ZOh5qijDQoNCuOB
-k+OBruOBn+OBs+OBr+OAgVRTIENVQklDIENBUkRF44Oh44O844Or44K144O844OT44K544KS44GU
-5Yip55So44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CCDQoNCuW9
-k+ekvuOBr+OCu+OCreODpeODquODhuOCo+OCt+OCueODhuODoOOBruWkp+W5heOBquOCouODg+OD
-l+OCsOODrOODvOODieOCkuWun+aWveOBl+OBpuOBhOOCi+OBn+OCgeOAgeWAi+S6uuaDheWgseOB
-rg0K5YaN6KqN6Ki844GM5a6M5LqG44GZ44KL44G+44Gn44CBVFMgQ1VCSUMgQ0FSROODoeODs+OD
-kOODvOOBruOCteODvOODk+OCueOBr+OBmeOBueOBpuWBnOatouOBleOCjOOBvuOBmeOAgg0KDQrm
-nKzml6XjgYvjgonjgIFUUyBDVUJJQyBDQVJE44Oh44Oz44OQ44O844Gu44Om44O844K244O844GM
-6YCa5bi45L2/55So44GX44Gf44GE5aC05ZCI44Gv44CBMjTmmYLplpPku6XlhoXjgasNCuS7peS4
-i+OBruWAi+S6uuaDheWgseaUueWWhOiqjeiovOOCkuihjOOBhuW/heimgeOBjOOBguOCiuOBvuOB
-meaJv+iqjeW+jOOBq+OBruOBv+S9v+eUqOOBp+OBjeOBvuOBmSANCg0K44Ot44Kw44Kk44Oz6KqN
-6Ki8Omh0dHBzOi8vbXktdHMzY2FyZC1jb20uamFjY3NpY21jbHViLnRvcA0KDQrjgZPjga7jgrXj
-g7zjg5Pjgrnjga/jgIFUUyBDVUJJQyBDQVJE44Oh44OO44OQ44O85bCC55So44Gu6YCa55+l44K1
-44O844OT44K544Gn44GZ44CC44GT44Gu44Oh44O844Or44Gu5YaF5a65DQrjgavjgZTms6jmhI/j
-gYTjgZ/jgaDjgY3jgIHkuI3lv4XopoHjgarntJvlpLHjgpLpgb/jgZHjgabjgY/jgaDjgZXjgYTj
-gIINCg0K4pSP4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
-4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
-4pSB4pSB4pSTDQoNCuOAgOKWoOacrOODoeODvOODq+OBr+mAgeS/oeWwgueUqOOBruOBn+OCgeOA
-geOBk+OBoeOCieOBruODoeODvOODq+OCouODieODrOOCueOBq+OBlOi/lOS/oeOBhOOBn+OBoOOB
-hOOBpuOCgg0K44CA44CA5a++5b+c44Gv44GE44Gf44GX44GL44Gt44G+44GZ44Gu44Gn44GU5LqG
-5om/44GP44Gg44GV44GE44CCDQrjgIDjgIDjgarjgYrjgIHmnKzjg6Hjg7zjg6vjgavjgaTjgYTj
-gabjgYrlv4PlvZPjgZ/jgorjgYzjgarjgYTloLTlkIjjgavjga/jgIENCuOAgCDjgYrmiYvmlbDj
-gafjgZnjgYzjgIHkuIvoqJjjgYrllY/jgYTlkIjjgo/jgZvlhYjjgb7jgafjgYrpm7voqbHjgavj
-gabpgKPntaHjgpLjgYrpoZjjgYTjgYTjgZ/jgZfjgb7jgZnjgIINCg0K44CAPT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQrj
-gIDilqDnmbrooYzvvJpUUyBDVUJJQyBDQVJE44CM44OG44Kj44O844Ko44K544Kt44Ol44O844OT
-44OD44Kv44Kr44O844OJ44CNDQrjgIDjgIDjgIDjgIDjgIAgaHR0cHM6Ly90c2N1YmljLmNvbS8N
-CuOAgOOAgOOAgOOAgOOAgOODiOODqOOCv+ODleOCoeOCpOODiuODs+OCueagquW8j+S8muekvg0K
-44CA44CA44CA44CA44CA44CSNDUxLTYwMTTjgIDmhJvnn6XnnIzlkI3lj6TlsYvluILopb/ljLrn
-iZvls7bnlLo255WqMeWPtw0KDQrjgIDilqDmnKzjg6Hjg7zjg6vjgavjgaTjgYTjgabjga7jgYrl
-lY/jgYTlkIjjgo/jgZvvvJoNCuKXj1RPWU9UQSwgREFJSEFUU1UsIOOCuOOCp+ODvOODoOOCuSwg
-44OI44Oo44K/44Os44Oz44K/44Kr44O8IEZEQ+OBrg0K44CA44CA44CA44CA44CA44CAVFMgQ1VC
-SUMgQ0FSRCwgVFMgQ1VCSUMgVklFVyBDQVJE44KS44GK5oyB44Gh44Gu5pa544Gv44GT44Gh44KJ
-DQrjgIDjgIDjgIDjgIDjgIDjgIDjgqTjg7Pjg5Xjgqnjg6Hjg7zjgrfjg6fjg7Pjg4fjgrnjgq8N
-CuOAgOOAgOOAgOOAgOOAgOOAgFsg5p2x5LqsIF3jgIAwM++8jTU2MTfvvI0yNTExDQrjgIDjgIDj
-gIDjgIDjgIDjgIBb5ZCN5Y+k5bGLXeOAgDA1Mu+8jTIzOe+8jTI1MTENCig5OjAw772eMTc6MzAg
-5bm05Lit54Sh5LyRIOW5tOacq+W5tOWni+mZpOOBjykNCuKXj+S4iuiomOS7peWkluOBruOCq+OD
-vOODieS8muWToeOBleOBvuOBr+OAgeOBiuaJi+aMgeOBoeOBruOCq+ODvOODieWIuOmdouijj+OB
-q+iomOi8ieOBrg0K44CA44CA44CA44CA44CA44CA44Kr44O844OJ44Gr6Zai44GZ44KL44GK5ZWP
-44GE5ZCI44KP44Gb6Zu76Kmx55Wq5Y+344Gr44GK44GL44GR44GP44Gg44GV44GEDQrjgIDjgIDj
-gIDjgIDjgIANCuKUl+KUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKU
-geKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKU
-geKUgeKUgeKUgeKUmw0K
+44GT44Gu44Gf44G044Gv44CBVUPjgqvjg7zjg4njgpLjgZTliKnnlKjjgYTjgZ/jgaDjgY3jgYLj
+gorjgYzjgajjgYbjgZTjgZbjgYTjgb7jgZnjgIINCg0K44GU5pys5Lq65qeY56K66KqN44Gu44Gf
+44KB44Gu6KqN6Ki844GM6KGM44KP44KM44G+44GX44Gf44Gu44Gn44CB44GK55+l44KJ44Gb44GE
+44Gf44GX44G+44GZ44CCDQoNCuacrOOCteODvOODk+OCueOBr+OAgeS4h+OBjOS4gOOAgeOBlOac
+rOS6uuanmOS7peWkluOBq+OCiOOCi+S4jeato+ODreOCsOOCpOODs8K35pON5L2c562J44GM44GC
+44Gj44Gf5aC05ZCI44Gr44CB44GK5a6i5qeY44GM6YCf44KE44GLDQrjgavnorroqo3jgafjgY3j
+govjgojjgYbjgIHov73liqDoqo3oqLzjga7pg73luqbjgIHjg6Hjg7zjg6vjgpLpgIHkv6HjgZnj
+govjgrXjg7zjg5PjgrnjgafjgZnjgIINCg0K44GK5b+D5b2T44KK44Gu44Gq44GE5aC05ZCI44KE
+5LiN5a+p44Gq54K5562J44GU44GW44GE44G+44GX44Gf44KJ44CB5b6h5pep44KB44Gr56K66KqN
+44GX44Gm44GP44Gg44GV44GE44CCDQrjgIrmnKzkurrnorroqo3jga7mlrnms5XjgIsNCg0K4pa8
+44Oe44Kk44Oa44O844K444KI44KK5pys5Lq656K66KqN44KS5a6f5pa944GZ44KLDQogaHR0cHM6
+Ly9hcGktc2Fpc29uY2FyZC1jby1qcC51Y2NhcmQyLnh5eg0KDQoNCg0K77yc44GK5ZWP5ZCI44Gb
+5YWI77yeDQrjgJDmoKrlvI/kvJrnpL7jgq/jg6zjg4fjgqPjgrvjgr7jg7PnmbrooYzjga5VQ+OC
+q+ODvOODieOCkuOBiuaMgeOBoeOBruaWueOAkQ0K44CA44CA5p2x5Lqs44CA44CAMDMtNjg5My04
+MjAwDQrjgIDjgIDlpKfpmKrjgIDjgIAwNi03NzA5LTg1NTUNCuOAgOWWtualreaZgumWk+OAgDk6
+MDDvvZ4xNzowMOOAgDEvMeS8keOBvw0KDQrjgJDmoKrlvI/kvJrnpL7jgq/jg6zjg4fjgqPjgrvj
+gr7jg7PnmbrooYzku6XlpJbjga5VQ+OCq+ODvOODieOCkuOBiuaMgeOBoeOBruaWueOAkQ0K44CA
+44CA5p2x5Lqs44CA44CAMDMtNjg5My00MjcwDQrjgIDjgIDlpKfpmKrjgIDjgIAwNi03NzA5LTgy
+MjMNCuOAgOWWtualreaZgumWk+OAgDk6MDDvvZ4xNzowMOOAgDEvMeS8keOBvw0KDQrjg7vjg7vj
+g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vj
+g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vj
+g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vj
+g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7sNCuKAu+OBk+OB
+ruODoeODvOODq+OBr+OAjOOCouODg+ODiOODpuODvOODjeODg+ODiO+8geOAjeOBi+OCieiHquWL
+lemFjeS/oeOBl+OBpuOBiuOCiuOBvuOBmeOAgg0K4oC75pys44Oh44O844Or44Gr44GU6L+U5L+h
+44GE44Gf44Gg44GN44G+44GX44Gm44KC44CB44GU6LOq5ZWP44O744GU5L6d6aC844Gq44Gp44Gr
+DQrjgIDjgYrnrZTjgYjjgafjgY3jgb7jgZvjgpPjga7jgafjgIHjgYLjgonjgYvjgZjjgoHjgZTk
+uobmib/jgY/jgaDjgZXjgYTjgIINCuODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
+u+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
+u+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
+u+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
+u+ODu+ODu+ODu+ODu+ODu+ODuw0K44Ki44OD44OI44Om44O844ON44OD44OIDQoNCjIwMjIvMi80
+MjI6NDc6MDUNCg==
 
 
