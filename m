@@ -2,63 +2,55 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF62F4A9B5D
-	for <lists+autofs@lfdr.de>; Fri,  4 Feb 2022 15:47:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 200454AC0DF
+	for <lists+autofs@lfdr.de>; Mon,  7 Feb 2022 15:17:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348061AbiBDOrH (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Fri, 4 Feb 2022 09:47:07 -0500
-Received: from 6g3be3.cn ([106.75.138.117]:52638 "EHLO mail.uccard.co.jp"
-        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231160AbiBDOrH (ORCPT <rfc822;autofs@vger.kernel.org>);
-        Fri, 4 Feb 2022 09:47:07 -0500
-Date:   Fri, 4 Feb 2022 22:46:57 +0800
-From:   =?utf-8?B?44Ki44OD44OI44Om44O844ON44OD44OI?= 
-        <atu@mail.uccard.co.jp>
-To:     <autofs@vger.kernel.org>
-Subject: =?utf-8?B?44CQ44Om44O844K344O844Kr44O844OJ44CR44GU5pys5Lq65qeY56K66KqN5a6M5LqG44Gu44GU6YCj?=
-        =?utf-8?B?57Wh?=
-Message-ID: <20220204224707331838@mail.uccard.co.jp>
-X-mailer: Foxmail 6, 13, 102, 15 [en]
-Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S229734AbiBGOQj (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 7 Feb 2022 09:16:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43600 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1388993AbiBGNu5 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 7 Feb 2022 08:50:57 -0500
+X-Greylist: delayed 573 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 07 Feb 2022 05:50:52 PST
+Received: from afk.nosc.io (static.36.148.69.159.clients.your-server.de [159.69.148.36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C544C0401D0
+        for <autofs@vger.kernel.org>; Mon,  7 Feb 2022 05:50:51 -0800 (PST)
+Received: from afk.nosc.io (localhost [127.0.0.1])
+        by afk.nosc.io (8.15.2/8.15.2/Debian-18) with ESMTP id 217DfHVp141640
+        for <autofs@vger.kernel.org>; Mon, 7 Feb 2022 14:41:17 +0100
+Received: (from www-data@localhost)
+        by afk.nosc.io (8.15.2/8.15.2/Submit) id 217DfHZ3141639;
+        Mon, 7 Feb 2022 14:41:17 +0100
+To:     autofs@vger.kernel.org
+Subject: k56kdob8
+Date:   Mon, 7 Feb 2022 13:41:17 +0000
+From:   WordPress <info@couchundchaos.de>
+Reply-To: autofs@vger.kernel.org
+Message-ID: <XJcwTMIuUxhys0VlbrrKVB8w6XackHK3A15wH6h94Lk@couchundchaos.de>
+X-Mailer: PHPMailer 6.5.3 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=4.5 required=5.0 tests=BAYES_50,
+        HEADER_FROM_DIFFERENT_DOMAINS,KHOP_HELO_FCRDNS,RCVD_IN_VALIDITY_RPBL,
+        SHORT_SHORTNER,SPF_HELO_NONE,SPF_NONE,T_PDS_TINYSUBJ_URISHRT,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-44GT44Gu44Gf44G044Gv44CBVUPjgqvjg7zjg4njgpLjgZTliKnnlKjjgYTjgZ/jgaDjgY3jgYLj
-gorjgYzjgajjgYbjgZTjgZbjgYTjgb7jgZnjgIINCg0K44GU5pys5Lq65qeY56K66KqN44Gu44Gf
-44KB44Gu6KqN6Ki844GM6KGM44KP44KM44G+44GX44Gf44Gu44Gn44CB44GK55+l44KJ44Gb44GE
-44Gf44GX44G+44GZ44CCDQoNCuacrOOCteODvOODk+OCueOBr+OAgeS4h+OBjOS4gOOAgeOBlOac
-rOS6uuanmOS7peWkluOBq+OCiOOCi+S4jeato+ODreOCsOOCpOODs8K35pON5L2c562J44GM44GC
-44Gj44Gf5aC05ZCI44Gr44CB44GK5a6i5qeY44GM6YCf44KE44GLDQrjgavnorroqo3jgafjgY3j
-govjgojjgYbjgIHov73liqDoqo3oqLzjga7pg73luqbjgIHjg6Hjg7zjg6vjgpLpgIHkv6HjgZnj
-govjgrXjg7zjg5PjgrnjgafjgZnjgIINCg0K44GK5b+D5b2T44KK44Gu44Gq44GE5aC05ZCI44KE
-5LiN5a+p44Gq54K5562J44GU44GW44GE44G+44GX44Gf44KJ44CB5b6h5pep44KB44Gr56K66KqN
-44GX44Gm44GP44Gg44GV44GE44CCDQrjgIrmnKzkurrnorroqo3jga7mlrnms5XjgIsNCg0K4pa8
-44Oe44Kk44Oa44O844K444KI44KK5pys5Lq656K66KqN44KS5a6f5pa944GZ44KLDQogaHR0cHM6
-Ly9hcGktc2Fpc29uY2FyZC1jby1qcC51Y2NhcmQyLnh5eg0KDQoNCg0K77yc44GK5ZWP5ZCI44Gb
-5YWI77yeDQrjgJDmoKrlvI/kvJrnpL7jgq/jg6zjg4fjgqPjgrvjgr7jg7PnmbrooYzjga5VQ+OC
-q+ODvOODieOCkuOBiuaMgeOBoeOBruaWueOAkQ0K44CA44CA5p2x5Lqs44CA44CAMDMtNjg5My04
-MjAwDQrjgIDjgIDlpKfpmKrjgIDjgIAwNi03NzA5LTg1NTUNCuOAgOWWtualreaZgumWk+OAgDk6
-MDDvvZ4xNzowMOOAgDEvMeS8keOBvw0KDQrjgJDmoKrlvI/kvJrnpL7jgq/jg6zjg4fjgqPjgrvj
-gr7jg7PnmbrooYzku6XlpJbjga5VQ+OCq+ODvOODieOCkuOBiuaMgeOBoeOBruaWueOAkQ0K44CA
-44CA5p2x5Lqs44CA44CAMDMtNjg5My00MjcwDQrjgIDjgIDlpKfpmKrjgIDjgIAwNi03NzA5LTgy
-MjMNCuOAgOWWtualreaZgumWk+OAgDk6MDDvvZ4xNzowMOOAgDEvMeS8keOBvw0KDQrjg7vjg7vj
-g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vj
-g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vj
-g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vj
-g7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7vjg7sNCuKAu+OBk+OB
-ruODoeODvOODq+OBr+OAjOOCouODg+ODiOODpuODvOODjeODg+ODiO+8geOAjeOBi+OCieiHquWL
-lemFjeS/oeOBl+OBpuOBiuOCiuOBvuOBmeOAgg0K4oC75pys44Oh44O844Or44Gr44GU6L+U5L+h
-44GE44Gf44Gg44GN44G+44GX44Gm44KC44CB44GU6LOq5ZWP44O744GU5L6d6aC844Gq44Gp44Gr
-DQrjgIDjgYrnrZTjgYjjgafjgY3jgb7jgZvjgpPjga7jgafjgIHjgYLjgonjgYvjgZjjgoHjgZTk
-uobmib/jgY/jgaDjgZXjgYTjgIINCuODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
-u+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
-u+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
-u+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+ODu+OD
-u+ODu+ODu+ODu+ODu+ODu+ODuw0K44Ki44OD44OI44Om44O844ON44OD44OIDQoNCjIwMjIvMi80
-MjI6NDc6MDUNCg==
+Von: ❤️ Beverly liked you! Click Here: https://clck.ru/atp3P?p95 ❤️ <autofs@vger.kernel.org>
+Betreff: k56kdob8
 
+Nachrichtentext:
+o6wp0k
+
+GDPR accepted on:
+Akzeptiert am 7. Februar 2022 14:41.
+
+--
+Diese E-Mail wurde von einem Kontaktformular von Doodad (https://couch-und-chaos.de) gesendet
 
