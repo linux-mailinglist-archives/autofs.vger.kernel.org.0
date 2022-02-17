@@ -2,140 +2,88 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D64B24B64FE
-	for <lists+autofs@lfdr.de>; Tue, 15 Feb 2022 09:02:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0F384B962A
+	for <lists+autofs@lfdr.de>; Thu, 17 Feb 2022 03:57:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232125AbiBOICF (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 15 Feb 2022 03:02:05 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53338 "EHLO
+        id S232019AbiBQC5w (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 16 Feb 2022 21:57:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233149AbiBOICE (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 15 Feb 2022 03:02:04 -0500
-X-Greylist: delayed 318 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 15 Feb 2022 00:01:52 PST
-Received: from air.basealt.ru (air.basealt.ru [194.107.17.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004591D316;
-        Tue, 15 Feb 2022 00:01:52 -0800 (PST)
-Received: by air.basealt.ru (Postfix, from userid 490)
-        id C7A1F58958B; Tue, 15 Feb 2022 07:56:30 +0000 (UTC)
+        with ESMTP id S232045AbiBQC5v (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 16 Feb 2022 21:57:51 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA886B12F3;
+        Wed, 16 Feb 2022 18:57:37 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 4134D1F383;
+        Thu, 17 Feb 2022 02:57:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1645066656; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=z6eRmy0xNlN2fdKPLYv2w1ctFFL+lJF1HVKt4VFf25I=;
+        b=y+Vz5nmTyJNuiQEeFMHKyZ7LDH8M+5jd2outxvMTt0Pq7fjTBQ7JJ/9Cq0VhNLFILStZIV
+        X4D6G+5sKivNtkFgRADy3rH8tu3qAjeowmKAC7vX0fCJB2ggVYe7zus+iTYkYomZ5KLFdN
+        88K8z4qHbpqb/jCoDu40UrASh3eluQ8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1645066656;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=z6eRmy0xNlN2fdKPLYv2w1ctFFL+lJF1HVKt4VFf25I=;
+        b=77MwZlgfpUOMcqYFWIWY2ePHl3tmJhJLc/klj49UTzzu+N9w2cvbBxZAuNjMYyWLXWSKih
+        zb+t6zs3/WQNDDBQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 9DE6013B3A;
+        Thu, 17 Feb 2022 02:57:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id AtNqFp65DWIuKgAAMHmgww
+        (envelope-from <neilb@suse.de>); Thu, 17 Feb 2022 02:57:34 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+From:   "NeilBrown" <neilb@suse.de>
+To:     "Stanislav Levin" <slev@altlinux.org>
+Cc:     "Ian Kent" <raven@themaw.net>, autofs@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [ANNOUNCE] autofs 5.1.8 release
+In-reply-to: <c1c21e74-85b0-0040-deb7-811a6fa7b312@altlinux.org>
+References: <b54fb31652a4ba76b39db66b8ae795ee3af6f025.camel@themaw.net>,
+ <164444398868.27779.4643380819577932837@noble.neil.brown.name>,
+ <c1c21e74-85b0-0040-deb7-811a6fa7b312@altlinux.org>
+Date:   Thu, 17 Feb 2022 13:57:26 +1100
+Message-id: <164506664650.10228.15450975168088794628@noble.neil.brown.name>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
-Received: from [10.88.129.190] (obninsk.basealt.ru [217.15.195.17])
-        by air.basealt.ru (Postfix) with ESMTPSA id 12D0C589436;
-        Tue, 15 Feb 2022 07:56:27 +0000 (UTC)
-Subject: Re: [ANNOUNCE] autofs 5.1.8 release
-To:     NeilBrown <neilb@suse.de>, Ian Kent <raven@themaw.net>
-Cc:     autofs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <b54fb31652a4ba76b39db66b8ae795ee3af6f025.camel@themaw.net>
- <164444398868.27779.4643380819577932837@noble.neil.brown.name>
-From:   Stanislav Levin <slev@altlinux.org>
-Message-ID: <c1c21e74-85b0-0040-deb7-811a6fa7b312@altlinux.org>
-Date:   Tue, 15 Feb 2022 10:56:26 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <164444398868.27779.4643380819577932837@noble.neil.brown.name>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="pD5O09yoODx1alNwerPtyi6o7EC1qi5Ab"
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---pD5O09yoODx1alNwerPtyi6o7EC1qi5Ab
-Content-Type: multipart/mixed; boundary="6zcs3mLrVsX7jMaOke8gYrDQxKCsFuysk";
- protected-headers="v1"
-From: Stanislav Levin <slev@altlinux.org>
-To: NeilBrown <neilb@suse.de>, Ian Kent <raven@themaw.net>
-Cc: autofs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Message-ID: <c1c21e74-85b0-0040-deb7-811a6fa7b312@altlinux.org>
-Subject: Re: [ANNOUNCE] autofs 5.1.8 release
-References: <b54fb31652a4ba76b39db66b8ae795ee3af6f025.camel@themaw.net>
- <164444398868.27779.4643380819577932837@noble.neil.brown.name>
-In-Reply-To: <164444398868.27779.4643380819577932837@noble.neil.brown.name>
+On Tue, 15 Feb 2022, Stanislav Levin wrote:
+> 
+> 
+> This seems duplicate of https://www.spinics.net/lists/autofs/msg02389.html
+> 
 
---6zcs3mLrVsX7jMaOke8gYrDQxKCsFuysk
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Yes it is - thanks for the link.
+I wonder why the proposed fix isn't in git ....
 
+Also, I cannot see that the new NS4_ONLY_REQUESTED is different from the
+existing NFS4_VERS_MASK.
+They are both set/cleared at exactly the same places.
 
-
-10.02.2022 00:59, NeilBrown =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
-> On Tue, 19 Oct 2021, Ian Kent wrote:
->> Hi all,
->>
->> It's time for a release, autofs-5.1.8.
->>
-> ...
->> - also require TCP_REQUESTED when setting NFS port.
->=20
-> Unfortunately that last patch is buggy.  TCP_REQUESTED is masked out in=
-
-> the caller.
->=20
-> Maybe the following is best.
->=20
-> NeilBrown
->=20
-> From: NeilBrown <neilb@suse.de>
-> Subject: [PATCH] Test TCP request correctly in nfs_get_info()
->=20
-> The TCP_REQUESTED flag is masked out by the caller, so it never gets to=
-
-> nfs_get_info().
-> We can test if TCP was requested by examining the 'proto' parameter.
->=20
-> Signed-off-by: NeilBrown <neilb@suse.de>
->=20
-> diff --git a/modules/replicated.c b/modules/replicated.c
-> index 09075dd0c1b4..3ac7ee432e73 100644
-> --- a/modules/replicated.c
-> +++ b/modules/replicated.c
-> @@ -291,7 +291,7 @@ static unsigned int get_nfs_info(unsigned logopt, s=
-truct host *host,
-> =20
->  	rpc_info->proto =3D proto;
->  	if (port < 0) {
-> -		if ((version & NFS4_REQUESTED) && (version & TCP_REQUESTED))
-> +		if ((version & NFS4_REQUESTED) && (proto =3D=3D IPPROTO_TCP))
->  			rpc_info->port =3D NFS_PORT;
->  		else
->  			port =3D 0;
->=20
-
-
-This seems duplicate of https://www.spinics.net/lists/autofs/msg02389.htm=
-l
-
-
---6zcs3mLrVsX7jMaOke8gYrDQxKCsFuysk--
-
---pD5O09yoODx1alNwerPtyi6o7EC1qi5Ab
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEEyZWA1UChsdCFaW6bq6v+jV2aGegFAmILXKoFAwAAAAAACgkQq6v+jV2aGeiJ
-/RAAx4QAOWVv70H3pf1Jzh1zWh+43sO7rXYje+lpiILwkq40XwbipMfDoPvYiLvJP8nEm0svsCMT
-R8rhluLgTpRF2wLYvJmcxBWbGVkGsOms3jMVg/pBiX4JEWS8dxKtb9Xbth1vbm+rUCueKplQHtm0
-ZfMCcP4tz2i7OJEzYZa98B6y0Z05dknmEm5OQwGjsKRm/2G/Q93U+SaHfSpDqHMlg4QE3AeNg39s
-EjCpn33ubQSP+Y1BVCMLYRe9O+LCMMho2vxo1s5gYUHJ605erc6K27mVYm7qlJqaPAX0Lk8Fb9Py
-9AfgVTjs44lPK0s0aoT8vjW5cszIjQTate/rgYJpvPdktrxU4Q0oMJDFTuR8VDtT8/qDfhvdq7Fa
-Ov4Kh5s8GbSzMeWb4ojAKgUXwZxj9pMzApoB36nozo2kY3U6rSjXZRy9veiporOJd0yZ2DwSRU4g
-AaBaxc4S9hIt2ijNjZy2nuSfH/IbfpGMSvqR0R1Iv3b9cbDOsgdb/EUz44sI/RAgLH/BAdnAim3e
-Mz2Fwlmfuy/q71iyJ0GoeFYGmOXhMy7AjpF4VpxssF4hyQxlfGN1wN/eYHVhdrhnLN6juSKo3NNN
-5bMEwYbfAUX4mhZL/xwJw5dI2Ur8VqIEGd5KgKYZrHLsMgpmOh46zXMUV3s8YfxJOxSRiWWTWWrx
-Pq4=
-=LkuI
------END PGP SIGNATURE-----
-
---pD5O09yoODx1alNwerPtyi6o7EC1qi5Ab--
+Thanks,
+NeilBrown
