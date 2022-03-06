@@ -2,125 +2,105 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6BE84BB0F6
-	for <lists+autofs@lfdr.de>; Fri, 18 Feb 2022 05:55:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A52C24CE8A4
+	for <lists+autofs@lfdr.de>; Sun,  6 Mar 2022 05:01:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229889AbiBRE4J (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 17 Feb 2022 23:56:09 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60648 "EHLO
+        id S232810AbiCFECF (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sat, 5 Mar 2022 23:02:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbiBRE4H (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 17 Feb 2022 23:56:07 -0500
-X-Greylist: delayed 481 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 17 Feb 2022 20:55:50 PST
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE0A84130F;
-        Thu, 17 Feb 2022 20:55:50 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id C7AF15C021B;
-        Thu, 17 Feb 2022 23:47:46 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 17 Feb 2022 23:47:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
-        :cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm2; bh=MAx0LbiRQY2/4y
-        fvblXz5g/u+zDEUYP5tuDrUJ8qmwQ=; b=I7ZRQ1BmgnsxTccEzquz5498MFjt54
-        0dJYI+ugMMV8NaSvSuz2sbYtS5IYKRAgu6jR1lQ0Y7Gv/2F8L+ZJHdo0TrYxnNqR
-        GZkfW2HosNfWFjLrcLNbttXIKNOyc5xjL0DbS/I3WJ19aOwaQZ3r2Sv9Ftlrg+SK
-        h+ohCUMKkH9RJQ/AGwPg4SA9prbbV2zQavd6h5YbiRGJ0mTTUe9YCmdWD+xEPQ9A
-        RxSIvFQsG8WVTYhst2AqnUgNweB0wmVr7cF2uEwMGKrCrq4ig1hcsGlDfPyJ6SUZ
-        0oVzXob/M7eQHESEy2LTyFL79o7R4UZwbq0Km7dYjaBrV5D2BAGnFolg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=MAx0LbiRQY2/4yfvblXz5g/u+zDEUYP5tuDrUJ8qm
-        wQ=; b=KAUf4Dx8X7/lwkY78oioZj07RZWfgPCG54ojKLPgb3qHP51tvq/Z/fX34
-        +tCzRQ/vq3J5KJrjqoX1B9vyY/a7C950qWZKZFvjt3Bze2iiZ5K7IitiODqX1/bp
-        ZIz8k6vzor19SGtrTXNZ6F4Zl9QD++ZRMAZmRhrKjk7xCjHEvqZnYbjwKM/tcbis
-        NG0JBvwn62H2WSJNascgg1o2wodJMWlA5RvogzYKElOJ45GawtWgGHPU0AEG71M+
-        iduFCShz2qkyak82rYpq41v5jBmvnWMbsweuLGx8jVnvzF21/bLvW7Kb03rYXkPN
-        B9gE0RpInvEKqrPvrBTk3jjZ7inyg==
-X-ME-Sender: <xms:8SQPYlJjs6whUac1XfFfY3iKqagmwTQ4VIV0543opSBFTHPogf56hg>
-    <xme:8SQPYhISK6fUF14TWPotQhEeAoxxWgvJlHHaBx55sMDoRq5ZErgPNmqirW9g9xCjg
-    fA_9whkszep>
-X-ME-Received: <xmr:8SQPYts1ixs12d6uS7BoyWyAXKrEXZ03NLpm3N2B3lntbb9wcFt4lOZiEm4DT1LNNyeDVqaDCNtgJMRy7i294EM1t8ykX5xGEfVHWPxXXc882DVzj-Nd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeelgdejgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkuffhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpefkrghnucfm
-    vghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnhepve
-    egfeekgfeiueeujeeigefgueffjeeuvddtheetfeegtdevtdetgedutefhtdfgnecuffho
-    mhgrihhnpehsphhinhhitghsrdhnvghtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvghmrgifrdhnvght
-X-ME-Proxy: <xmx:8iQPYmYccKG7iujCzCjDt_WdVh3vETEXUMx_w_ULFmQvE5br-xJjJQ>
-    <xmx:8iQPYsZ_i1QJGDSrDCw_8EI-Y6NpuFJMEGkozygc6QTzPN9C2ATPSw>
-    <xmx:8iQPYqDnn1OEYNLO_D8YIOH_X85TGw5vnxwMRF6GrqrOmLxiq40ceQ>
-    <xmx:8iQPYrl_wLhzA2F0KG3QokhVasTWQsJuMurFv5x207Q28W6vDWZw_g>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Feb 2022 23:47:43 -0500 (EST)
-Message-ID: <480248c2fdd2a098fd016aea832f297d711dfdff.camel@themaw.net>
-Subject: Re: [ANNOUNCE] autofs 5.1.8 release
-From:   Ian Kent <raven@themaw.net>
-To:     NeilBrown <neilb@suse.de>, Stanislav Levin <slev@altlinux.org>
-Cc:     autofs@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Date:   Fri, 18 Feb 2022 12:47:37 +0800
-In-Reply-To: <164506664650.10228.15450975168088794628@noble.neil.brown.name>
-References: <b54fb31652a4ba76b39db66b8ae795ee3af6f025.camel@themaw.net>
-        , <164444398868.27779.4643380819577932837@noble.neil.brown.name>
-        , <c1c21e74-85b0-0040-deb7-811a6fa7b312@altlinux.org>
-         <164506664650.10228.15450975168088794628@noble.neil.brown.name>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.3 (3.42.3-1.fc35) 
+        with ESMTP id S229986AbiCFECE (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sat, 5 Mar 2022 23:02:04 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C14322B18
+        for <autofs@vger.kernel.org>; Sat,  5 Mar 2022 20:01:13 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id g1so10994332pfv.1
+        for <autofs@vger.kernel.org>; Sat, 05 Mar 2022 20:01:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
+        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
+        b=ZaLOZIjO3dkx34XjJ72Vs4lFJrqOEvsDicQYEJEqo765LXstU5vXhENBvGAHfr+3rj
+         jbZ9FafetZkc422cYvpMkPWcEgf08e5/xOH9AW88uFoVt4cvh7BKVZ2C3JUe3FC38m2C
+         BOojbqB0konaekpgiOOtGRVGypv3s1jbz9w90/6gZsSX+fOGJJagJ0ot7if6vz8J3p1I
+         GxRxZsNgM3J1jYyBqOn0zlI8leK0x4gLDTcn4ad0uqt92WbPNyq4mWXF2a5bU6IshOpq
+         zDsk4Khh6ORzljKl1u106eo9x6goeSvhbamAouFRHR6IVejz6TizrrY2cKSRjlCii+N4
+         e3BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to;
+        bh=VaaSLAJ+hgNGNq49WyPsh3ndDLo+mnrYcswrOHpJSv8=;
+        b=k5g9p0/mlmplOF272nDJxFFN2O5bllToo4emUL/Gke7kjMWwfTaGBGK1Ybu3dhqSeT
+         fJN9/0NC6Iyxi4QDGI4TGHL6GO5QG61X4ru6DXdryU+gcKF011UBS5+6KKa6W2Psw1Aq
+         P7Lq1+BKEe39CgdksKSZ0/vZIBZJcVj2WXmrNv3rmTrckt1/6YYiA6L4KTTjzqnrOskj
+         k6UegOWk5K2vnELYDOu94Vv6SJ3/nJJDQL2azHx7t7QjNPRgmhVTFyKqxliXlC9ri87h
+         R4ndJUTyE82GJ8JOBsV0x3rNNaAEcn0NQAbpjyHhKvRe1APwZXXdfo3WO5olW1AzJ23y
+         xN0g==
+X-Gm-Message-State: AOAM531iINwW5BcVz2JSs/v/Singnu6wrqf8zg29BCBP7CppwbUWVBFj
+        C1lA5qTGLXX4yHgtU9BFBiggGu3q6Ipt739ZQ6E=
+X-Google-Smtp-Source: ABdhPJxEFDUcjeP0zoevAQfsOKSWzC25SDJsDYQTtvmYOjS2Nseh540rA8zmMJC2LysLjdavl9f3fdwHZjbaXWvb+Gw=
+X-Received: by 2002:a63:e543:0:b0:373:efe3:6f46 with SMTP id
+ z3-20020a63e543000000b00373efe36f46mr4878535pgj.183.1646539272558; Sat, 05
+ Mar 2022 20:01:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Reply-To: mrs.susanelwoodhara17@gmail.com
+Sender: mrs.arawayann04@gmail.com
+Received: by 2002:a05:7301:1d06:b0:57:bd4:f39c with HTTP; Sat, 5 Mar 2022
+ 20:01:10 -0800 (PST)
+From:   Mrs Susan Elwood Hara <mrs.susanelwoodhara17@gmail.com>
+Date:   Sun, 6 Mar 2022 04:01:10 +0000
+X-Google-Sender-Auth: wncpIujslsLsOqE9krZSKIG1wcU
+Message-ID: <CAP-cSYDGbQvjN+wWvGsSAEqXYtPJj4N3TrUvBqeUPNuUx7Y23g@mail.gmail.com>
+Subject: GOD BLESS YOU AS YOU REPLY URGENTLY
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,T_HK_NAME_FM_MR_MRS,
+        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:434 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [mrs.susanelwoodhara17[at]gmail.com]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [mrs.susanelwoodhara17[at]gmail.com]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [mrs.arawayann04[at]gmail.com]
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  3.6 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Thu, 2022-02-17 at 13:57 +1100, NeilBrown wrote:
-> On Tue, 15 Feb 2022, Stanislav Levin wrote:
-> > 
-> > 
-> > This seems duplicate of
-> > https://www.spinics.net/lists/autofs/msg02389.html
-> > 
-> 
-> Yes it is - thanks for the link.
-> I wonder why the proposed fix isn't in git ....
+GOD BLESS YOU AS YOU REPLY URGENTLY
 
-I think we are refering to commits:
-fc4c067b53f7 autofs-5.1.7 - make NFS version check flags consistent
-26fb6b5408be autofs-5.1.7 - refactor get_nfs_info()
-606795ecfaa1 autofs-5.1.7 - also require TCP_REQUESTED when setting NFS
-port
-
-> 
-> Also, I cannot see that the new NS4_ONLY_REQUESTED is different from
-> the
-> existing NFS4_VERS_MASK.
-> They are both set/cleared at exactly the same places.
-
-Yes they are at the moment.
-
-The aim there is, at some point, to have two seperate cases for NFSv4
-mounts, one that may use rpcbind and one that does not such as when
-traversing a firewall. Although I'm not clear on it myself the RFC
-says, more or less, should (although that might have been must) not
-need to use other than the NFS port, so no rpcbind should need to be
-used.
-
-Clearly the case seperation hasn't happened yet but I'm pretty sure
-the current code did avoid the rpcbind usage for fstype=nfs4 which
-is what was asked for at the time and what had been broken somewhere
-along the line.
-
-Ian
+ Hello Dear,
+Greetings, I am contacting you regarding an important information i
+have for you please reply to confirm your email address and for more
+details Thanks
+Regards
+Mrs Susan Elwood Hara.
