@@ -2,58 +2,66 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00181535F51
-	for <lists+autofs@lfdr.de>; Fri, 27 May 2022 13:33:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B863A53ADFB
+	for <lists+autofs@lfdr.de>; Wed,  1 Jun 2022 22:50:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351318AbiE0LdR convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+autofs@lfdr.de>); Fri, 27 May 2022 07:33:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41724 "EHLO
+        id S230164AbiFAUqF (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 1 Jun 2022 16:46:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351308AbiE0LdQ (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Fri, 27 May 2022 07:33:16 -0400
-X-Greylist: delayed 1375 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 27 May 2022 04:33:14 PDT
-Received: from mail.composit.net (mail.composit.net [195.49.185.119])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 093DD5BE7A;
-        Fri, 27 May 2022 04:33:13 -0700 (PDT)
-Received: from mail.composit.net (localhost.localdomain [127.0.0.1])
-        by mail.composit.net (Proxmox) with ESMTP id 06B61393E0C;
-        Fri, 27 May 2022 14:06:28 +0300 (MSK)
-Received: from mail.composit.net (mail.composit.local [192.168.101.14])
-        by mail.composit.net (Proxmox) with SMTP id CD62D3874D8;
-        Fri, 27 May 2022 14:06:27 +0300 (MSK)
-Received: from [192.168.1.105] (Unknown [197.234.219.23])
-        by mail.composit.net with ESMTPSA
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256)
-        ; Fri, 27 May 2022 14:06:28 +0300
-Message-ID: <9BFDB06A-BFCE-40E8-A0DE-BA0D3E0A9D05@mail.composit.net>
-Content-Type: text/plain; charset="iso-8859-1"
+        with ESMTP id S230185AbiFAUpm (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 1 Jun 2022 16:45:42 -0400
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CBB91D808E
+        for <autofs@vger.kernel.org>; Wed,  1 Jun 2022 13:35:01 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-e93bbb54f9so4219007fac.12
+        for <autofs@vger.kernel.org>; Wed, 01 Jun 2022 13:35:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=Gk4nfCem3ECRa7Gml0J0mN/3RZoOAdfGaQAqyHPKtiI=;
+        b=HLFKV03IvnCnmYNulbqEkPjTK3riUL87h2wHAPtiQ15M9iY6Q8e992KMQxJwLdk6f+
+         yc6asPWVRklcz8AY8oqwyi19SO9Z3FXfSKl8KIcHwdn2diZ16fcVN3Noj9XYHhxCnXOp
+         L86c6aBumcYcai1ti0jT0anzEO5LqUJSpP7KiFxQXIe3O9qnWY7viJfSABa1ly9ubc5O
+         7xqU4M/fQQEbpLLu8u6cCuAo0xRfp/5LoTJYIMP5ne/O4VXGwgI3hKlV02ue3fdzqvYA
+         6IABKhDngCz8ZKTuipfv5GZ/7HEqJFbM8x/u/85qQFiKTPs+Mb3XRU84XoMrlsTu1Zr+
+         PsMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=Gk4nfCem3ECRa7Gml0J0mN/3RZoOAdfGaQAqyHPKtiI=;
+        b=jzzJFgw7tNliEA3CVzyGXHq9AxbV+Z8q+sBmQGRG4weyQr16YhPcFnS5sIU1Fki06j
+         DBBQcHXUwRBoUc7ncP5O01lYv4tntz/WqoFsmQ/zLl66SMNm7exbSr4in4aARDUI9eT/
+         iyDKlYgT3FJ87WvU4V1GqJP32lh/G+9/dwdNqjfxiOufpNWFspa2nU7arnJOBjLFyrdi
+         mCA2UlqtJqZOh9p4BkT4/9890uUdnt6+Tl55/aXso5GzZyG6yoQs2jeIB2vEAO9fK/Gr
+         Q4l0ygB5kx2KcCUc9Q+ugtdldN5wjSCX+qyt8keDMQyDlvTYmRv5WbS0COoiXu3MMHP3
+         tY4A==
+X-Gm-Message-State: AOAM531FufLdg7/AlEpWkk1iHgYZ3kKESsPSkEzwFCaqIZ1cQbUe3QPi
+        p2nl2a+N3qtVScfpH8XVOnioJnFTW45yaWEIgno+EsvU2pw=
+X-Google-Smtp-Source: ABdhPJzieEZsH3sz7p7h/CGCrygaKC3twss2VqEDgMRTw52PjXyF0yZxDsfC/Wcw+CTWK4gcBihtpQQBph7O0cnThRw=
+X-Received: by 2002:a05:6870:308:b0:f1:ddfe:8ac5 with SMTP id
+ m8-20020a056870030800b000f1ddfe8ac5mr16670934oaf.237.1654111051378; Wed, 01
+ Jun 2022 12:17:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Greetings From Ukraine.  
-To:     Recipients <heiss@dnet.it>
-From:   "Kostiantyn Chichkov" <heiss@dnet.it>
-Date:   Fri, 27 May 2022 12:06:11 +0100
-Reply-To: kostiantync@online.ee
-X-Spam-Status: No, score=3.7 required=5.0 tests=BAYES_50,RCVD_IN_SBL,
-        RCVD_IN_SORBS_WEB,RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+Received: by 2002:a05:6358:3601:b0:a3:2139:251d with HTTP; Wed, 1 Jun 2022
+ 12:17:30 -0700 (PDT)
+Reply-To: johnwinery@online.ee
+From:   johnwinery <alicejohnson8974@gmail.com>
+Date:   Wed, 1 Jun 2022 12:17:30 -0700
+Message-ID: <CAFqHCSSUC0MpbjYK8d-GCxOG4b6Qbk2uH3+xQDZte6cPBsxLGA@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_05,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Good Morning,
-
-We are Kostiantyn Chychkov and Maryna Chudnovska from Ukraine, we need your service, we have gone through your profile and we will like to work with you on an important service that needs urgent attention due to the ongoing war in our country. Kindly acknowledge this inquiry as soon as possible for a detailed discussion about the service.
-
-Thank you.
-
-Yours expectantly,
-
-Kostiantyn Chichkov & Ms. Maryna Chudnovska,
-From Ukraine.
-
-
+Greeting ,I had written an earlier mail to you but without response
