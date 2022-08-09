@@ -2,57 +2,57 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F154B58D87A
-	for <lists+autofs@lfdr.de>; Tue,  9 Aug 2022 13:57:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60ECE58D87B
+	for <lists+autofs@lfdr.de>; Tue,  9 Aug 2022 13:57:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243022AbiHIL5U (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        id S243032AbiHIL5U (ORCPT <rfc822;lists+autofs@lfdr.de>);
         Tue, 9 Aug 2022 07:57:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43470 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240188AbiHIL5S (ORCPT
+        with ESMTP id S243047AbiHIL5S (ORCPT
         <rfc822;autofs@vger.kernel.org>); Tue, 9 Aug 2022 07:57:18 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E885924BD0
-        for <autofs@vger.kernel.org>; Tue,  9 Aug 2022 04:57:16 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id z20so12865151edb.9
-        for <autofs@vger.kernel.org>; Tue, 09 Aug 2022 04:57:16 -0700 (PDT)
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B7524958
+        for <autofs@vger.kernel.org>; Tue,  9 Aug 2022 04:57:17 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id qn6so9949431ejc.11
+        for <autofs@vger.kernel.org>; Tue, 09 Aug 2022 04:57:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=W9cLkPmnv59hkUmcmNvZMVP9S4Ws8rL04Lu9lbAt71c=;
-        b=EecITYgtrHgt8gJDgntEtt0DJf+aOciFEVbQkeSdaBEsHS23FuMQr7ARPEHHzxQtKW
-         jzufddZnwNqeLVNPEHa8iCVKx0JeAddVkv5IcilFsTQU6T5IedTTOi6Rx3K7nvmAb/nR
-         aVogi1ptTDIl/rXaF3sauc5hJvpNy1XPFpSglBahtqkz+8aTFFraMpUKmKwUvDJRSJfZ
-         uwPpu24Goo59CnqM17WoQV9NKab+wyHhQGa2+yN+H5KAxpitEOB+VWO8Nrdj7jAEZtHe
-         jnqBPKJkYWrd6yik2+d86eZ1+2pQ7ds748KmuMvFuFyGJp/P2bz1JSDp6flwN16sjHQN
-         EjUw==
+        bh=vQ9L5yx38lyFC5+N7Ob7ZIluwOIK6rPkPEHcxr6/X4g=;
+        b=qZNelyh3DD3ghXVabqLPA4iBPSku+g+/OXnqalfABb2oM6hG0HnMnnT70v3JltOuUL
+         oam/y6xY0W3N7KuEbUBMwa8qZT5o1jpTLlLerEB13SSCfKbxpkq7mniff8PjNGRjLK11
+         jwXTVShEoInL/uthq+oiaY0f/uAKcxzqiHYLBErrJMsTQmcK7kLHmcaGd42I2Hd/vEsl
+         gnFdcE2u0cV2dcMU205GPFE0BNXsnhu7XGr6ikiX4eZA1VP2dA1YhrtStbtOOHpc1suz
+         ld54BvXQduZ3+wWF7larqIvVat58YSyQyiLrnAl4NKIlXz1bUa7fe6dPb42FEXz4SCoY
+         CbNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=W9cLkPmnv59hkUmcmNvZMVP9S4Ws8rL04Lu9lbAt71c=;
-        b=3A1sfPXmwPRbyZ8S0pGJWO0DTbo65Bu3Dd2/HAgFD+MKfE7AR1F5pFv9uJLDWhCe0W
-         m0+ULVZb6dQkl2of7RIJsEZBu0qF3mviXzdJmHzO6B5EVKLEgt4WcGYhq/kTLfolbIrJ
-         1ljHFnC/ZtSEog/vem4PDQY+lMlVPpAAXWatLNMfvsruEjbU7dNc4woD+YBmK7RiLMwN
-         w3BBk/7SCxIMIQkPIOLzV6osQq+QR7WA+0aA8mZHH02ttVRwDtHo3I7nmjekc2PuiOFE
-         bZ8DY5SpTC/kkoZ1PPadjbdy35i0zxbW9iEOOCtg+Zqawa0aHqGeQ2I7CMdH/2N6AS7T
-         Y7jQ==
-X-Gm-Message-State: ACgBeo1Jlw4rCrgqIzbsPrGtNMQy8+Yr9/hTVq2FSMEPGsOjHLBj58bO
-        TdXKZjW7PJqRxZHoI4Nacd28GbpfohZi
-X-Google-Smtp-Source: AA6agR5g8tmGVRhyfsFRVkRmpalvSYqwykIGePAlo6w/HLfgXI2Qpxoo25x3Ylp6Js/jc9C/xnp2LA==
-X-Received: by 2002:a05:6402:26d0:b0:43d:6f63:e6b with SMTP id x16-20020a05640226d000b0043d6f630e6bmr21962216edd.61.1660046235412;
-        Tue, 09 Aug 2022 04:57:15 -0700 (PDT)
+        bh=vQ9L5yx38lyFC5+N7Ob7ZIluwOIK6rPkPEHcxr6/X4g=;
+        b=VnOLyh7nOPRetymPjp6ID2Jkl9wT9grSrMprvo6ehVGs2F4ytwDsAFyTKJGfHhmz5o
+         71u9Ma7md7B9b84c7VPMIDeBtHBaPetUBSU3jxaGmPL+KrkDpe8Qq5bbJID0yOaPAlvO
+         oMrXQ24OVATkB7WnlZGLFEmqettnd9WhRHeSh4SgOmU/EhDTIhLPC/4G+YUM9hpK7YW+
+         RsFOAzSBryP1z1lcfuNPwqkCwpnaa5jRjA2ifpwWRTe0WW+4uWX5OZP5UOkg/TFqwRLN
+         7OLX7trb+z7KER3mbCnKri++aKK/19PED7jijNsglj8PO1UAK6nLEfCEGNbqoICEg/qm
+         pgFQ==
+X-Gm-Message-State: ACgBeo0tSWZZcTcqnffeiJAymOZ+s5fI6hGXZOXGReXoPCFkY476gudH
+        sNuCxQnm98oziGSsar44xprCc7El5gIk
+X-Google-Smtp-Source: AA6agR6oO8w3BshXGx/ULkgDz6CjLHJY2+ozsnrsH5Qt8QpTrmBSz3//QvK0uO6OWj6TU8nk2b67/Q==
+X-Received: by 2002:a17:907:a0c6:b0:731:87ce:5289 with SMTP id hw6-20020a170907a0c600b0073187ce5289mr2961456ejc.465.1660046236018;
+        Tue, 09 Aug 2022 04:57:16 -0700 (PDT)
 Received: from localhost.localdomain (dynamic-077-179-191-137.77.179.pool.telefonica.de. [77.179.191.137])
-        by smtp.gmail.com with ESMTPSA id hb9-20020a170906b88900b0072b85a735afsm1039994ejb.113.2022.08.09.04.57.14
+        by smtp.gmail.com with ESMTPSA id hb9-20020a170906b88900b0072b85a735afsm1039994ejb.113.2022.08.09.04.57.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 09 Aug 2022 04:57:15 -0700 (PDT)
 From:   ThomasReim <reimth@gmail.com>
 To:     autofs@vger.kernel.org
 Cc:     Thomas Reim <reimth@gmail.com>
-Subject: [PATCH 2/4] autofs-5.1.8 - improve debug logging of SASL binds
-Date:   Tue,  9 Aug 2022 13:57:08 +0200
-Message-Id: <20220809115710.108512-3-reimth@gmail.com>
+Subject: [PATCH 3/4] autofs-5.1.8 - internal SASL logging only in debug log mode
+Date:   Tue,  9 Aug 2022 13:57:09 +0200
+Message-Id: <20220809115710.108512-4-reimth@gmail.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220809115710.108512-1-reimth@gmail.com>
 References: <20220809115710.108512-1-reimth@gmail.com>
@@ -70,58 +70,109 @@ X-Mailing-List: autofs@vger.kernel.org
 
 From: Thomas Reim <reimth@gmail.com>
 
-automounter only provides very limited debug information when binding
-using Cyrus SASL. LDAP based directory services currently all increase
-communication security, which makes it difficult for system administrators
-to find the root cause of failed authentication binds.
+Cyrus SASL library is known for useless error notifications of internal
+events that can and will be easily handled by the applications. By default
+automounter provides a logging callback to the SASL library, which displays
+annoying SASL error messages to users for internal library issues that do
+not harm SASL authentication operation.
 
-Log Cyrus SASL binding parameters and result.
+OpenLDAP only provides a logging callback to SASL library for its server
+application. Client side applications won't see any internal SASL
+notifcations.
+
+Choose a compromise and provide SASL internal logging messages only if user
+requests debug logging mode.
 
 Signed-off-by: Thomas Reim <reimth@gmail.com>
 ---
- modules/cyrus-sasl.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ include/log.h        |  2 ++
+ lib/log.c            | 10 ++++++++++
+ modules/cyrus-sasl.c | 17 +++++++++++++++--
+ 3 files changed, 27 insertions(+), 2 deletions(-)
 
+diff --git a/include/log.h b/include/log.h
+index 3ec8f0c..f073300 100644
+--- a/include/log.h
++++ b/include/log.h
+@@ -37,6 +37,8 @@ extern void set_log_verbose_ap(struct autofs_point *ap);
+ extern void set_log_debug_ap(struct autofs_point *ap);
+ extern void set_mnt_logging(unsigned global_logopt);
+ 
++extern unsigned int have_log_verbose(void);
++extern unsigned int have_log_debug(void);
+ extern int get_log_debug_level(void);
+ 
+ extern void open_log(void);
+diff --git a/lib/log.c b/lib/log.c
+index 9567460..1c5b3da 100644
+--- a/lib/log.c
++++ b/lib/log.c
+@@ -58,6 +58,16 @@ static char *prepare_attempt_prefix(const char *msg)
+ 	return prefixed_msg;
+ }
+ 
++unsigned int have_log_verbose(void)
++{
++	return do_verbose;
++}
++
++unsigned int have_log_debug(void)
++{
++	return do_debug;
++}
++
+ int get_log_debug_level(void)
+ {
+ 	return debug_level;
 diff --git a/modules/cyrus-sasl.c b/modules/cyrus-sasl.c
-index 3736d12..8984f0f 100644
+index 8984f0f..9059b54 100644
 --- a/modules/cyrus-sasl.c
 +++ b/modules/cyrus-sasl.c
-@@ -136,7 +136,7 @@ sasl_log_func(void *context, int level, const char *message)
+@@ -109,6 +109,13 @@ static int getpass_func(sasl_conn_t *, void *, int, sasl_secret_t **);
+ static int getuser_func(void *, int, const char **, unsigned *);
+ 
+ static sasl_callback_t callbacks[] = {
++	{ SASL_CB_USER, &getuser_func, NULL },
++	{ SASL_CB_AUTHNAME, &getuser_func, NULL },
++	{ SASL_CB_PASS, &getpass_func, NULL },
++	{ SASL_CB_LIST_END, NULL, NULL },
++};
++
++static sasl_callback_t debug_callbacks[] = {
+ 	{ SASL_CB_LOG, &sasl_log_func, NULL },
+ 	{ SASL_CB_USER, &getuser_func, NULL },
+ 	{ SASL_CB_AUTHNAME, &getuser_func, NULL },
+@@ -136,7 +143,7 @@ sasl_log_func(void *context, int level, const char *message)
  	case SASL_LOG_DEBUG:
  	case SASL_LOG_TRACE:
  	case SASL_LOG_PASS:
--		debug(LOGOPT_DEBUG, "%s", message);
-+		debug(LOGOPT_NONE, "%s", message);
+-		debug(LOGOPT_NONE, "%s", message);
++		log_debug(LOGOPT_NONE, "libsasl2: %s", message);
  		break;
  	default:
  		break;
-@@ -960,6 +960,26 @@ sasl_bind_mech(unsigned logopt, LDAP *ldap, struct lookup_context *ctxt, const c
- 	result = do_sasl_bind(logopt, ldap, conn,
- 			 &clientout, &clientoutlen, chosen_mech, result);
- 	if (result == 0) {
-+		/* Conversation was completed successfully by now */
-+		char *data;
-+		sasl_ssf_t *ssf;
-+		result = sasl_getprop(conn, SASL_USERNAME, (const void **)(char *) &data);
-+		if (result == SASL_OK && data && *data) {
-+			debug(logopt, "SASL username: %s", data);
-+		}
-+		result = ldap_get_option(ldap, LDAP_OPT_X_SASL_AUTHCID, &data);
-+		if (result == LDAP_OPT_SUCCESS && data && *data) {
-+			debug(logopt, "SASL authcid: %s", data);
-+		}
-+		result = ldap_get_option(ldap, LDAP_OPT_X_SASL_AUTHZID, &data);
-+		if (result == LDAP_OPT_SUCCESS && data && *data) {
-+			debug(logopt, "SASL authzid: %s", data);
-+		}
-+		ssf = NULL;
-+		result = sasl_getprop(conn, SASL_SSF, (const void **)(char *) &ssf);
-+		if (result == SASL_OK) {
-+			debug(logopt, "SASL SSF: %lu", (unsigned long) *ssf);
-+		}
- 		ldap_memfree(host);
- 		debug(logopt, "sasl bind with mechanism %s succeeded",
- 		      chosen_mech);
+@@ -1243,6 +1250,7 @@ static void sasl_mutex_dispose(void *mutex __attribute__((unused)))
+  */
+ int autofs_sasl_client_init(unsigned logopt)
+ {
++	int result;
+ 
+ 	sasl_set_mutex(sasl_mutex_new,
+ 		       sasl_mutex_lock,
+@@ -1250,7 +1258,12 @@ int autofs_sasl_client_init(unsigned logopt)
+ 		       sasl_mutex_dispose);
+ 
+ 	/* Start up Cyrus SASL--only needs to be done at library load. */
+-	if (sasl_client_init(callbacks) != SASL_OK) {
++	if (have_log_debug()) {
++		result = sasl_client_init(debug_callbacks);
++	} else {
++		result = sasl_client_init(callbacks);
++	}
++	if (result != SASL_OK) {
+ 		error(logopt, "sasl_client_init failed");
+ 		return 0;
+ 	}
 -- 
 2.37.1
 
