@@ -2,176 +2,149 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4375D58D87D
-	for <lists+autofs@lfdr.de>; Tue,  9 Aug 2022 13:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4A4758E450
+	for <lists+autofs@lfdr.de>; Wed, 10 Aug 2022 03:04:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243036AbiHIL5V (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 9 Aug 2022 07:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43512 "EHLO
+        id S229872AbiHJBEn (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 9 Aug 2022 21:04:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243056AbiHIL5T (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 9 Aug 2022 07:57:19 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C85A2497F
-        for <autofs@vger.kernel.org>; Tue,  9 Aug 2022 04:57:18 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id w3so14826995edc.2
-        for <autofs@vger.kernel.org>; Tue, 09 Aug 2022 04:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=DnrZ7mLAGovhTOtJ4iDQqeeqXTnW+M9QDk17RHLXKFY=;
-        b=UQSBe3B9f/vRNG/tbH9BXDF+Z4aUWmEGwAjNRxDf5tglibr8I74lWWYOLa4EKNFhOb
-         DZgfGQ2F/wgkVsghosv0ublYYjp6lhnXvOUCZIMS9jyF8wgBuI93Vgq9IL1yKSjihj7K
-         puYKESn7m4tROH3d1knxoh14k/0N/oRP7U+uLNj8ALz6HFtFc9yq1QoI/WFzQk/fPRK0
-         /J7Sr3BC2Lmf9WwW89skYlUd5DwLrJ0hK5POAKJ58YiJ0Vn/IGQgRlwzS1ONT+vSV5I7
-         8bu7xYHFjtj/eMaEI+iXNVo84JW62qe4HTLeGNZO8CZ8OC35zj6Y2bcHUQhOpAHZl6Uw
-         LCNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=DnrZ7mLAGovhTOtJ4iDQqeeqXTnW+M9QDk17RHLXKFY=;
-        b=rUMkBfvueBoj//qnq87JjfgInhfiUZIFWO8f0zVr/sHHqLEm2d6+7OizldgDtFnx5k
-         j/dvoPs16yIvQnSgne7NzfOhX5qVCthI6AwvaSKA6V0GFZcczopA7SblTXiANAxECYAu
-         aQShBZLvQ7uHrFYTtZ6cBm+B1ddIbF8RfrTVuMpqLGLltpSMWBlQcY/J10tLiQctRdU+
-         l4U8DPfHwLBhgrSTCC9H+H1lpY429KoToRQ0708H/bKDMQHkExs7Jc1P36lMYwFlJ7mz
-         Xo57zVXDlnsI+lmmTYDJNXVBmr95uTqaJtL2I8Q8KKafbokQtyES9Tn2u2aW9ALtO+Kc
-         XylA==
-X-Gm-Message-State: ACgBeo0ODR4bRdyau4XS2ifVSOa2gGRZe20nHwuP0SRV8qKOEeTx/9yD
-        MNLNuPzFQ0gGk7m3oYkAPLkqQrre2lq0
-X-Google-Smtp-Source: AA6agR6hF90QnbqeaiFB3jv2eOoPkhNxxJ7AiIvdQWNWTLmV7hRPpgw+8Ggq+g1Bo2sdudWxQpYP+A==
-X-Received: by 2002:a05:6402:1703:b0:43c:c03a:db3d with SMTP id y3-20020a056402170300b0043cc03adb3dmr21545529edu.384.1660046236789;
-        Tue, 09 Aug 2022 04:57:16 -0700 (PDT)
-Received: from localhost.localdomain (dynamic-077-179-191-137.77.179.pool.telefonica.de. [77.179.191.137])
-        by smtp.gmail.com with ESMTPSA id hb9-20020a170906b88900b0072b85a735afsm1039994ejb.113.2022.08.09.04.57.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 04:57:16 -0700 (PDT)
-From:   ThomasReim <reimth@gmail.com>
-To:     autofs@vger.kernel.org
-Cc:     Thomas Reim <reimth@gmail.com>
-Subject: [PATCH 4/4] autofs-5.1.8 - more comprehensive verbose logging for LDAP maps
-Date:   Tue,  9 Aug 2022 13:57:10 +0200
-Message-Id: <20220809115710.108512-5-reimth@gmail.com>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20220809115710.108512-1-reimth@gmail.com>
-References: <20220809115710.108512-1-reimth@gmail.com>
+        with ESMTP id S229476AbiHJBEm (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 9 Aug 2022 21:04:42 -0400
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B32D97FE64
+        for <autofs@vger.kernel.org>; Tue,  9 Aug 2022 18:04:41 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 6618B5C01B4;
+        Tue,  9 Aug 2022 21:04:39 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Tue, 09 Aug 2022 21:04:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
+        :content-transfer-encoding:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1660093479; x=
+        1660179879; bh=KZIDtlNpSo20POWmcwK4B90vzWseozE0U5xVG0cty+4=; b=T
+        edHXWM0gn+wur9tDuk9W+npCM+B4MRGI7uuINjGzSX3SPqPj74s1xAYkRO/hvumV
+        9BR5HBdq8VJ6fnWObq3XP76OYgAcPjaCxbi5xUA0p4PCUStMooid5g16nQbrnE7v
+        F1qQs+eMDG2DSODb/L+hr7DG1yLAvn4BIjBbmuUJHDOPxyPOZcmRKkaph5ko8woj
+        seYOIYUaCm0dcDOWoygdtRw00KphORbBylQXwK7hXQ8B28vb/I/WOvIJWBtELzfW
+        5BWmv6E/YMka2XUYbbFCQYgFAv1oyS14Gmo2L8EkELs8bsKFgGKXAKlgsV6Lrr+X
+        RAVzmBwstg7w78QKhrHug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:date:feedback-id:feedback-id:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; t=1660093479; x=1660179879; bh=K
+        ZIDtlNpSo20POWmcwK4B90vzWseozE0U5xVG0cty+4=; b=1JK1qIaKRVUZc8L03
+        OH2yT7Q+N/s8wt+7vjVKtqNpUftr+1VD2PU5b2qgs4Q3iyo1NWKZI2fJxtggUJQn
+        HN5770sWw8mmDrdP9+J/ElYZz1DaDmhbiinNmDZEkuSWsNv1zxpgocB1rgO7SjK9
+        r00zu/PF+F5shSA1+a0Pl6Ui1rF/ywiW0ED3bDofaJ0PMIk2xMgj1YWxIitKggeG
+        zzIvX/4tk+wjkM6rNfTq1Ig2Exhul8q6fMrehD7smfN4dwZSpqJM2BLcWN7znVHi
+        qUcCfkCQnReK6op+QjBdmKoLAkABi4AkE7RuK47LMurr3u7Nt+1ho6bi84sW/IWS
+        Y71vQ==
+X-ME-Sender: <xms:JwTzYndVuB3U_K7oAqXjv8dAhuR1eRrHX2ZQzH4uQ9vD3_SmpB5LZw>
+    <xme:JwTzYtNp74eq7SQiteltprijNNMCrPs35WqtBXEYx6_fapXcnYHRQ1Qk24r0CcIwD
+    xZXgAcoXC-1>
+X-ME-Received: <xmr:JwTzYgj553l6utIqWfzdsDymZ0ZnmZjtC_yWYtuXfTlLy8n4Yc3GPEfyyTbbo9YVbA-YG2wPahFviN27YvoIEH8EqXRVzMNdqk5g4MCrfy1-Jel2JaDT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdeguddggedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfuvfhfhfgjtgfgsehtje
+    ertddtfeejnecuhfhrohhmpefkrghnucfmvghnthcuoehrrghvvghnsehthhgvmhgrfidr
+    nhgvtheqnecuggftrfgrthhtvghrnhepgfegkedtvddtgeeilefhteffffeukeeggeehvd
+    duleegvdeiieeihfetudehjeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomheprhgrvhgvnhesthhhvghmrgifrdhnvght
+X-ME-Proxy: <xmx:JwTzYo-kxRmyfXY5AujZAhK_k6kPxlyKbI5NXR4B0BqkbeJ6nz5EhQ>
+    <xmx:JwTzYjtPF31oFHxVse_95B78HPSnbhW67pHAeD-MWf_BvHU86VZBtQ>
+    <xmx:JwTzYnFaZukVccCN4b7_AdCZa86k2HhCMPLxya3jlc3F8bv-fpB-qw>
+    <xmx:JwTzYg7k2QBqpuHgXAqBKM3Xn0w_6x03Up5NkcR835l7Vh3QcqWi6w>
+Feedback-ID: i31e841b0:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Aug 2022 21:04:37 -0400 (EDT)
+Message-ID: <75d2e158-631c-5785-d0be-3328056db540@themaw.net>
+Date:   Wed, 10 Aug 2022 09:04:34 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 0/4] Missing Support of SASL Sign or Seal using Data
+ Security Layer
+Content-Language: en-US
+To:     ThomasReim <reimth@gmail.com>, autofs@vger.kernel.org
+References: <20220809115608.107767-1-reimth@gmail.com>
+From:   Ian Kent <raven@themaw.net>
+In-Reply-To: <20220809115608.107767-1-reimth@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-From: Thomas Reim <reimth@gmail.com>
+On 9/8/22 19:56, ThomasReim wrote:
+> From: Thomas Reim <reimth@gmail.com>
+>
+> Since version 4.4 Samba AD domain controllers default settings only allow
+> for simple SASL binds over TLS encrypted connections or SASL binds with
+> sign or seal, i. e. data security layer encryption, over unencrypted
+> connections. Therefore, current automounter cannot fetch autofs maps from
+> Samba AD DCs using SASL anymore without setting Samba configuration
+> parameter "ldap server require strong auth" to "no" or "allow_sasl_over_tls".
+>
+> Cyrus SASL supports data encryption in GSSAPI (with Kerberos V) mode using
+> an SASL data security layer according to IETF RFC 2078. This security layer
+> provides for traffic encryption during authentication and authorization
+> towards an OpenLDAP based server and for subsequent encryption of data
+> traffic for the LDAP session. Current automounter does not implement SASL
+> security layer encryption and only relies on TLS to protect LDAP
+> communication.
+>
+> OpenLDAP libldap if compiled with Cyrus SASL supports negotiation of an
+> SASL data security layer based encryption of LDAP traffic. libldap also
+> provides automatic negotiation of the best suited SASL mechanism taking
+> into account application required defaults.
+>
+> This series of patches updates automounter to let OpenLDAP and Cyrus SASL
+> handle SASL binding and traffic security configuration. Proposed changes
+> are backward compatible for clients that use LDAP libraries different from
+> OpenLDAP. When using SASL mechanism GSSAPI or simple authentication with
+> TLS encryption automounter seamlessly interworks with latest Samba AD DCs.
+>
+> Please review and provide your comments or suggestions.
+>
+> Thomas Reim (4):
+>    autofs-5.1.8 - restore gcc flags after autoconf Kerberos 5 check
+>    autofs-5.1.8 - prepare for OpenLDAP SASL binding
+>    autofs-5.1.8 - let OpenLDAP handle SASL binding
+>    autofs-5.1.8 - configure: LDAP function checks ignore implicit
+>      declarations
+>
+>   aclocal.m4            |  52 +++++++++++++++
+>   configure.in          |   5 +-
+>   include/config.h.in   |   3 +
+>   include/lookup_ldap.h |   6 ++
+>   modules/cyrus-sasl.c  | 148 +++++++++++++++++++++++++++++++++++++++++-
+>   modules/lookup_ldap.c | 102 ++++++++++++++++++++++++++++-
+>   6 files changed, 312 insertions(+), 4 deletions(-)
+>
 
-Current logging of LDAP map lookups in verbose mode is not very
-comprehensive. It's not clear for what purpose connections to the LDAP
-directory are made as the only result that will be reported is the autofs
-mount point creation.
+Thanks Thomas, this functionality sounds useful and the code looks good.
 
-Inform users about the intention of the LDAP directory access in verbose
-mode.
 
-Signed-off-by: Thomas Reim <reimth@gmail.com>
----
- daemon/lookup.c       | 20 ++++++++++----------
- modules/lookup_ldap.c |  4 ++--
- 2 files changed, 12 insertions(+), 12 deletions(-)
+Mostly the comments I'll make later (once I've looked at it a few times)
 
-diff --git a/daemon/lookup.c b/daemon/lookup.c
-index 4a286d6..b2fd488 100644
---- a/daemon/lookup.c
-+++ b/daemon/lookup.c
-@@ -169,7 +169,7 @@ int lookup_nss_read_master(struct master *master, time_t age)
- 	/* If it starts with a '/' it has to be a file or LDAP map */
- 	if (*master->name == '/') {
- 		if (*(master->name + 1) == '/') {
--			debug(logopt, "reading master ldap %s", master->name);
-+			info(logopt, "reading ldap master %s", master->name);
- 			result = do_read_master(master, "ldap", age);
- 		} else {
- 			debug(logopt, "reading master file %s", master->name);
-@@ -215,7 +215,7 @@ int lookup_nss_read_master(struct master *master, time_t age)
- 				 */
- 				if (strncmp(name, "ldap", 4)) {
- 					master->name = tmp + 1;
--					debug(logopt, "reading master %s %s",
-+					info(logopt, "reading %s master %s",
- 					      source, master->name);
- 				} else {
- 					master->name = name;
-@@ -260,8 +260,8 @@ int lookup_nss_read_master(struct master *master, time_t age)
- 		    strncmp(this->source, "sss", 3))
- 			continue;
- 
--		debug(logopt,
--		      "reading master %s %s", this->source, master->name);
-+		info(logopt,
-+		      "reading %s master %s", this->source, master->name);
- 
- 		result = read_master_map(master, this->source, age);
- 
-@@ -549,8 +549,8 @@ int lookup_nss_read_map(struct autofs_point *ap, struct map_source *source, time
- 			if (!strncmp(map->type, "multi", 5))
- 				debug(ap->logopt, "reading multi map");
- 			else
--				debug(ap->logopt,
--				      "reading map %s %s",
-+				info(ap->logopt,
-+				      "reading %s map %s",
- 				       map->type, map->argv[0]);
- 			result = lookup_map_read_map(ap, map, age);
- 			map = map->next;
-@@ -566,8 +566,8 @@ int lookup_nss_read_map(struct autofs_point *ap, struct map_source *source, time
- 					continue;
- 				}
- 				map->type = tmp;
--				debug(ap->logopt,
--				      "reading map %s %s", tmp, map->argv[0]);
-+				info(ap->logopt,
-+				      "reading %s map %s", tmp, map->argv[0]);
- 				result = do_read_map(ap, map, age);
- 			} else {
- 				debug(ap->logopt,
-@@ -602,8 +602,8 @@ int lookup_nss_read_map(struct autofs_point *ap, struct map_source *source, time
- 				continue;
- 			}
- 
--			debug(ap->logopt,
--			      "reading map %s %s", this->source, map->argv[0]);
-+			info(ap->logopt,
-+			      "reading %s map %s", this->source, map->argv[0]);
- 
- 			result = read_map_source(this, ap, map, age);
- 			if (result == NSS_STATUS_UNKNOWN)
-diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
-index df9376e..8393c00 100644
---- a/modules/lookup_ldap.c
-+++ b/modules/lookup_ldap.c
-@@ -2591,7 +2591,7 @@ static int do_get_entries(struct ldap_search_params *sp, struct map_source *sour
- 	e = ldap_first_entry(sp->ldap, sp->result);
- 	if (!e) {
- 		debug(ap->logopt,
--		      MODPREFIX "query succeeded, no matches for %s",
-+		      MODPREFIX "query succeeded, no matches for query %s",
- 		      sp->query);
- 		ret = ldap_parse_result(sp->ldap, sp->result,
- 					&rv, NULL, NULL, NULL, NULL, 0);
-@@ -2614,7 +2614,7 @@ static int do_get_entries(struct ldap_search_params *sp, struct map_source *sour
- 			e = ldap_next_entry(sp->ldap, e);
- 			if (!e) {
- 				debug(ap->logopt, MODPREFIX
--				      "failed to get next entry for query %s",
-+				      "query succeeded, no more matches for query %s",
- 				      sp->query);
- 				ret = ldap_parse_result(sp->ldap,
- 							sp->result, &rv,
--- 
-2.37.1
+are about my coding style preferences but there was one place where I
+
+had questions about some function call behaviors. I'm tempted to make
+
+the style changes myself but it's your code and I'd probably make a
+
+mistake or two, ;)
+
+
+Ian
 
