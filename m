@@ -2,57 +2,57 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A44F59298C
+	by mail.lfdr.de (Postfix) with ESMTP id E349959298D
 	for <lists+autofs@lfdr.de>; Mon, 15 Aug 2022 08:23:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbiHOGXB (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 15 Aug 2022 02:23:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55470 "EHLO
+        id S229476AbiHOGXA (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 15 Aug 2022 02:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbiHOGW6 (ORCPT
+        with ESMTP id S229665AbiHOGW6 (ORCPT
         <rfc822;autofs@vger.kernel.org>); Mon, 15 Aug 2022 02:22:58 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757BA1900F
-        for <autofs@vger.kernel.org>; Sun, 14 Aug 2022 23:22:56 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id qn6so11923260ejc.11
-        for <autofs@vger.kernel.org>; Sun, 14 Aug 2022 23:22:56 -0700 (PDT)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C791193C2
+        for <autofs@vger.kernel.org>; Sun, 14 Aug 2022 23:22:57 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id y13so11913302ejp.13
+        for <autofs@vger.kernel.org>; Sun, 14 Aug 2022 23:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=xA8xWTPNqOvNwdRenR6zie/wYMWA3xv0eY4XlWlfO4o=;
-        b=cs2aRcAILhdvtCLfWoCVecthA0hAd93WFYyxM5kXLUsMfKLUocZooNSqgx7u7Vtsu3
-         3G/14Er8dizW2R9Wpg/t1FH1/vltPqvNzvURnRx/68jZO3SXbaBfbJJCXYDDIGzwIIKM
-         XtYW3Agu2QJEBFYinfpeFM+R0QU6wtRbtubj9V7DrNGJ3AO28tfEMNctykzQhdWuUCtG
-         xJO9etGq6bquH/gpnvojgx3lq86CBZ2Z7fyG4fD6n9jSL9z3IwMzbFEAfkafOPgsXblE
-         2oWgwHBedDeT5kouRF627Gv8Y6eESQxWd/gyETaXgK8toKzImrlCF7vqs3kl326iYJFU
-         /QdQ==
+        bh=RC/tzwu0z2NQqWCJ1rkpPolj1VE2uuQ2rRC4q6+8S0o=;
+        b=nR8rWd9u10Dl7D64qNdLDxEfaD71DIGyzVpXvCjwNfZnkSEsNr8BMTi8JdJhY1eAib
+         /8UNgRwWRLhzR3Rgqek9TyLuyWnBFtlYPrqMBD2A10XzeAs3wIssxz0S+V8FdgLJxl8y
+         06xUTIoppnSNZQxyRq/EumlrYPDn77/Nr4TyAQNqN/cc7IShANXNMdw9MAZTC0lIzAhC
+         jwwDLF3g2Kd1n7GEMTMF5R7nq/Wp4XCip0lnOWZr5tcKkVy04bPEDOyhs65FcrcXOAL2
+         FpgcsQ3mZ6PDrI45LC9BIAOIas282D5NHjC02hC/Db/txO2W2IyqisRlpqGnO1adKO6P
+         /NtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=xA8xWTPNqOvNwdRenR6zie/wYMWA3xv0eY4XlWlfO4o=;
-        b=ytYJ/CysbzZcRgKwjQgP6Uy9nL+xhtVw9i9ogzVK/F64J82amTL9QgPuIwRB/2x0ZZ
-         1gb1WrKHAQYbjsgtfF9VN7vIshlNsEfAr77Oqug6QQKZ9f5nEEOLvIEClKNwJwWbBGQq
-         R1LI5i39PXzOJaGGXxIWbc84NnCJoAzhH4bpDQbViozf2kb9ro1CvW+oa5pZXRP4xAEL
-         kfFHTxCYwR81n63je+0LGoU1VYPblgiSYMalaGI/4pDCt3FaFnezV0NN47mHnRwl3UWp
-         tA/C2L7x0D7IP+V+kTuT7T0J1vgd+CDIOCQiqrPpRhvt4PrWzpnMU0CSHfzOokg6OUpE
-         AKqA==
-X-Gm-Message-State: ACgBeo2ijQt/ThGXgNyDClUQEPGzcu7R9LnCbP9IjThgoWUdpwl/brL5
-        ixygalZMiv59kf4JlvR/10oqC0VFScOX
-X-Google-Smtp-Source: AA6agR7CnQ6Ai08VHX4ZKhFB6xEd7T1ojrzP/sEwF0ia/tdMyHQtAgZEbqNgOP8FnRM00NAuZ+6/Dg==
-X-Received: by 2002:a17:907:7619:b0:730:d709:a2f0 with SMTP id jx25-20020a170907761900b00730d709a2f0mr9662901ejc.673.1660544575045;
+        bh=RC/tzwu0z2NQqWCJ1rkpPolj1VE2uuQ2rRC4q6+8S0o=;
+        b=VBir7e87YdDTKSI3uBUGvRuNa7Qopmp0VIcmtii+VgNuCEcHQ9osjPPWK6UNkIuKq5
+         80xPE9GCx+QjW8mvVupktt9oWn3A1crTuR4cdl68gysldkIlDmYyAePiZMGHR5Usl3Ia
+         4zb4uODANXc3q9jHGTRJFgMDnSC+Gf2mC6CVV3ctze1mB08PW4PzH/3lJWHQe6Jm59/h
+         YPd3T1gei9iZcf01LkZLQis+FZNUEPTl2CNy1txFP7E5+Y4QWCO8f16FheXbX27dSuqZ
+         o1uaWmB4c2TUXq/Vqt6INOil8kCYzCmkGbRsnfUrFzkVkIKXUbM+EuBD4bnScXazTBsa
+         uvxg==
+X-Gm-Message-State: ACgBeo1HwD9SbvR+Cb9dAzX5n4X6RtEeMUI58bvj4hLwxcYoXiVttvcI
+        pCTwojQ2oFSC4MvP9YB0M+bAMBjPEPhT
+X-Google-Smtp-Source: AA6agR7AIj2pA5KaQ6DWG5KVviFa3wBCCWM5P+YEG8Q+5X4/ATNTuEltM9TwKJ+8mwlrlwKVm8ZHew==
+X-Received: by 2002:a17:907:8a1a:b0:731:6475:68f7 with SMTP id sc26-20020a1709078a1a00b00731647568f7mr9419939ejc.359.1660544575766;
         Sun, 14 Aug 2022 23:22:55 -0700 (PDT)
 Received: from localhost.localdomain ([77.189.63.104])
-        by smtp.gmail.com with ESMTPSA id fu18-20020a170907b01200b007308bdef04bsm3662838ejc.103.2022.08.14.23.22.54
+        by smtp.gmail.com with ESMTPSA id fu18-20020a170907b01200b007308bdef04bsm3662838ejc.103.2022.08.14.23.22.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Aug 2022 23:22:54 -0700 (PDT)
+        Sun, 14 Aug 2022 23:22:55 -0700 (PDT)
 From:   ThomasReim <reimth@gmail.com>
 To:     autofs@vger.kernel.org
 Cc:     Thomas Reim <reimth@gmail.com>
-Subject: [PATCH v2 3/4] autofs-5.1.8 - internal SASL logging only in debug log mode
-Date:   Mon, 15 Aug 2022 08:22:44 +0200
-Message-Id: <20220815062245.1719099-4-reimth@gmail.com>
+Subject: [PATCH v2 4/4] autofs-5.1.8 - more comprehensive verbose logging for LDAP maps
+Date:   Mon, 15 Aug 2022 08:22:45 +0200
+Message-Id: <20220815062245.1719099-5-reimth@gmail.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220815062245.1719099-1-reimth@gmail.com>
 References: <20220815062245.1719099-1-reimth@gmail.com>
@@ -70,108 +70,108 @@ X-Mailing-List: autofs@vger.kernel.org
 
 From: Thomas Reim <reimth@gmail.com>
 
-Cyrus SASL library is known for useless error notifications of internal
-events that can and will be easily handled by the applications. By default
-automounter provides a logging callback to the SASL library, which displays
-annoying SASL error messages to users for internal library issues that do
-not harm SASL authentication operation.
+Current logging of LDAP map lookups in verbose mode is not very
+comprehensive. It's not clear for what purpose connections to the LDAP
+directory are made as the only result that will be reported is the autofs
+mount point creation.
 
-OpenLDAP only provides a logging callback to SASL library for its server
-application. Client side applications won't see any internal SASL
-notifcations.
-
-Choose a compromise and provide SASL internal logging messages only if user
-requests debug logging mode.
+Inform users about the intention of the LDAP directory access in verbose
+mode.
 
 Signed-off-by: Thomas Reim <reimth@gmail.com>
 ---
- include/log.h        |  2 ++
- lib/log.c            | 10 ++++++++++
- modules/cyrus-sasl.c | 16 ++++++++++++++--
- 3 files changed, 26 insertions(+), 2 deletions(-)
+ daemon/lookup.c       | 20 ++++++++++----------
+ modules/lookup_ldap.c |  4 ++--
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/include/log.h b/include/log.h
-index 3ec8f0c..f073300 100644
---- a/include/log.h
-+++ b/include/log.h
-@@ -37,6 +37,8 @@ extern void set_log_verbose_ap(struct autofs_point *ap);
- extern void set_log_debug_ap(struct autofs_point *ap);
- extern void set_mnt_logging(unsigned global_logopt);
+diff --git a/daemon/lookup.c b/daemon/lookup.c
+index 4a286d6..b2fd488 100644
+--- a/daemon/lookup.c
++++ b/daemon/lookup.c
+@@ -169,7 +169,7 @@ int lookup_nss_read_master(struct master *master, time_t age)
+ 	/* If it starts with a '/' it has to be a file or LDAP map */
+ 	if (*master->name == '/') {
+ 		if (*(master->name + 1) == '/') {
+-			debug(logopt, "reading master ldap %s", master->name);
++			info(logopt, "reading ldap master %s", master->name);
+ 			result = do_read_master(master, "ldap", age);
+ 		} else {
+ 			debug(logopt, "reading master file %s", master->name);
+@@ -215,7 +215,7 @@ int lookup_nss_read_master(struct master *master, time_t age)
+ 				 */
+ 				if (strncmp(name, "ldap", 4)) {
+ 					master->name = tmp + 1;
+-					debug(logopt, "reading master %s %s",
++					info(logopt, "reading %s master %s",
+ 					      source, master->name);
+ 				} else {
+ 					master->name = name;
+@@ -260,8 +260,8 @@ int lookup_nss_read_master(struct master *master, time_t age)
+ 		    strncmp(this->source, "sss", 3))
+ 			continue;
  
-+extern unsigned int have_log_verbose(void);
-+extern unsigned int have_log_debug(void);
- extern int get_log_debug_level(void);
+-		debug(logopt,
+-		      "reading master %s %s", this->source, master->name);
++		info(logopt,
++		      "reading %s master %s", this->source, master->name);
  
- extern void open_log(void);
-diff --git a/lib/log.c b/lib/log.c
-index 9567460..1c5b3da 100644
---- a/lib/log.c
-+++ b/lib/log.c
-@@ -58,6 +58,16 @@ static char *prepare_attempt_prefix(const char *msg)
- 	return prefixed_msg;
- }
+ 		result = read_master_map(master, this->source, age);
  
-+unsigned int have_log_verbose(void)
-+{
-+	return do_verbose;
-+}
-+
-+unsigned int have_log_debug(void)
-+{
-+	return do_debug;
-+}
-+
- int get_log_debug_level(void)
- {
- 	return debug_level;
-diff --git a/modules/cyrus-sasl.c b/modules/cyrus-sasl.c
-index 4806734..358813a 100644
---- a/modules/cyrus-sasl.c
-+++ b/modules/cyrus-sasl.c
-@@ -109,6 +109,13 @@ static int getpass_func(sasl_conn_t *, void *, int, sasl_secret_t **);
- static int getuser_func(void *, int, const char **, unsigned *);
+@@ -549,8 +549,8 @@ int lookup_nss_read_map(struct autofs_point *ap, struct map_source *source, time
+ 			if (!strncmp(map->type, "multi", 5))
+ 				debug(ap->logopt, "reading multi map");
+ 			else
+-				debug(ap->logopt,
+-				      "reading map %s %s",
++				info(ap->logopt,
++				      "reading %s map %s",
+ 				       map->type, map->argv[0]);
+ 			result = lookup_map_read_map(ap, map, age);
+ 			map = map->next;
+@@ -566,8 +566,8 @@ int lookup_nss_read_map(struct autofs_point *ap, struct map_source *source, time
+ 					continue;
+ 				}
+ 				map->type = tmp;
+-				debug(ap->logopt,
+-				      "reading map %s %s", tmp, map->argv[0]);
++				info(ap->logopt,
++				      "reading %s map %s", tmp, map->argv[0]);
+ 				result = do_read_map(ap, map, age);
+ 			} else {
+ 				debug(ap->logopt,
+@@ -602,8 +602,8 @@ int lookup_nss_read_map(struct autofs_point *ap, struct map_source *source, time
+ 				continue;
+ 			}
  
- static sasl_callback_t callbacks[] = {
-+	{ SASL_CB_USER, &getuser_func, NULL },
-+	{ SASL_CB_AUTHNAME, &getuser_func, NULL },
-+	{ SASL_CB_PASS, &getpass_func, NULL },
-+	{ SASL_CB_LIST_END, NULL, NULL },
-+};
-+
-+static sasl_callback_t debug_callbacks[] = {
- 	{ SASL_CB_LOG, &sasl_log_func, NULL },
- 	{ SASL_CB_USER, &getuser_func, NULL },
- 	{ SASL_CB_AUTHNAME, &getuser_func, NULL },
-@@ -136,7 +143,7 @@ sasl_log_func(void *context, int level, const char *message)
- 	case SASL_LOG_DEBUG:
- 	case SASL_LOG_TRACE:
- 	case SASL_LOG_PASS:
--		debug(LOGOPT_NONE, "%s", message);
-+		log_debug(LOGOPT_NONE, "libsasl2: %s", message);
- 		break;
- 	default:
- 		break;
-@@ -1090,6 +1097,7 @@ static void sasl_mutex_dispose(void *mutex __attribute__((unused)))
-  */
- int autofs_sasl_client_init(unsigned logopt)
- {
-+	int result;
+-			debug(ap->logopt,
+-			      "reading map %s %s", this->source, map->argv[0]);
++			info(ap->logopt,
++			      "reading %s map %s", this->source, map->argv[0]);
  
- 	sasl_set_mutex(sasl_mutex_new,
- 		       sasl_mutex_lock,
-@@ -1097,7 +1105,11 @@ int autofs_sasl_client_init(unsigned logopt)
- 		       sasl_mutex_dispose);
- 
- 	/* Start up Cyrus SASL--only needs to be done at library load. */
--	if (sasl_client_init(callbacks) != SASL_OK) {
-+	if (have_log_debug())
-+		result = sasl_client_init(debug_callbacks);
-+	else
-+		result = sasl_client_init(callbacks);
-+	if (result != SASL_OK) {
- 		error(logopt, "sasl_client_init failed");
- 		return 0;
- 	}
+ 			result = read_map_source(this, ap, map, age);
+ 			if (result == NSS_STATUS_UNKNOWN)
+diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
+index c174426..c44e248 100644
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -2489,7 +2489,7 @@ static int do_get_entries(struct ldap_search_params *sp, struct map_source *sour
+ 	e = ldap_first_entry(sp->ldap, sp->result);
+ 	if (!e) {
+ 		debug(ap->logopt,
+-		      MODPREFIX "query succeeded, no matches for %s",
++		      MODPREFIX "query succeeded, no matches for query %s",
+ 		      sp->query);
+ 		ret = ldap_parse_result(sp->ldap, sp->result,
+ 					&rv, NULL, NULL, NULL, NULL, 0);
+@@ -2512,7 +2512,7 @@ static int do_get_entries(struct ldap_search_params *sp, struct map_source *sour
+ 			e = ldap_next_entry(sp->ldap, e);
+ 			if (!e) {
+ 				debug(ap->logopt, MODPREFIX
+-				      "failed to get next entry for query %s",
++				      "query succeeded, no more matches for query %s",
+ 				      sp->query);
+ 				ret = ldap_parse_result(sp->ldap,
+ 							sp->result, &rv,
 -- 
 2.37.1
 
