@@ -2,42 +2,42 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 044315A2386
-	for <lists+autofs@lfdr.de>; Fri, 26 Aug 2022 10:49:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B9195A2388
+	for <lists+autofs@lfdr.de>; Fri, 26 Aug 2022 10:49:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245011AbiHZItd (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Fri, 26 Aug 2022 04:49:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56154 "EHLO
+        id S245367AbiHZItj (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Fri, 26 Aug 2022 04:49:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240949AbiHZItd (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Fri, 26 Aug 2022 04:49:33 -0400
-Received: from smtp01.aussiebb.com.au (smtp01.aussiebb.com.au [121.200.0.92])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63B4D5DD6
-        for <autofs@vger.kernel.org>; Fri, 26 Aug 2022 01:49:31 -0700 (PDT)
+        with ESMTP id S245288AbiHZIth (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Fri, 26 Aug 2022 04:49:37 -0400
+Received: from smtp01.aussiebb.com.au (smtp01.aussiebb.com.au [IPv6:2403:5800:3:25::1001])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBEC5D5DF4
+        for <autofs@vger.kernel.org>; Fri, 26 Aug 2022 01:49:35 -0700 (PDT)
 Received: from localhost (localhost.localdomain [127.0.0.1])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 65CE71002AB
-        for <autofs@vger.kernel.org>; Fri, 26 Aug 2022 18:49:29 +1000 (AEST)
+        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 23B57100317
+        for <autofs@vger.kernel.org>; Fri, 26 Aug 2022 18:49:34 +1000 (AEST)
 X-Virus-Scanned: Debian amavisd-new at smtp01.aussiebb.com.au
 Received: from smtp01.aussiebb.com.au ([127.0.0.1])
         by localhost (smtp01.aussiebb.com.au [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id zHtzA2ZV93cQ for <autofs@vger.kernel.org>;
-        Fri, 26 Aug 2022 18:49:29 +1000 (AEST)
+        with ESMTP id oVwv7KtVTbM0 for <autofs@vger.kernel.org>;
+        Fri, 26 Aug 2022 18:49:34 +1000 (AEST)
 Received: by smtp01.aussiebb.com.au (Postfix, from userid 116)
-        id 5ED88100338; Fri, 26 Aug 2022 18:49:29 +1000 (AEST)
+        id 18917100338; Fri, 26 Aug 2022 18:49:34 +1000 (AEST)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 Received: from donald.themaw.net (180-150-90-198.b4965a.per.nbn.aussiebb.net [180.150.90.198])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 170921002AB;
-        Fri, 26 Aug 2022 18:49:28 +1000 (AEST)
-Subject: [PATCH v2 2/4] autofs-5.1.8 - prepare for OpenLDAP SASL binding
+        by smtp01.aussiebb.com.au (Postfix) with ESMTP id A1A611002AB;
+        Fri, 26 Aug 2022 18:49:33 +1000 (AEST)
+Subject: [PATCH v2 3/4] autofs-5.1.8 - let OpenLDAP handle SASL binding
 From:   Ian Kent <raven@themaw.net>
 To:     ThomasReim <reimth@gmail.com>
 Cc:     autofs mailing list <autofs@vger.kernel.org>
-Date:   Fri, 26 Aug 2022 16:49:27 +0800
-Message-ID: <166150376775.37723.14388715962754633577.stgit@donald.themaw.net>
+Date:   Fri, 26 Aug 2022 16:49:33 +0800
+Message-ID: <166150377330.37723.7093874206401696231.stgit@donald.themaw.net>
 In-Reply-To: <166150296106.37723.4019530934770123921.stgit@donald.themaw.net>
 References: <166150296106.37723.4019530934770123921.stgit@donald.themaw.net>
 User-Agent: StGit/1.1
@@ -50,231 +50,432 @@ X-Mailing-List: autofs@vger.kernel.org
 
 From: Thomas Reim <reimth@gmail.com>
 
-autofs prefers OpenLDAP as LDAP client library and Cyrus as SASL library.
-OpenLDAP also uses Cyrus SASL and is fully capable of providing SASL
-authentication and binding to clients. OpenLDAP SASL interface is actively
-maintained and provides latest security features, e. g. SASL data security
-layer.
+From: Thomas Reim <reimth@gmail.com>
 
-It does not make much sense to implement and use an own SASL interface in
-autofs if OpenLDAP is used, which already has a powerful SASL implementation.
+Cyrus SASL supports data encryption in GSSAPI (with Kerberos V) mode using an
+SASL data security layer according to IETF RFC 2078. This security layer
+provides for traffic encryption during authentication and authorization towards
+an OpenLDAP based server and for subsequent encryption of data traffic for the
+LDAP session. Current automounter does not implement SASL security layer
+encryption and only relies on TLS to protect LDAP communication.
 
-Prepare conditional compilation for use of OpenLDAP for SASL authentication
-and binding.
+OpenLDAP libldap if compiled with Cyrus SASL supports negotiation of an SASL
+data security layer based encryption of LDAP traffic. libldap also provides
+automatic negotiation of the best suited SASL mechanism taking into account
+application required defaults.
+
+Since version 4.4 Samba AD domain controllers default settings only allow for
+simple SASL binds over TLS encrypted connections or SASL binds with sign or
+seal, i. e. data security layer encryption, over unencrypted connections.
+Therefore, current automounter cannot fetch autofs maps from Samba AD DCs
+using SASL anymore without setting Samba configuration parameter "ldap server
+require strong auth" to "no" or "allow_sasl_over_tls".
+
+This patch updates automounter to let OpenLDAP and Cyrus SASL handle SASL
+binding and traffic security configuration. Proposed changes are backward
+compatible for clients that use LDAP libaries different from LDAP. When using
+SASL mechanism GSSAPI or simple authentication with TLS encryption automounter
+seamlessly interworks with latest Samba AD DCs.
 
 Signed-off-by: Thomas Reim <reimth@gmail.com>
 Signed-off-by: Ian Kent <raven@themaw.net>
 ---
- CHANGELOG           |    1 +
- aclocal.m4          |   43 ++++++++++++++++++++++++++++++++++++++++
- configure           |   55 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- configure.in        |    5 ++++-
- include/config.h.in |    3 +++
- 5 files changed, 105 insertions(+), 2 deletions(-)
+ CHANGELOG             |    1 
+ include/lookup_ldap.h |    6 ++
+ modules/cyrus-sasl.c  |  150 +++++++++++++++++++++++++++++++++++++++++++++++++
+ modules/lookup_ldap.c |  137 ++++++++++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 292 insertions(+), 2 deletions(-)
 
 diff --git a/CHANGELOG b/CHANGELOG
-index 68365e86..98ec78a9 100644
+index 98ec78a9..52da6256 100644
 --- a/CHANGELOG
 +++ b/CHANGELOG
-@@ -30,6 +30,7 @@
- - fix missing unlock in sasl_do_kinit_ext_cc().
+@@ -31,6 +31,7 @@
  - fix a couple of null cache locking problems.
  - restore gcc flags after autoconf Kerberos 5 check.
-+- prepare for OpenLDAP SASL binding.
+ - prepare for OpenLDAP SASL binding.
++- let OpenLDAP handle SASL binding.
  
  19/10/2021 autofs-5.1.8
  - add xdr_exports().
-diff --git a/aclocal.m4 b/aclocal.m4
-index c671b5b0..91b22dae 100644
---- a/aclocal.m4
-+++ b/aclocal.m4
-@@ -325,6 +325,49 @@ AC_TRY_LINK(
- LIBS="$af_check_hesiod_save_libs"
- ])
+diff --git a/include/lookup_ldap.h b/include/lookup_ldap.h
+index 3a107782..9c3e8627 100644
+--- a/include/lookup_ldap.h
++++ b/include/lookup_ldap.h
+@@ -129,6 +129,12 @@ int autofs_sasl_bind(unsigned logopt, struct ldap_conn *conn, struct lookup_cont
+ void autofs_sasl_unbind(struct ldap_conn *conn, struct lookup_context *ctxt);
+ void autofs_sasl_dispose(struct ldap_conn *conn, struct lookup_context *ctxt);
+ void autofs_sasl_done(void);
++int sasl_do_kinit(unsigned logopt, struct lookup_context *ctxt);
++#ifdef WITH_LDAP_CYRUS_SASL
++void autofs_ldap_sasl_freedefs(void *defaults);
++void *autofs_ldap_sasl_defaults(LDAP *ld, char *mech, char *realm, char *authcid, char *passwd, char *authzid );
++int autofs_ldap_sasl_interact(LDAP *ld, unsigned flags, void *defaults, void *in );
++#endif
+ /* cyrus-sasl-extern */
+ int do_sasl_extern(LDAP *ldap, struct lookup_context *ctxt);
+ #endif
+diff --git a/modules/cyrus-sasl.c b/modules/cyrus-sasl.c
+index 738e363f..11e3f76a 100644
+--- a/modules/cyrus-sasl.c
++++ b/modules/cyrus-sasl.c
+@@ -233,6 +233,151 @@ get_server_SASL_mechanisms(unsigned logopt, LDAP *ld)
+ 	return mechanisms;
+ }
  
-+dnl --------------------------------------------------------------------------
-+dnl AF_CHECK_FUNC_LDAP_SUPPORT_SASL
-+dnl
-+dnl Check for sasl support in ldap
-+dnl --------------------------------------------------------------------------
-+AC_DEFUN(
-+  [AF_CHECK_FUNC_LDAP_SUPPORT_SASL],
-+  [AC_MSG_CHECKING(for cyrus sasl support in openldap)
-+    have_openldap_cyrus_sasl=no
-+    # save current libs
-+    af_check_ldap_support_sasl_save_libs="$LIBS"
-+    LIBS="$LIBLDAP"
-+
-+    AC_RUN_IFELSE(
-+      [ AC_LANG_SOURCE(
-+        [ #include <stdlib.h>
-+          #include <ldap.h>
-+          int main (int argc, char **argv) {
-+            LDAP *ldap = NULL;
-+            int lret = 0;
-+
-+            lret = ldap_initialize(&ldap, NULL);
-+            if (lret != LDAP_OPT_SUCCESS) {
-+              exit(1);
-+            }
-+            lret = ldap_set_option(ldap, LDAP_OPT_X_SASL_NOCANON,
-+                                   LDAP_OPT_ON);
-+            exit(lret == LDAP_OPT_SUCCESS ? 0 : 1);
-+          } ])],
-+      have_openldap_sasl=yes,
-+      have_openldap_sasl=no,
-+      have_openldap_sasl=yes)
-+
-+    AC_MSG_RESULT($have_openldap_sasl)
-+    if test "$have_openldap_sasl" = "yes"; then
-+      AC_DEFINE(WITH_LDAP_CYRUS_SASL,1,
-+         [Define if OpenLDAP was built with Cyrus SASL])
-+    fi
-+
-+    # restore libs
-+    LIBS="$af_check_ldap_parse_page_control_save_libs"
-+  ])
-+
- dnl --------------------------------------------------------------------------
- dnl AF_CHECK_FUNC_LDAP_CREATE_PAGE_CONTROL
- dnl
-diff --git a/configure b/configure
-index 90ce6e0e..91be1e14 100755
---- a/configure
-+++ b/configure
-@@ -4481,6 +4481,9 @@ _ACEOF
- fi
- done
- 
-+
-+  CFLAGS="$SAVE_CFLAGS"
-+  LIBS="$SAVE_LIBS"
- fi
- 
- { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing versionsort" >&5
-@@ -5347,6 +5350,7 @@ CFLAGS="$af_check_nis_header_save_cflags"
- # OpenLDAP support?  Expect that this may have a special directory...
- #
- AF_tmp_ldflags="$LDFLAGS"
-+AF_tmp_libs="$LIBS"
- LIBLDAP=''
- HAVE_LDAP=''
- 
-@@ -5413,7 +5417,54 @@ fi
- 
- $as_echo "#define WITH_LDAP 1" >>confdefs.h
- 
--	fi
-+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for cyrus sasl support in openldap" >&5
-+$as_echo_n "checking for cyrus sasl support in openldap... " >&6; }
-+    have_openldap_cyrus_sasl=no
-+    # save current libs
-+    af_check_ldap_support_sasl_save_libs="$LIBS"
-+    LIBS="$LIBLDAP"
-+
-+    if test "$cross_compiling" = yes; then :
-+  have_openldap_sasl=yes
-+else
-+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-+/* end confdefs.h.  */
-+  #include <stdlib.h>
-+          #include <ldap.h>
-+          int main (int argc, char **argv) {
-+            LDAP *ldap = NULL;
-+            int lret = 0;
-+
-+            lret = ldap_initialize(&ldap, NULL);
-+            if (lret != LDAP_OPT_SUCCESS) {
-+              exit(1);
-+            }
-+            lret = ldap_set_option(ldap, LDAP_OPT_X_SASL_NOCANON,
-+                                   LDAP_OPT_ON);
-+            exit(lret == LDAP_OPT_SUCCESS ? 0 : 1);
-+          }
-+_ACEOF
-+if ac_fn_c_try_run "$LINENO"; then :
-+  have_openldap_sasl=yes
-+else
-+  have_openldap_sasl=no
-+fi
-+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
-+  conftest.$ac_objext conftest.beam conftest.$ac_ext
-+fi
++#ifdef WITH_LDAP_CYRUS_SASL
++typedef struct autofs_ldap_sasl_defaults_s {
++	char *mech;
++	char *realm;
++	char *authcid;
++	char *passwd;
++	char *authzid;
++} ldapSASLdefaults;
 +
 +
-+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $have_openldap_sasl" >&5
-+$as_echo "$have_openldap_sasl" >&6; }
-+    if test "$have_openldap_sasl" = "yes"; then
++void autofs_ldap_sasl_freedefs(void *defaults)
++{
++	ldapSASLdefaults *defs = defaults;
 +
-+$as_echo "#define WITH_LDAP_CYRUS_SASL 1" >>confdefs.h
++	assert(defs != NULL);
 +
-+    fi
++	if (defs->mech)
++		ber_memfree(defs->mech);
++	if (defs->realm)
++		ber_memfree(defs->realm);
++	if (defs->authcid)
++		ber_memfree(defs->authcid);
++	if (defs->passwd)
++		ber_memfree(defs->passwd);
++	if (defs->authzid)
++		ber_memfree(defs->authzid);
 +
-+    # restore libs
-+    LIBS="$af_check_ldap_parse_page_control_save_libs"
++	ber_memfree(defs);
++}
 +
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ldap_create_page_control in -lldap" >&5
- $as_echo_n "checking for ldap_create_page_control in -lldap... " >&6; }
- 
-@@ -5500,12 +5551,14 @@ fi
- # restore libs
- LIBS="$af_check_ldap_parse_page_control_save_libs"
- 
-+    fi
- fi
- 
- 
- 
- 
- LDFLAGS="${AF_tmp_ldflags}"
-+LIBS="${AF_tmp_libs}"
- 
- #
- # SASL support
-diff --git a/configure.in b/configure.in
-index 68cbd44a..45f32340 100644
---- a/configure.in
-+++ b/configure.in
-@@ -279,6 +279,7 @@ AF_CHECK_NIS_HEADER()
- # OpenLDAP support?  Expect that this may have a special directory...
- #
- AF_tmp_ldflags="$LDFLAGS"
-+AF_tmp_libs="$LIBS"
- LIBLDAP=''
- HAVE_LDAP=''
- AC_ARG_WITH(openldap,
-@@ -303,15 +304,17 @@ if test -z "$HAVE_LDAP" -o "$HAVE_LDAP" != "0"; then
- 	if test "$HAVE_LDAP" = "1"; then
- 		AC_DEFINE(WITH_LDAP,1,
- 			[Define if using LDAP as a source of automount maps])
--	fi
-+	AF_CHECK_FUNC_LDAP_SUPPORT_SASL()
- 	AF_CHECK_FUNC_LDAP_CREATE_PAGE_CONTROL()
- 	AF_CHECK_FUNC_LDAP_PARSE_PAGE_CONTROL()
-+    fi
- fi
- 
- AC_SUBST(LDAP_FLAGS)
- AC_SUBST(HAVE_LDAP)
- AC_SUBST(LIBLDAP)
- LDFLAGS="${AF_tmp_ldflags}"
-+LIBS="${AF_tmp_libs}"
- 
- #
- # SASL support
-diff --git a/include/config.h.in b/include/config.h.in
-index 4f8daa86..7dab82ee 100644
---- a/include/config.h.in
-+++ b/include/config.h.in
-@@ -162,6 +162,9 @@
- /* Define if using LDAP as a source of automount maps */
- #undef WITH_LDAP
- 
-+/* Define if OpenLDAP was built with Cyrus SASL */
-+#undef WITH_LDAP_CYRUS_SASL
++void *
++autofs_ldap_sasl_defaults(LDAP *ld,
++			  char *mech,
++			  char *realm,
++			  char *authcid,
++			  char *passwd,
++			  char *authzid)
++{
++	ldapSASLdefaults *defaults;
 +
- /* Define to 1 if you have the libtirpc library installed */
- #undef WITH_LIBTIRPC
++	defaults = ber_memalloc(sizeof(ldapSASLdefaults));
++
++	if (defaults == NULL)
++		return NULL;
++
++	defaults->mech = mech ? ber_strdup(mech) : NULL;
++	defaults->realm = realm ? ber_strdup(realm) : NULL;
++	defaults->authcid = authcid ? ber_strdup(authcid) : NULL;
++	defaults->passwd = passwd ? ber_strdup(passwd) : NULL;
++	defaults->authzid = authzid ? ber_strdup(authzid) : NULL;
++
++	if (defaults->mech == NULL)
++		ldap_get_option(ld, LDAP_OPT_X_SASL_MECH, &defaults->mech);
++	if (defaults->realm == NULL)
++		ldap_get_option(ld, LDAP_OPT_X_SASL_REALM, &defaults->realm);
++	if (defaults->authcid == NULL)
++		ldap_get_option(ld, LDAP_OPT_X_SASL_AUTHCID, &defaults->authcid);
++	if (defaults->authzid == NULL)
++		ldap_get_option(ld, LDAP_OPT_X_SASL_AUTHZID, &defaults->authzid);
++
++	return defaults;
++}
++
++static int
++interaction(unsigned flags,
++	    sasl_interact_t *interact,
++	    ldapSASLdefaults *defaults)
++{
++	switch (interact->id) {
++	case SASL_CB_GETREALM:
++		if (defaults->realm)
++			interact->result = defaults->realm;
++		else if (interact->defresult)
++			interact->result = interact->defresult;
++		else
++			interact->result = "";
++		interact->len = strlen(interact->result);
++		break;
++
++	case SASL_CB_USER:
++		if (defaults->authzid)
++			interact->result = defaults->authzid;
++		else if (interact->defresult)
++			interact->result = interact->defresult;
++		else
++			interact->result = "";
++		interact->len = strlen(interact->result);
++		break;
++
++	case SASL_CB_PASS:
++		if (defaults->passwd)
++			interact->result = defaults->passwd;
++		else if (interact->defresult)
++			interact->result = interact->defresult;
++		else
++			interact->result = "";
++		interact->len = strlen(interact->result);
++		break;
++
++	case SASL_CB_AUTHNAME:
++		if (defaults->authcid)
++			interact->result = defaults->authcid;
++		else if (interact->defresult)
++			interact->result = interact->defresult;
++		else
++			interact->result = "";
++		interact->len = strlen(interact->result);
++		break;
++	}
++
++	return LDAP_SUCCESS;
++}
++
++int
++autofs_ldap_sasl_interact(LDAP *ld,
++			  unsigned flags,
++			  void *defaults,
++			  void *interact)
++{
++	ldapSASLdefaults *deflts = (ldapSASLdefaults*) defaults;
++	sasl_interact_t *in = (sasl_interact_t*) interact;
++	int rc = LDAP_SUCCESS;
++
++	if (!ld)
++		return LDAP_PARAM_ERROR;
++
++	while (in->id != SASL_CB_LIST_END) {
++		switch (in->id) {
++		case SASL_CB_NOECHOPROMPT:
++		case SASL_CB_ECHOPROMPT:
++			return LDAP_UNAVAILABLE;
++
++		default:
++			rc = interaction(flags, in, deflts);
++			if (rc)
++				return rc;
++			break;
++		}
++		in++;
++	}
++
++	return rc;
++}
++#endif
++
+ /*
+  *  Returns 0 upon successful connect, -1 on failure.
+  */
+@@ -994,11 +1139,12 @@ void autofs_sasl_dispose(struct ldap_conn *conn, struct lookup_context *ctxt)
+ 		return;
+ 	}
  
++#ifndef WITH_LDAP_CYRUS_SASL
+ 	if (conn && conn->sasl_conn) {
+ 		sasl_dispose(&conn->sasl_conn);
+ 		conn->sasl_conn = NULL;
+ 	}
+-
++#endif
+ 	if (ctxt->kinit_successful) {
+ 		if (--krb5cc_in_use || ctxt->client_cc)
+ 			ret = krb5_cc_close(ctxt->krb5ctxt, ctxt->krb5_ccache);
+@@ -1099,7 +1245,9 @@ int autofs_sasl_client_init(unsigned logopt)
+  */
+ void autofs_sasl_done(void)
+ {
++#ifndef WITH_LDAP_CYRUS_SASL
+ 	sasl_done();
++#endif
+ 	return;
+ }
+ 
+diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
+index 3e43fc01..d08f648d 100644
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -223,11 +223,13 @@ int __unbind_ldap_connection(unsigned logopt,
+ 	if (ctxt->use_tls == LDAP_TLS_RELEASE)
+ 		ctxt->use_tls = LDAP_TLS_INIT;
+ #ifdef WITH_SASL
++#ifndef WITH_LDAP_CYRUS_SASL
+ 	if (ctxt->auth_required & LDAP_NEED_AUTH)
+ 		autofs_sasl_unbind(conn, ctxt);
+ 	/* No, sasl_dispose does not release the ldap connection
+ 	 * unless it's using sasl EXTERNAL
+ 	 */
++#endif
+ #endif
+ 	if (conn->ldap) {
+ 		rv = ldap_unbind_ext(conn->ldap, NULL, NULL);
+@@ -574,15 +576,146 @@ static int do_bind(unsigned logopt, struct ldap_conn *conn,
+ 		   const char *uri, struct lookup_context *ctxt)
+ {
+ 	char *host = NULL, *nhost;
+-	int rv;
++	int rv, result;
+ 
+ #ifdef WITH_SASL
++#ifdef WITH_LDAP_CYRUS_SASL
++	unsigned int sasl_flags = LDAP_SASL_AUTOMATIC;
++	LDAPMessage *ldap_res = NULL;
++	const char *chosen_mech = NULL;
++	const char *rmech = NULL;
++	char *part_dn = NULL;
++	char *info = NULL;
++	int msgid, err;
++	void *defaults;
++	char *data;
++	ber_len_t *ssf;
++
++#endif
+ 	debug(logopt, MODPREFIX "auth_required: %d, sasl_mech %s",
+ 	      ctxt->auth_required, ctxt->sasl_mech);
+ 
+ 	if (ctxt->auth_required & LDAP_NEED_AUTH) {
++#ifndef WITH_LDAP_CYRUS_SASL
+ 		rv = autofs_sasl_bind(logopt, conn, ctxt);
+ 		debug(logopt, MODPREFIX "autofs_sasl_bind returned %d", rv);
++#else
++		if (ctxt->sasl_mech && !strncmp(ctxt->sasl_mech, "GSSAPI", 6)) {
++			rv = sasl_do_kinit(logopt, ctxt);
++			if (rv != 0)
++				return 0;
++			sasl_flags = LDAP_SASL_QUIET;
++		}
++
++		debug(logopt, "Attempting sasl bind with mechanism %s", ctxt->sasl_mech);
++
++		if (ctxt->auth_required & LDAP_AUTH_AUTODETECT) {
++			if (ctxt->sasl_mech) {
++				free(ctxt->sasl_mech);
++				ctxt->sasl_mech = NULL;
++			}
++		}
++
++		/*
++		 *  If LDAP_AUTH_AUTODETECT is set, it means that there was no
++		 *  mechanism specified in the configuration file or auto
++		 *  selection has been requested, so try to auto-select an
++		 *  auth mechanism.
++		 */
++
++		defaults = autofs_ldap_sasl_defaults(conn->ldap, ctxt->sasl_mech, NULL,
++						     ctxt->user, ctxt->secret, NULL);
++		do {
++			rv = ldap_sasl_interactive_bind(conn->ldap, NULL,
++							ctxt->sasl_mech, NULL, NULL,
++							sasl_flags,
++							autofs_ldap_sasl_interact,
++							defaults, ldap_res,
++							&rmech, &msgid);
++
++			if (rmech)
++				chosen_mech = rmech;
++
++			if (rv != LDAP_SASL_BIND_IN_PROGRESS)
++				break;
++
++			if (ldap_res) {
++				ldap_msgfree(ldap_res);
++				ldap_res = NULL;
++			}
++
++			if (ldap_result(conn->ldap, msgid, LDAP_MSG_ALL, NULL, &ldap_res) == -1 || !ldap_res) {
++				ldap_get_option(conn->ldap, LDAP_OPT_RESULT_CODE, (void*) &err);
++				ldap_get_option(conn->ldap, LDAP_OPT_DIAGNOSTIC_MESSAGE, (void*) &info);
++				error(logopt, MODPREFIX "ldap_sasl_interactive_bind failed with error %d",
++				      err);
++				debug(logopt, "ldap_sasl_interactive_bind: %s", info);
++				ldap_memfree(info);
++				if (ldap_res)
++					ldap_msgfree(ldap_res);
++				return 0;
++			}
++		} while (rv == LDAP_SASL_BIND_IN_PROGRESS);
++
++		autofs_ldap_sasl_freedefs(defaults);
++
++		if (rv != LDAP_SUCCESS) {
++			ldap_get_option(conn->ldap, LDAP_OPT_DIAGNOSTIC_MESSAGE, (void*) &info);
++			error(logopt, MODPREFIX "ldap_sasl_interactive_bind failed with error %d",
++			      rv);
++			debug(logopt, "ldap_sasl_interactive_bind: %s", info);
++			ldap_memfree(info);
++			if (ldap_res)
++				ldap_msgfree(ldap_res);
++			return 0;
++		}
++
++		/* Parse the result and check for errors */
++		if (ldap_res) {
++			rv = ldap_parse_result(conn->ldap, ldap_res, &err, &part_dn, &info, NULL, NULL, 0);
++			if (rv != LDAP_SUCCESS) {
++				error(logopt,
++				      MODPREFIX "ldap_sasl_interactive_bind parse result failed with error %d",
++				      err);
++				debug(logopt, "ldap_sasl_interactive_bind matched DN: %s", part_dn);
++				debug(logopt, "ldap_sasl_interactive_bind parse result: %s", info);
++				ldap_memfree(info);
++				ldap_memfree(part_dn);
++				ldap_msgfree(ldap_res);
++				return 0;
++			}
++		}
++
++		if (info)
++			ldap_memfree(info);
++		if (part_dn)
++			ldap_memfree(part_dn);
++		if (ldap_res)
++			ldap_msgfree(ldap_res);
++
++		/* Conversation was completed successfully by now */
++		result = ldap_get_option(conn->ldap, LDAP_OPT_X_SASL_USERNAME, &data);
++		if (result == LDAP_OPT_SUCCESS && data && *data)
++			debug(logopt, "SASL username: %s", data );
++
++		data = NULL;
++		result = ldap_get_option(conn->ldap, LDAP_OPT_X_SASL_AUTHCID, &data);
++		if (result == LDAP_OPT_SUCCESS && data && *data)
++			debug(logopt, "SASL authcid: %s", data);
++
++		data = NULL;
++		result = ldap_get_option(conn->ldap, LDAP_OPT_X_SASL_AUTHZID, &data);
++		if (result == LDAP_OPT_SUCCESS && data && *data)
++			debug(logopt, "SASL authzid: %s", data);
++
++		ssf = NULL;
++		result = ldap_get_option(conn->ldap, LDAP_OPT_X_SASL_SSF, &ssf);
++		if (result == LDAP_OPT_SUCCESS && ssf)
++			debug(logopt, "SASL SSF: %lu", (unsigned long) ssf);
++
++		debug(logopt, "sasl bind with mechanism %s succeeded",
++		      chosen_mech);
++#endif
+ 	} else {
+ 		rv = bind_ldap_simple(logopt, conn->ldap, uri, ctxt);
+ 		debug(logopt, MODPREFIX "ldap simple bind returned %d", rv);
+@@ -1793,6 +1926,7 @@ static int do_init(const char *mapfmt,
+ 	}
+ 
+ #ifdef WITH_SASL
++#ifndef WITH_LDAP_CYRUS_SASL
+ 	/* Init the sasl callbacks */
+ 	ldapinit_mutex_lock();
+ 	if (!autofs_sasl_client_init(LOGOPT_NONE)) {
+@@ -1801,6 +1935,7 @@ static int do_init(const char *mapfmt,
+ 		return 1;
+ 	}
+ 	ldapinit_mutex_unlock();
++#endif
+ #endif
+ 
+ 	if (is_amd_format)
 
 
