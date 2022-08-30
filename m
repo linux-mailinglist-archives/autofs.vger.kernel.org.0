@@ -2,122 +2,127 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 660875A3FB1
-	for <lists+autofs@lfdr.de>; Sun, 28 Aug 2022 22:54:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52B3D5A628B
+	for <lists+autofs@lfdr.de>; Tue, 30 Aug 2022 13:56:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbiH1UyD (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sun, 28 Aug 2022 16:54:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50878 "EHLO
+        id S229488AbiH3L40 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 30 Aug 2022 07:56:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiH1UyD (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sun, 28 Aug 2022 16:54:03 -0400
+        with ESMTP id S230005AbiH3L4Y (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 30 Aug 2022 07:56:24 -0400
 Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04AA521A
-        for <autofs@vger.kernel.org>; Sun, 28 Aug 2022 13:54:02 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id lx1so12113921ejb.12
-        for <autofs@vger.kernel.org>; Sun, 28 Aug 2022 13:54:01 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BE9B6563
+        for <autofs@vger.kernel.org>; Tue, 30 Aug 2022 04:56:23 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id fy31so21200964ejc.6
+        for <autofs@vger.kernel.org>; Tue, 30 Aug 2022 04:56:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=EouSF2EN/UKIaoi/9qTx28CoKkbyQaPbZoTsae9JRx0=;
-        b=l4zZL6YStThia//sAlwlFr1tPXlo+0kKpPk9I/y9ZaDsWF8kR3xl8JzK0fwkUawmw9
-         jwp9N/+12zng7JWQf0oaUzFOLdaENAnRtHKALAZUxvPtB2vgGgEQb162qWdJG+8oMlw9
-         f91G+L1Ye10uSsJVHmLhc2qAX1zhMdE8EwPWdRm7AJBdp9SrhVdUGxFEDC066ZEMrw8k
-         dRz0d0fa6icRIl5xTvx2vlyvsf+8v4F4cDBXbHjN4y2qS62D1wOIYN34SSYd7xuF3VJg
-         VhRfjphMyESO9ysZbPkDswr8zxyY0z2LkQxxmTYMfX8BXGiD6PZOCCY5X4+Wt+wLDVlK
-         ZncA==
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date;
+        bh=nrkgH02o2Rcq15VakJfrbQDQa/xxZur4E42yyaQ4r1Y=;
+        b=MQ+v9gmXLiQkD710ePwz9mO3FqnxINIVj+vKJgtDaEoGA1yC57OQL8Nm2OVdzmwI03
+         8P5ytFZiGxJJjf3Rp82icmsW19CiChn7HPlKLAvW7hpoQ0gJzTiZXVu4VRyzDvjGK4wx
+         tjToRtn/Hz9AmTE1BSUVOyPwg41aR2EhTEPSVNFAsTIhf5O3jzM+Sc36ZnLD5M16IQh4
+         e/sMevrE8Js7ABLPuSMlDze8I7i4eWlbw60Z7CZjYnzrL86kj7pIfbpDeV7agiwDLU9F
+         Qx9ffjziQFzv0uOpa05hLxzxfsc00rXtaibbPQNANrYCp+zMFIB+hFzVF7mkdtxT6pZM
+         QbBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=EouSF2EN/UKIaoi/9qTx28CoKkbyQaPbZoTsae9JRx0=;
-        b=nBO7nGguoS1DM5G226vfuRERU98YA4WoCj0Wr5+o8Bp02f/+LbpSjRvW/n6hDIEOKy
-         1lG0AiNglDbtRXiHwQYUDYu1gZusiNC1JCFuJBVCWFq+XiAp1cHLP2RxbxAQQcCop0rt
-         zQI+pfDqDYqGdzIpHEZVFgA5lEZSa5lEj8wrbFMsvVXLEeGwl3ZEHktYON3tvg5RW1pA
-         YQiraw+ccTkMszNgJY7bmlf6GKaBrYQvu9UyAJVHoz/F18kpdl3lL9Jbq/4BqokUjGp7
-         f07xXlRrx17nxHsC895UcvEpOO2lyuob/8hldAlpyAahSzTy3WOHuzjmB8mzI4eZjNab
-         54EA==
-X-Gm-Message-State: ACgBeo0VrLw3HY+lbTHeChSS3WbmlhPW5vNOZ6+pxluc7Ykyc3JaWgay
-        Liy9iQAk6RAZU1Hx4LUBG69aYaN2L8dx
-X-Google-Smtp-Source: AA6agR7UCCkeI4RXKJzp0vbypP5cyS7TCbtZkV+01phaAhTfDyVRcSTWGLC79mc6V4DYlxO8P9o5ng==
-X-Received: by 2002:a17:907:7f20:b0:73d:d54f:6571 with SMTP id qf32-20020a1709077f2000b0073dd54f6571mr10403666ejc.315.1661720040450;
-        Sun, 28 Aug 2022 13:54:00 -0700 (PDT)
-Received: from [192.168.254.199] (dynamic-077-181-093-224.77.181.pool.telefonica.de. [77.181.93.224])
-        by smtp.gmail.com with ESMTPSA id v27-20020a170906489b00b00738795e7d9bsm3579454ejq.2.2022.08.28.13.53.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 Aug 2022 13:53:59 -0700 (PDT)
-Message-ID: <08877c51-0819-76d6-37d6-ed3403023b10@gmail.com>
-Date:   Sun, 28 Aug 2022 22:53:59 +0200
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=nrkgH02o2Rcq15VakJfrbQDQa/xxZur4E42yyaQ4r1Y=;
+        b=K/s7hYBzLT5O5CuJMph2oXHn8H0yytWPDB97IAfUSKIxZ9rXQqtbJS+iv8DWu0AgNQ
+         8+X0+WmNb3kd2kIwzb+sChVloMpeC1xEq2mYC70/c3BokAMA0e/r8gnD9M8YSOdlUHyH
+         5353s3nzQ0OBk+OtqX6Ph/y1MXvxHIVP6cGfxLrqu5yFEznLHcrKe8t/fZIb7ZWk8WML
+         kD+c+wmQpUZBvC1XxJQYKqn50dTxA46BWpg56TT/TPANDeI/V002QiSByA/m5NT0zwo4
+         Y5eVEA0HtxYbNcRI5b2kZkBz5nNVhPc4vXM/AFg8saXMb9OVzptzThB8yFr3KplB0iV9
+         knHg==
+X-Gm-Message-State: ACgBeo2x0HkwHSJDqk7BzoEbNWLg6ZV5WD8V2lidV/lYv6RZru8SWxLj
+        4Peln/qDu69dB7yhoGsqZL3S/GYdmuf3+CmIz9E=
+X-Google-Smtp-Source: AA6agR6So9hmF2A0UcmZwSCuNqgTP0X8jtzoegfxs/TxWIBeZ+VbQAeSOoZKus//L5dlbRgAw5cdhv/InhVER4C7QN0=
+X-Received: by 2002:a17:907:2c77:b0:741:5f0b:aff2 with SMTP id
+ ib23-20020a1709072c7700b007415f0baff2mr8873006ejc.698.1661860582368; Tue, 30
+ Aug 2022 04:56:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 0/4] Updated LDAP SASL bind series
-Content-Language: en-US
-To:     autofs mailing list <autofs@vger.kernel.org>
-Cc:     Ian Kent <raven@themaw.net>
-References: <166150296106.37723.4019530934770123921.stgit@donald.themaw.net>
-From:   Thomas Reim <reimth@gmail.com>
-In-Reply-To: <166150296106.37723.4019530934770123921.stgit@donald.themaw.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a17:906:31cb:b0:73d:6076:ca65 with HTTP; Tue, 30 Aug 2022
+ 04:56:21 -0700 (PDT)
+Reply-To: omrtonyelumelu98@gmail.cm
+From:   " Mrs. Kristalina Georgieva" <oze123456788@gmail.com>
+Date:   Tue, 30 Aug 2022 12:56:21 +0100
+Message-ID: <CACOHB+1AR3imghvfm4MoO3jXtmiAfomwmMEzgMOto3o+fXqb3g@mail.gmail.com>
+Subject: hi
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+X-Spam-Status: No, score=2.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FROMSPACE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Dear Ian,
-
-the updated patch series works fine. I've created an Ubuntu PPA for 
-testing and early adoption: 
-https://launchpad.net/~rdratlos/+archive/ubuntu/lp-1984073-autofs-broken-sasl-binds-to-samba-ad 
-until an official patch release will be available.
-
-Thank you very much for your support.
-
-Kind regards
-
-Thomas
-
-
-On 26/08/2022 10:49, Ian Kent wrote:
-> I think the series looks good now and I believe your ok with the
-> changes I've made.
->
-> The series will sit in my patch queue until I commit them and push
-> them to the repo. I will most likely test the function of them too
-> but that will take a while to do.
->
-> Changes since v1:
-> - in do_bind() don't free the passed in result in ldap_parse_result(),
->    explicitly handle the free in the function that declares the result
->    variable, do_bind().
-> ---
->
-> Thomas Reim (4):
->        autofs-5.1.8 - restore gcc flags after autoconf Kerberos 5 check
->        autofs-5.1.8 - prepare for OpenLDAP SASL binding
->        autofs-5.1.8 - let OpenLDAP handle SASL binding
->        autofs-5.1.8 - configure: LDAP function checks ignore implicit declarations
->
->
->   CHANGELOG             |   4 ++
->   aclocal.m4            |  52 +++++++++++++++
->   configure             |  55 +++++++++++++++-
->   configure.in          |   5 +-
->   include/config.h.in   |   3 +
->   include/lookup_ldap.h |   6 ++
->   modules/cyrus-sasl.c  | 150 +++++++++++++++++++++++++++++++++++++++++-
->   modules/lookup_ldap.c | 137 +++++++++++++++++++++++++++++++++++++-
->   8 files changed, 408 insertions(+), 4 deletions(-)
->
-> --
-> Ian
->
+5Zu96Zqb6YCa6LKo5Z+66YeRIChJTUYpDQrlm73pmpvlgrXli5nnrqHnkIboqrINCu+8gzE5MDDj
+gIFBVi5EVeekvumVtw0KDQpJLk0uRi4g44OH44Kj44Os44Kv44K/44O844Gu5YWs5byP6Zu75a2Q
+44Oh44O844OrIOOCouODieODrOOCueOBuOOCiOOBhuOBk+OBneOAguOCr+ODquOCueOCv+ODquOD
+vOODiuODu+OCsuOCquODq+OCruOCqOODrw0KDQoNCuimquaEm+OBquOCi+WPl+ebiuiAhe+8gQ0K
+DQrmlrDjgZ/jgavku7vlkb3jgZXjgozjgZ/osqHli5nplbflrpjjgajlm73pgKPpgJrosqjlvZPl
+sYDjga7ntbHmsrvmqZ/plqLjga/jgIHlm73pgKPmlL/lupzjgavplbfjgYTplpPlgrXli5njgpLo
+sqDjgaPjgabjgYTjgZ/mnKroq4vmsYLjga7os4fph5HjgpLoqr/mn7vjgZnjgovjgZPjgajjgpLo
+qLHlj6/jgZfjgZ/jgZ/jgoHjgIHmiYDmnInogIXjga/oqZDmrLrjgaflkYrnmbrjgZXjgozjgb7j
+gZfjgZ8u5Zu96YCj44Gu5ZCN5YmN44KS5L2/55So44GX44Gf6KmQ5qy65bir44CC6Kq/5p+75Lit
+44Gu44K344K544OG44Og44Gu6Zu75a2Q44Oh44O844OrDQrjgqLjg4njg6zjgrnjga7jg4fjg7zj
+gr8g44K544OI44Os44O844K46KiY6Yyy44Gr44KI44KL44Go44CB44GC44Gq44Gf44Gu5pSv5omV
+44GE44Gv44CB5qyh44Gu44Kr44OG44K044Oq44GuIDE1MCDkurrjga7lj5fnm4rogIXjga7jg6rj
+grnjg4jjgavlkKvjgb7jgozjgabjgYTjgb7jgZnjgILlpZHntITos4fph5HjgIINCg0K44GC44Gq
+44Gf44Gu6LOH6YeR44KS44Gg44G+44GX5Y+W44KL44Gf44KB44Gr5rGa6IG344KS54qv44GX44Gf
+6IWQ5pWX44GX44Gf6YqA6KGM6IG35ZOh44Gv44CB44GC44Gq44Gf44Gu5pSv5omV44GE44KS5LiN
+5b2T44Gr6YGF44KJ44Gb44CB44GC44Gq44Gf44Gu5YG044Gr5aSa44GP44Gu6LK755So44GM44GL
+44GL44KK44CB44GC44Gq44Gf44Gu5pSv5omV44GE44Gu5Y+X44GR5YWl44KM44GM5LiN5b2T44Gr
+6YGF44KM44G+44GX44GfLuWbvemAo+OBqOWbvemam+mAmuiyqOWfuumHkQ0KKElNRikg44Gv44CB
+5YyX57Gz44CB5Y2X57Gz44CB57Gz5Zu944CB44Oo44O844Ot44OD44OR44CB44Ki44K444Ki44CB
+44GK44KI44Gz5LiW55WM5Lit44GuIEFUTSBWaXNhIOOCq+ODvOODieOCkuS9v+eUqOOBl+OBpiAx
+NTANCuS6uuOBruWPl+ebiuiAheOBq+OBmeOBueOBpuOBruijnOWEn+OCkuaUr+aJleOBhuOBk+OB
+qOOCkumBuOaKnuOBl+OBvuOBl+OBn+OAguOBk+OBruOCsOODreODvOODkOODq+OBquaUr+aJleOB
+hOaKgOihk+OBjOWIqeeUqOWPr+iDveOBp+OBguOCi+OBn+OCgeOBp+OBmeOAgua2iOiyu+iAheOA
+geS8gealreOAgemHkeiejeapn+mWouOBq+OAguaUv+W6nOOBjOePvumHkeOChOWwj+WIh+aJi+OB
+ruS7o+OCj+OCiuOBq+ODh+OCuOOCv+ODq+mAmuiyqOOCkuS9v+eUqOOBp+OBjeOCi+OCiOOBhuOB
+q+OBl+OBvuOBmeOAgg0KDQpBVE0gVmlzYeOCq+ODvOODieOCkuS9v+eUqOOBl+OBpuaUr+aJleOB
+hOOCkuihjOOBhuOCiOOBhuOBq+aJi+mFjeOBl+OBvuOBl+OBn+OAguOCq+ODvOODieOBr+eZuuih
+jOOBleOCjOOAgeWIqeeUqOWPr+iDveOBquWuhemFjeS+v+OCteODvOODk+OCueOCkuS7i+OBl+OB
+puebtOaOpeS9j+aJgOOBq+mAgeOCieOCjOOBvuOBmeOAguOBlOmAo+e1oeW+jOOAgTEsNTAwLDAw
+MC4wMA0K57Gz44OJ44Or44Gu6YeR6aGN44GMIEFUTSBWaXNhIOOCq+ODvOODieOBq+i7oumAgeOB
+leOCjOOBvuOBmeOAguOBk+OCjOOBq+OCiOOCiuOAgeOBiuS9j+OBvuOBhOOBruWbveOBriBBVE0g
+44GL44KJIDEg5pel44GC44Gf44KK5bCR44Gq44GP44Go44KCIDEwLDAwMA0K57Gz44OJ44Or44KS
+5byV44GN5Ye644GZ44GT44Go44Gn44CB44GK6YeR44KS5byV44GN5Ye644GZ44GT44Go44GM44Gn
+44GN44G+44GZ44CC44GU6KaB5pyb44Gr5b+c44GY44Gm44CBMSDml6XjgYLjgZ/jgoogMjAsMDAw
+LjAwDQrjg4njg6vjgb7jgafkuIrpmZDjgpLlvJXjgY3kuIrjgZLjgovjgZPjgajjgYzjgafjgY3j
+gb7jgZnjgILjgZPjgozjgavplqLjgZfjgabjgIHlm73pmpvmlK/miZXjgYrjgojjgbPpgIHph5Hl
+sYDjgavpgKPntaHjgZfjgIHopoHmsYLjgZXjgozjgZ/mg4XloLHjgpLmrKHjga7mlrnms5Xjgafm
+j5DkvpvjgZnjgovlv4XopoHjgYzjgYLjgorjgb7jgZnjgIINCg0KMS7jgYLjgarjgZ/jga7jg5Xj
+g6vjg43jg7zjg6AuLi4uLi4uLi4NCjIu44GC44Gq44Gf44Gu5a6M5YWo44Gq5L2P5omALi4uLi4u
+Li4NCjMuIOWbveexjSAuLi4uLi4uLi4uLi4uLi4uLg0KNC7nlJ/lubTmnIjml6Xjg7vmgKfliKXi
+gKbigKbigKbigKYNCjUu5bCC6ZaA5oCnLi4uLi4uLi4NCjYuIOmbu+ipseeVquWPtyAuLi4uLi4u
+Li4uDQo3LiDlvqHnpL7jga7jg6Hjg7zjg6vjgqLjg4njg6zjgrnigKbigKYNCjgu5YCL5Lq644Gu
+44Oh44O844Or44Ki44OJ44Os44K54oCm4oCmDQoNCg0K44GT44Gu44Kz44O844OJICjjg6rjg7Pj
+gq86IENMSUVOVC05NjYvMTYpIOOCkuitmOWIpeOBmeOCi+OBq+OBr+OAgembu+WtkOODoeODvOOD
+q+OBruS7tuWQjeOBqOOBl+OBpuS9v+eUqOOBl+OAgeS4iuiomOOBruaDheWgseOCkuasoeOBruW+
+k+alreWToeOBq+aPkOS+m+OBl+OBpiBBVE0NClZpc2Eg44Kr44O844OJ44Gu55m66KGM44Go6YWN
+6YCB44KS5L6d6aC844GX44Gm44GP44Gg44GV44GE44CCDQoNCumKgOihjOOBruaLheW9k+iAheOB
+jOOBk+OBruaUr+aJleOBhOOCkui/vei3oeOBl+OAgeODoeODg+OCu+ODvOOCuOOCkuS6pOaPm+OB
+l+OBpuOAgeizh+mHkeOBruOBleOCieOBquOCi+mBheW7tuOChOiqpOOBo+OBn+aWueWQkeS7mOOB
+keOCkumYsuOBkOOBk+OBqOOBjOOBp+OBjeOCi+OCiOOBhuOBq+OAgeaWsOOBl+OBhOeVquWPt+OB
+p+WAi+S6uuOBrumbu+WtkOODoeODvOODqw0K44Ki44OJ44Os44K544KS6ZaL44GP44GT44Go44KS
+44GK5Yun44KB44GX44G+44GZ44CC5Lul5LiL44Gu6YCj57Wh5YWI5oOF5aCx44KS5L2/55So44GX
+44Gm44CB44Om44OK44Kk44OG44OD44OJIOODkOODs+OCryDjgqrjg5Yg44Ki44OV44Oq44Kr44Gu
+44Ko44O844K444Kn44Oz44OI44Gr5LuK44GZ44GQ44GU6YCj57Wh44GP44Gg44GV44GE44CCDQoN
+CumAo+e1oeeqk+WPo++8muODiOODi+ODvOODu+OCqOODq+ODoeODq+awjw0K6KOc5YSf6YeR6YCB
+6YeR6YOoIFVuaXRlZCBCYW5rIG9mIEFmcmljYSDpgKPntaHlhYjjg6Hjg7zjg6vjgqLjg4njg6zj
+grk6ICwobXJ0b255ZWx1bWVsdTk4QGdtYWlsLmNvbSkNCg0K44GT44KM5Lul5LiK44Gu6YGF44KM
+44KS6YG/44GR44KL44Gf44KB44Gr44CB44GT44Gu44Oh44O844Or44G444Gu6L+F6YCf44Gq5a++
+5b+c44GM5b+F6KaB44Gn44GZ44CCDQoNCuaVrOWFtw0K44Kv44Oq44K544K/44Oq44O844OK44O7
+44Ky44Kq44Or44Ku44Ko44OQ5aSr5Lq6DQo=
