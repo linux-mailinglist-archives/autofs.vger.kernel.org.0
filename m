@@ -2,157 +2,151 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AC055B930B
-	for <lists+autofs@lfdr.de>; Thu, 15 Sep 2022 05:26:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E55E55B93C6
+	for <lists+autofs@lfdr.de>; Thu, 15 Sep 2022 06:58:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbiIOD03 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 14 Sep 2022 23:26:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41382 "EHLO
+        id S229577AbiIOE65 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 15 Sep 2022 00:58:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbiIOD01 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 14 Sep 2022 23:26:27 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C6984C61A
-        for <autofs@vger.kernel.org>; Wed, 14 Sep 2022 20:26:25 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 7CDE75C00ED;
-        Wed, 14 Sep 2022 23:26:24 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 14 Sep 2022 23:26:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
-        :cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; t=1663212384; x=
-        1663298784; bh=sQ+eTn+nOJ+c/GFn3wgmwqEBCVDhu42YsNV/Gu8Pap8=; b=E
-        dfZT4iJ1u6Qu/FIjGEgrZaHiFp44Od5rn0XelpcxbRnNWljUXpiLCv2ROIXeXf2X
-        nYOLq6Q4jcmbYnt+JVEcSyx11h8TmLy4JoRcKVsgRc/5wIcu1rniEq2RfOxc9RsV
-        D36am3KzQScmSt7ZMcGMuGyEDpZVT6Sumxz7OeOCsAqGlXCHXnp5FRW+Q8lgF55V
-        WSEXvyovYeCVXuZe9LWEbtYxph0GdFQLvM61Xg2NB1A7f7M20VNYX1JVAeLjQDgz
-        iI0DHwHpNmooJOO3MpvHNr0d/9bPBSXb+usu8Uu71+Zi87o6EHRjmIYy5wF0SCXA
-        aKKI2dZJZzNm19bWAu7+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1663212384; x=
-        1663298784; bh=sQ+eTn+nOJ+c/GFn3wgmwqEBCVDhu42YsNV/Gu8Pap8=; b=o
-        jT3STm4etIFWrLqVvjC+twgQN7xHr/2JQb0zjifx0tkzEOGQj0cPP8t39BB6xhhv
-        kxXwX9q3b+qtJlvn3tfGzUSzxyHfoCAR99AZdIHhJpa4dLfXgA3ERhjoWCw0nb7D
-        M7J48Nt5DNSEGz9p7glXcjwQ9tmPD+UKHNC+9jrRtugJb6PH+NiBXWUIgMb1Ut1c
-        Jg7gHGMPlYcJwKMszOfrKY6iE6v+wS0VUtMlwCa2mL3zDHISc5VFd7LeAA0Q7dg3
-        QJz2DKVZ0GZNh6EHYYlfQWZPUwLI2o5ro/+m+cFgbCIr6oFrJr2BA6F+EnpOogT5
-        hoy2EXRsYcfeZEzDku1MQ==
-X-ME-Sender: <xms:YJsiY79tj5ABorLnEZ9yYa63ePZGxP9ekH5JOPZZPvo10GYyMA0n9Q>
-    <xme:YJsiY3twtX_w5CPJeoUrLtN7zmDDBFWEpjyZbI4NlSYYKwikqCVZVHJygxgX_-gVz
-    -AX4ukzxU2h>
-X-ME-Received: <xmr:YJsiY5C-E7YV4Dp6EmX9G7_RrrjtOmVR4qKXuJuyZNQSRMEjYR9dCVFOlYECJtztZ2CL2_kV0osRUE65n52jhMbeD7gGthQ14em2HzOwLkxreHrocgQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfedujedgjeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkfffgggfuffvvehfhfgjtgfgsehtkeertddtfeejnecuhfhrohhmpefkrghn
-    ucfmvghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnh
-    epgedvteevvdefiedvueeujeegtedvheelhfehtefhkefgjeeuffeguefgkeduhfejnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhgrvhgvnh
-    esthhhvghmrgifrdhnvght
-X-ME-Proxy: <xmx:YJsiY3fvQBXxwMbVJnODqiY7AHVeAt0mQz24L9P_PhsxVEOK-BnQvQ>
-    <xmx:YJsiYwOkwpOXJPEKXAUPY57kzqWTFdPvP75K6e5ZlV23kPJS3CJN0Q>
-    <xmx:YJsiY5kj5RblCrTdkW_4iwKcq35mO_vUza4FsEFJt3H5wpMtqF7n6w>
-    <xmx:YJsiY6UdBN_sQp5XaLSZRAQOxW4ENg2wOycKZkygnTKM9HutCr5gsg>
-Feedback-ID: i31e841b0:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Sep 2022 23:26:22 -0400 (EDT)
-Message-ID: <94101915-3156-b594-e886-838b09204aa5@themaw.net>
-Date:   Thu, 15 Sep 2022 11:26:19 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 2/2] autofs-5.1.8 - ldap_sasl_interactive_bind() needs
- credentials for auto-detection
-Content-Language: en-US
-To:     Thomas Reim <reimth@gmail.com>, autofs@vger.kernel.org
-Cc:     Paul Menzel <pmenzel@molgen.mpg.de>
-References: <20220912005822.3947426-1-reimth@gmail.com>
- <20220912005822.3947426-3-reimth@gmail.com>
- <b20bff58-a7f5-47c7-47eb-8b44f1e2e6a5@molgen.mpg.de>
- <147a772c-c180-09d6-729e-46b731821241@gmail.com>
- <4aece4c3-129c-998e-5a2d-2f3ee5bb7c9a@molgen.mpg.de>
- <862ca431-e10c-3b84-b13f-b4028640f376@gmail.com>
-From:   Ian Kent <raven@themaw.net>
-In-Reply-To: <862ca431-e10c-3b84-b13f-b4028640f376@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        with ESMTP id S229498AbiIOE64 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 15 Sep 2022 00:58:56 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B3B04B0FF
+        for <autofs@vger.kernel.org>; Wed, 14 Sep 2022 21:58:55 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id gh9so39440172ejc.8
+        for <autofs@vger.kernel.org>; Wed, 14 Sep 2022 21:58:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date;
+        bh=BUXi/00IExob2iQKzZpN5xcq5kYX3JODQtWz2LFQP4E=;
+        b=iGDop9Y5YehhIywuakcdYs7/HP8dUoBkljo/jDHzTPDoo0QVLY/7tNm8YLiyN8QHaX
+         lOoJ7R/7OoyoVcm1hsZ9W7PrM6mWdQIVORrRcUpHiGZEUzDRHJh49/+647WR4IS3M+8o
+         hOEFYQh8Zz+PcLgqqi1Og0xeJTen7R925EPIhIHLqqfR3F2qkP3IqG1CHpxHxyy8qtE0
+         ZiERGJId6W+It1069P2bDMRt4fCY0cE9AJAm13qONqOX9mqvk/SLH5Rxl0Ly9GAXphZq
+         KIpX86oF553AVcBxZoMgdl6xnCl4yCVAa0NMsk13021RWiYBeRAIiVZPOsek4kVwjXPZ
+         HP5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=BUXi/00IExob2iQKzZpN5xcq5kYX3JODQtWz2LFQP4E=;
+        b=qipTKgQqMue6UZyFfatqhl3bSm6+lmkir388222yhoYv+7SyfnxnqZK3Y+RsMZ99zz
+         zOAkY6PTIbWENYN9wxkS5cQMoRhRcbBAlJUvabOjAs+FaWSYUwYbe2luUQHSOHW+eRRE
+         we5/d9iIf9u1UAGvA8+H0HeVfIdlaumcozeDZJ5msG1OiChNOC2RA37zgAyALqsdCkuf
+         RSwEPTLGBCt+krvRZzFfy/SnBiWflchxaFj0vVGMdDV3qS5TFycaATSPqBPqUwpAQ2OT
+         tHG7OlUgbtZ0t1k4JQabO0nksxgqLGbOmbO7GzsJlw+5PZfnryOdDUZAS6eqlZqsVNlw
+         SDHQ==
+X-Gm-Message-State: ACgBeo08G37NigQYrmPMtcphdhtKX0ha9hDvGEbDTwSPVE3hWlj2ObiK
+        uluKttau4dhD/vq7FKpi7g==
+X-Google-Smtp-Source: AA6agR7c2gV9gwn3dbFXO/EOt4V4qFHb2Zfa0+iiDdnpO5EXNyenmlDil5fvQ2vNvInRGhvwxPyooA==
+X-Received: by 2002:a17:907:3da3:b0:780:3d46:cbe3 with SMTP id he35-20020a1709073da300b007803d46cbe3mr3660522ejc.175.1663217933441;
+        Wed, 14 Sep 2022 21:58:53 -0700 (PDT)
+Received: from smtpclient.apple (dynamic-2a01-0c23-7899-5500-b4ac-5266-9091-77d1.c23.pool.telefonica.de. [2a01:c23:7899:5500:b4ac:5266:9091:77d1])
+        by smtp.gmail.com with ESMTPSA id i5-20020a170906698500b007081282cbd8sm8433262ejr.76.2022.09.14.21.58.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Sep 2022 21:58:52 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From:   Thomas Reim <reimth@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 2/2] autofs-5.1.8 - ldap_sasl_interactive_bind() needs credentials for auto-detection
+Date:   Thu, 15 Sep 2022 06:58:52 +0200
+Message-Id: <6193431A-F113-4D65-9797-B7D962826913@gmail.com>
+References: <94101915-3156-b594-e886-838b09204aa5@themaw.net>
+Cc:     Paul Menzel <pmenzel@molgen.mpg.de>, Ian Kent <raven@themaw.net>
+In-Reply-To: <94101915-3156-b594-e886-838b09204aa5@themaw.net>
+To:     autofs@vger.kernel.org
+X-Mailer: iPhone Mail (19G82)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On 12/9/22 18:04, Thomas Reim wrote:
-> Perfect.
->
-> Shall I provide an updated v3 series or should I wait for further 
-> comments?
+Dear Ian,
 
+It would be great if you make the small changes.=20
 
-I can make these small changes to save you the trouble.
+> Am 15.09.2022 um 05:28 schrieb Ian Kent <raven@themaw.net>:
+>=20
+> =EF=BB=BFOn 12/9/22 18:04, Thomas Reim wrote:
+>> Perfect.
+>>=20
+>> Shall I provide an updated v3 series or should I wait for further comment=
+s?
+>=20
+>=20
+> I can make these small changes to save you the trouble.
+>=20
+>=20
+> My understanding is they are the spelling of "capabilities" and
+>=20
+> the removal of "type" and "method" from from those error() log
 
+Correct.=20
 
-My understanding is they are the spelling of "capabilities" and
+>=20
+> calls at the end of the patch.
+>=20
+>=20
+> Is that all the changes?
+>=20
+> Is that what's been agreed?
 
-the removal of "type" and "method" from from those error() log
+=46rom my side: agreed
 
-calls at the end of the patch.
+There were no further comments (yet).
 
+Thomas
 
-Is that all the changes?
-
-Is that what's been agreed?
-
-
-Ian
-
->
-> Kind regards
->
-> Thomas
->
-> On 12.09.22 11:49, Paul Menzel wrote:
->> Dear Thomas,
->>
->>
->> Am 12.09.22 um 10:40 schrieb Thomas Reim:
->>
->>> thank you for reviewing the patch. My understanding of your comment 
->>> is to align the notation and use authentication "type" or "method". 
->>> Is this correct?
->>
->> Yes, I thought it’s the same, and suggested it for consistency.
->>
->>> In general, IANA and IETF define SASL authentication mechanisms. For 
->>> LDAP people talk about different types LDAP authentication calls: 
->>> simple bind, SASL bind, mixed bind type.
->>> In autofs LDAP configuration users can specify the SASL mechanism 
->>> using attribute authtype and the authentication bind call type using 
->>> parameter authrequired.
->>>
->>> I'm not sure how to proceed. Maybe we should use:
->>> - "Simple authentication requires ..."
->>> - "%s authentication requires ..." (e. g. SCRAM-SHA-256 
->>> authentication requires ...)
->>> - "SASL authentication mechanism auto-selection requires ..."
->>>
->>> What do you think?
->>
->> Good idea to avoid it altogether.
->>
->>
->> Kind regards,
->>
->> Paul
->
->
+>=20
+>=20
+> Ian
+>=20
+>>=20
+>> Kind regards
+>>=20
+>> Thomas
+>>=20
+>>> On 12.09.22 11:49, Paul Menzel wrote:
+>>> Dear Thomas,
+>>>=20
+>>>=20
+>>>> Am 12.09.22 um 10:40 schrieb Thomas Reim:
+>>>=20
+>>>> thank you for reviewing the patch. My understanding of your comment is t=
+o align the notation and use authentication "type" or "method". Is this corr=
+ect?
+>>>=20
+>>> Yes, I thought it=E2=80=99s the same, and suggested it for consistency.
+>>>=20
+>>>> In general, IANA and IETF define SASL authentication mechanisms. For LD=
+AP people talk about different types LDAP authentication calls: simple bind,=
+ SASL bind, mixed bind type.
+>>>> In autofs LDAP configuration users can specify the SASL mechanism using=
+ attribute authtype and the authentication bind call type using parameter au=
+threquired.
+>>>>=20
+>>>> I'm not sure how to proceed. Maybe we should use:
+>>>> - "Simple authentication requires ..."
+>>>> - "%s authentication requires ..." (e. g. SCRAM-SHA-256 authentication r=
+equires ...)
+>>>> - "SASL authentication mechanism auto-selection requires ..."
+>>>>=20
+>>>> What do you think?
+>>>=20
+>>> Good idea to avoid it altogether.
+>>>=20
+>>>=20
+>>> Kind regards,
+>>>=20
+>>> Paul
+>>=20
+>>=20
