@@ -2,97 +2,154 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFBDE62165D
-	for <lists+autofs@lfdr.de>; Tue,  8 Nov 2022 15:27:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFA2562D3AE
+	for <lists+autofs@lfdr.de>; Thu, 17 Nov 2022 07:57:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234062AbiKHO1K (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 8 Nov 2022 09:27:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36162 "EHLO
+        id S233096AbiKQG5r (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 17 Nov 2022 01:57:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233827AbiKHO0Z (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 8 Nov 2022 09:26:25 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A0D325DE
-        for <autofs@vger.kernel.org>; Tue,  8 Nov 2022 06:25:13 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id b11so13947864pjp.2
-        for <autofs@vger.kernel.org>; Tue, 08 Nov 2022 06:25:13 -0800 (PST)
+        with ESMTP id S229451AbiKQG5q (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 17 Nov 2022 01:57:46 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7CB55B58B
+        for <autofs@vger.kernel.org>; Wed, 16 Nov 2022 22:57:45 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id m22so2716748eji.10
+        for <autofs@vger.kernel.org>; Wed, 16 Nov 2022 22:57:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+        h=content-transfer-encoding:in-reply-to:subject:from:content-language
+         :references:cc:to:user-agent:mime-version:date:message-id:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=qJPWO9SMfKs9CV4DzOtfpg0tG5L2kEZQtV/LBBChMrnKplvig/HcfOA36QzOFbaour
-         tgINSm9CFH0IH0weUkbi8oL7C5P0uFU99A+FANpQrOPV/x2at1b6HjUUAphEgu/Nt2rO
-         YdZzEeguInvIt6hR0YTDbuGc0g6QmBH3JOdUVEiMakuZ8pUv0rSqDGDPPz36WP9L+M70
-         Yi8Qvn61/fVJa/s6+O6bNGj9Vrx81J7VmEWQcrrTipgg1zMWjvYHOXsRX3Tp8F7t1isZ
-         URWNY0E6DDGhkUjSdRf6tRRt6Dm01iRomcQNGIBkoA7vu4q8ZFmcmXCe9DgPR3TaW/OT
-         odpw==
+        bh=/z/kCaOa8ZSVxlRTatthvwb20mJ7s4mvQZKz3UYrH7o=;
+        b=hipYIRG+X0dR86CqPMEPFm7BmSWrXeWinzB6c8o4EBTQ1jvRHTarTea6+/7KxXUtqX
+         xtH0Xd7bDrV84CLYnRd/na0gU4WNzM1pRihpVpa8Xj+AB/huQRPWsmQGQxBsS7QxoYs4
+         UM1r+GAxMsPX2QlvoPDwRTHgVz7c5uiA0l8r3Nvgk/GotWurS9ssFdzyHHnH6mDZU7Ei
+         U4elyKrxHErmr+iLH+JRbVtE114L19q22IUWyAQ5m1KxFpkmAH64+nXDrpnwL0q4n4wa
+         G0CQgy8MF3b5E5FvpFUk+FB9A0KB9c9DPx+NBCngHkZNzcJkd1saPGhGhg+uBgU3hT8W
+         skkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
+        h=content-transfer-encoding:in-reply-to:subject:from:content-language
+         :references:cc:to:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=GHtHTpMlsHJnhA9SvEznmQoODnLZuulLTOKhYeLlVUbbw2ebSi8lxJ4MZ0pS98+Wys
-         1XRaMmtUOq++N5St/tCU87zTFHzt0QQvxxHORCfpab04RntFWgjE2ELX5WVPigjgX/ce
-         QSaTPCkoiLvIBi58SaIsNL3HN4JqWAimhbVsH00ZDVUubpilFGbUWpc/L6cyA1I06toj
-         MVZertkmi3EFbukoe1hNaSD3oPQn4u0rJs5b+Ekeb4NBklcRnnmJl8oCDn2wujTCPkk0
-         nEuAQtaeq8YIGYl20kuQ4ZYC4y1+0Rtj8368bJTqj8SpzyVJIGE5xA6Gx/dhjfJfyMs7
-         5gkg==
-X-Gm-Message-State: ACrzQf3oMe7OGCrvYM3ddRIetE++G7eRQ6vS06VIPdyl0dzbpDSggMIO
-        17YS1PkG4IKx5kEEsQKbLqsIr7Eigfuy21gbHbo=
-X-Google-Smtp-Source: AMsMyM7xjnW3BCIcPmRXceI8CMPrgJsNpwknP0oXmxg9pb3hPM8UnVyASTbWsNqLc31U8nSLRepoWwOH4L/DHUye4LA=
-X-Received: by 2002:a17:90b:1d90:b0:213:c798:86f6 with SMTP id
- pf16-20020a17090b1d9000b00213c79886f6mr52558648pjb.84.1667917512394; Tue, 08
- Nov 2022 06:25:12 -0800 (PST)
+        bh=/z/kCaOa8ZSVxlRTatthvwb20mJ7s4mvQZKz3UYrH7o=;
+        b=AOlA+dsJ1JOhSIilVnbfAVCdZtwhEtzOgMhBhwul2ocYge7R9wTv4L9q1Aoot6PxkG
+         8vJAbEZ+cLsv8uh3q/JmsJYArWBK4UXVLGuL0nEBs5XGk25US7gJodeHQmA88P7/+0nw
+         ipW/dsHFdnQP1Un6/QdMk8nk83UzrY6yW3v5kHvMgq7vCV2MZlq4RxnTwyUcw9eLUYzK
+         cnKJcy2TfR4XLH8A8R1mu7SyKffQT68JTCOjCGkeAXYhfwzAXRIaEPy/YJY1JZ5rxcqo
+         oToRzBjeppsrRUA+Jjxq9YhZXYQTr353xyaMaRIi546nBk8yeVicKa7B394AWr9O/wXL
+         Tcnw==
+X-Gm-Message-State: ANoB5pkDNTTIh8CGokYjRAWNmlpEvHE63KghTT0kxKeGsxdaCTB7Ubs3
+        a+3gNbvolOuYLnyv8X2m81tM3XMTLQ==
+X-Google-Smtp-Source: AA0mqf5knOFgHPOsXu4TEF8faDOJ5BFsgsLrzyMy9jp5nWrBuexv3wlzpPBeGCqSFrIM37MTnGL2AQ==
+X-Received: by 2002:a17:907:75f3:b0:78d:b046:aaae with SMTP id jz19-20020a17090775f300b0078db046aaaemr1001851ejc.218.1668668264146;
+        Wed, 16 Nov 2022 22:57:44 -0800 (PST)
+Received: from [10.77.254.199] (dynamic-077-015-023-202.77.15.pool.telefonica.de. [77.15.23.202])
+        by smtp.gmail.com with ESMTPSA id o19-20020a170906769300b00722e50dab2csm7723943ejm.109.2022.11.16.22.57.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 22:57:43 -0800 (PST)
+Message-ID: <c3d6769f-2b41-3b75-53e3-479877d11954@gmail.com>
+Date:   Thu, 17 Nov 2022 07:57:42 +0100
 MIME-Version: 1.0
-Received: by 2002:a05:7300:5388:b0:85:81c6:896c with HTTP; Tue, 8 Nov 2022
- 06:25:11 -0800 (PST)
-Reply-To: mr.abraham022@gmail.com
-From:   "Mr.Abraham" <davidkekeli11@gmail.com>
-Date:   Tue, 8 Nov 2022 14:25:11 +0000
-Message-ID: <CAPBO+FJ3Nhd2ncX9Z_fDUqYStiGQU821nC6EEFSDx5iCTdXkaQ@mail.gmail.com>
-Subject: Greeting
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:102d listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4998]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [mr.abraham022[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [davidkekeli11[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [davidkekeli11[at]gmail.com]
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+To:     autofs@vger.kernel.org
+Cc:     Paul Menzel <pmenzel@molgen.mpg.de>, Ian Kent <raven@themaw.net>
+References: <20220912005822.3947426-1-reimth@gmail.com>
+ <20220912005822.3947426-3-reimth@gmail.com>
+ <b20bff58-a7f5-47c7-47eb-8b44f1e2e6a5@molgen.mpg.de>
+ <147a772c-c180-09d6-729e-46b731821241@gmail.com>
+ <4aece4c3-129c-998e-5a2d-2f3ee5bb7c9a@molgen.mpg.de>
+ <862ca431-e10c-3b84-b13f-b4028640f376@gmail.com>
+ <94101915-3156-b594-e886-838b09204aa5@themaw.net>
+Content-Language: en-US
+From:   "Thomas A. Reim" <reimth@gmail.com>
+Subject: Re: [PATCH v2 2/2] autofs-5.1.8 - ldap_sasl_interactive_bind() needs
+ credentials for auto-detection
+In-Reply-To: <94101915-3156-b594-e886-838b09204aa5@themaw.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-My Greeting, Did you receive the letter i sent to you. Please answer me.
-Regard, Mr.Abraham
+Dear Ian and all,
+
+could you please confirm status of this patch?
+
+Kind regards
+
+Thomas
+
+On 15.09.22 05:26, Ian Kent wrote:
+> On 12/9/22 18:04, Thomas Reim wrote:
+>> Perfect.
+>>
+>> Shall I provide an updated v3 series or should I wait for further 
+>> comments?
+>
+>
+> I can make these small changes to save you the trouble.
+>
+>
+> My understanding is they are the spelling of "capabilities" and
+>
+> the removal of "type" and "method" from from those error() log
+>
+> calls at the end of the patch.
+>
+>
+> Is that all the changes?
+>
+> Is that what's been agreed?
+>
+>
+> Ian
+>
+>>
+>> Kind regards
+>>
+>> Thomas
+>>
+>> On 12.09.22 11:49, Paul Menzel wrote:
+>>> Dear Thomas,
+>>>
+>>>
+>>> Am 12.09.22 um 10:40 schrieb Thomas Reim:
+>>>
+>>>> thank you for reviewing the patch. My understanding of your comment 
+>>>> is to align the notation and use authentication "type" or "method". 
+>>>> Is this correct?
+>>>
+>>> Yes, I thought it’s the same, and suggested it for consistency.
+>>>
+>>>> In general, IANA and IETF define SASL authentication mechanisms. 
+>>>> For LDAP people talk about different types LDAP authentication 
+>>>> calls: simple bind, SASL bind, mixed bind type.
+>>>> In autofs LDAP configuration users can specify the SASL mechanism 
+>>>> using attribute authtype and the authentication bind call type 
+>>>> using parameter authrequired.
+>>>>
+>>>> I'm not sure how to proceed. Maybe we should use:
+>>>> - "Simple authentication requires ..."
+>>>> - "%s authentication requires ..." (e. g. SCRAM-SHA-256 
+>>>> authentication requires ...)
+>>>> - "SASL authentication mechanism auto-selection requires ..."
+>>>>
+>>>> What do you think?
+>>>
+>>> Good idea to avoid it altogether.
+>>>
+>>>
+>>> Kind regards,
+>>>
+>>> Paul
+>>
+>>
