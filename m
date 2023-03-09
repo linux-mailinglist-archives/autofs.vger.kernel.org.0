@@ -2,136 +2,70 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25E5C6B1FE5
-	for <lists+autofs@lfdr.de>; Thu,  9 Mar 2023 10:23:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A40F56B286E
+	for <lists+autofs@lfdr.de>; Thu,  9 Mar 2023 16:10:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230030AbjCIJXn (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 9 Mar 2023 04:23:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56340 "EHLO
+        id S230340AbjCIPKe (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 9 Mar 2023 10:10:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230075AbjCIJXj (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 9 Mar 2023 04:23:39 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DB177CB1
-        for <autofs@vger.kernel.org>; Thu,  9 Mar 2023 01:23:35 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id A2E8821D60;
-        Thu,  9 Mar 2023 09:23:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1678353814; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=0/LMULgUjM/HiaqFYfOzEV9clACa6oBsTJla/FsL9Wo=;
-        b=kZaVXHgSEInFFMDFw0X3TwfbTDAOc1NUNNmpkSwgnIZOgpzGHJw3x5RKCZkdSzLVW9O2/a
-        ur7aloqkYRlz+hPdKV2Y1IkMW3ssl7dF4T9QX41d+V/iMV+1BrWs9GZo+P9lvTYZoyiiPX
-        8BLNifNz9JnwYzCxDDpcaofMHhS0TrY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1678353814;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=0/LMULgUjM/HiaqFYfOzEV9clACa6oBsTJla/FsL9Wo=;
-        b=Qo/99fbvrDBGGXSaBDiIel/W9xHAtyGvh8dpzIaq5sMr5ttPp3abyd/0yAQYi67pR4/rca
-        Oa+DIlifh0OEK3Bg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B12B21391B;
-        Thu,  9 Mar 2023 09:23:33 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id dhMMGZWlCWQvDAAAMHmgww
-        (envelope-from <neilb@suse.de>); Thu, 09 Mar 2023 09:23:33 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S231147AbjCIPJ1 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 9 Mar 2023 10:09:27 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AF0FA099
+        for <autofs@vger.kernel.org>; Thu,  9 Mar 2023 07:06:56 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id j11so2646143lfg.13
+        for <autofs@vger.kernel.org>; Thu, 09 Mar 2023 07:06:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678374415;
+        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=N3tQa/xAjjFjMbYTIPvabJVdNLC/DkLFMMTZCH3qWNU=;
+        b=lCOcTalBP7Q1jpEscFwnscaDMH07D8GAFyxnyJ5cQc1cfL8GkYziNk4QtdJCO+00f+
+         +KeGiX8OjsYOe0QtOw6mNrTCCaSF3rNT1gSLDPsTj8ZVU5pA4xv1JIXffrWJkBGmDUbt
+         0ApXg4+a5Ca8WzU5XkAqq3NJN1qi1M8qqSvvCUryRhleg1q4aIuHNY0wfHeWnvZQhKyQ
+         GOwe+ZxWf34if47/YWJPeoHgyk+2/+MX3ycMjqAfNKQ+ml8DCsfZB/H53A/FZ2ZVnOpv
+         jZihxqBd1leTarKKthIQFRo6J3g+rMsD/oFgJmqcICVo5b2OeyISdUbSSRW/ntj0jgYn
+         bq/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678374415;
+        h=to:subject:message-id:date:from:sender:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N3tQa/xAjjFjMbYTIPvabJVdNLC/DkLFMMTZCH3qWNU=;
+        b=1BKu6UKEILixdra8iOQLtiUysQ1NX3q4/JlHUkcUAaw2Dqt1SVghukceLBXy7p3Gep
+         xTBTSdvRJh7uwiONafRbqCPzGNjw7YmQoaWe2K4mYhWCeTw6s+pI9a/zWuh9skA+SAso
+         jgAMFrZEDd438DyctxTUVPgnGwN3R6rXpxlAWARyY9GBaPYGDq/FlXEs+Wg2gAVIHdMM
+         agLiKewSyQg6VbBR34qAqw3Cc6BgLR2hAYurlg2kiX4lVqK8Ig4D6DFWfnMXAjKjqDMe
+         ah3KlRUNFh3W31t+3v3qw05Nm/Afnrh/xQltl6u/veEoapYJngrG380aXDDAAHPgHXBB
+         wKvQ==
+X-Gm-Message-State: AO0yUKVKRxy4cJEONnvCfU2DkmkXM2XxozMPP6b3ugX0eqyqu+UWg2WY
+        51Svtogs6kW/3esLrLSg2ftGW1Guo9qAhqe2sak=
+X-Google-Smtp-Source: AK7set+h5msdSeSNWQy099kLraAr1VadZYcuzK6hHVaFOjmtK3ytkvvFW9b/YSJnj/FO8iSlZh44NZgW5PTAyY599XU=
+X-Received: by 2002:ac2:5934:0:b0:4db:3873:fac1 with SMTP id
+ v20-20020ac25934000000b004db3873fac1mr6932667lfi.9.1678374414545; Thu, 09 Mar
+ 2023 07:06:54 -0800 (PST)
 MIME-Version: 1.0
-From:   "NeilBrown" <neilb@suse.de>
-To:     "Ian Kent" <raven@themaw.net>
-Cc:     autofs@vger.kernel.org
-Subject: Re: [PATCH/RFC] autofs-5.1.8 - support setting mount propagation for
- autofs mount point.
-In-reply-to: <01bca36d-54c6-f26a-56fb-3955332f9c70@themaw.net>
-References: <167825473018.8008.14797686282321546235@noble.neil.brown.name>,
- <01bca36d-54c6-f26a-56fb-3955332f9c70@themaw.net>
-Date:   Thu, 09 Mar 2023 20:23:25 +1100
-Message-id: <167835380568.8008.17125175633261559260@noble.neil.brown.name>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Sender: nicolemarios1978@gmail.com
+Received: by 2002:a2e:9883:0:b0:295:cb7c:231e with HTTP; Thu, 9 Mar 2023
+ 07:06:53 -0800 (PST)
+From:   Elena Tudorie <elenatudorie987@gmail.com>
+Date:   Thu, 9 Mar 2023 20:36:53 +0530
+X-Google-Sender-Auth: MIuUZQvse7ZEKouipJjbzPrMq5E
+Message-ID: <CAAAK_q7zdE9SH8fZ8fambinkSbpETX2BQ9aQYi11Bq3pTGj-cw@mail.gmail.com>
+Subject: Greetings
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Thu, 09 Mar 2023, Ian Kent wrote:
-> On 8/3/23 13:52, NeilBrown wrote:
-> > New flags in the master map:
-> >    autofsshared
-> >    autofsprivate
-> >    autofsslave
-> >
-> > cause the corresponding mount propagation flags to be set on the autofs
-> > mount point.  If none are specified the current behaviour of inheriting
-> > from the parent unchanged.
-> >
-> > For example specify "autofsprivate" allows mount points to be moved
-> > away from autofs using "mount -M .....".  This is not supported by the
-> > kernel for the normal default of "shared".
-> >
-> > Better flag names should be chosen.  I would have liked to use "shared",
-> > "private", and "slave", but they are already in use and only affect bind
-> > mounts.
-> 
-> Looks fine, I'll add it to my patch queue, can't say when I'll commit
-> 
-> them though. If you need it committed sooner let me know.
-
-No rush at all - that fact that you don't hate it is enough for now.
-I was hoping you *would* hate the flag names I chose and would suggest
-something better.
-After pondering some more the best I can think of is
-
-  private-autofs
-etc.
-Can you think of anything better?
-
-maybe
-  private=autofs
-which could later be extended to a list of filesystem types...
-
-My other thought is that if they autofs mount is "private" then that is
-inherited to all descendants including the "bind" mounts.  So if we
-changed "private" to apply to the autofs mounts rather than just the
-bind mounts, then it would still affect the bind mounts as documented,
-but it would affect more as well....  I guess that would end up
-negatively affecting someone though...
-
-> 
-> 
-> This takes things a bit further than I had.
-> 
-> May I ask, what was the motivation for adding this?
-
-As the commit message hints, I have a customer with a work-flow that
-involves moving mount out of the automount tree with "mount -M ....".
-This used to work perfectly in out SLE-11 product which didn't use
-systemd and so followed the kernel default that mounts were "private" by
-default.  "mount -M" only works out of parents that are private.
-
-But with SLE-12 we use systemd, and systemd sets everything to "shared"
-by default.  There are good reasons for this and the customer doesn't
-want to over-ride it globally.  They just want the autofs mounts to not
-be shared, so that mount -M works.
-Don't ask me why they want to move mounts like this - but it doesn't
-seem an unreasonable thing to want.
-
-Thanks,
-NeilBrown
-
+I am Ms Elena Tudorie, I have a important  business  to discuss with you,
+Thanks for your time and  Attention.
+Regards.
+Mrs.Elena Tudorie
