@@ -2,62 +2,52 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A40F56B286E
-	for <lists+autofs@lfdr.de>; Thu,  9 Mar 2023 16:10:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE7EB6B320E
+	for <lists+autofs@lfdr.de>; Fri, 10 Mar 2023 00:27:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230340AbjCIPKe (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 9 Mar 2023 10:10:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38500 "EHLO
+        id S230434AbjCIX1O (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 9 Mar 2023 18:27:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbjCIPJ1 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 9 Mar 2023 10:09:27 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AF0FA099
-        for <autofs@vger.kernel.org>; Thu,  9 Mar 2023 07:06:56 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id j11so2646143lfg.13
-        for <autofs@vger.kernel.org>; Thu, 09 Mar 2023 07:06:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678374415;
-        h=to:subject:message-id:date:from:sender:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N3tQa/xAjjFjMbYTIPvabJVdNLC/DkLFMMTZCH3qWNU=;
-        b=lCOcTalBP7Q1jpEscFwnscaDMH07D8GAFyxnyJ5cQc1cfL8GkYziNk4QtdJCO+00f+
-         +KeGiX8OjsYOe0QtOw6mNrTCCaSF3rNT1gSLDPsTj8ZVU5pA4xv1JIXffrWJkBGmDUbt
-         0ApXg4+a5Ca8WzU5XkAqq3NJN1qi1M8qqSvvCUryRhleg1q4aIuHNY0wfHeWnvZQhKyQ
-         GOwe+ZxWf34if47/YWJPeoHgyk+2/+MX3ycMjqAfNKQ+ml8DCsfZB/H53A/FZ2ZVnOpv
-         jZihxqBd1leTarKKthIQFRo6J3g+rMsD/oFgJmqcICVo5b2OeyISdUbSSRW/ntj0jgYn
-         bq/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678374415;
-        h=to:subject:message-id:date:from:sender:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N3tQa/xAjjFjMbYTIPvabJVdNLC/DkLFMMTZCH3qWNU=;
-        b=1BKu6UKEILixdra8iOQLtiUysQ1NX3q4/JlHUkcUAaw2Dqt1SVghukceLBXy7p3Gep
-         xTBTSdvRJh7uwiONafRbqCPzGNjw7YmQoaWe2K4mYhWCeTw6s+pI9a/zWuh9skA+SAso
-         jgAMFrZEDd438DyctxTUVPgnGwN3R6rXpxlAWARyY9GBaPYGDq/FlXEs+Wg2gAVIHdMM
-         agLiKewSyQg6VbBR34qAqw3Cc6BgLR2hAYurlg2kiX4lVqK8Ig4D6DFWfnMXAjKjqDMe
-         ah3KlRUNFh3W31t+3v3qw05Nm/Afnrh/xQltl6u/veEoapYJngrG380aXDDAAHPgHXBB
-         wKvQ==
-X-Gm-Message-State: AO0yUKVKRxy4cJEONnvCfU2DkmkXM2XxozMPP6b3ugX0eqyqu+UWg2WY
-        51Svtogs6kW/3esLrLSg2ftGW1Guo9qAhqe2sak=
-X-Google-Smtp-Source: AK7set+h5msdSeSNWQy099kLraAr1VadZYcuzK6hHVaFOjmtK3ytkvvFW9b/YSJnj/FO8iSlZh44NZgW5PTAyY599XU=
-X-Received: by 2002:ac2:5934:0:b0:4db:3873:fac1 with SMTP id
- v20-20020ac25934000000b004db3873fac1mr6932667lfi.9.1678374414545; Thu, 09 Mar
- 2023 07:06:54 -0800 (PST)
+        with ESMTP id S229823AbjCIX1N (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 9 Mar 2023 18:27:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC461033A1
+        for <autofs@vger.kernel.org>; Thu,  9 Mar 2023 15:26:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1678404389;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=1ues5INZSDB1Dc5ATXpLpIhZ6zID3xSYlL34+g8iPyk=;
+        b=Xj/Fdxv+ABdChIiX85AW0DgWxmhlqVS2VbnTSbG/z7V9VaeRfKsIp3L59LLhWzdiiLleh0
+        LCp6cyjUl3UxdSlyEn3buxFlSvT8/gfoyNMjnHCJhlVUSCKZQbZ6ltRIqQxJ6v4Me6HSt1
+        rLX5pMJH0xaq95PYiMOkHOWk5ikI21A=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-244-5tvlx_15NKmG3x9QaIQW0g-1; Thu, 09 Mar 2023 18:26:28 -0500
+X-MC-Unique: 5tvlx_15NKmG3x9QaIQW0g-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com [10.11.54.5])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 021FB811E6E
+        for <autofs@vger.kernel.org>; Thu,  9 Mar 2023 23:26:28 +0000 (UTC)
+Received: from x1carbon.redhat.com (unknown [10.45.224.6])
+        by smtp.corp.redhat.com (Postfix) with ESMTPS id 2916D440DE;
+        Thu,  9 Mar 2023 23:26:26 +0000 (UTC)
+From:   Arjun Shankar <arjun@redhat.com>
+To:     autofs@vger.kernel.org
+Cc:     Arjun Shankar <arjun@redhat.com>
+Subject: [PATCH] autofs-5.1.8 - define LDAP_DEPRECATED during LDAP configure check
+Date:   Fri, 10 Mar 2023 00:26:18 +0100
+Message-Id: <20230309232618.22517-1-arjun@redhat.com>
 MIME-Version: 1.0
-Sender: nicolemarios1978@gmail.com
-Received: by 2002:a2e:9883:0:b0:295:cb7c:231e with HTTP; Thu, 9 Mar 2023
- 07:06:53 -0800 (PST)
-From:   Elena Tudorie <elenatudorie987@gmail.com>
-Date:   Thu, 9 Mar 2023 20:36:53 +0530
-X-Google-Sender-Auth: MIuUZQvse7ZEKouipJjbzPrMq5E
-Message-ID: <CAAAK_q7zdE9SH8fZ8fambinkSbpETX2BQ9aQYi11Bq3pTGj-cw@mail.gmail.com>
-Subject: Greetings
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.5
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,7 +55,91 @@ Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-I am Ms Elena Tudorie, I have a important  business  to discuss with you,
-Thanks for your time and  Attention.
-Regards.
-Mrs.Elena Tudorie
+This commit defines LDAP_DEPRECATED as 1 during a configure check for
+ldap_parse_page_control.  This is in line with how lookup_ldap.c is
+compiled at build time.
+
+The configure script is regenerated with autoconf 2.69.
+
+The regeneration of the configure script also includes changes due to
+commit 69fda4f090e3.  That commit intended to run checks with implicit
+function declaration warnings enabled in order to recognize missing
+libldap functions.  However, the in-tree copy of the configure script
+was not regenerated at that time.
+
+Signed-off-by: Arjun Shankar <arjun@redhat.com>
+---
+This patch is a result of efforts to port Fedora to modern C:
+
+https://fedoraproject.org/wiki/Changes/PortingToModernC
+https://fedoraproject.org/wiki/Toolchain/PortingToModernC
+
+A configure regeneration after 69fda4f090e3 would cause the check for
+ldap_parse_page_control to fail, as would using a compiler that expects C99
+by default.
+---
+ aclocal.m4 | 3 ++-
+ configure  | 9 ++++++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/aclocal.m4 b/aclocal.m4
+index 9fc20bf..3b49599 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -419,7 +419,8 @@ af_check_ldap_parse_page_control_save_cflags="$CFLAGS"
+ CFLAGS="$CFLAGS -Werror=implicit-function-declaration"
+ 
+ AC_TRY_LINK(
+-  [ #include <ldap.h> ],
++  [ #define LDAP_DEPRECATED 1
++    #include <ldap.h> ],
+   [ LDAP *ld;
+     ber_int_t ct;
+     struct berval *c;
+diff --git a/configure b/configure
+index 91be1e1..bbd2586 100755
+--- a/configure
++++ b/configure
+@@ -5471,6 +5471,8 @@ $as_echo_n "checking for ldap_create_page_control in -lldap... " >&6; }
+ # save current libs
+ af_check_ldap_create_page_control_save_libs="$LIBS"
+ LIBS="$LIBS -lldap"
++af_check_ldap_create_page_control_save_cflags="$CFLAGS"
++CFLAGS="$CFLAGS -Werror=implicit-function-declaration"
+ 
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+@@ -5507,6 +5509,7 @@ fi
+ 
+ # restore libs
+ LIBS="$af_check_ldap_create_page_control_save_libs"
++CFLAGS="$af_check_ldap_create_page_control_save_cflags"
+ 
+ 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ldap_parse_page_control in -lldap" >&5
+ $as_echo_n "checking for ldap_parse_page_control in -lldap... " >&6; }
+@@ -5514,10 +5517,13 @@ $as_echo_n "checking for ldap_parse_page_control in -lldap... " >&6; }
+ # save current libs
+ af_check_ldap_parse_page_control_save_libs="$LIBS"
+ LIBS="$LIBS -lldap"
++af_check_ldap_parse_page_control_save_cflags="$CFLAGS"
++CFLAGS="$CFLAGS -Werror=implicit-function-declaration"
+ 
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+- #include <ldap.h>
++ #define LDAP_DEPRECATED 1
++    #include <ldap.h>
+ int
+ main ()
+ {
+@@ -5550,6 +5556,7 @@ fi
+ 
+ # restore libs
+ LIBS="$af_check_ldap_parse_page_control_save_libs"
++CFLAGS="$af_check_ldap_parse_page_control_save_cflags"
+ 
+     fi
+ fi
+-- 
+2.39.1
+
