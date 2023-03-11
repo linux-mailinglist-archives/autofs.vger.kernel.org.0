@@ -2,98 +2,208 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC0F86B4FAB
-	for <lists+autofs@lfdr.de>; Fri, 10 Mar 2023 18:57:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 963096B58EF
+	for <lists+autofs@lfdr.de>; Sat, 11 Mar 2023 07:26:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230369AbjCJR5c (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Fri, 10 Mar 2023 12:57:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59984 "EHLO
+        id S229697AbjCKG0b (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sat, 11 Mar 2023 01:26:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230088AbjCJR5Y (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Fri, 10 Mar 2023 12:57:24 -0500
-Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96E2D134807;
-        Fri, 10 Mar 2023 09:56:57 -0800 (PST)
-Received: from fpc (unknown [10.10.165.6])
-        by mail.ispras.ru (Postfix) with ESMTPSA id E180744C1012;
-        Fri, 10 Mar 2023 17:56:31 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru E180744C1012
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-        s=default; t=1678470992;
-        bh=oG5fFn0kiKwI+o2dpqA6h07vjlrIN+7+r7CBFmMBjCw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tnP9BB9cn5lj7m6We3HdShkdvND1EVGlI6M4v/wFc2xqSVWgj8jFFi7cFQdZEq0Yw
-         DGq9/7qgovJCXKntijgEv0A1qRtgltJUqz02wVEcgoUV36LWistZgg1B5mDDBw3BH2
-         gKNsL9o2dfb+W9/7LS8OuVKQpflgEU4daS2EFLaA=
-Date:   Fri, 10 Mar 2023 20:56:27 +0300
-From:   Fedor Pchelkin <pchelkin@ispras.ru>
-To:     Ian Kent <raven@themaw.net>, Al Viro <viro@ZenIV.linux.org.uk>
-Cc:     Matthew Wilcox <willy@infradead.org>,
-        Andrei Vagin <avagin@gmail.com>,
-        Takeshi Misawa <jeliantsurux@gmail.com>,
-        autofs@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Alexey Khoroshilov <khoroshilov@ispras.ru>,
-        lvc-project@linuxtesting.org
-Subject: Re: [PATCH 0/1] autofs: fix memory leak of waitqueues in
- autofs_catatonic_mode
-Message-ID: <20230310175627.dvmkyvgb7b3qehbx@fpc>
-References: <20230211195950.452364-1-pchelkin@ispras.ru>
- <5b86f03b-020b-1584-be8f-b7dc7277fa0a@themaw.net>
- <2f87a31c-7879-dce8-9c4b-01d2e781e22c@themaw.net>
+        with ESMTP id S229589AbjCKG0a (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sat, 11 Mar 2023 01:26:30 -0500
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ED913D1C4
+        for <autofs@vger.kernel.org>; Fri, 10 Mar 2023 22:26:23 -0800 (PST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 6907F320076F;
+        Sat, 11 Mar 2023 01:26:21 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Sat, 11 Mar 2023 01:26:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
+        :cc:content-transfer-encoding:content-type:content-type:date
+        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
+        1678515981; x=1678602381; bh=HBdJtEkUh+hV/Q6dolGm6Yow+cWFmkVP/dG
+        XunEucjw=; b=KQPAtpPV4N8KVqob2TROTm5tm5/wN4IXwQHSzs1/msoV/9+kWi8
+        XSlSBbO76Nc5IL8y/XieeotBXW+rZ8pqqmqlucyP2DCorwku6nzInKKu2aF6f6Ra
+        3Pd5j3xjGXtrPRVIPT+3zIUOWxYpR99XJYWmrbz7/Mt28gIzkjcvcq/thDHoG4qT
+        JddbyIuZuLdXfvu5AXzPJvoyqyjKsKwUEYIC54tGDT45VutbSvDSSK4VjpUcqGSi
+        gzvObsu8HexOB7qpMdUQ5RJtZ5BV9wmRtEPV7WaP/tKhaqZyTpDPSMXL6ULvjrPr
+        6L5likBk2KLYqATgv9hwZYm1o4HE3CZ4XFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1678515981; x=1678602381; bh=HBdJtEkUh+hV/Q6dolGm6Yow+cWFmkVP/dG
+        XunEucjw=; b=tNW96UXkowxpyWv94t7nxGmM/wrAK3N/s2zW2Y5em9pfxSDPBfR
+        mxtxdxEd9WhWhyLnZXvq9ROfDbXs/nBa1aepBvJG036ZJ71kyPip0PSt55fxagbZ
+        na1YZ88UYTieiNhf48G+XWcKT101fRAbXahxiJWV4R+HUAEDg7xBcZLRxp3SJkg/
+        4ISpY4ElPhJpBkt2YfCCA8Yi8U2bsxhzs7VLi4tSlrMOI2658z+kyYCOYr5pMr+P
+        J6U/gZCI7gbTS2iL5WOVdrCxQkph1Aqqe5mF75fTh66ihQy+D0m6ThTBeFIrRsXT
+        gE2BHhborXOWfK4iqf7g9fdtfV2hV5qDZVw==
+X-ME-Sender: <xms:DB8MZJZmT-924C4cDMkCyz8s2RZh8B43-9sIyZhLEs3eObgfgSY7LQ>
+    <xme:DB8MZAaONyn2I9JZtmv-kb92K3oi8skH85_GCS3XqzZT6gWElPqy-9Avsprdq-nVz
+    WEUrZir9Erd>
+X-ME-Received: <xmr:DB8MZL80KY-V3J57IQbdYxOg5mg-mrpp31eapgh8VJuInjJ-raLny6slbobt3MCQK-A20tAJEQQEXINyYG_oc5Z3zGfflZCwfEtsR0rXxd3zg-YAg8ye>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdduledgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfuvfevfhfhjggtgfesth
+    ejredttdefjeenucfhrhhomhepkfgrnhcumfgvnhhtuceorhgrvhgvnhesthhhvghmrgif
+    rdhnvghtqeenucggtffrrghtthgvrhhnpeeuhfeuieeijeeuveekgfeitdethefguddtle
+    ffhfelfeelhfduuedvfefhgefhheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvth
+X-ME-Proxy: <xmx:DB8MZHp75oAS6iRcF3wVZ5vWEsBNyaNpq59xKM5ft7vr3cP2LyRWJA>
+    <xmx:DB8MZErzzdHpAEblA2_1NiIOWY1E9PMHsquryvGERmt3EguLD5GZkw>
+    <xmx:DB8MZNSuY1L0BohQKmKkCl_vk5kCr1oYUScVniKk1vdbKkwa3i2qhQ>
+    <xmx:DR8MZKE7AYLy7JsM4hQZcBVOKWCMoy_ebd01Zz-igAO5RNAHGK3BQQ>
+Feedback-ID: i31e841b0:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 11 Mar 2023 01:26:19 -0500 (EST)
+Message-ID: <cb91e968-1014-fdfe-596a-fd758856aa44@themaw.net>
+Date:   Sat, 11 Mar 2023 14:26:15 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2f87a31c-7879-dce8-9c4b-01d2e781e22c@themaw.net>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH/RFC] autofs-5.1.8 - support setting mount propagation for
+ autofs mount point.
+To:     NeilBrown <neilb@suse.de>
+Cc:     autofs@vger.kernel.org
+References: <167825473018.8008.14797686282321546235@noble.neil.brown.name>
+ <01bca36d-54c6-f26a-56fb-3955332f9c70@themaw.net>
+ <167835380568.8008.17125175633261559260@noble.neil.brown.name>
+Content-Language: en-US
+From:   Ian Kent <raven@themaw.net>
+In-Reply-To: <167835380568.8008.17125175633261559260@noble.neil.brown.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Mon, Feb 13, 2023 at 12:37:16PM +0800, Ian Kent wrote:
-> 
-> I was going to Ack the patch but I wondering if we should wait a little
-> 
-> while and perhaps (probably) include the wake up call change as well.
+On 9/3/23 17:23, NeilBrown wrote:
+> On Thu, 09 Mar 2023, Ian Kent wrote:
+>> On 8/3/23 13:52, NeilBrown wrote:
+>>> New flags in the master map:
+>>>     autofsshared
+>>>     autofsprivate
+>>>     autofsslave
+>>>
+>>> cause the corresponding mount propagation flags to be set on the autofs
+>>> mount point.  If none are specified the current behaviour of inheriting
+>>> from the parent unchanged.
+>>>
+>>> For example specify "autofsprivate" allows mount points to be moved
+>>> away from autofs using "mount -M .....".  This is not supported by the
+>>> kernel for the normal default of "shared".
+>>>
+>>> Better flag names should be chosen.  I would have liked to use "shared",
+>>> "private", and "slave", but they are already in use and only affect bind
+>>> mounts.
+>> Looks fine, I'll add it to my patch queue, can't say when I'll commit
+>>
+>> them though. If you need it committed sooner let me know.
+> No rush at all - that fact that you don't hate it is enough for now.
+> I was hoping you *would* hate the flag names I chose and would suggest
+> something better.
+
+I think your suggesting merging this with the existing code, that's were
+
+I was going too.
+
+
+> After pondering some more the best I can think of is
 >
+>    private-autofs
+> etc.
+> Can you think of anything better?
+>
+> maybe
+>    private=autofs
+> which could later be extended to a list of filesystem types...
+>
+> My other thought is that if they autofs mount is "private" then that is
+> inherited to all descendants including the "bind" mounts.  So if we
+> changed "private" to apply to the autofs mounts rather than just the
+> bind mounts, then it would still affect the bind mounts as documented,
+> but it would affect more as well....  I guess that would end up
+> negatively affecting someone though...
 
-Hmm, those would be separate patches?
+I can't remember now the motivation for what I originally did.
 
-An interesting thing is that the code itself supposes the wake up calls
-from autofs_wait_release() and autofs_catatonic_mode() to be related in
-some way (see autofs_wait fragment):
 
-	/*
-	 * wq->name.name is NULL iff the lock is already released
-	 * or the mount has been made catatonic.
-	 */
-	wait_event_killable(wq->queue, wq->name.name == NULL);
-	status = wq->status;
+I'll need to look at that but I suspect it's similar, if not
 
-It seems 'the lock is already released' refers to autofs_wait_release()
-as there is no alternative except the call to catatonic function where
-wq->name.name is NULL. So apparently the wake up calls should be the same
-(although I don't know if autofs_catatonic_mode has some different
-behaviour in such case, but probably it doesn't differ here).
+the same, as your reasons for needing it. I should get a bit
 
-It's also strange that autofs_kill_sb() calls autofs_catatonic_mode() and
-currently it just decrements the wait_ctr's and it is not clear to me
-where the waitqueues are eventually freed in such case. Only if
-autofs_wait_release() or autofs_wait() are called? I'm not sure whether
-they are definitely called after that or not.
+of time soon to have a look ...
 
-[1] https://www.spinics.net/lists/autofs/msg01878.html
-> 
-> In any case we need Al to accept it (cc'd).
-> 
-> Hopefully Al will offer his opinion on the changes too.
-> 
 
-It would be very nice if probably Al would make it more clear.
+>
+>>
+>> This takes things a bit further than I had.
+>>
+>> May I ask, what was the motivation for adding this?
+> As the commit message hints, I have a customer with a work-flow that
+> involves moving mount out of the automount tree with "mount -M ....".
+> This used to work perfectly in out SLE-11 product which didn't use
+> systemd and so followed the kernel default that mounts were "private" by
+> default.  "mount -M" only works out of parents that are private.
 
-At the moment I think that the leak issue should be fixed with the
-currenly discussed patch and the wake up call issue should be fixed like
-in [1], but perhaps I'm missing something.
+Haha, but it's worse than that.
+
+
+What about systemd's PrivateTmp (I think that's spelling) which creates
+
+a new mount namespace for temporary files. Think about what happens if
+
+you restart a service which this setting when there are autofs mounts
+
+present. Maybe someone made some changes because I haven't seen problems
+
+of this nature for a while but at one time the autofs mounts propagated
+
+to the temp files mount namespace and could never expire preventing them
+
+from ever being umounted including those in the init mount namespace.
+
+
+I think there's also systemd-nspawn that might have similar problems.
+
+
+Anyway, it's not very fun, so what your doing is useful, !!
+
+>
+> But with SLE-12 we use systemd, and systemd sets everything to "shared"
+> by default.  There are good reasons for this and the customer doesn't
+> want to over-ride it globally.  They just want the autofs mounts to not
+> be shared, so that mount -M works.
+> Don't ask me why they want to move mounts like this - but it doesn't
+> seem an unreasonable thing to want.
+
+I'm not sure how useful this would be, autofs is very much path based
+
+due to it being driven by path based maps (as you know).
+
+
+Mind you it sounds a bit like how automounts can work in containers.
+
+
+Essentially you bind mount (eg. docker --volume=<path> option, IIRC)
+
+the autofs mount into the container at start and child mounts get
+
+propagated to the container. The paths just need to be the same inside
+
+the container.
+
+
+Ian
+
