@@ -2,90 +2,83 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 368276B592F
-	for <lists+autofs@lfdr.de>; Sat, 11 Mar 2023 08:03:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E7B6B594C
+	for <lists+autofs@lfdr.de>; Sat, 11 Mar 2023 08:28:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229852AbjCKHDI (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sat, 11 Mar 2023 02:03:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52892 "EHLO
+        id S230185AbjCKH2p (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sat, 11 Mar 2023 02:28:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbjCKHDF (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sat, 11 Mar 2023 02:03:05 -0500
+        with ESMTP id S229801AbjCKH2o (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sat, 11 Mar 2023 02:28:44 -0500
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 846E65BA7;
-        Fri, 10 Mar 2023 23:02:57 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 23F71320076F;
-        Sat, 11 Mar 2023 02:01:52 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FCBE63E5
+        for <autofs@vger.kernel.org>; Fri, 10 Mar 2023 23:28:40 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id E5303320092F;
+        Sat, 11 Mar 2023 02:28:37 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Sat, 11 Mar 2023 02:01:52 -0500
+  by compute3.internal (MEProxy); Sat, 11 Mar 2023 02:28:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
         :cc:content-transfer-encoding:content-type:content-type:date
         :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
         :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
-        1678518111; x=1678604511; bh=feqTz2HniZqY/yt47o/AlWtYhoQHaXGw7ql
-        1hoEkXKY=; b=BYtuz7HWC/S3Oh0s4/uNl714hq2Bu/njK8bv3IWaYhKCllp2/0C
-        Mi+prRlVDMjJoun7FFvmtcZypv0k4ZgXBq0xdWz5g89mMHLpHtghWlHqtvtt3NqP
-        Yul8D0z3W1hCzYbMA4JK7Zti2pMDjMHXgVSBbE/AVFf7CSShauBEkEk4LNlZOVkT
-        gz+io8HfZqQ1gX5au9ho12aTpcKQAM7AgKFpK/YMl/G46joM+wWtlNeCnvJJjs6F
-        cbCZDrj1mIQJOY/4L2Cy/gMD59AOJR+iellIqquGuzRuCxBMZgUF+882WN2dmdU9
-        RoBJxy9R8GmDrO7Rc7IBYyqKtjRUY3spTAA==
+        1678519717; x=1678606117; bh=zL08AeYH0KQcvzpm69941w/AouULIZpcSPY
+        yxGkxXss=; b=KlzkMZHIlcnI/QHTKlGuDjaTH0pWuIYCorUs3VCj7Et24CI0maM
+        sIFq1ivpZIz6NJ7bIgQiY3QZgWSyW26Jf/j4dBNmDdrIkYac4oP0CCCqrmfRK15g
+        WlWbfrcWcfQhepmdYmg9lSkuuzftX4iTOoU073t0kpALZUu2ibjtW6PX8X4jO8Ld
+        rgR9ZY+jUb6NIZDQB4k91aTihEbRIMaCOzB5JkJ8iw4k141ajLNWAOUAEShhCo5Y
+        HUBRcZq+yaAsAnKn7qJMVtvB3m0A3dJgp2bKYcaNPNj4fIXhIqRtDLWUmpQpjz3K
+        ZdX2U7lp1IBz3VT++B+0ldG0GHoQZGz04Cg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:date:feedback-id:feedback-id
         :from:from:in-reply-to:in-reply-to:message-id:mime-version
         :references:reply-to:sender:subject:subject:to:to:x-me-proxy
         :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1678518111; x=1678604511; bh=feqTz2HniZqY/yt47o/AlWtYhoQHaXGw7ql
-        1hoEkXKY=; b=C6COX5XoTMnu1fmW+GAFv7Jk+hkNnpaRLmmvXh0M6brkO8xUskJ
-        hQFTQylX/XL5h+RMt86497enasRzFPx60Dcfx/BpyX9onmta1/igdDjOaUFpc5Cl
-        mq4MD+e2eEQYeIvvkiu+05Oj0ZNkzPT7OFcby1doXAHSGn7ab2aXmiWn55znc1F2
-        ftwZXJz096Qax+5xfByzJrQCmUcf0aPLKApP2Idg1dlXHYr6op7euVzUpKIww/xX
-        n14ATT5ffnnG9t60AE7puYeaGEkzikwwlOR8WPpWGBZSjZ5jsoGGccmx8OWuxnzD
-        nDUJOxib2qJZyTxErqIZ6Ed6J2oNSpLTm3g==
-X-ME-Sender: <xms:XycMZGeUJfGs8LAQ5t-pFO-5-HdeIoEn7kvdHZT9RpXkcFW8yds2-A>
-    <xme:XycMZAPWPtmDf0OYSqa-TG0RGggcwFUVmEqCm0ftsHbezj1Y0StCnPAr7StyGzpap
-    ZE5qYpu5kq6>
-X-ME-Received: <xmr:XycMZHgpLNDJaZ9TPbT3f2B0NfHjW270Di5-5sVi-pc9zBUEzKSc6zbVWYEnld6DZ7WR8C5eTSuQbhYuCiZ2XcMTvGo1EzPcm3_SzfO1B4fApZoGU62i>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdduledguddtudcutefuodetggdotefrod
+        1678519717; x=1678606117; bh=zL08AeYH0KQcvzpm69941w/AouULIZpcSPY
+        yxGkxXss=; b=hZB2zFtFzngHjcOI5M636pFlXgyi0NH31B27xvqtb9AamwJ/05I
+        es5nsyjpU3bJu7xXDuGf5KiTITUhfcx1J8v2EeVdEO64erun+BQNckbhyVeUoupz
+        /iyheW6QCZkYdKVd9ix5bGlnEq33Tu/3NhwGUAQa+Dp3Q/5kNYL45b5WUroOk4PX
+        6UoCHVPkUcvcW26CLzaOmi6+OXJcxg9yDasPCTK3vTA1MjLE8NAhR4HHbRwMyW4o
+        V8XTrddkZb7BM6WPCsH0scwUS3QdTT9qMiOdZRbMNtnI/GDQO60iE9590Kej83kt
+        l7Nn8JSGEVHr5Y5U/f6P3PABqCptZmqWu0g==
+X-ME-Sender: <xms:pS0MZLsC9iLcMqbqLxezevZcDpv0_Wdn0sDLv_25d0Kxxh3aZNxC7w>
+    <xme:pS0MZMdHjd8JuZecHZvhLd5lmvECGmi0JNsCysgkT3LuDImzXAVweswZZcHTSfXCu
+    AW_8ZblIKis>
+X-ME-Received: <xmr:pS0MZOyxeNJR54SqR8jc3cnqWFQJHOj2dk96KMKd_5coYBWaLbMbfg_RTY1l7tP0E07jXdgzIE3RFGSzSvjq5FMCOpJmEZJXZkzE6u7AaoWSE2nw-1jU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdduledguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomhepkfgr
-    nhcumfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucggtffrrghtthgvrh
-    hnpefhgeffkedtvefhjedvffffheeukedvueeigeetieelheffudeugfegieeivdehjeen
-    ucffohhmrghinhepshhpihhnihgtshdrnhgvthenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvth
-X-ME-Proxy: <xmx:XycMZD_kkt-JdZXdBGJ2zCqlIBa4_S4Z3szcfIgtm3KHqS4zLCeXnw>
-    <xmx:XycMZCuN83KcH9vk1W0YF-lQ5PAqNMXIKxrs7gKtS4AFsEsCc2dEBA>
-    <xmx:XycMZKFZErHqT8L2aWrYeJKVKVpESCXRLwHcxggSDAp3TxG6DeNPog>
-    <xmx:XycMZGjhzA-RXEUSUE0fOnJWI5F-OvmgNKUU_tdtmC4NLW1upUVdDQ>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepkfffgggfuffhvfevfhgjtgfgse
+    htkeertddtfeejnecuhfhrohhmpefkrghnucfmvghnthcuoehrrghvvghnsehthhgvmhgr
+    fidrnhgvtheqnecuggftrfgrthhtvghrnhepieevleekgfdtgedufedufedtleetjeetvd
+    ehueelvedvleeuhfdutdeigeevleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvghmrgifrdhnvght
+X-ME-Proxy: <xmx:pS0MZKM1sf_GhnyO_0GiaJ6lZU6_xGbvPwGTCtebd7XVkzQdYUSSXQ>
+    <xmx:pS0MZL8MLB1djjFMQgNqJ2n1uYPHNVGZxb1Q_kh18n4rNx7i0p8T_w>
+    <xmx:pS0MZKWjL-JIHp86aBTktlojKlkuuOyqeY2UiOEZlW4VXbnNZ3C0pA>
+    <xmx:pS0MZIIMUvlyHyMm1CK6GFaKo3kk-6ElF-_eyPBncvKgU7f5k3Yv1g>
 Feedback-ID: i31e841b0:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 11 Mar 2023 02:01:47 -0500 (EST)
-Message-ID: <ff12aef6-b3a1-e8ab-45c4-0976673bce84@themaw.net>
-Date:   Sat, 11 Mar 2023 15:01:45 +0800
+ 11 Mar 2023 02:28:35 -0500 (EST)
+Message-ID: <78d83b4f-b3c6-eb2e-ab3d-76824b9b29f7@themaw.net>
+Date:   Sat, 11 Mar 2023 15:28:31 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 0/1] autofs: fix memory leak of waitqueues in
- autofs_catatonic_mode
+Subject: Re: [PATCH/RFC] autofs-5.1.8 - support setting mount propagation for
+ autofs mount point.
 Content-Language: en-US
-To:     Fedor Pchelkin <pchelkin@ispras.ru>,
-        Al Viro <viro@ZenIV.linux.org.uk>
-Cc:     Matthew Wilcox <willy@infradead.org>,
-        Andrei Vagin <avagin@gmail.com>,
-        Takeshi Misawa <jeliantsurux@gmail.com>,
-        autofs@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Alexey Khoroshilov <khoroshilov@ispras.ru>,
-        lvc-project@linuxtesting.org
-References: <20230211195950.452364-1-pchelkin@ispras.ru>
- <5b86f03b-020b-1584-be8f-b7dc7277fa0a@themaw.net>
- <2f87a31c-7879-dce8-9c4b-01d2e781e22c@themaw.net>
- <20230310175627.dvmkyvgb7b3qehbx@fpc>
 From:   Ian Kent <raven@themaw.net>
-In-Reply-To: <20230310175627.dvmkyvgb7b3qehbx@fpc>
+To:     NeilBrown <neilb@suse.de>
+Cc:     autofs@vger.kernel.org
+References: <167825473018.8008.14797686282321546235@noble.neil.brown.name>
+ <01bca36d-54c6-f26a-56fb-3955332f9c70@themaw.net>
+ <167835380568.8008.17125175633261559260@noble.neil.brown.name>
+ <cb91e968-1014-fdfe-596a-fd758856aa44@themaw.net>
+In-Reply-To: <cb91e968-1014-fdfe-596a-fd758856aa44@themaw.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,URIBL_BLOCKED autolearn=ham
@@ -96,91 +89,78 @@ Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-
-On 11/3/23 01:56, Fedor Pchelkin wrote:
-> On Mon, Feb 13, 2023 at 12:37:16PM +0800, Ian Kent wrote:
->> I was going to Ack the patch but I wondering if we should wait a little
+On 11/3/23 14:26, Ian Kent wrote:
+> On 9/3/23 17:23, NeilBrown wrote:
+>> On Thu, 09 Mar 2023, Ian Kent wrote:
+>>> On 8/3/23 13:52, NeilBrown wrote:
+>>>> New flags in the master map:
+>>>>     autofsshared
+>>>>     autofsprivate
+>>>>     autofsslave
+>>>>
+>>>> cause the corresponding mount propagation flags to be set on the 
+>>>> autofs
+>>>> mount point.  If none are specified the current behaviour of 
+>>>> inheriting
+>>>> from the parent unchanged.
+>>>>
+>>>> For example specify "autofsprivate" allows mount points to be moved
+>>>> away from autofs using "mount -M .....".  This is not supported by the
+>>>> kernel for the normal default of "shared".
+>>>>
+>>>> Better flag names should be chosen.  I would have liked to use 
+>>>> "shared",
+>>>> "private", and "slave", but they are already in use and only affect 
+>>>> bind
+>>>> mounts.
+>>> Looks fine, I'll add it to my patch queue, can't say when I'll commit
+>>>
+>>> them though. If you need it committed sooner let me know.
+>> No rush at all - that fact that you don't hate it is enough for now.
+>> I was hoping you *would* hate the flag names I chose and would suggest
+>> something better.
+>
+> I think your suggesting merging this with the existing code, that's were
+>
+> I was going too.
+>
+>
+>> After pondering some more the best I can think of is
 >>
->> while and perhaps (probably) include the wake up call change as well.
+>>    private-autofs
+>> etc.
+>> Can you think of anything better?
 >>
-> Hmm, those would be separate patches?
->
-> An interesting thing is that the code itself supposes the wake up calls
-> from autofs_wait_release() and autofs_catatonic_mode() to be related in
-> some way (see autofs_wait fragment):
->
-> 	/*
-> 	 * wq->name.name is NULL iff the lock is already released
-> 	 * or the mount has been made catatonic.
-> 	 */
-> 	wait_event_killable(wq->queue, wq->name.name == NULL);
-> 	status = wq->status;
->
-> It seems 'the lock is already released' refers to autofs_wait_release()
-> as there is no alternative except the call to catatonic function where
-> wq->name.name is NULL. So apparently the wake up calls should be the same
-> (although I don't know if autofs_catatonic_mode has some different
-> behaviour in such case, but probably it doesn't differ here).
-
-I think that, because there are processes waiting, they will always go
-
-via the tail of autofs_wait() so the wait will be freed at that point.
-
-
-Alternately autofs_wait_release() will be called from user space daemon
-
-to tell the kernel it's done with the current notification.
-
-
-I think there was an order of execution problem at some point between
-
-autofs_wait() and autofs_wait_release() hence the code there. The same
-
-may be the case for autofs_catatonic_mode() which is what the patch
-
-implies.
-
-
-These mount points can be left mounted after the user space daemon
-
-exits with the processes still blocked so umounting the mount should
-
-trigger the freeing of the name or they may be set catatonic by the
-
-daemon at exit, again freeing the name, and in both cases unblocking
-
-the processes to free the wait.
-
-
-So I didn't think there was a memory leak here but SyZkaller says
-
-there is.
-
-
->
-> It's also strange that autofs_kill_sb() calls autofs_catatonic_mode() and
-> currently it just decrements the wait_ctr's and it is not clear to me
-> where the waitqueues are eventually freed in such case. Only if
-> autofs_wait_release() or autofs_wait() are called? I'm not sure whether
-> they are definitely called after that or not.
->
-> [1] https://www.spinics.net/lists/autofs/msg01878.html
->> In any case we need Al to accept it (cc'd).
+>> maybe
+>>    private=autofs
+>> which could later be extended to a list of filesystem types...
 >>
->> Hopefully Al will offer his opinion on the changes too.
->>
-> It would be very nice if probably Al would make it more clear.
+>> My other thought is that if they autofs mount is "private" then that is
+>> inherited to all descendants including the "bind" mounts.  So if we
+>> changed "private" to apply to the autofs mounts rather than just the
+>> bind mounts, then it would still affect the bind mounts as documented,
+>> but it would affect more as well....  I guess that would end up
+>> negatively affecting someone though...
 >
-> At the moment I think that the leak issue should be fixed with the
-> currenly discussed patch and the wake up call issue should be fixed like
-> in [1], but perhaps I'm missing something.
+> I can't remember now the motivation for what I originally did.
+>
+>
+> I'll need to look at that but I suspect it's similar, if not
+>
+> the same, as your reasons for needing it. I should get a bit
+>
+> of time soon to have a look ...
 
-The question I have is, is it possible a process waiting on the wait
+It looks like the only thing to worry about if we decide to merge
 
-queue gets unblocked after the wait is freed in autofs_catatonic_mode?
+the existing propagation options and these is whether we check
+
+and stop people from shooting themselves in the foot by causing
+
+a deadlock and working out if there are other cases of deadlock
+
+beside bind mounting.
 
 
 Ian
-
-
 
