@@ -2,398 +2,335 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DC546B88C6
-	for <lists+autofs@lfdr.de>; Tue, 14 Mar 2023 03:56:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEBE26C094D
+	for <lists+autofs@lfdr.de>; Mon, 20 Mar 2023 04:26:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229921AbjCNC4u (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 13 Mar 2023 22:56:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37612 "EHLO
+        id S229472AbjCTD0p (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sun, 19 Mar 2023 23:26:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjCNC4t (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 13 Mar 2023 22:56:49 -0400
+        with ESMTP id S229446AbjCTD0p (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sun, 19 Mar 2023 23:26:45 -0400
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 369968F731
-        for <autofs@vger.kernel.org>; Mon, 13 Mar 2023 19:56:45 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D5F1A674
+        for <autofs@vger.kernel.org>; Sun, 19 Mar 2023 20:26:42 -0700 (PDT)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 949531F7AB;
-        Tue, 14 Mar 2023 02:56:44 +0000 (UTC)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 309F51FEA0;
+        Mon, 20 Mar 2023 03:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1678762604; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+        t=1679282801; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=E0Ve/LnCcoAC1XTIcHLrYOmQeE74iTMvSDSysQZl08c=;
-        b=oUr5C/FIzxVJ3pg8uqyYzRCgb9VN1wUAZ54uClS0q7egW8oTvMkH/iVia2BCaLrqzyKjFk
-        qPd4oxfbMuSo20NBO1ixehsA6kaR1uafVWkVnl2/glfkM17+yHr5OfBrHdqffzK9hW5xgG
-        HivpkYANdoCqkpDU/ocRFQdn5uVnR3k=
+         content-transfer-encoding:content-transfer-encoding;
+        bh=IO788Nu69COk8oGGYNDs6ppU0LYDpjASDRlmXbjRBNA=;
+        b=I5bzInsW1Ta477lo/QCXZkbOWI02cPYyLp7L56aIcrOJIL413RGFEwaKGv/gmM8+TMcDSx
+        +t3vAEF6KgaKMhiMKaCBGN9d5qjkqk3zYKSoyn44mm7vyn5RbbQaCmnEPq58u34Y2VN4bm
+        gtREfzhjP9Wk7WzR/Qkmrw2NeXyp8Xk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1678762604;
+        s=susede2_ed25519; t=1679282801;
         h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=E0Ve/LnCcoAC1XTIcHLrYOmQeE74iTMvSDSysQZl08c=;
-        b=IWxz6NnZ7Cy8ii8aAmaa3F+0ENdZGWcCFA1k6zwInExAFANFNUBpICuonCqMDOmJuOVqXz
-        rLIaRFan64WSxuAQ==
+         content-transfer-encoding:content-transfer-encoding;
+        bh=IO788Nu69COk8oGGYNDs6ppU0LYDpjASDRlmXbjRBNA=;
+        b=fj4CPrInjmV5A3D49haSlBukzr7jIhgagImaBhgrwI5Bbo0lziFOogbtD1qzBhfmJZdxqx
+        T8O3bcCk3diIdkDg==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id AD8C413A1B;
-        Tue, 14 Mar 2023 02:56:43 +0000 (UTC)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E998413912;
+        Mon, 20 Mar 2023 03:26:39 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
         by imap2.suse-dmz.suse.de with ESMTPSA
-        id xnQzGWviD2SeLwAAMHmgww
-        (envelope-from <neilb@suse.de>); Tue, 14 Mar 2023 02:56:43 +0000
+        id N0IAJ2/SF2ReVwAAMHmgww
+        (envelope-from <neilb@suse.de>); Mon, 20 Mar 2023 03:26:39 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 From:   "NeilBrown" <neilb@suse.de>
-To:     "Ian Kent" <raven@themaw.net>
+To:     Ian Kent <raven@themaw.net>
 Cc:     autofs@vger.kernel.org
-Subject: Re: [PATCH/RFC] autofs-5.1.8 - support setting mount propagation for
- autofs mount point.
-In-reply-to: <f748072c-52a0-32a3-aaef-4689c3adaa41@themaw.net>
-References: <167825473018.8008.14797686282321546235@noble.neil.brown.name>,
- <01bca36d-54c6-f26a-56fb-3955332f9c70@themaw.net>,
- <167835380568.8008.17125175633261559260@noble.neil.brown.name>,
- <cb91e968-1014-fdfe-596a-fd758856aa44@themaw.net>,
- <78d83b4f-b3c6-eb2e-ab3d-76824b9b29f7@themaw.net>,
- <167867796579.8008.1010314226146743739@noble.neil.brown.name>,
- <f748072c-52a0-32a3-aaef-4689c3adaa41@themaw.net>
-Date:   Tue, 14 Mar 2023 13:56:40 +1100
-Message-id: <167876260016.8008.10986525185984597321@noble.neil.brown.name>
+Subject: [PATCH] autofs-5.1.8 - add "unshared" option to disable mount propagation.
+Date:   Mon, 20 Mar 2023 14:26:35 +1100
+Message-id: <167928279599.8008.18190549797975624979@noble.neil.brown.name>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Mon, 13 Mar 2023, Ian Kent wrote:
-> On 13/3/23 11:26, NeilBrown wrote:
-> > On Sat, 11 Mar 2023, Ian Kent wrote:
-> >> On 11/3/23 14:26, Ian Kent wrote:
-> >>> On 9/3/23 17:23, NeilBrown wrote:
-> >>>> On Thu, 09 Mar 2023, Ian Kent wrote:
-> >>>>> On 8/3/23 13:52, NeilBrown wrote:
-> >>>>>> New flags in the master map:
-> >>>>>>  =C2=A0=C2=A0=C2=A0 autofsshared
-> >>>>>>  =C2=A0=C2=A0=C2=A0 autofsprivate
-> >>>>>>  =C2=A0=C2=A0=C2=A0 autofsslave
-> >>>>>>
-> >>>>>> cause the corresponding mount propagation flags to be set on the
-> >>>>>> autofs
-> >>>>>> mount point.=C2=A0 If none are specified the current behaviour of
-> >>>>>> inheriting
-> >>>>>> from the parent unchanged.
-> >>>>>>
-> >>>>>> For example specify "autofsprivate" allows mount points to be moved
-> >>>>>> away from autofs using "mount -M .....".=C2=A0 This is not supported=
- by the
-> >>>>>> kernel for the normal default of "shared".
-> >>>>>>
-> >>>>>> Better flag names should be chosen.=C2=A0 I would have liked to use
-> >>>>>> "shared",
-> >>>>>> "private", and "slave", but they are already in use and only affect
-> >>>>>> bind
-> >>>>>> mounts.
-> >>>>> Looks fine, I'll add it to my patch queue, can't say when I'll commit
-> >>>>>
-> >>>>> them though. If you need it committed sooner let me know.
-> >>>> No rush at all - that fact that you don't hate it is enough for now.
-> >>>> I was hoping you *would* hate the flag names I chose and would suggest
-> >>>> something better.
-> >>> I think your suggesting merging this with the existing code, that's were
-> >>>
-> >>> I was going too.
-> >>>
-> >>>
-> >>>> After pondering some more the best I can think of is
-> >>>>
-> >>>>  =C2=A0=C2=A0 private-autofs
-> >>>> etc.
-> >>>> Can you think of anything better?
-> >>>>
-> >>>> maybe
-> >>>>  =C2=A0=C2=A0 private=3Dautofs
-> >>>> which could later be extended to a list of filesystem types...
-> >>>>
-> >>>> My other thought is that if they autofs mount is "private" then that is
-> >>>> inherited to all descendants including the "bind" mounts.=C2=A0 So if =
-we
-> >>>> changed "private" to apply to the autofs mounts rather than just the
-> >>>> bind mounts, then it would still affect the bind mounts as documented,
-> >>>> but it would affect more as well....=C2=A0 I guess that would end up
-> >>>> negatively affecting someone though...
-> >>> I can't remember now the motivation for what I originally did.
-> >>>
-> >>>
-> >>> I'll need to look at that but I suspect it's similar, if not
-> >>>
-> >>> the same, as your reasons for needing it. I should get a bit
-> >>>
-> >>> of time soon to have a look ...
-> >> It looks like the only thing to worry about if we decide to merge
-> >>
-> >> the existing propagation options and these is whether we check
-> >>
-> >> and stop people from shooting themselves in the foot by causing
-> >>
-> >> a deadlock and working out if there are other cases of deadlock
-> >>
-> >> beside bind mounting.
-> >>
-> > I'm not sure that I understand the cause of the deadlock.
->=20
-> It's been a while but IIRC it was because of mounts that were
->=20
-> propagation shared.
->=20
->=20
-> They were propagating to another mount but were also being
->=20
-> propagated back which was strange. Again, IIRC and I'm not sure
->=20
-> I do, when a mount was triggered it was causing the propagation
->=20
-> (back) to cover original mount and trying to follow it triggered
->=20
-> another mount that couldn't be competed (since the first couldn't
->=20
-> be completed). It was odd and I'm pretty sure it shouldn't have
->=20
-> been happening.
->=20
 
-I didn't some digging and experimenting.
-I created
+[[This is a different approach to meeting my customer's need.
+  Thoughts? - thanks.]]
 
+Sometimes it is useful for an autofs mount to be "private" for mount
+propagation.  For example, this allows submounts to be moved off with
+"mount --move" - such movement is not permitted for shared mounts.
 
-/etc/auto.master.d/tst.autofs :
+Changing the autofs mount point to "private" with "mount --make-private"
+after the automount daemon has started can be problematic.  If the
+mount point is already shared there will be another copy that will never
+get acted on by automount and so tools accessing it can hang.
 
-   /import /etc/import.map shared bind
+So to safely achieve non-shared auto-mountpoints we need to create a
+transparent bind mount at the mount point, mark it as private, then
+mount the autofs mount there.
 
-and=20
+This patch does this when the "unshared" option is given in the
+auto.master file.
 
-/etc/import.map=20
+Ideally we would check if the target mountpoint is shared and skip the
+extra bind mount in that case.  However checking the propagation status
+requires reading /proc/self/mountinfo which is more work than seems
+justified in this case.
 
-  loop -type=3Dlofs / localhost:/export /B localhost:/export/B /C localhost:/=
-export/C
+Signed-off-by: NeilBrown <neilb@suse.de>
+---
+ daemon/automount.c    | 20 ++++++++++++++++----
+ daemon/direct.c       | 26 ++++++++++++++++++++++++++
+ daemon/indirect.c     | 18 ++++++++++++++++++
+ daemon/master_parse.y |  7 +++++++
+ daemon/master_tok.l   |  1 +
+ include/automount.h   |  6 ++++++
+ man/auto.master.5.in  |  9 +++++++++
+ 7 files changed, 83 insertions(+), 4 deletions(-)
 
-and then tried to access /import/loop/B.  I got a deadlock.
-
-automount has called spawn_bind_mount() which called do_spawn() with
-SPAWN_OPT_OPEN set.  After forking and changing pgrp do_spawn() tried to
-open the target: /export/B.  This had an autofs mount back-propagated to
-it and hung waiting for the bind mount to complete.
-
-I rebuilt after configuring with --enable-mount-locking (which turns off
-SPAWN_OPT_OPEN) and don't get the deadlock any more.
-
-I don't think that is a useful solution, just a proof-of-concept
-work-around.
-
->=20
-> Fact is it was hard to understand what was going on in the first
->=20
-> place, but one thing is sure, propagation shared is not friendly
->=20
-> for automounting and is probably a bad choice for the root file
->=20
-> system on systemd's part.
-
-You probably aren't alone in that view, but I suspect the are real
-advantages.  Probably there is something wrong with the abstraction as
-different people want different things for good reasons.  Changing the
-abstraction might be hard....
-
-I'll sleep on it and try to provide a credible solution for autofs now
-that I understand the problems.  Quite possibly it will just extend the
-current "private" etc flags to the autofs mounts...
-
-Thanks,
-NeilBrown
-
-
->=20
->=20
-> >
-> > I assume it happens when an autofs mount appears somewhere that the
-> > automount daemon doesn't know about, and when propagation is configured
-> > so that when automount mounts something on the location it *does* know
-> > about, the mount isn't propagated to the problem location.
->=20
-> Tbh, I can't remember now.
->=20
->=20
-> >
-> > And access of that problem location would then block waiting for the
-> > automount daemon to mount something, but it never will.
-> >
-> > Is that correct?  Is that the only problem?
->=20
-> I think the only autofs problem is mounts can be set propagation shared.
->=20
->=20
-> >
-> > So if automount bind-mounts something from elsewhere over an autofs
-> > mount point, it doesn't want any autofs mount points is mounts below
-> > this to be propagated back to the origin.  This is why it defaults to
-> > "slave".  That makes sense.  It would be safe for mounts to propagate
-> > back only of the original mount was shared or slave - be we cannot check
-> > or enforce that.
->=20
-> I don't think there is any autofs case where a mount should be set
->=20
-> propagation shared. I am talking about autofs mounts themselves
->=20
-> though not the things autofs mounts for us.
->=20
->=20
-> >
-> > Though if the first autofs mount point were already private, then it
-> > should probably leave the child bind-mount as private rather than change
-> > it to slave.
->=20
-> Yes, I agree.
->=20
->=20
-> >
-> > It feels like there is a lot of potential for problems if someone
-> > creates a bind mount from an automount-manager tree and makes it
-> > private, or if the original tree is private.  So maybe we shouldn't
-> > support "private" autofs mounts.  They should be shared, slave, or
-> > unbindable.
->=20
-> I don't think we should allow autofs mounts to be set propagation
->=20
-> shared, if someone wants to do this they probably don't actually
->=20
-> need to do it and will very likely see a mount hang.
->=20
->=20
-> Not sure about private usage, in fact I don't think I care either
->=20
-> way. Thing is users might get themselves into odd situations but
->=20
-> I don't think it will lead to problems bleeding into other mount
->=20
-> trees like we see with shared mount trees.
->=20
->=20
-> Clearly binding a private tree elsewhere is going to leave a tree
->=20
-> of mounts that will need to be umounted manually unless it is within
->=20
-> a new mount namespace.
->=20
->=20
-> The use case for bind mounting autofs mounts (well what I mean is
->=20
-> actually mount namespace creation but it sounds like and looks like
->=20
-> bind mounting when talking about containers) is into containers where
->=20
-> they need to have the same path to work and need to be propagation
->=20
-> slave for the child directories or mount point triggers that cause
->=20
-> automounts to trigger that then propagate to the namespace.
->=20
->=20
-> >
-> > Similarly slave autofs mounts would be a problem as if they are
-> > bind-mounted to somewhere (or just duplicated into a new namespace).
-> > Changes made by automount wouldn't propagate elsewhere and so deadlocks
-> > could happen.
->=20
-> I think we do need to distinguish between bind-mounting and mount namespace
->=20
-> creation. I've previously used these interchangeably which is not right.
->=20
-> Propagated mounts (I think) are cloned not bound (hehe, sounds like a
->=20
-> bind mount).
->=20
->=20
-> Straight bind-mounting generally isn't useful. I'm not sure it should be
->=20
-> prevented since it's usually not harmful although also not useful. Mount
->=20
-> namespace creation should prevent propagation shared autofs mounts being
->=20
-> included, and there should be some way to prevent any autofs mounts (trees)
->=20
-> from being included, and only specifically requested mounts should be cloned
->=20
-> to the target namespace.
->=20
->=20
-> But that's kindof a "never ever do this, but allow it if someone says=20
-> please"
->=20
-> type thing, and I don't know how to do that, ;)
->=20
->=20
-> >
-> > So maybe the autofs mounts should always be either shared or unbindable.
->=20
-> I agree with that.
->=20
-> Not sure we care about unbindable since pure bind mounts should not cause
->=20
-> harmful side effects but they aren't useful either so ... it's an open
->=20
-> question.
->=20
->=20
-> >
-> > When autofs mounts a new filesystem on an autofs mount it can safely
-> > inherit from the parent.  However when it bind-mounts an existing
-> > filesystem it needs to ensure it is at most "slave".
-> >
-> > So I can see two sensible options.
-> >
-> >   1/ The autofs mount is "shared" if parent is shared, and is
-> >      unbindable otherwise.
-> >      bind-mounts are "slave" if the parent is shared, or
-> >      unbindable otherwise
->=20
-> I think it's only necessary to over-ride setting the mount propagation
->=20
-> shared, I don't think there's a use case for shared at all. I may be
->=20
-> wrong ... time will tell.
->=20
->=20
-> >
-> >   2/ Everything is unbindable.  This could be achieved with the "private"
-> >      option.
->=20
-> I must admit I found unbindable behavior odd.
->=20
-> I played with it a bit and probably need to do so again.
->=20
-> IIRC I thought it wasn't usable to prevent bind mounting.
->=20
->=20
-> >
-> > I guess that we still need to support "shared" with leaves bind mounts
-> > as shared, but with a warning that deadlocks can occur if used
-> > carelessly.
->=20
-> Haha, did I say I really don't like propagation shared mounts ... just
->=20
-> in case, I don't like mount that are propagation shared, ;)
->=20
->=20
-> Ian
->=20
->=20
+diff --git a/daemon/automount.c b/daemon/automount.c
+index f550bc8fb222..dbc8976550eb 100644
+--- a/daemon/automount.c
++++ b/daemon/automount.c
+@@ -32,6 +32,7 @@
+ #include <sys/stat.h>
+ #include <sys/time.h>
+ #include <sys/resource.h>
++#include <sys/mount.h>
+ #include <sys/poll.h>
+ #include <dirent.h>
+ #include <sys/vfs.h>
+@@ -1739,7 +1740,7 @@ static void handle_mounts_cleanup(void *arg)
+ {
+ 	struct autofs_point *ap;
+ 	char buf[MAX_ERR_BUF];
+-	unsigned int clean =3D 0, submount, logopt;
++	unsigned int clean =3D 0, clean_bind =3D 0, submount, logopt;
+ 	unsigned int pending =3D 0;
+=20
+ 	ap =3D (struct autofs_point *) arg;
+@@ -1747,9 +1748,12 @@ static void handle_mounts_cleanup(void *arg)
+ 	logopt =3D ap->logopt;
+ 	submount =3D ap->submount;
+=20
+-	if (!submount && strcmp(ap->path, "/-") &&
+-	    ap->flags & MOUNT_FLAG_DIR_CREATED)
+-		clean =3D 1;
++	if (!submount && strcmp(ap->path, "/-")) {
++		if (ap->flags & MOUNT_FLAG_DIR_CREATED)
++			clean =3D 1;
++		if (ap->flags & MOUNT_FLAG_DID_BIND)
++			clean_bind =3D 1;
++	}
+=20
+ 	if (submount) {
+ 		struct mnt_list *mnt;
+@@ -1787,6 +1791,14 @@ static void handle_mounts_cleanup(void *arg)
+ 		master_free_mapent(ap->entry);
+ 	}
+=20
++	if (clean_bind) {
++		if (umount2(ap->path, MNT_DETACH)) {
++			char *estr =3D strerror_r(errno, buf, MAX_ERR_BUF);
++			warn(logopt, "failed to remove internal bind mount %s: %s",
++			     ap->path, estr);
++		}
++	}
++
+ 	if (clean) {
+ 		if (rmdir(ap->path) =3D=3D -1) {
+ 			char *estr =3D strerror_r(errno, buf, MAX_ERR_BUF);
+diff --git a/daemon/direct.c b/daemon/direct.c
+index 316ffd781762..db15689def9d 100644
+--- a/daemon/direct.c
++++ b/daemon/direct.c
+@@ -205,6 +205,14 @@ force_umount:
+ 	} else
+ 		info(ap->logopt, "umounted direct mount %s", me->key);
+=20
++	if (!rv && (me->flags & MOUNT_FLAG_DID_BIND)) {
++		if (umount2(me->key, MNT_DETACH) =3D=3D -1) {
++			char *estr =3D strerror_r(errno, buf, MAX_ERR_BUF);
++			warn(ap->logopt, "failed to unmount internal bind mount %s: %s",
++			     me->key, estr);
++		}
++	}
++
+ 	if (!rv && me->flags & MOUNT_FLAG_DIR_CREATED) {
+ 		if  (rmdir(me->key) =3D=3D -1) {
+ 			char *estr =3D strerror_r(errno, buf, MAX_ERR_BUF);
+@@ -400,6 +408,24 @@ int do_mount_autofs_direct(struct autofs_point *ap,
+=20
+ 	map_name =3D me->mc->map->argv[0];
+=20
++	me->flags &=3D ~MOUNT_FLAG_DID_BIND;
++	if (ap->flags & MOUNT_FLAG_UNSHARED) {
++		/* Ideally we would check if the mount is shared, but
++		 * that requires reading mountinfo which isn't easy.
++		 */
++		if (mount(me->key, me->key, "none", MS_BIND, NULL) !=3D 0) {
++			error(ap->logopt,
++			      "failed to create internal bind mount for 'unshared': %s",
++			      me->key);
++		} else {
++			if (mount(NULL, me->key, NULL, MS_PRIVATE, NULL) =3D=3D 0)
++				me->flags |=3D MOUNT_FLAG_DID_BIND;
++			else
++				error(ap->logopt,
++				      "failed to make %s private", me->key);
++		}
++	}
++
+ 	ret =3D mount(map_name, me->key, "autofs", MS_MGC_VAL, mp->options);
+ 	if (ret) {
+ 		crit(ap->logopt, "failed to mount autofs path %s", me->key);
+diff --git a/daemon/indirect.c b/daemon/indirect.c
+index 23ef9f41398d..70c601814f6d 100644
+--- a/daemon/indirect.c
++++ b/daemon/indirect.c
+@@ -108,6 +108,24 @@ static int do_mount_autofs_indirect(struct autofs_point =
+*ap, const char *root)
+ 	if (!type || strcmp(ap->entry->maps->type, "hosts"))
+ 		map_name =3D ap->entry->maps->argv[0];
+=20
++	ap->flags &=3D ~MOUNT_FLAG_DID_BIND;
++	if (ap->flags & MOUNT_FLAG_UNSHARED) {
++		/* Ideally we would check if the mount is shared, but
++		 * that requires reading mountinfo which isn't easy.
++		 */
++		if (mount(root, root, "none", MS_BIND, NULL) !=3D 0) {
++			error(ap->logopt,
++			      "failed to create internal bind mount for 'unshared': %s",
++			      root);
++		} else {
++			if (mount(NULL, root, NULL, MS_PRIVATE, NULL) =3D=3D 0)
++				ap->flags |=3D MOUNT_FLAG_DID_BIND;
++			else
++				error(ap->logopt,
++				      "failed to make %s private", root);
++		}
++	}
++
+ 	ret =3D mount(map_name, root, "autofs", MS_MGC_VAL, options);
+ 	if (ret) {
+ 		crit(ap->logopt,
+diff --git a/daemon/master_parse.y b/daemon/master_parse.y
+index 469cfe9765ac..9e4e9d0e02ff 100644
+--- a/daemon/master_parse.y
++++ b/daemon/master_parse.y
+@@ -62,6 +62,7 @@ static long positive_timeout;
+ static unsigned symlnk;
+ static unsigned strictexpire;
+ static unsigned nobind;
++static unsigned unshared;
+ static unsigned ghost;
+ extern unsigned global_selection_options;
+ static unsigned random_selection;
+@@ -116,6 +117,7 @@ static int master_fprintf(FILE *, char *, ...);
+ %token OPT_TIMEOUT OPT_NTIMEOUT OPT_PTIMEOUT OPT_NOBIND OPT_NOGHOST OPT_GHOS=
+T OPT_VERBOSE
+ %token OPT_DEBUG OPT_RANDOM OPT_USE_WEIGHT OPT_SYMLINK OPT_MODE
+ %token OPT_STRICTEXPIRE OPT_SHARED OPT_SLAVE OPT_PRIVATE
++%token OPT_UNSHARED
+ %token COLON COMMA NL DDASH
+ %type <strtype> map
+ %type <strtype> options
+@@ -223,6 +225,7 @@ line:
+ 	| PATH OPT_SLAVE { master_notify($1); YYABORT; }
+ 	| PATH OPT_PRIVATE { master_notify($1); YYABORT; }
+ 	| PATH OPT_NOBIND { master_notify($1); YYABORT; }
++	| PATH OPT_UNSHARED { master_notify($1); YYABORT; }
+ 	| PATH OPT_GHOST { master_notify($1); YYABORT; }
+ 	| PATH OPT_NOGHOST { master_notify($1); YYABORT; }
+ 	| PATH OPT_VERBOSE { master_notify($1); YYABORT; }
+@@ -642,6 +645,7 @@ daemon_option: OPT_TIMEOUT NUMBER { timeout =3D $2; }
+ 	| OPT_SHARED	{ propagation =3D PROPAGATION_SHARED; }
+ 	| OPT_SLAVE	{ propagation =3D PROPAGATION_SLAVE; }
+ 	| OPT_PRIVATE	{ propagation =3D PROPAGATION_PRIVATE; }
++	| OPT_UNSHARED  { unshared =3D 1; }
+ 	| OPT_NOBIND	{ nobind =3D 1; }
+ 	| OPT_NOGHOST	{ ghost =3D 0; }
+ 	| OPT_GHOST	{ ghost =3D 1; }
+@@ -716,6 +720,7 @@ static void local_init_vars(void)
+ 	symlnk =3D 0;
+ 	strictexpire =3D 0;
+ 	propagation =3D PROPAGATION_SLAVE;
++	unshared =3D 0;
+ 	nobind =3D 0;
+ 	ghost =3D defaults_get_browse_mode();
+ 	random_selection =3D global_selection_options & MOUNT_FLAG_RANDOM_SELECT;
+@@ -918,6 +923,8 @@ int master_parse_entry(const char *buffer, unsigned int d=
+efault_timeout, unsigne
+ 	entry->ap->flags &=3D ~(PROPAGATION_MASK);
+ 	entry->ap->flags |=3D propagation;
+=20
++	if (unshared)
++		entry->ap->flags |=3D MOUNT_FLAG_UNSHARED;
+ 	if (random_selection)
+ 		entry->ap->flags |=3D MOUNT_FLAG_RANDOM_SELECT;
+ 	if (use_weight)
+diff --git a/daemon/master_tok.l b/daemon/master_tok.l
+index e2d15bce8b4d..28b34647ecc6 100644
+--- a/daemon/master_tok.l
++++ b/daemon/master_tok.l
+@@ -437,6 +437,7 @@ MODE		(--mode{OPTWS}|--mode{OPTWS}=3D{OPTWS})
+ 	-?shared		{ return(OPT_SHARED); }
+ 	-?slave			{ return(OPT_SLAVE); }
+ 	-?private		{ return(OPT_PRIVATE); }
++	-?unshared		{ return(OPT_UNSHARED); }
+ 	-?strictexpire		{ return(OPT_STRICTEXPIRE); }
+ 	-g|--ghost|-?browse	{ return(OPT_GHOST); }
+ 	-v|--verbose		{ return(OPT_VERBOSE); }
+diff --git a/include/automount.h b/include/automount.h
+index 9387ad1b1ce2..32372c5cabce 100644
+--- a/include/automount.h
++++ b/include/automount.h
+@@ -548,6 +548,12 @@ struct kernel_mod_version {
+ /* Indicator for applications to ignore the mount entry */
+ #define MOUNT_FLAG_IGNORE		0x1000
+=20
++/* The autofs mount must not be shared */
++#define MOUNT_FLAG_UNSHARED		0x2000
++
++/* The bind mount was created first to change propagation */
++#define MOUNT_FLAG_DID_BIND		0x4000
++
+ struct autofs_point {
+ 	pthread_t thid;
+ 	char *path;			/* Mount point name */
+diff --git a/man/auto.master.5.in b/man/auto.master.5.in
+index 167170150292..db907b6bc878 100644
+--- a/man/auto.master.5.in
++++ b/man/auto.master.5.in
+@@ -221,6 +221,15 @@ since the automount target is itself an (unwanted) autom=
+ount trigger.
+ This option is an autofs pseudo mount option that can be used in the
+ master map only.
+ .TP
++.I unshared
++This option ensures that the auto-mountpoint created is not shared for
++the purposes of mount propagation.  Marking the mountpoint "private"
++after it is mounted is not safe for auto-mountpoints as it can leave
++orphans auto-mountpoints which will causing any tool accessing them to
++hang.  So automount must ensure the auto-mountpoints are not shared when
++first mounted.  It does this by creating an internal bind mount at the
++target mountpoint which has mount propagation disabled.
++.TP
+ .I "\-r, \-\-random-multimount-selection"
+ Enables the use of random selection when choosing a host from a
+ list of replicated servers. This option is applied to this mount
+--=20
+2.40.0
 
