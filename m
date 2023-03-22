@@ -2,52 +2,52 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A99D6C3F38
-	for <lists+autofs@lfdr.de>; Wed, 22 Mar 2023 01:38:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C96CC6C3F70
+	for <lists+autofs@lfdr.de>; Wed, 22 Mar 2023 02:11:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbjCVAix (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 21 Mar 2023 20:38:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60226 "EHLO
+        id S229579AbjCVBLn (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 21 Mar 2023 21:11:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229854AbjCVAip (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 21 Mar 2023 20:38:45 -0400
+        with ESMTP id S229522AbjCVBLn (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 21 Mar 2023 21:11:43 -0400
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07B6B5261
-        for <autofs@vger.kernel.org>; Tue, 21 Mar 2023 17:38:21 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id EE9015C0091;
-        Tue, 21 Mar 2023 20:38:17 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BCD1BAC3
+        for <autofs@vger.kernel.org>; Tue, 21 Mar 2023 18:11:41 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id C3B4F5C00F9;
+        Tue, 21 Mar 2023 21:11:40 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 21 Mar 2023 20:38:17 -0400
+  by compute3.internal (MEProxy); Tue, 21 Mar 2023 21:11:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
         :cc:content-transfer-encoding:content-type:content-type:date
         :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
         :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
-        1679445497; x=1679531897; bh=swjYuE6Kuq92o3hcKMCO/H9i5+kAx+S0F/k
-        LaNe/4AY=; b=Wth3yVL8icWWYB0YB5c/p997cv29ve+RMtKe4dRdWE1YYtxAwzY
-        71dkY5L3IpiKtAr/vAP4By0VnDpeG1IbbecTlla5HmbWSvnulOqzk0KgN+u2D5O0
-        FXTnwBH4GE2jLL3XNHoDaijGLvnrOXClUpbFAk2+KbOPx1ZBbNBO6vnwGm4It3T1
-        3olb5x7SDju3ZbTjlV8MJYqgQcAp6BFxXNQYW4vgLR9HWYfd2JoH6gmsAavIjZMY
-        zS+Wbj9tjKVJrOElq309l5wgylc0ujuYquAjomEbFn7dgFD67B4hFZVR6n/L861a
-        mlaf0A8HCP+lMGgN1gpp3N0xU3jqSSJXFZg==
+        1679447500; x=1679533900; bh=lSBRfWwtFkfFx67ULMcxJibcdIUcir7ZZ5I
+        7gsg7494=; b=T0m9VeFcD+rPh7cyS1jdiv8efOml1YQw8ensmT5x0NnZE5DheDY
+        RIx1tYXGaKtsmTddkXcgpiZRcSAsIZCc+vIrOl80fsAYiF7tO9zwxqZHnUvO/j5j
+        eOAaLhecu9Vooe/dyoNDFFyKg1pZZU4BVHzJz0H5aOOaArFyBYxJs+y2OkxMs6tk
+        qtAQZ6eeKanzgFDnHVVF2FABTBYJtvdtfXHL1ry89Qxyo50KTX76nG4lmnZtGfti
+        eBiqOTOxNyzEmyTdakKoMLfDGHR+ruNOpVg/ygXjaYuq1L7y6+oFgFuN3zz1TqWh
+        /yQg/4u97dgvpo0DgXUgJgZ6Xyb8Igj/MWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:date:feedback-id:feedback-id
         :from:from:in-reply-to:in-reply-to:message-id:mime-version
         :references:reply-to:sender:subject:subject:to:to:x-me-proxy
         :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1679445497; x=1679531897; bh=swjYuE6Kuq92o3hcKMCO/H9i5+kAx+S0F/k
-        LaNe/4AY=; b=Jp/dM9oGZVi5PhvH6oDkor0xOxR2WnMKIPAIcYvHYCFPt/btcxu
-        9NyuR+wS4Lgbol8/DHojNXXp3wn2wzK9xK6iRToKqhSg0p7kDteuz2MYMPFbb6eJ
-        omOY4bWUSZmI61dB19VmPnlHMoISnfFXgDw5vp73WIWgmbOxEqz9Aam1n1cgA7QH
-        JYXsgGM3wcAWrktu0wKqWB2geX2+6iELLPZ9UWBXMe3COh5KcWZUO84jq4fveSXb
-        Tcb6ytZdrcaR1RS7cF+GPR5omzQsI3S/fa9/DvY3fv6Edf1fzZU3/xlxmKFS6vnJ
-        N4uX4gxruOATG3tGET5qi5U2LsFKqminh4g==
-X-ME-Sender: <xms:-U0aZHkFyK_K39opjVE-qK6MQwgGQp4809eG883-g_XpZSBKOoUKOQ>
-    <xme:-U0aZK0ml86RirM4yP8af7TPqilrnc-6GTDK4HMX5OfSn9klR8tlY2uAkWe08atZu
-    XgqjGAWB8bg>
-X-ME-Received: <xmr:-U0aZNo992cx2vllLgn05a-e1IKAqyUBi7TzAptIJUpJZCpdpsQDeHE-5FmFiSl1EPvltYNaOsHo2ayywxGavmEElYtIl9RMMSLG_xnwlbSiZO8mTi7r>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeguddgvdehucetufdoteggodetrfdotf
+        1679447500; x=1679533900; bh=lSBRfWwtFkfFx67ULMcxJibcdIUcir7ZZ5I
+        7gsg7494=; b=bzZx10E5YNDjJxerrL7wUnNISw+utieHzOqSylyz3AzEJrD1PKk
+        RR/klrOs81qbUtMmK51jXhObsF9YTqZUUpAGh4cdVhohOaBz7mGm/BCGA2SN/1o+
+        AvQMInzV8OvB/83IVhCpJD2JS/wb+WOnI7w4dMhUX0bZG/5HCu/kmPSOwO5HpYV/
+        U+g5LMT2J/tg7FxOeXhYHdeAyNyaCRuHyWNAwaaUaUvs6hHa2ohBuoi0OK/aq5XH
+        8WOgsTcOiBr3JBOn3kpgLrskWmKthk2pFiPEuzV5h6m2gwhDmzwlQ9voRxBfb/ol
+        XOAEqIc1s4ZKyyGUoocKCY2glVi95s0u6JQ==
+X-ME-Sender: <xms:zFUaZJB-ooygFmfV02tRyd3K7AZ5A1ukyfw-2Hzw0r_HHsKundBmnQ>
+    <xme:zFUaZHhfm7MciBdYL63VrppZJ9ooDGU4kW_7vgamLe6h0HWwoZQSJzdr3d_r3Kdvk
+    QKl7GqwTMqL>
+X-ME-Received: <xmr:zFUaZEnO7Rrja0LL3SY9KTVS8YBRLgAb07Trr8yc65T0YKr8OKkQMwgrBB3Be2dW1b_6lCDTaeg-xK0gnmn3aKChzZ4miNvpZicOSI3phD-PbiSahJXe>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeguddgfedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfuvfevfhfhjggtgfesth
     ejredttdefjeenucfhrhhomhepkfgrnhcumfgvnhhtuceorhgrvhgvnhesthhhvghmrgif
@@ -55,24 +55,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeguddgvdehucetufdoteggod
     ethffhleeigeffgfeijefftdegkeenucffohhmrghinhepthhokhdrlhgsnecuvehluhhs
     thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvg
     hmrgifrdhnvght
-X-ME-Proxy: <xmx:-U0aZPmdsrt3mjGO84uO11M-KinL8PjannG3_LLcTwRHwN7ecSdDnw>
-    <xmx:-U0aZF29yjA96jEMjLTElPioyrnDTDH7SUmRp06V9VQdllzpRXrJaA>
-    <xmx:-U0aZOvKFqVrn6MjJGrpQ_qvvL-W1B_R4v67FYdeOqOGlqbTJZ3QaQ>
-    <xmx:-U0aZCiiRvx9j0oosvdM62EJDNYXEulaOwgwQrUhJGQZMJuYDgM8bw>
+X-ME-Proxy: <xmx:zFUaZDzXxdzzHy1HkWgzsIZ-USeiqV2_MYzap1lr0eNGpNOEoSTXRA>
+    <xmx:zFUaZORQMG8J-Ht-P6Uhk1YkLYh3_FwKS56STmkFERvNeDHEhc447Q>
+    <xmx:zFUaZGblVYvhTtjCRtcKFREc3LnXTx9o0eDypGvyWL4wM0YTcKS69g>
+    <xmx:zFUaZFMJb2sUY5etEsJKO4hN7MpxiNp1zfK2-u4bCoJwrsXxoyod4w>
 Feedback-ID: i31e841b0:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Mar 2023 20:38:16 -0400 (EDT)
-Message-ID: <fc354f86-a31d-5fae-e0da-0cf2749bbe01@themaw.net>
-Date:   Wed, 22 Mar 2023 08:38:11 +0800
+ 21 Mar 2023 21:11:39 -0400 (EDT)
+Message-ID: <6de3cfaa-10ba-b350-960e-a21577db6dba@themaw.net>
+Date:   Wed, 22 Mar 2023 09:11:35 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
 Subject: Re: [PATCH] autofs-5.1.8 - add "unshared" option to disable mount
  propagation.
+Content-Language: en-US
 To:     NeilBrown <neilb@suse.de>
 Cc:     autofs@vger.kernel.org
 References: <167928279599.8008.18190549797975624979@noble.neil.brown.name>
-Content-Language: en-US
 From:   Ian Kent <raven@themaw.net>
 In-Reply-To: <167928279599.8008.18190549797975624979@noble.neil.brown.name>
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -90,70 +90,19 @@ X-Mailing-List: autofs@vger.kernel.org
 On 20/3/23 11:26, NeilBrown wrote:
 > [[This is a different approach to meeting my customer's need.
 >    Thoughts? - thanks.]]
-
-I'm a bit lost here now.
-
-
+>
 > Sometimes it is useful for an autofs mount to be "private" for mount
 > propagation.  For example, this allows submounts to be moved off with
 > "mount --move" - such movement is not permitted for shared mounts.
-
-I always use "submount" to refer to map entries that have fstype=autofs,
-
-they are distinct mounts, is that the case here?
-
-
 >
 > Changing the autofs mount point to "private" with "mount --make-private"
 > after the automount daemon has started can be problematic.  If the
 > mount point is already shared there will be another copy that will never
 > get acted on by automount and so tools accessing it can hang.
-
-Right, I get that.
-
-
 >
 > So to safely achieve non-shared auto-mountpoints we need to create a
 > transparent bind mount at the mount point, mark it as private, then
 > mount the autofs mount there.
-
-Yes, it's the parent mount that things need to be done to, was always
-
-a bit of a pain to understand IMHO, and easy to get confused by.
-
-
-So what do we end up with here, a stack of mounts with one extra
-
-mount?
-
-It sounds like the goal is to set the autofs mount propagation
-
-private, is that right?
-
-
-I'm not sure but this might cause some trouble for the kernel.
-
-I've been working on fixing the expire check for mount trees to
-
-work for multiple mount namespaces in the kernel and mount stacking
-
-topology looks a bit odd.
-
-
-Do these mount points continue to expire as they should?
-
-I wonder what this will do to my expire changes ...
-
-
-I'm sorry, I feel like I'm being difficult now and I don't want
-
-to be but what's being done here is puzzling me and sounds just
-
-a bit unusual.
-
-
-Ian
-
 >
 > This patch does this when the "unshared" option is given in the
 > auto.master file.
@@ -208,6 +157,38 @@ Ian
 > +		if (ap->flags & MOUNT_FLAG_DID_BIND)
 > +			clean_bind = 1;
 > +	}
+
+I think I have a bug here and you've been caught by it.
+
+
+Not considering the directory created flag, that if clause above
+
+says "if it's an indirect mount and it's not a submount" but below
+
+there's an extra mount for both indirect and direct mounts. Looks
+
+like it leaks direct mounts. I think I might require direct mount
+
+point directories to already exist, so maybe it's not a bug before
+
+the change here, I'd need to check.
+
+
+Now direct mounts do need to be distinct (no nesting is allowed)
+
+so that should be fine but we frequently see direct mount maps
+
+with several hundred or less frequently several thousand map
+
+entries and occasionally many more. So making each one consume 2
+
+mounts is probably not such a good idea. Although it does require
+
+a mount option so maybe it's ok.
+
+
+Ian
+
 >   
 >   	if (submount) {
 >   		struct mnt_list *mnt;
