@@ -2,350 +2,93 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C9FB6C43D7
-	for <lists+autofs@lfdr.de>; Wed, 22 Mar 2023 08:08:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A8686D3E7E
+	for <lists+autofs@lfdr.de>; Mon,  3 Apr 2023 09:57:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjCVHIg (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 22 Mar 2023 03:08:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
+        id S231742AbjDCH51 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 3 Apr 2023 03:57:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbjCVHIf (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 22 Mar 2023 03:08:35 -0400
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CEAD5550C
-        for <autofs@vger.kernel.org>; Wed, 22 Mar 2023 00:08:34 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 81B775C023E;
-        Wed, 22 Mar 2023 03:08:33 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 22 Mar 2023 03:08:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
-        :cc:content-transfer-encoding:content-type:content-type:date
-        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
-        1679468913; x=1679555313; bh=FgKoBXll1QLU9WQTtM5736aQIFDLlHKbGJq
-        l5ZQVa9w=; b=tETfOc8qF/BgoTrWayjciKJmXegi3b/At5LTeceByygPFXigsVt
-        /eWuTkV20w8BqX5eEG6gy5HMJkZYlIhX4PQNoHwGlSatYLL0Qh+6TVFahX4cVyUO
-        FxTdeq2r1ukaibplSHevHNVFyN9kO+ly2UIAkhGLDOKtyl1ODpu6SdkVvEGzi30v
-        +xachX3bUML5d5f8IMw9iCHWNlVqa4C4O1nnmETzNk1EfAVcvh/65j3laVP0LCzp
-        QvvRTRzgJovgckPBJ69+kSssA1/qcOPGXqcXHDwcz3QwXFV2kacGYkD3gEnXCbbp
-        UcoIgVgcfoYsWWADDOFf2LgWEXiJ79gr94w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1679468913; x=1679555313; bh=FgKoBXll1QLU9WQTtM5736aQIFDLlHKbGJq
-        l5ZQVa9w=; b=o0lZb+4raPxmCu2oWsiCDCn6gh+wyx6AdHkHF5pxto+J1Qd6/W6
-        erboW5WBzT3v9mPAoozc1wLFa4JhTqQHPtcTz00QULEYNGJYA5G4d1aQJEbCCPQo
-        YT7tDpOxIGk1GOZsar1+GG5KW1yZWAhclus3LBH1o35j0eY/gqKVHvHz75gURyYT
-        joFJYQZH0GOkqViiVN6p6SdCiem3kL+bSd3kbTEzLbpo2K3Wr5DKuaTQWGligZod
-        2fUZCjGMFnSBqp7S4w05FB+6iGaYknD/lBYMb3d+riJUHnmdUpEZ76v87/8wMBO6
-        QO0CErMS0f8B+LF9bjFsMXGT8l8CQmU4R+g==
-X-ME-Sender: <xms:cakaZLYDmoidVRSNvEPk5riRItX9GvoodunkN5C9SjkmPCRcTjJIqA>
-    <xme:cakaZKY0pxAfbgtBiO0Bl2awFgh5XoNE9qbqeG7R6B7Je-eD2CoLVhcC32tb6noJe
-    alewthjmbXz>
-X-ME-Received: <xmr:cakaZN_m5sRrJ69CAQzBddis9j1UZOvVUvy-C3UvrTZ9JP9xPUHrjwDS5HmsJ6eMSDL_F3638U1gWuk_ahD2JLSzPHi53uyyL1mRDXpJQPJmKyc4AAeL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeguddguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepkfffgggfuffvvehfhfgjtgfgse
-    htkeertddtfeejnecuhfhrohhmpefkrghnucfmvghnthcuoehrrghvvghnsehthhgvmhgr
-    fidrnhgvtheqnecuggftrfgrthhtvghrnhepgedvteevvdefiedvueeujeegtedvheelhf
-    ehtefhkefgjeeuffeguefgkeduhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomheprhgrvhgvnhesthhhvghmrgifrdhnvght
-X-ME-Proxy: <xmx:cakaZBoTNMZ2-TfiBmxrjEBwaMpLVd_OK885F_Pll-qraayh2xyOzw>
-    <xmx:cakaZGpCkZFbgYQIuze9ABBc-5NF-OMusESOVbcG0xR9C62dUDJWUA>
-    <xmx:cakaZHQfIyMLI3EiwHE50nmfq8DMe2T8Ku-NoU9zKvxMnEvI_Ib7hg>
-    <xmx:cakaZEEWAyU4FvVSO6DsWqR3R62jaDoTAxr7eVo-_CmfnCDDaAqf9w>
-Feedback-ID: i31e841b0:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Mar 2023 03:08:31 -0400 (EDT)
-Message-ID: <782b2b89-cfce-8f79-fd9d-9de2860e8322@themaw.net>
-Date:   Wed, 22 Mar 2023 15:08:27 +0800
+        with ESMTP id S231788AbjDCH5W (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 3 Apr 2023 03:57:22 -0400
+X-Greylist: delayed 395 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 03 Apr 2023 00:57:18 PDT
+Received: from mail.gramblingfirm.com (mail.gramblingfirm.com [89.40.118.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DEBE8A49
+        for <autofs@vger.kernel.org>; Mon,  3 Apr 2023 00:57:18 -0700 (PDT)
+Received: by mail.gramblingfirm.com (Postfix, from userid 1001)
+        id 28722817E2; Mon,  3 Apr 2023 08:50:34 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gramblingfirm.com;
+        s=mail; t=1680508242;
+        bh=gqzZsu7MXwZPzlbvSQiKceUrEEFPNw9Lezccrk6Bymo=;
+        h=Date:From:To:Subject:From;
+        b=odbMK/BVlL1+cvJp2J3jT4y2dxKI0K9QbvlyxlbDpbQJXppYlpir2Axxb1aJAMDqw
+         ihuIBBYH/gY2lADESyL3HkLnxca/GavAL/R7nDLKaa9lUmKA9kJbZ/eEZCkPp+Yq8s
+         yikCOybTRHn4MNtzzjKWXjDNwz7LDpk/uPXFcIha//YF/L8FnFkJjLlHJcQnXB4fR+
+         0OXDufd7bRVxPOBS2GLkNbB3/7aC+1X2oy9pA1SBjsQ5CJaKUKsCYbt2qS7CVKJCI2
+         egCPYsOA7tNukHC0fhxsWNAejfvC7YbJYvWNFVGzCtqHFp+4VLo9KEEcGNuSNjKmgO
+         OtV7Ou+n+8mIg==
+Received: by mail.gramblingfirm.com for <autofs@vger.kernel.org>; Mon,  3 Apr 2023 07:50:26 GMT
+Message-ID: <20230403074500-0.1.2p.4ofj.0.2o7ghq9q98@gramblingfirm.com>
+Date:   Mon,  3 Apr 2023 07:50:26 GMT
+From:   "Daniel Musil" <daniel.musil@gramblingfirm.com>
+To:     <autofs@vger.kernel.org>
+Subject: Robotisation of production
+X-Mailer: mail.gramblingfirm.com
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] autofs-5.1.8 - add "unshared" option to disable mount
- propagation.
-Content-Language: en-US
-To:     NeilBrown <neilb@suse.de>
-Cc:     autofs@vger.kernel.org
-References: <167928279599.8008.18190549797975624979@noble.neil.brown.name>
- <fc354f86-a31d-5fae-e0da-0cf2749bbe01@themaw.net>
- <167945353012.8008.5840128784550260895@noble.neil.brown.name>
-From:   Ian Kent <raven@themaw.net>
-In-Reply-To: <167945353012.8008.5840128784550260895@noble.neil.brown.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,RCVD_IN_SORBS_DUL,
+        SPF_HELO_NONE,SPF_PASS,URIBL_CSS_A,URIBL_DBL_SPAM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: *  3.6 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
+        *      [89.40.118.123 listed in zen.spamhaus.org]
+        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
+        *      blocklist
+        *      [URIs: gramblingfirm.com]
+        *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
+        *      blocklist
+        *      [URIs: gramblingfirm.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.0 RCVD_IN_SORBS_DUL RBL: SORBS: sent directly from dynamic IP
+        *      address
+        *      [89.40.118.123 listed in dnsbl.sorbs.net]
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On 22/3/23 10:52, NeilBrown wrote:
-> On Wed, 22 Mar 2023, Ian Kent wrote:
->> On 20/3/23 11:26, NeilBrown wrote:
->>> [[This is a different approach to meeting my customer's need.
->>>     Thoughts? - thanks.]]
->> I'm a bit lost here now.
->>
->>
->>> Sometimes it is useful for an autofs mount to be "private" for mount
->>> propagation.  For example, this allows submounts to be moved off with
->>> "mount --move" - such movement is not permitted for shared mounts.
->> I always use "submount" to refer to map entries that have fstype=autofs,
-> Now I'm lost.
-> Do you mean a map containing something like
->    key -fstype autofs ....
-Hehe, no ...
->
-> ?? I cannot imaging how that would work.
-> Or maybe you mean multimounts?
+Hello,
 
-Again, no ...
+I am trying to reach the person who manages your machinery and/or is resp=
+onsible for the improvement and automation of production.=20
 
+We deal with processes related to broadly defined robotisation and automa=
+tion of production. We support you in the design and implementation of au=
+tomation and control systems, the construction of control cabinets, their=
+ servicing and diagnostics of already existing devices.=20
 
-Check out these examples from the connectathon test I use, obviously
+Thanks to a large team of specialists in various fields, we are able to i=
+mplement industrial robots, construct electrical installation facilities,=
+ provide solutions for monitoring of media consumption, and integrate mac=
+hines and devices into complete assemblies.
 
-those, AUTOMAP_DIR, SERVER1, AUTO_SERVER_DIR, get replaced as part
+What sets us apart is our versatility, many years of experience and a qua=
+lified team who have developed their knowledge over the years by carrying=
+ out projects for various industries and processes.
 
-of the test run:
+I think it is worth discussing what this looks like in your company and w=
+hat we could offer. What do you think of my proposal?
 
-
-#
-# basic tests
-#
-g1      -fstype=autofs                  :AUTOMAP_DIR/auto_icthon
-g1a     -fstype=autofs  /               :AUTOMAP_DIR/auto_icthon
-g1b     /       -fstype=autofs          :AUTOMAP_DIR/auto_icthon
-
-##
-## subdir support
-##
-g2       \
-         /s1     -fstype=autofs          :AUTOMAP_DIR/auto_icthon \
-         /s2     -fstype=autofs          :AUTOMAP_DIR/auto_icthon
-g2a      \
-         / SERVER1:AUTO_SERVER_DIR/export5/testing/test \
-         /s1     -fstype=autofs          :AUTOMAP_DIR/auto_icthon \
-         /s2     -fstype=autofs          :AUTOMAP_DIR/auto_icthon
-g3b SERVER1:AUTO_SERVER_DIR/export5/testing/test \
-         /s1     -fstype=autofs          :AUTOMAP_DIR/auto_icthon \
-         /s2     -fstype=autofs          :AUTOMAP_DIR/auto_icthon
-g3c      \
-         / SERVER1:AUTO_SERVER_DIR/export5/testing/test \
-         /s1 SERVER1:AUTO_SERVER_DIR/export5/testing/test/s1 \
-         /s2 SERVER1:AUTO_SERVER_DIR/export5/testing/test/s2 \
-         /s1/ss1 -fstype=autofs          :AUTOMAP_DIR/auto_icthon \
-         /s2/ss2 -fstype=autofs          :AUTOMAP_DIR/auto_icthon
-
-##
-## subdir-option support
-##
-g4      -fstype=autofs  \
-         /s1                             :AUTOMAP_DIR/auto_icthon \
-         /s2                             :AUTOMAP_DIR/auto_icthon
-g4a     -fstype=autofs \
-         /                               :AUTOMAP_DIR/auto_icthon
-g4b     -fstype=autofs / -fstype=nfs 
-SERVER1:AUTO_SERVER_DIR/export5/testing/test \
-         /s1                             :AUTOMAP_DIR/auto_icthon \
-         /s2                             :AUTOMAP_DIR/auto_icthon
-
-The thing to notice is that a map can be specified for an autofs sub-mount
-
-within the multi-mount tree.
-
-
-The important thing is that an autofs sub-mount is an independent (autofs)
-
-mount.
-
-
->
->> they are distinct mounts, is that the case here?
-
-Sounds like that isn't the case here ... these sound like plain
-
-indirect mounts.
-
-
-> No. By "submount" I mean whatever gets automatically mounted onto an
-> autofs directory.  That mount is subordinate to the autofs directory and
-> below the autofs mount....  Isn't naming fun ?
-
-Indeed it is .. I just call these mounts or triggered mounts if I need
-
-to.
-
-
->
->>
->>> Changing the autofs mount point to "private" with "mount --make-private"
->>> after the automount daemon has started can be problematic.  If the
->>> mount point is already shared there will be another copy that will never
->>> get acted on by automount and so tools accessing it can hang.
->> Right, I get that.
->>
-> It has occurred to me that this could get addressed in the kernel
-> instead.
-> I haven't worked through all the details, but if autofs_d_automount is
-> called is called with a vfsmnt that is in a different share group to the
-> one used when the mount was created, then I think it should return an
-> error, or at least return NULL.
-
-Mmm share groups are confusing to me, I'm pretty sure I don't understand
-
-them. But, from what I have seen of them, the assertion your making sounds
-
-right.
-
-
->
->>> So to safely achieve non-shared auto-mountpoints we need to create a
->>> transparent bind mount at the mount point, mark it as private, then
->>> mount the autofs mount there.
->> Yes, it's the parent mount that things need to be done to, was always
->>
->> a bit of a pain to understand IMHO, and easy to get confused by.
->>
->>
->> So what do we end up with here, a stack of mounts with one extra
->>
->> mount?
-> Correct.  Is doubling the number of mount points a big cost I wonder...
-
-Well, maybe, the effort David Howells, et. al. (including myself), made
-
-was in part meant to resolve the problems we had with handling very
-
-large mount tables.
-
-You might remember them, they were ultimately rejected by Linus.
-
-
-An example of the sort of problem we would see is a few systemd
-
-processes consuming around 80% or more CPU because systemd will
-
-respond to mount table chnages when there was mount activity.
-
-
-There were quite a few customer bugs because of it, either the
-
-piecemeal changes done over time helped or our customer gave up.
-
-
-So the question of "is having a large number of mounts a problem"
-
-is very much a maybe.
-
-
-At least it's worth keeping it in mind (and we know users will do
-
-dumb things and expect us to support them/make them work) but also
-
-remembering that it's user buy-in controlled by an option.
-
-
->> It sounds like the goal is to set the autofs mount propagation
->>
->> private, is that right?
-> Yes.
-
-And we need to deal with the annoyance of needing to have a parent
-
-mount to propagate from (while at the same time not interfering
-
-with other mounts below it). That was always the thing that caused
-
-me pain and it seemed like an odd and inconvenient design to me.
-
-
->
->>
->> I'm not sure but this might cause some trouble for the kernel.
->>
->> I've been working on fixing the expire check for mount trees to
->>
->> work for multiple mount namespaces in the kernel and mount stacking
->>
->> topology looks a bit odd.
->>
->>
->> Do these mount points continue to expire as they should?
->>
->> I wonder what this will do to my expire changes ...
->>
->>
->> I'm sorry, I feel like I'm being difficult now and I don't want
->>
->> to be but what's being done here is puzzling me and sounds just
->>
->> a bit unusual.
-> You seem helpful to me, rather than difficult.  I realise that what I'm
-> trying a bit odd and it would need a good justification and a clear lack
-> of alternatives.  I'm not sure yet so there is no reason you should be.
-
-Haha, you have certainly picked a difficult problem.
-
-Mount namespaces and propagation are, IMO, difficult to grok, to
-
-say the least.
-
-
-I'm glad I'm not coming across as difficult, ;)
-
-
->
-> I'm actually hoping that I can convince the customer to solve the
-> problem internally (maybe by specifying one or two private bind mounts
-> in /etc/fstab if there are any suitable common roots for all their
-> thousands of mounts) and at the same time exploring options for changing
-> automount.  Leave it with me for now - I'll get back to you after I've
-> done more exploration and heard back from the customer.
-
-You could add a directory to the master map mount point path and
-
-set it propagation private then mount the autofs mount in there.
-
-
-No-one will want to make that sort of change though, likely will
-
-have numerous references to the existing path ... etc.
-
-
->
-> BTW, is there a reason that you don't publish all your current work,
-> possibly some in a "testing" branch or similar?  It might help me to see
-> where you are headed.
-
-There's no reason not to, mostly there's no reason to do so either.
-
-But I could publish a snapshot of what I have if that will help you.
-
-You would need to remember that often it would be out of date almost
-
-immediately, ;)
-
-
-We would need two git repos, one the the user space changes, and one
-
-for the kernel expire changes.
-
-
-The later would be interesting as it starts with a patch from Al that
-
-stops child mounts taking a reference to their parent. That makes the
-
-autofs busyness check very straight forward.
-
-
-Ian
-
+Best regards
+Daniel Musil
