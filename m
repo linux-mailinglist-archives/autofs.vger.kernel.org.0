@@ -2,56 +2,54 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D47066DD0C2
-	for <lists+autofs@lfdr.de>; Tue, 11 Apr 2023 06:22:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A1086E4DFF
+	for <lists+autofs@lfdr.de>; Mon, 17 Apr 2023 18:06:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbjDKEWZ convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+autofs@lfdr.de>); Tue, 11 Apr 2023 00:22:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38700 "EHLO
+        id S229649AbjDQQGP convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+autofs@lfdr.de>); Mon, 17 Apr 2023 12:06:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbjDKEWY (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 11 Apr 2023 00:22:24 -0400
-X-Greylist: delayed 31627 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 10 Apr 2023 21:22:23 PDT
-Received: from zimbra-dc.paul-scerri.ch (dc.paul-scerri.ch [62.220.130.141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8243E10E6
-        for <autofs@vger.kernel.org>; Mon, 10 Apr 2023 21:22:23 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra-dc.paul-scerri.ch (Postfix) with ESMTP id 9488F5853B2;
-        Mon, 10 Apr 2023 20:44:24 +0200 (CEST)
-Received: from zimbra-dc.paul-scerri.ch ([127.0.0.1])
-        by localhost (zimbra-dc.paul-scerri.ch [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id vOqBhoEI3uOC; Mon, 10 Apr 2023 20:44:24 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra-dc.paul-scerri.ch (Postfix) with ESMTP id 97E8D58DB22;
-        Mon, 10 Apr 2023 20:36:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at zimbra-dc.paul-scerri.ch
-Received: from zimbra-dc.paul-scerri.ch ([127.0.0.1])
-        by localhost (zimbra-dc.paul-scerri.ch [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id Rxd_-nrl1aol; Mon, 10 Apr 2023 20:36:23 +0200 (CEST)
-Received: from [185.169.4.108] (unknown [185.169.4.108])
-        by zimbra-dc.paul-scerri.ch (Postfix) with ESMTPSA id 7E4CA58E10C;
-        Mon, 10 Apr 2023 20:28:03 +0200 (CEST)
-Content-Type: text/plain; charset="utf-8"
+        with ESMTP id S229551AbjDQQGP (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 17 Apr 2023 12:06:15 -0400
+X-Greylist: delayed 1829 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 17 Apr 2023 09:06:12 PDT
+Received: from parfum-bhs.ru (mx.bhs32.ru [84.42.40.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFF57A4
+        for <autofs@vger.kernel.org>; Mon, 17 Apr 2023 09:06:12 -0700 (PDT)
+Message-ID: <2413496742-437184@parfum-bhs.ru>
+X-Spam-Status: No, score=4.9 required=5.0 tests=BAYES_00,FORGED_SPF_HELO,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        MSGID_FROM_MTA_HEADER,RCVD_IN_SBL_CSS,RCVD_IN_VALIDITY_RPBL,SPF_FAIL,
+        SPF_HELO_PASS,SPOOFED_FREEMAIL,SPOOFED_FREEM_REPTO,
+        TO_EQ_FM_DOM_SPF_FAIL,TO_EQ_FM_SPF_FAIL,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: 
+X-Footer: cGFyZnVtLWJocy5ydQ==
+Received: from localhost ([127.0.0.1])
+        by parfum-bhs.ru (Kerio Connect 9.2.8 patch 1) with ESMTPA;
+        Mon, 17 Apr 2023 18:35:02 +0300
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8BIT
 Content-Description: Mail message body
-Subject: Re
-To:     Recipients <wiki@paul-scerri.ch>
-From:   "Maria-Elisabeth Schaeffler" <wiki@paul-scerri.ch>
-Date:   Mon, 10 Apr 2023 11:28:02 -0700
-Reply-To: mariaelisabeths457@gmail.com
-Message-Id: <20230410182803.7E4CA58E10C@zimbra-dc.paul-scerri.ch>
-X-Spam-Status: No, score=2.8 required=5.0 tests=FREEMAIL_FORGED_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: **
+Subject: Good day!!
+To:     Recipients <luyongzhen@asia.com>
+From:   luyongzhen@asia.com
+Date:   Mon, 17 Apr 2023 17:34:26 +0200
+Reply-To: luyongzhen28@gmail.com
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Your email account has been selected for a donation of €1,700,000. Please contact for more information.
+Greetings,
 
-Mrs Maria Elisabeth Schaeffler
-CEO SCHAEFFLER.
+  I have a mutual business proposal, which refers to the transfer of a large amount of money to an account abroad, with your help as a foreign partner as a beneficiary of the funds. Everything about this transaction will be legal without any bridge of financial authority both in my country and yours. If you are interested and I will give you more information about the project as soon as I receive your positive response.
+
+Best regards,
+
+Executive Director.
+
+ICBC. China
+
