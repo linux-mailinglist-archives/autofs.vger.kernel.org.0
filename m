@@ -2,71 +2,69 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE08A7149B5
-	for <lists+autofs@lfdr.de>; Mon, 29 May 2023 14:52:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F595722DE4
+	for <lists+autofs@lfdr.de>; Mon,  5 Jun 2023 19:50:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbjE2Mwn (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 29 May 2023 08:52:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59888 "EHLO
+        id S231797AbjFERu4 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 5 Jun 2023 13:50:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjE2Mwn (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 29 May 2023 08:52:43 -0400
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A32B5
-        for <autofs@vger.kernel.org>; Mon, 29 May 2023 05:52:41 -0700 (PDT)
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com [209.85.128.198])
+        with ESMTP id S229559AbjFERuz (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 5 Jun 2023 13:50:55 -0400
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43111A7
+        for <autofs@vger.kernel.org>; Mon,  5 Jun 2023 10:50:54 -0700 (PDT)
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 3CA5D3F452
-        for <autofs@vger.kernel.org>; Mon, 29 May 2023 12:52:38 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 251A33F199
+        for <autofs@vger.kernel.org>; Mon,  5 Jun 2023 17:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1685364758;
-        bh=FaO7huKZqQ1AF2p29Aynp2BOk7vRXz3SQkSLUIz0oP4=;
+        s=20210705; t=1685987452;
+        bh=BMwQWYlnaLFtqQZIIL0hac2AOWMRlmoHYbE/zDEeiSs=;
         h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
          To:Content-Type;
-        b=ZZz35rZWWIU4FppOQVxQ3XlGg/Yk/Rl9apokNMYkl5Dv3osUhEp+EtkzIgUoZg3cn
-         hPA5dSxDPq9NImadroIDlV1abA7r6kSgPRJuSLW+qXUyDcmBsQb4tcpDkbD545n0N+
-         PIEUQfukh0wQkuoPEhIMabwGm9suDahHBK9PFlk++gSzLcR7CdUzYcxPGXYQaz4KDb
-         GbYEIrDYoJfzY5ZEfcJM1UoyGtO+4XYBAoQDIaxSZmk7zwxMcc/z8248CujNpmduby
-         ryxDLIJANl09Yi58yYqPzMlvHuAy/waweb0PrU9QniR7RyaJHTVJ+s0lqz0Syk8lor
-         rPikg3oh8wLxQ==
-Received: by mail-yw1-f198.google.com with SMTP id 00721157ae682-565de4b5be5so22776837b3.1
-        for <autofs@vger.kernel.org>; Mon, 29 May 2023 05:52:38 -0700 (PDT)
+        b=cc9oPTLVsb2wGrZCadGpQnkj/3VBu6H+KmJOomPQ3NwQHtEiffKlgkE7OC93hQlEQ
+         HzQ9ODefRIe+7/lkdo6fkYn5y8tJnRMiGfwDK8/3wJlHX2QUu0DvmJQeSVW1eFzA8q
+         xA0+UrrzzBTW/+f26SKdeaJwha+i5mnsvFc4KYS3eqmpF4rzgOV4LCvw17w1Rti4Rg
+         XSl8VYECgGBHty9XcbQkXwHjAcM6htA9J7NQP37ZcHXqYwsTcx5zz+mVeJi2X2AJQm
+         eNqA/7rNyl9BqLV/Qc4vGShMZnB3eg+8kMQNBGn+VsG8LfDbJfweiyacbwPRaTdpeq
+         Qkj99eTA4pU6w==
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-39a98be77dcso780669b6e.1
+        for <autofs@vger.kernel.org>; Mon, 05 Jun 2023 10:50:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685364757; x=1687956757;
+        d=1e100.net; s=20221208; t=1685987451; x=1688579451;
         h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FaO7huKZqQ1AF2p29Aynp2BOk7vRXz3SQkSLUIz0oP4=;
-        b=gGRZeAvvDOjSfDBUrQhoorpXfknbaf9E4+F/LJLOTFFvKkN2M8Di81/fib1O9b2nc/
-         7JG1BLkIQ4xg17+S614Qi5mdeXdHIiClBTuXtC6DzQwQZYI7VAIsloqqzh8ZuRFrD2th
-         cDHDhSi+B+D+abNpSr4Q1JTxhthKNMFmEnajMi7+FFEt03pMg+q4baQA3VYcNFcjEynS
-         DqxJw99WbXUCAYB0lodAkCrwZycdTHh7WTtPj/Fqeu50ltOlhO7NSVElCFwYFQBITeJb
-         2cMlKdOzvK99jS2pPwvtZPgG6Jnhn5Q0ksnciDDoS4XbmBYvZjuoYDdCZnChFYYkAwFr
-         2Fyg==
-X-Gm-Message-State: AC+VfDxpAOW81HCakeyGHx2BkQtlXMDTwPvsTmNhxuY40gia4SXSxOk6
-        JUpLo98MN7ZzPA1KaRUzZwmFhPiHW8Rxx3qlcQLYqAD42eV6jI8UdoDuqoZKT/3szQkxH4FGrNg
-        wQoH/L35LWkqOVAZCA9vYAwUU+bts12w4OfBCdM4heldM64NQc8IT0PQ3IQ==
-X-Received: by 2002:a0d:eb10:0:b0:565:de9d:be6b with SMTP id u16-20020a0deb10000000b00565de9dbe6bmr7744095ywe.21.1685364757173;
-        Mon, 29 May 2023 05:52:37 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ6kP5I2Un9jv9A1PHYWqIhhSsKH+YMVM3hGnsm4QWkLeXc+g9BF4sI6VYmQxkruvVPVReUqkREq9bK3TaY993g=
-X-Received: by 2002:a0d:eb10:0:b0:565:de9d:be6b with SMTP id
- u16-20020a0deb10000000b00565de9dbe6bmr7744081ywe.21.1685364756900; Mon, 29
- May 2023 05:52:36 -0700 (PDT)
+        bh=BMwQWYlnaLFtqQZIIL0hac2AOWMRlmoHYbE/zDEeiSs=;
+        b=P0SrJdw+KbfYCWckpmthy0wnj0fVnfL+jwEWRHtZRpHjjclVkpE9RG1fW3JYqqmBaC
+         7vG1ZjlgxPLFO/MvfCNmx4zaUyvEQFbX8EOgkcNgrsayYsCspWYCH6Iv/lLl1Y4gqi89
+         5EelneUNca8jcSs6FqWiqKJOcsLKjd3pF8C0N/c9t+bg+nOj1jEPnHhShuqg0HrWXzot
+         QJdqlJsmTCcyRu+tyhbKATBm3w5mvLdOj971qyYiTchXb9x9H+QGCYYBfUqrVZDcfJSo
+         vE64lu3Sb4fDe/oY9ATX+KAPw92n21WR/U/QzEZ6aFLj0EIqAcRiIOK81Lk+TYiW9Dlc
+         LQhA==
+X-Gm-Message-State: AC+VfDz9mD/MjZz91V/efpRhBjvhaS/FWkUA+tAjk2LPUJjGgzMeELjs
+        mIlggN9BrSJROwkX7BDSqN2KhxFfru1Spxe0GcgRZ8KTUTbyBz58rI/GViXgMxcpv4CWzQAPc1W
+        zzFs1lmB+0KhY6u5dkK/+txjYeho4qtpoSHaHIzWQVGbAJdX9I8aO9vATugTn
+X-Received: by 2002:aca:1715:0:b0:39a:519c:2a6a with SMTP id j21-20020aca1715000000b0039a519c2a6amr5162654oii.43.1685987450897;
+        Mon, 05 Jun 2023 10:50:50 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ4vKRqhMvcpEYSLJmoRvygEe1AfnThbYKwQJEfGibHMPxM1XuY7sz1YnuiqLQVNZX/AfIvnxF+pfuiodHMqvG8=
+X-Received: by 2002:aca:1715:0:b0:39a:519c:2a6a with SMTP id
+ j21-20020aca1715000000b0039a519c2a6amr5162643oii.43.1685987450638; Mon, 05
+ Jun 2023 10:50:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <166150296106.37723.4019530934770123921.stgit@donald.themaw.net>
- <166150377330.37723.7093874206401696231.stgit@donald.themaw.net>
- <CANYNYEEL3rv73o+ezPRXfeigacn5vN9O9PGXU6Fysgthfd5BYA@mail.gmail.com> <d496f4d8-b71f-a959-06e2-740916bb2a4b@themaw.net>
-In-Reply-To: <d496f4d8-b71f-a959-06e2-740916bb2a4b@themaw.net>
+References: <20220912005822.3947426-1-reimth@gmail.com> <20220912005822.3947426-2-reimth@gmail.com>
+In-Reply-To: <20220912005822.3947426-2-reimth@gmail.com>
 From:   Andreas Hasenack <andreas@canonical.com>
-Date:   Mon, 29 May 2023 09:52:26 -0300
-Message-ID: <CANYNYEHB_+pjSftSEp-Q1SYKfxP=+0ie-D9X-3Xn84o=i1aEnQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] autofs-5.1.8 - let OpenLDAP handle SASL binding
-To:     autofs mailing list <autofs@vger.kernel.org>
+Date:   Mon, 5 Jun 2023 14:50:39 -0300
+Message-ID: <CANYNYEGQs7+F8-U9YXHCnRmw25fNYBxgK3OnXyRDAw=YgWOsYw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] autofs-5.1.8 - support SCRAM for SASL binding
+To:     autofs@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
@@ -78,39 +76,104 @@ X-Mailing-List: autofs@vger.kernel.org
 
 Hi,
 
-On Mon, May 29, 2023 at 12:13=E2=80=AFAM Ian Kent <raven@themaw.net> wrote:
->
-> On 25/5/23 02:38, Andreas Hasenack wrote:
-> > I quickly tried this:
-> > --- a/modules/lookup_ldap.c 2023-05-16 21:02:41.263345786 +0000
-> > +++ b/modules/lookup_ldap.c 2023-05-16 21:02:47.807520735 +0000
-> > @@ -601,7 +601,10 @@
-> >          debug(logopt, MODPREFIX "autofs_sasl_bind returned %d", rv);
-> >   #else
-> >          if (ctxt->sasl_mech && !strncmp(ctxt->sasl_mech, "GSSAPI", 6))=
- {
-> > -           rv =3D sasl_do_kinit(logopt, ctxt);
-> > +            if (ctxt->client_cc)
-> > +                rv =3D sasl_do_kinit_ext_cc(logopt, ctxt);
-> > +            else
-> > +               rv =3D sasl_do_kinit(logopt, ctxt);
-> >              if (rv !=3D 0)
-> >                  return 0;
-> >              sasl_flags =3D LDAP_SASL_QUIET;
-> >
-> > And then my test case worked again. But maybe there is another way to
-> > do it "the openldap way"?
->
->
-> On the face of it this looks like a mistake.
->
->
-> I'll have a look at the code as a whole later but I expect I'll just appl=
-y
->
-> this as it is, ;)
+On Sun, Sep 11, 2022 at 9:58=E2=80=AFPM ThomasReim <reimth@gmail.com> wrote=
+:
+> This patch enables SCRAM-SHA-1 and other SCRAM-SHA mechanisms
+> (if supported by SASL library).
+> @@ -1241,6 +1241,7 @@ int authtype_requires_creds(const char *authtype)
+>  #ifdef WITH_SASL
+>         if (!strncmp(authtype, "PLAIN", strlen("PLAIN")) ||
+>             !strncmp(authtype, "DIGEST-MD5", strlen("DIGEST-MD5")) ||
+> +           !strncmp(authtype, "SCRAM-SHA-", strlen("SCRAM-SHA-")) ||
+>             !strncmp(authtype, "LOGIN", strlen("LOGIN")))
+>                 return 1;
+>  #endif
 
+While writing a test for this, I decided to include NTLM and CRAM-MD5,
+and noticed something interesting. NTLM in autofs-5.1.8 would "work".
+automount was able to fetch the map from openldap using NTLM SASL
+authentication. Even though it's not handled by
+authtype_requires_creds().
 
-\o/
+When switching to openldap for the sasl authentication, then automount
+would fail if configured to use NTLM. So initially I thought it was a
+regression, but turns out automount 5.1.8 was just ignoring the SASL
+NTLM error and continuing. openldap allowed that, but treated it as an
+anonymous bind I suppose, and since the ACLs didn't prevent that, in
+the end it all worked.
 
-Thanks! :)
+Attempting to mount entry /mnt/storage, notice how sasl fails, but is
+then declared as having worked:
+
+lookup_mount: lookup(ldap): looking up storage
+do_bind: lookup(ldap): auth_required: 2, sasl_mech NTLM
+sasl_bind_mech: Attempting sasl bind with mechanism NTLM
+getuser_func: called with context (nil), id 16386.
+sasl_log_func:128: Parameter Error in ../../common/plugin_common.c near lin=
+e 364
+sasl_bind_mech: sasl bind with mechanism NTLM succeeded
+do_bind: lookup(ldap): autofs_sasl_bind returned 0
+get_query_dn: lookup(ldap): query succeeded, no matches for (objectclass=3D=
+nisMap)
+get_query_dn: lookup(ldap): found query dn ou=3Dauto.indirect,dc=3Dexample,=
+dc=3Dfake
+lookup_one: lookup(ldap): searching for
+"(&(objectclass=3Dautomount)(|(cn=3Dstorage)(cn=3D/)(cn=3D\2A)))" under
+"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake"
+lookup_one: lookup(ldap): getting first entry for cn=3D"storage"
+lookup_one: lookup(ldap): examining first entry
+lookup_mount: lookup(ldap): storage -> -fstype=3Dnfs4 server.example.fake:/=
+&
+
+corresponding openldap logs:
+slapd[5499]: conn=3D1012 op=3D0 BIND dn=3D"" method=3D163
+slapd[5499]: NTLM server step 1
+slapd[5499]: client flags: 207
+slapd[5499]: conn=3D1012 op=3D0 RESULT tag=3D97 err=3D14 qtime=3D0.000021
+etime=3D0.000118 text=3DSASL(0): successful result:
+slapd[5499]: conn=3D1012 op=3D1 BIND dn=3D"" method=3D163
+slapd[5499]: NTLM server step 2
+slapd[5499]: SASL [conn=3D1012] Failure: client didn't issue valid NTLM res=
+ponse
+slapd[5499]: conn=3D1012 op=3D1 RESULT tag=3D97 err=3D80 qtime=3D0.000018
+etime=3D0.000070 text=3DSASL(-5): bad protocol / cancel: client didn't
+issue valid NTLM response
+slapd[5499]: conn=3D1012 op=3D2 SRCH
+base=3D"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake" scope=3D2 deref=3D0
+filter=3D"(objectClass=3DnisMap)"
+slapd[5499]: conn=3D1012 op=3D2 SRCH attr=3DnisMapName
+slapd[5499]: conn=3D1012 op=3D2 SEARCH RESULT tag=3D101 err=3D0 qtime=3D0.0=
+00016
+etime=3D0.000166 nentries=3D0 text=3D
+slapd[5499]: conn=3D1012 op=3D3 SRCH
+base=3D"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake" scope=3D2 deref=3D0
+filter=3D"(objectClass=3DautomountMap)"
+slapd[5499]: conn=3D1012 op=3D3 SRCH attr=3Dou
+slapd[5499]: conn=3D1012 op=3D3 SEARCH RESULT tag=3D101 err=3D0 qtime=3D0.0=
+00016
+etime=3D0.000112 nentries=3D1 text=3D
+slapd[5499]: conn=3D1012 op=3D4 SRCH
+base=3D"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake" scope=3D2 deref=3D0
+filter=3D"(&(objectClass=3Dautomount)(|(cn=3Dstorage)(cn=3D/)(cn=3D\2A)))"
+slapd[5499]: conn=3D1012 op=3D4 SRCH attr=3Dcn automountInformation
+slapd[5499]: conn=3D1012 op=3D4 SEARCH RESULT tag=3D101 err=3D0 qtime=3D0.0=
+00018
+etime=3D0.000123 nentries=3D1 text=3D
+
+Now, NTLM and CRAM-MD5 are deprecated nowadays (specially CRAM-MD5,
+see https://datatracker.ietf.org/doc/html/draft-ietf-sasl-crammd5-to-histor=
+ic-00.html).
+Is there still interest in supporting those?
+
+If yes, the trivial change should be just this:
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -1208,6 +1208,8 @@
+    if (!strncmp(authtype, "PLAIN", strlen("PLAIN")) ||
+        !strncmp(authtype, "DIGEST-MD5", strlen("DIGEST-MD5")) ||
+        !strncmp(authtype, "SCRAM-SHA-", strlen("SCRAM-SHA-")) ||
++       !strncmp(authtype, "NTLM", strlen("NTLM")) ||
++       !strncmp(authtype, "CRAM-MD5", strlen("CRAM-MD5")) ||
+        !strncmp(authtype, "LOGIN", strlen("LOGIN")))
+        return 1;
+ #endif
