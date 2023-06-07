@@ -2,178 +2,173 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F595722DE4
-	for <lists+autofs@lfdr.de>; Mon,  5 Jun 2023 19:50:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 161E872726C
+	for <lists+autofs@lfdr.de>; Thu,  8 Jun 2023 00:56:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231797AbjFERu4 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 5 Jun 2023 13:50:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56706 "EHLO
+        id S232949AbjFGW43 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 7 Jun 2023 18:56:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbjFERuz (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 5 Jun 2023 13:50:55 -0400
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43111A7
-        for <autofs@vger.kernel.org>; Mon,  5 Jun 2023 10:50:54 -0700 (PDT)
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 251A33F199
-        for <autofs@vger.kernel.org>; Mon,  5 Jun 2023 17:50:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1685987452;
-        bh=BMwQWYlnaLFtqQZIIL0hac2AOWMRlmoHYbE/zDEeiSs=;
-        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-         To:Content-Type;
-        b=cc9oPTLVsb2wGrZCadGpQnkj/3VBu6H+KmJOomPQ3NwQHtEiffKlgkE7OC93hQlEQ
-         HzQ9ODefRIe+7/lkdo6fkYn5y8tJnRMiGfwDK8/3wJlHX2QUu0DvmJQeSVW1eFzA8q
-         xA0+UrrzzBTW/+f26SKdeaJwha+i5mnsvFc4KYS3eqmpF4rzgOV4LCvw17w1Rti4Rg
-         XSl8VYECgGBHty9XcbQkXwHjAcM6htA9J7NQP37ZcHXqYwsTcx5zz+mVeJi2X2AJQm
-         eNqA/7rNyl9BqLV/Qc4vGShMZnB3eg+8kMQNBGn+VsG8LfDbJfweiyacbwPRaTdpeq
-         Qkj99eTA4pU6w==
-Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-39a98be77dcso780669b6e.1
-        for <autofs@vger.kernel.org>; Mon, 05 Jun 2023 10:50:52 -0700 (PDT)
+        with ESMTP id S233251AbjFGW4N (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 7 Jun 2023 18:56:13 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A17E26B2
+        for <autofs@vger.kernel.org>; Wed,  7 Jun 2023 15:55:54 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-970028cfb6cso2096166b.1
+        for <autofs@vger.kernel.org>; Wed, 07 Jun 2023 15:55:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686178553; x=1688770553;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lwmqmz3SLTAm/5XHn54kA2Qkz1KiGdBlOiEDAaxIk1A=;
+        b=d8ALJgWgHzWLVbYqm5Xun40Trrtx9u26PJxgDpuM+opU1kagifpoMF3E49HbI3GY2V
+         wVrEz/8VMNXOa34mGDXKD+N7lGOv2QGCP2gi2Pc2YR15Cm6aBUEYMKdxMAaBdTZps5JD
+         wHIIcg7iFPDm6hq2Anc8eetPMFV7Dmp3k3ChvztUfrQawEncim7LlPLb1dcX0GFSQa2Z
+         MpCDoaZndeCwrh4lYpSlY+MIxLpkoT0dvzpzNzmwq8ANq48/S89YAmvR6lG4ID6DJkmg
+         UQBMvZ4NUlogSfe/ccOin4LQnm3S/JQ2MwxZLa7FvZbQYk7vl4nSPeVW9A3WoEossLXw
+         Xp4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685987451; x=1688579451;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BMwQWYlnaLFtqQZIIL0hac2AOWMRlmoHYbE/zDEeiSs=;
-        b=P0SrJdw+KbfYCWckpmthy0wnj0fVnfL+jwEWRHtZRpHjjclVkpE9RG1fW3JYqqmBaC
-         7vG1ZjlgxPLFO/MvfCNmx4zaUyvEQFbX8EOgkcNgrsayYsCspWYCH6Iv/lLl1Y4gqi89
-         5EelneUNca8jcSs6FqWiqKJOcsLKjd3pF8C0N/c9t+bg+nOj1jEPnHhShuqg0HrWXzot
-         QJdqlJsmTCcyRu+tyhbKATBm3w5mvLdOj971qyYiTchXb9x9H+QGCYYBfUqrVZDcfJSo
-         vE64lu3Sb4fDe/oY9ATX+KAPw92n21WR/U/QzEZ6aFLj0EIqAcRiIOK81Lk+TYiW9Dlc
-         LQhA==
-X-Gm-Message-State: AC+VfDz9mD/MjZz91V/efpRhBjvhaS/FWkUA+tAjk2LPUJjGgzMeELjs
-        mIlggN9BrSJROwkX7BDSqN2KhxFfru1Spxe0GcgRZ8KTUTbyBz58rI/GViXgMxcpv4CWzQAPc1W
-        zzFs1lmB+0KhY6u5dkK/+txjYeho4qtpoSHaHIzWQVGbAJdX9I8aO9vATugTn
-X-Received: by 2002:aca:1715:0:b0:39a:519c:2a6a with SMTP id j21-20020aca1715000000b0039a519c2a6amr5162654oii.43.1685987450897;
-        Mon, 05 Jun 2023 10:50:50 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ4vKRqhMvcpEYSLJmoRvygEe1AfnThbYKwQJEfGibHMPxM1XuY7sz1YnuiqLQVNZX/AfIvnxF+pfuiodHMqvG8=
-X-Received: by 2002:aca:1715:0:b0:39a:519c:2a6a with SMTP id
- j21-20020aca1715000000b0039a519c2a6amr5162643oii.43.1685987450638; Mon, 05
- Jun 2023 10:50:50 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686178553; x=1688770553;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lwmqmz3SLTAm/5XHn54kA2Qkz1KiGdBlOiEDAaxIk1A=;
+        b=kEz2CexChnVUuyqNoSetqk72Iq12PBddE1ikixgPMG27ljsEuw3m/O3x0S1jsYdV9u
+         qUiUtQ7NM20qrXRBHRXPyPQpW35BvSRI0mN3nXCbyFbnhULQWts0wIaHtVmeY+PH/Tby
+         hTsaPTz7w1IEWGuF+RNdAuptLHvWpQ4/GK7aqN257y6LQC/iAKM89AsCrHaX+f5G2L+x
+         AmKDPxMYCeQWtu8UrWMGQD+/+WCpR6PRn4oIbZWXsxf6DIRKad/BuhBbAIa56TxCcEgj
+         da4bm2263yFEJzYEJ18LqxUpAkqQSz9n/toErH2wnUBySYvffjU4bbpDJbtnQhp9NbfH
+         TW+Q==
+X-Gm-Message-State: AC+VfDxmIghC4e5/u+YIrmNqwfP09WZ7xpv5dcaky4owZVHGc9GsZ0lL
+        5sK8jELEqOiWTsyD1eaZwuJxS62OTxenHeBmXSk=
+X-Google-Smtp-Source: ACHHUZ5lc5uNG0II8N/7owu97MNYayebO2FU5BOHITGRdvZTCXANx0Yi1fv5Th/dfzvi0zTuZAaSCLE67mXxoPl8ud4=
+X-Received: by 2002:a17:907:8a08:b0:973:ad8f:ef9b with SMTP id
+ sc8-20020a1709078a0800b00973ad8fef9bmr8009971ejc.5.1686178552696; Wed, 07 Jun
+ 2023 15:55:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220912005822.3947426-1-reimth@gmail.com> <20220912005822.3947426-2-reimth@gmail.com>
-In-Reply-To: <20220912005822.3947426-2-reimth@gmail.com>
-From:   Andreas Hasenack <andreas@canonical.com>
-Date:   Mon, 5 Jun 2023 14:50:39 -0300
-Message-ID: <CANYNYEGQs7+F8-U9YXHCnRmw25fNYBxgK3OnXyRDAw=YgWOsYw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] autofs-5.1.8 - support SCRAM for SASL binding
-To:     autofs@vger.kernel.org
+Received: by 2002:a54:2409:0:b0:217:72a9:f646 with HTTP; Wed, 7 Jun 2023
+ 15:55:52 -0700 (PDT)
+Reply-To: unitednationcompensationcoordinatortreasury@hotmail.com
+From:   "UNITED NATION DEPUTY SECRETARY-GENERAL (U.N)" 
+        <successikolo@gmail.com>
+Date:   Wed, 7 Jun 2023 15:55:52 -0700
+Message-ID: <CADFNGJ8EwbrtVXBod+yuxOPvcNStu1uNZVywED0Ra-jpG92ATw@mail.gmail.com>
+Subject: CONTACT DHL OFFICE IMMEDIATELY FOR YOUR ATM MASTER CARD 1.5 MILLION,
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: Yes, score=6.6 required=5.0 tests=ADVANCE_FEE_3_NEW_FRM_MNY,
+        BAYES_50,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FILL_THIS_FORM,FORM_FRAUD_5,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        LOTS_OF_MONEY,MONEY_FORM,MONEY_FRAUD_5,MONEY_FREEMAIL_REPTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,
+        T_FILL_THIS_FORM_LOAN,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,UNDISC_MONEY
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2a00:1450:4864:20:0:0:0:634 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [successikolo[at]gmail.com]
+        *  0.5 SUBJ_ALL_CAPS Subject is all capitals
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  0.2 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  0.0 FILL_THIS_FORM Fill in a form with personal information
+        *  0.0 T_FILL_THIS_FORM_LOAN Answer loan question(s)
+        *  0.0 MONEY_FORM Lots of money if you fill out a form
+        *  1.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+        *  0.0 ADVANCE_FEE_3_NEW_FRM_MNY Advance Fee fraud form and lots of
+        *      money
+        *  0.2 MONEY_FRAUD_5 Lots of money and many fraud phrases
+        *  0.0 FORM_FRAUD_5 Fill a form and many fraud phrases
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Hi,
+UNITED NATION DEPUTY SECRETARY-GENERAL.
 
-On Sun, Sep 11, 2022 at 9:58=E2=80=AFPM ThomasReim <reimth@gmail.com> wrote=
-:
-> This patch enables SCRAM-SHA-1 and other SCRAM-SHA mechanisms
-> (if supported by SASL library).
-> @@ -1241,6 +1241,7 @@ int authtype_requires_creds(const char *authtype)
->  #ifdef WITH_SASL
->         if (!strncmp(authtype, "PLAIN", strlen("PLAIN")) ||
->             !strncmp(authtype, "DIGEST-MD5", strlen("DIGEST-MD5")) ||
-> +           !strncmp(authtype, "SCRAM-SHA-", strlen("SCRAM-SHA-")) ||
->             !strncmp(authtype, "LOGIN", strlen("LOGIN")))
->                 return 1;
->  #endif
+This is to official inform you that we have been having meetings for
+the past three (3) weeks which ended two days ago with MR. JIM YONG
+KIM the world bank president and other seven continent presidents on
+the congress we treated on solution to scam victim problems.
 
-While writing a test for this, I decided to include NTLM and CRAM-MD5,
-and noticed something interesting. NTLM in autofs-5.1.8 would "work".
-automount was able to fetch the map from openldap using NTLM SASL
-authentication. Even though it's not handled by
-authtype_requires_creds().
+ Note: we have decided to contact you following the reports we
+received from anti-fraud international monitoring group your
+name/email has been submitted to us therefore the united nations have
+agreed to compensate you with the sum of (USD$ 1.5 Million) this
+compensation is also including international business that failed you
+in the past due to government problems etc.
 
-When switching to openldap for the sasl authentication, then automount
-would fail if configured to use NTLM. So initially I thought it was a
-regression, but turns out automount 5.1.8 was just ignoring the SASL
-NTLM error and continuing. openldap allowed that, but treated it as an
-anonymous bind I suppose, and since the ACLs didn't prevent that, in
-the end it all worked.
+ We have arranged your payment through our ATM Master Card and
+deposited it in DHL Office to deliver it to you which is the latest
+instruction from the World Bank president MR. JIM YONG KIM, For your
+information=E2=80=99s, the delivery charges already paid by U.N treasury, t=
+he
+only money you will send to DHL office south Korea is
+($500). for security keeping fee, U.N coordinator already paid for
+others charges fees for delivery except the security keeping fee, the
+director of DHL refused to collect the security keeping fee from U.N
+coordinator, the Director of DHL office said that they don=E2=80=99t know
+exactly time you will contact them to reconfirm your details to avoid
+counting demur-rage that is why they refused collecting the ($500) .
+for security keeping fee.
 
-Attempting to mount entry /mnt/storage, notice how sasl fails, but is
-then declared as having worked:
+ Therefore be advice to contact DHL Office agent south Korea. Rev:John
+Lee Tae-seok
+who is in position to deliver your ATM
+Master Card to your location address, contact DHL Office immediately
+with the bellow email & phone number as listed below.
 
-lookup_mount: lookup(ldap): looking up storage
-do_bind: lookup(ldap): auth_required: 2, sasl_mech NTLM
-sasl_bind_mech: Attempting sasl bind with mechanism NTLM
-getuser_func: called with context (nil), id 16386.
-sasl_log_func:128: Parameter Error in ../../common/plugin_common.c near lin=
-e 364
-sasl_bind_mech: sasl bind with mechanism NTLM succeeded
-do_bind: lookup(ldap): autofs_sasl_bind returned 0
-get_query_dn: lookup(ldap): query succeeded, no matches for (objectclass=3D=
-nisMap)
-get_query_dn: lookup(ldap): found query dn ou=3Dauto.indirect,dc=3Dexample,=
-dc=3Dfake
-lookup_one: lookup(ldap): searching for
-"(&(objectclass=3Dautomount)(|(cn=3Dstorage)(cn=3D/)(cn=3D\2A)))" under
-"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake"
-lookup_one: lookup(ldap): getting first entry for cn=3D"storage"
-lookup_one: lookup(ldap): examining first entry
-lookup_mount: lookup(ldap): storage -> -fstype=3Dnfs4 server.example.fake:/=
-&
+ Contact name: John Lee Tae-seok
 
-corresponding openldap logs:
-slapd[5499]: conn=3D1012 op=3D0 BIND dn=3D"" method=3D163
-slapd[5499]: NTLM server step 1
-slapd[5499]: client flags: 207
-slapd[5499]: conn=3D1012 op=3D0 RESULT tag=3D97 err=3D14 qtime=3D0.000021
-etime=3D0.000118 text=3DSASL(0): successful result:
-slapd[5499]: conn=3D1012 op=3D1 BIND dn=3D"" method=3D163
-slapd[5499]: NTLM server step 2
-slapd[5499]: SASL [conn=3D1012] Failure: client didn't issue valid NTLM res=
-ponse
-slapd[5499]: conn=3D1012 op=3D1 RESULT tag=3D97 err=3D80 qtime=3D0.000018
-etime=3D0.000070 text=3DSASL(-5): bad protocol / cancel: client didn't
-issue valid NTLM response
-slapd[5499]: conn=3D1012 op=3D2 SRCH
-base=3D"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake" scope=3D2 deref=3D0
-filter=3D"(objectClass=3DnisMap)"
-slapd[5499]: conn=3D1012 op=3D2 SRCH attr=3DnisMapName
-slapd[5499]: conn=3D1012 op=3D2 SEARCH RESULT tag=3D101 err=3D0 qtime=3D0.0=
-00016
-etime=3D0.000166 nentries=3D0 text=3D
-slapd[5499]: conn=3D1012 op=3D3 SRCH
-base=3D"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake" scope=3D2 deref=3D0
-filter=3D"(objectClass=3DautomountMap)"
-slapd[5499]: conn=3D1012 op=3D3 SRCH attr=3Dou
-slapd[5499]: conn=3D1012 op=3D3 SEARCH RESULT tag=3D101 err=3D0 qtime=3D0.0=
-00016
-etime=3D0.000112 nentries=3D1 text=3D
-slapd[5499]: conn=3D1012 op=3D4 SRCH
-base=3D"ou=3Dauto.indirect,dc=3Dexample,dc=3Dfake" scope=3D2 deref=3D0
-filter=3D"(&(objectClass=3Dautomount)(|(cn=3Dstorage)(cn=3D/)(cn=3D\2A)))"
-slapd[5499]: conn=3D1012 op=3D4 SRCH attr=3Dcn automountInformation
-slapd[5499]: conn=3D1012 op=3D4 SEARCH RESULT tag=3D101 err=3D0 qtime=3D0.0=
-00018
-etime=3D0.000123 nentries=3D1 text=3D
+ Email:( dhlgeneralheadquartersrepublic@gmail.com )
 
-Now, NTLM and CRAM-MD5 are deprecated nowadays (specially CRAM-MD5,
-see https://datatracker.ietf.org/doc/html/draft-ietf-sasl-crammd5-to-histor=
-ic-00.html).
-Is there still interest in supporting those?
+ Do not hesitate to Contact Rev: John Lee Tae-seok, as soon as you
 
-If yes, the trivial change should be just this:
---- a/modules/lookup_ldap.c
-+++ b/modules/lookup_ldap.c
-@@ -1208,6 +1208,8 @@
-    if (!strncmp(authtype, "PLAIN", strlen("PLAIN")) ||
-        !strncmp(authtype, "DIGEST-MD5", strlen("DIGEST-MD5")) ||
-        !strncmp(authtype, "SCRAM-SHA-", strlen("SCRAM-SHA-")) ||
-+       !strncmp(authtype, "NTLM", strlen("NTLM")) ||
-+       !strncmp(authtype, "CRAM-MD5", strlen("CRAM-MD5")) ||
-        !strncmp(authtype, "LOGIN", strlen("LOGIN")))
-        return 1;
- #endif
+ read this message. Email:( dhlgeneralheadquartersrepublic@gmail.com )
+
+ Make sure you reconfirmed DHL Office your details ASAP as stated
+below to avoid wrong delivery.
+
+ Your full name..........
+
+ Home address:.........
+
+ Your country...........
+
+ Your city..............
+
+ Telephone......
+
+ Occupation:.......
+
+ Age:=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6=E2=80=A6..
+
+ Let us know as soon as possible you receive your ATM MasterCard
+for proper verification.
+
+ Regards,
+
+ Mrs Vivian kakadu.
+
+ DEPUTY SECRETARY-GENERAL (U.N)
