@@ -2,152 +2,90 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 917AF731501
-	for <lists+autofs@lfdr.de>; Thu, 15 Jun 2023 12:15:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D164734D3D
+	for <lists+autofs@lfdr.de>; Mon, 19 Jun 2023 10:11:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245743AbjFOKPV (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 15 Jun 2023 06:15:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34782 "EHLO
+        id S229890AbjFSILv (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 19 Jun 2023 04:11:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343512AbjFOKPV (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 15 Jun 2023 06:15:21 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C97C52710;
-        Thu, 15 Jun 2023 03:15:19 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 28C04320095B;
-        Thu, 15 Jun 2023 06:15:14 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 15 Jun 2023 06:15:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
-        :cc:content-transfer-encoding:content-type:content-type:date
-        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
-        1686824113; x=1686910513; bh=jvOa0kUu39x3GQIUZew1mtO2AZHY76muWFu
-        JjSogrbo=; b=EPuJmmgzGiJ225PcqtobDHqYGSJ9FbMR2/HM25N5yJWC19vNsWc
-        Mc6g6a+7u+xOngvo9ql+gTvTIpzuGWBoP/5w/homxwocEszbS2BY66xEYK6rhU39
-        fKC/2J9A/tppqgMokw04lHq9ClAM1NidgPPF8XwPFb8brMaJ+yC9q3lx2oIXOqxk
-        NwLzZE/EEO50omOBh8TzBe3YSIduGwMWsqcNQv/QxRuOtVG1aQhGmfZDS7sPfd2L
-        ivZT6v6WRn+ar6/Ercj4MGKWKcxqfmYJxSQn9HNqtGrfvghNPb7RO/tPUhDvWwyc
-        AMWwvLlS+hTH2y5s8+UvqcROZ9GavRIlJjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1686824113; x=1686910513; bh=jvOa0kUu39x3GQIUZew1mtO2AZHY76muWFu
-        JjSogrbo=; b=WQJvt4ZbovTVmVpd9nLF3ZaQUs0YTu6cciUQMWaCHlkUVtF3OXV
-        BWs4+jr1+AQmOje/HwT59Uc+gCIA11iaI+HKQgg1BQI7sTScTCZe5aMc5Lf00ImL
-        QDpPl/Z5yXuNtNsNhoruSIK8Cot14nLIGVBTkr3kM9F5w/zLjQQXCcCm3wqRDJm2
-        HeWiDlna/Wo0l7rNZ01teWvAvYCqAbsjWmH0BfmI4FUBZcNogxXmZuNoaQmWIcoC
-        YVUfDU4KdHqT7PrUPo6RaUGRnMnVFM5UYZZEwh9IGjmkuLSVwVR7KWHfNcqZIgQY
-        s3tbtsbhHV1NfiIcQHLDi22Z7h98FbB3k5w==
-X-ME-Sender: <xms:ruSKZG5KTXG0gmtGtJo7uRZjEP9L2uA8FceNvEHEUY_HEFxS_vSg6w>
-    <xme:ruSKZP6gJfjPCPkDZxO7P2yfKxqgVshVYIO-BFUqG9gza_kFyrirnLzCAdWBYHHOA
-    rtssRT4dgHj>
-X-ME-Received: <xmr:ruSKZFcYMhzp3p4dVxc0s3Vl51XeTu7AHuu5VgqpTZEpWG00hrQLFYFShS57T4NXamlitnOlpunBaAkLolifmc7XM9J10LAESfQWDhF-ssSeVx6A_CQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvvddgvdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtfeejnecuhfhrohhmpefkrghn
-    ucfmvghnthcuoehrrghvvghnsehthhgvmhgrfidrnhgvtheqnecuggftrfgrthhtvghrnh
-    epueegveehueejjedvgeeiheekueduhffgueejgfevgedujeeiieegteehkeehvdeknecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehrrghvvghnsehthhgvmhgrfidrnhgvth
-X-ME-Proxy: <xmx:ruSKZDLzSSqLt02FBEIUzHHY4xZZ_TZ_PWC8bGUEs42QZiREyLJTGA>
-    <xmx:ruSKZKI8VzziHd8Su9M3RxLVJW6wU6YgqTLPVAMD4bEXZRsXqShSfg>
-    <xmx:ruSKZEz53POS86abZ0ETHQjNStkncFA38huo4bMy2_h8V5Cw8AqPbg>
-    <xmx:seSKZBjFa-W9fp3GjiPZn6ETCEsVPgY-xM4OpQEnsiOh_w7YUlORjg>
-Feedback-ID: i31e841b0:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Jun 2023 06:14:59 -0400 (EDT)
-Message-ID: <ebad4167-6fec-b603-9be8-54457b2a32fd@themaw.net>
-Date:   Thu, 15 Jun 2023 18:14:55 +0800
+        with ESMTP id S229905AbjFSILu (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 19 Jun 2023 04:11:50 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7869B9
+        for <autofs@vger.kernel.org>; Mon, 19 Jun 2023 01:11:43 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id 006d021491bc7-55e42149cf2so856399eaf.2
+        for <autofs@vger.kernel.org>; Mon, 19 Jun 2023 01:11:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687162303; x=1689754303;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rJ/7Kbo9gs7zs3QTF5nFKkJrBjocKGAtdax9LA/wsFg=;
+        b=HIa7ebvEK4HYGqcXt28uaCdQRULgDAf3zN7+B3ohPY8n4WAFlNlWZkQPBIlQf1njJc
+         gRZPFzUU4OIN1DVHKNaKXHVCfSmZWMssHRzNBlyOHkgbwwPcQ5a9BHW9Z4N6DlaaPsK9
+         9VqyVm/bkcG8dHGNeG2kE7HnPtwC2TKgUCmW1p35gEiIH/cX4RqlFLprPp5K8753uqTk
+         sf2uR5pqVo+sydp90gkUYTc13LGo5LokZb2ksSdv610TEc/5S4m1lJaYgEqMelusSwn0
+         Lbcsf7JB/tm6Autaj+84k8W3UCqauEJi9kIYbIKyxGATT+u6AhZ4t+mT262zFyIkF3cU
+         lqdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687162303; x=1689754303;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rJ/7Kbo9gs7zs3QTF5nFKkJrBjocKGAtdax9LA/wsFg=;
+        b=ZkUYO/8/krLyFjPWuVffBaRZZjec95AYtqz7kHLyoVGOOZLy9Tf4Z5ZLIc7mvEv7s0
+         Cig11QhIHXa/xDsHD5SYy+Fqcd4SOTTFiRwyKQld20KtF9+xoS+gvpDLa2xkb3qWm8Yf
+         2ilc+GX5ZPYm8AlzFmDpuXHFetP0JGqPD/UyUn4Z5O8mjFHX53732v7ZfO1JlOh9O5C0
+         xgxQ9ka80t69T80XmwhHx5E0TIFiJbQTMTmv64jmLvusMCZrYb0o9JUkXJLdsFO24iwj
+         Qi0C1OAMGAUe9FvNfkZ7jBT1MHe7ydedKAE0UHLKPLbKAVFockI7c2rRVktS5BaZ88gk
+         ZICw==
+X-Gm-Message-State: AC+VfDxo1Px0V4XU3hxq7WQS0ibtF5dH9e3ztaygDyxwazYk8NMhL5H0
+        +rhNia+m9mQgMWBFxRtKeeL2pSJBWDR3588OO7g=
+X-Google-Smtp-Source: ACHHUZ4BE+KzjTRXBEbDF+HJpeDBrxs0YzNH+DR20LaX5B3cHEV9XXwWWJr2+ABOsqebvzyOxejYCX/a0n3DEUf0sgA=
+X-Received: by 2002:a05:6808:13c6:b0:39a:b1e4:ef28 with SMTP id
+ d6-20020a05680813c600b0039ab1e4ef28mr12779831oiw.47.1687162302862; Mon, 19
+ Jun 2023 01:11:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: (subset) [PATCH v2 3/8] autofs: set ctime as well when mtime
- changes on a dir
-To:     Christian Brauner <brauner@kernel.org>,
-        Jeff Layton <jlayton@kernel.org>
-Cc:     Al Viro <viro@zeniv.linux.org.uk>,
-        Brad Warrum <bwarrum@linux.ibm.com>,
-        Ritu Agarwal <rituagar@linux.ibm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Tigran A. Aivazian" <aivazian.tigran@gmail.com>,
-        Jeremy Kerr <jk@ozlabs.org>, Ard Biesheuvel <ardb@kernel.org>,
-        Namjae Jeon <linkinjeon@kernel.org>,
-        Sungjong Seo <sj1557.seo@samsung.com>,
-        Steve French <sfrench@samba.org>,
-        Paulo Alcantara <pc@manguebit.com>,
-        Ronnie Sahlberg <lsahlber@redhat.com>,
-        Shyam Prasad N <sprasad@microsoft.com>,
-        Tom Talpey <tom@talpey.com>,
-        John Johansen <john.johansen@canonical.com>,
-        Paul Moore <paul@paul-moore.com>,
-        James Morris <jmorris@namei.org>,
-        "Serge E. Hallyn" <serge@hallyn.com>,
-        Ruihan Li <lrh2000@pku.edu.cn>,
-        Sebastian Reichel <sebastian.reichel@collabora.com>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        autofs@vger.kernel.org, linux-efi@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org, linux-cifs@vger.kernel.org,
-        samba-technical@lists.samba.org, apparmor@lists.ubuntu.com,
-        linux-security-module@vger.kernel.org
-References: <20230612104524.17058-1-jlayton@kernel.org>
- <20230612104524.17058-4-jlayton@kernel.org>
- <20230614-marmeladen-blechnapf-873c26e176cb@brauner>
-Content-Language: en-US
-From:   Ian Kent <raven@themaw.net>
-In-Reply-To: <20230614-marmeladen-blechnapf-873c26e176cb@brauner>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a05:6359:6e83:b0:127:8127:f692 with HTTP; Mon, 19 Jun 2023
+ 01:11:42 -0700 (PDT)
+From:   OFFER <diazanna810@gmail.com>
+Date:   Sun, 18 Jun 2023 20:11:42 -1200
+Message-ID: <CAO6W-YKuPrPw1xEt+cBfSuQafkrBhFJvH3GnDupY+T60ApsR0Q@mail.gmail.com>
+Subject: Greetings From Saudi Arabia
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=3.8 required=5.0 tests=BAYES_50,DEAR_SOMETHING,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLY,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On 14/6/23 16:30, Christian Brauner wrote:
-> On Mon, 12 Jun 2023 06:45:19 -0400, Jeff Layton wrote:
->> When adding entries to a directory, POSIX generally requires that the
->> ctime also be updated alongside the mtime.
->>
->>
-> Can't find a tree for this patch, so picking this patch up unless told otherwise.
+Dear Sir,
 
-There's relatively few changes to autofs and Linus asked me to send
+Need funding for your project or your business ? We are looking for
+foreign direct investment partners in any of the sectors stated below and we are
+willing to provide financing for up to US$ ten Billion to corporate
+bodies, companies, industries and entrepreneurs with profitable
+business ideas and investment projects that can generate the required
+ROI, so you can draw from this opportunity. We are currently providing
+funds in any of the sectors stated below. Energy & Power,
+construction, Agriculture, Acquisitions, Healthcare or Hospital, Real
+Estate, Oil & Gas, IT, technology, transport, mining,marine
+transportation and manufacturing, Education, hotels, etc. We are
+willing to finance your projects. We have developed a new funding
+method that does not take longer to receive funding from our
+customers. If you are seriously pursuing Foreign Direct Investment or
+Joint Venture for your projects in any of the sectors above or are you
+seeking a Loan to expand your Business or seeking funds to finance
+your business or project ? We are willing to fund your business and we
+would like you to provide us with your comprehensive business plan for
+our team of investment experts to review. Kindly contact me with below
+email: yousefahmedalgosaibi@consultant.com
 
-changes via. Al or Andrew so there's no point in maintaining a tree
-
-anyway.
-
-
-Ian
-
->
-> ---
->
-> Applied to the vfs.misc branch of the vfs/vfs.git tree.
-> Patches in the vfs.misc branch should appear in linux-next soon.
->
-> Please report any outstanding bugs that were missed during review in a
-> new review to the original patch series allowing us to drop it.
->
-> It's encouraged to provide Acked-bys and Reviewed-bys even though the
-> patch has now been applied. If possible patch trailers will be updated.
->
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git
-> branch: vfs.misc
->
-> [3/8] autofs: set ctime as well when mtime changes on a dir
->        https://git.kernel.org/vfs/vfs/c/9b37b3342a98
+Regards
+Mr. Yousef Ahmed
