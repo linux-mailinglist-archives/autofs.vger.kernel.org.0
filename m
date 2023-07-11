@@ -2,209 +2,367 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C001C74D7AD
-	for <lists+autofs@lfdr.de>; Mon, 10 Jul 2023 15:33:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDC4274E28E
+	for <lists+autofs@lfdr.de>; Tue, 11 Jul 2023 02:30:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbjGJNdK (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Mon, 10 Jul 2023 09:33:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43150 "EHLO
+        id S229923AbjGKAah (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Mon, 10 Jul 2023 20:30:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232944AbjGJNdF (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Mon, 10 Jul 2023 09:33:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B68019F;
-        Mon, 10 Jul 2023 06:32:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5933560FE9;
-        Mon, 10 Jul 2023 13:32:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E3BC433C9;
-        Mon, 10 Jul 2023 13:32:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1688995962;
-        bh=ypo6EEC/a10vTp0LME1omXwBE1UiKK/mReyAl6l5UHQ=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=J7Z7W1QfjLNRfgVQcSdKnYFRxtD+3fk+fVeHY9xuci1TKV61DCMVSYVvDG9kwuCBX
-         g+QpzC0XDkSjeL9nV9+lGdPbp68Q96EXBiPlDNXBynN9HrAz4Y+E89ZYAnFm4gMFob
-         SGwQAd+JWX6wsLqjr9V4UXCKsBkrO6/s1MT1FJcjDjR0RhV1HnH8M/padgIYfYI3iT
-         50AKfuQ1Ba3eH+A3TeCdkft2SWR53hIVATzxttJnSld1dtaOLY6XNcMPkiIrdtp3w+
-         UMgZy7XJf81pa8iQgs3v7vGfymFo80jGgmK2T6kIjmEHcqRaAvCUmLi8QnIHmVmDpT
-         pZFJemBst7t+w==
-Message-ID: <c4eaff9389fe63ec4e29404ec0d1181b74935426.camel@kernel.org>
-Subject: Re: [PATCH v2 00/89] fs: new accessors for inode->i_ctime
-From:   Jeff Layton <jlayton@kernel.org>
-To:     Christian Brauner <brauner@kernel.org>
-Cc:     jk@ozlabs.org, arnd@arndb.de, mpe@ellerman.id.au,
-        npiggin@gmail.com, christophe.leroy@csgroup.eu, hca@linux.ibm.com,
-        gor@linux.ibm.com, agordeev@linux.ibm.com,
-        borntraeger@linux.ibm.com, svens@linux.ibm.com,
-        gregkh@linuxfoundation.org, arve@android.com, tkjos@android.com,
-        maco@android.com, joel@joelfernandes.org, cmllamas@google.com,
-        surenb@google.com, dennis.dalessandro@cornelisnetworks.com,
-        jgg@ziepe.ca, leon@kernel.org, bwarrum@linux.ibm.com,
-        rituagar@linux.ibm.com, ericvh@kernel.org, lucho@ionkov.net,
-        asmadeus@codewreck.org, linux_oss@crudebyte.com, dsterba@suse.com,
-        dhowells@redhat.com, marc.dionne@auristor.com,
-        viro@zeniv.linux.org.uk, raven@themaw.net, luisbg@kernel.org,
-        salah.triki@gmail.com, aivazian.tigran@gmail.com,
-        ebiederm@xmission.com, keescook@chromium.org, clm@fb.com,
-        josef@toxicpanda.com, xiubli@redhat.com, idryomov@gmail.com,
-        jaharkes@cs.cmu.edu, coda@cs.cmu.edu, jlbec@evilplan.org,
-        hch@lst.de, nico@fluxnic.net, rafael@kernel.org, code@tyhicks.com,
-        ardb@kernel.org, xiang@kernel.org, chao@kernel.org,
-        huyue2@coolpad.com, jefflexu@linux.alibaba.com,
-        linkinjeon@kernel.org, sj1557.seo@samsung.com, jack@suse.com,
-        tytso@mit.edu, adilger.kernel@dilger.ca, jaegeuk@kernel.org,
-        hirofumi@mail.parknet.co.jp, miklos@szeredi.hu,
-        rpeterso@redhat.com, agruenba@redhat.com, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        mikulas@artax.karlin.mff.cuni.cz, mike.kravetz@oracle.com,
-        muchun.song@linux.dev, dwmw2@infradead.org, shaggy@kernel.org,
-        tj@kernel.org, trond.myklebust@hammerspace.com, anna@kernel.org,
-        chuck.lever@oracle.com, neilb@suse.de, kolga@netapp.com,
-        Dai.Ngo@oracle.com, tom@talpey.com, konishi.ryusuke@gmail.com,
-        anton@tuxera.com, almaz.alexandrovich@paragon-software.com,
-        mark@fasheh.com, joseph.qi@linux.alibaba.com, me@bobcopeland.com,
-        hubcap@omnibond.com, martin@omnibond.com, amir73il@gmail.com,
-        mcgrof@kernel.org, yzaikin@google.com, tony.luck@intel.com,
-        gpiccoli@igalia.com, al@alarsen.net, sfrench@samba.org,
-        pc@manguebit.com, lsahlber@redhat.com, sprasad@microsoft.com,
-        senozhatsky@chromium.org, phillip@squashfs.org.uk,
-        rostedt@goodmis.org, mhiramat@kernel.org, dushistov@mail.ru,
-        hdegoede@redhat.com, djwong@kernel.org, dlemoal@kernel.org,
-        naohiro.aota@wdc.com, jth@kernel.org, ast@kernel.org,
-        daniel@iogearbox.net, andrii@kernel.org, martin.lau@linux.dev,
-        song@kernel.org, yhs@fb.com, john.fastabend@gmail.com,
-        kpsingh@kernel.org, sdf@google.com, haoluo@google.com,
-        jolsa@kernel.org, hughd@google.com, akpm@linux-foundation.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, john.johansen@canonical.com,
-        paul@paul-moore.com, jmorris@namei.org, serge@hallyn.com,
-        stephen.smalley.work@gmail.com, eparis@parisplace.org,
-        jgross@suse.com, stern@rowland.harvard.edu, lrh2000@pku.edu.cn,
-        sebastian.reichel@collabora.com, wsa+renesas@sang-engineering.com,
-        quic_ugoswami@quicinc.com, quic_linyyuan@quicinc.com,
-        john@keeping.me.uk, error27@gmail.com, quic_uaggarwa@quicinc.com,
-        hayama@lineo.co.jp, jomajm@gmail.com, axboe@kernel.dk,
-        dhavale@google.com, dchinner@redhat.com, hannes@cmpxchg.org,
-        zhangpeng362@huawei.com, slava@dubeyko.com, gargaditya08@live.com,
-        penguin-kernel@I-love.SAKURA.ne.jp, yifeliu@cs.stonybrook.edu,
-        madkar@cs.stonybrook.edu, ezk@cs.stonybrook.edu,
-        yuzhe@nfschina.com, willy@infradead.org, okanatov@gmail.com,
-        jeffxu@chromium.org, linux@treblig.org, mirimmad17@gmail.com,
-        yijiangshan@kylinos.cn, yang.yang29@zte.com.cn,
-        xu.xin16@zte.com.cn, chengzhihao1@huawei.com, shr@devkernel.io,
-        Liam.Howlett@Oracle.com, adobriyan@gmail.com,
-        chi.minghao@zte.com.cn, roberto.sassu@huawei.com,
-        linuszeng@tencent.com, bvanassche@acm.org, zohar@linux.ibm.com,
-        yi.zhang@huawei.com, trix@redhat.com, fmdefrancesco@gmail.com,
-        ebiggers@google.com, princekumarmaurya06@gmail.com,
-        chenzhongjin@huawei.com, riel@surriel.com,
-        shaozhengchao@huawei.com, jingyuwang_vip@163.com,
-        linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-usb@vger.kernel.org, v9fs@lists.linux.dev,
-        linux-fsdevel@vger.kernel.org, linux-afs@lists.infradead.org,
-        autofs@vger.kernel.org, linux-mm@kvack.org,
-        linux-btrfs@vger.kernel.org, ceph-devel@vger.kernel.org,
-        codalist@coda.cs.cmu.edu, ecryptfs@vger.kernel.org,
-        linux-efi@vger.kernel.org, linux-erofs@lists.ozlabs.org,
-        linux-ext4@vger.kernel.org, linux-f2fs-devel@lists.sourceforge.net,
-        cluster-devel@redhat.com, linux-um@lists.infradead.org,
-        linux-mtd@lists.infradead.org,
-        jfs-discussion@lists.sourceforge.net, linux-nfs@vger.kernel.org,
-        linux-nilfs@vger.kernel.org, linux-ntfs-dev@lists.sourceforge.net,
-        ntfs3@lists.linux.dev, ocfs2-devel@lists.linux.dev,
-        linux-karma-devel@lists.sourceforge.net, devel@lists.orangefs.org,
-        linux-unionfs@vger.kernel.org, linux-hardening@vger.kernel.org,
-        reiserfs-devel@vger.kernel.org, linux-cifs@vger.kernel.org,
-        samba-technical@lists.samba.org,
-        linux-trace-kernel@vger.kernel.org, linux-xfs@vger.kernel.org,
-        bpf@vger.kernel.org, netdev@vger.kernel.org,
-        apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
-        selinux@vger.kernel.org
-Date:   Mon, 10 Jul 2023 09:32:23 -0400
-In-Reply-To: <20230710-zudem-entkam-bb508cbd8c78@brauner>
-References: <20230705185812.579118-1-jlayton@kernel.org>
-         <5e40891f6423feb5b68f025e31f26e9a50ae9390.camel@kernel.org>
-         <20230710-zudem-entkam-bb508cbd8c78@brauner>
-Content-Type: text/plain; charset="ISO-8859-15"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+        with ESMTP id S229583AbjGKAag (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Mon, 10 Jul 2023 20:30:36 -0400
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3961FB
+        for <autofs@vger.kernel.org>; Mon, 10 Jul 2023 17:30:34 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 03B9A3200972;
+        Mon, 10 Jul 2023 20:30:31 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Mon, 10 Jul 2023 20:30:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
+        :cc:content-transfer-encoding:content-type:content-type:date
+        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
+        1689035431; x=1689121831; bh=hgQ0C2Xz7O5UVQV+2tGc6FMhCxoEDzWk2qF
+        YpLjZHTs=; b=VuemtG/P+NTLhPGc4yV5jR/phANjwzO3U8HgS4U19MawPPGtoS+
+        5Q/o+/tQFzoSfA3dNCFdrEbFAESMDUOcrf6eh2IRXt1XbA/3NyhVF05CB+O6h4ea
+        7e50eMjNcs68/cKUK6KYd4283Xs9jEXUFBiPQ3S2UUPp6fl5ajp7W8LWRRpU4qqV
+        IjWomgT7vLegXQkuPPc8YMMZ3f3PlLM2j/Gy5bp4tvoDhBVRBe5C4KVv8LJ28b/h
+        0WqWb1O0LRuKfZim1IKvSfmSDx+f7Cpi76lJPVYng6eCKr3wDy/irK+mdPw0GhVA
+        dW0JLx5zKoASsbbmWihozUePp+32gx4nQkQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1689035431; x=1689121831; bh=hgQ0C2Xz7O5UVQV+2tGc6FMhCxoEDzWk2qF
+        YpLjZHTs=; b=AAfiShNzCQ5iMSAw0StxW4J7+QO8+NB1PrV+NyIu0YWCAp0UJUz
+        jWbu1zsGn4rd8BRp23V35mXp5xNd4atjECr8q2L36sjNgZCSNAsjzfiv4HLcnsDd
+        cnBh0dfjrgKskg1nMYGJcP/+LYrckBdwHADonRZJPvXHyn2aaQiWwGY6YG5ROjPV
+        Bdc7dir3EX9S5ym0xnYTMkpHDnRC/dAsnImg+tXmsYWZkSoC3tARnC5HnxbJZVfY
+        bQyFTBTO2/xx0kr5UBouvOUPNFCJwmdoLvMdT1HSWQvQZlPRfp6j2SJ3BRDCedYx
+        +BGfmlHhukvra6q3HJLU5tffcHCzwfDiBIQ==
+X-ME-Sender: <xms:p6KsZB80hMJ-bc8FKu6xM7ueEPmXN-yLu7N8XS6wshFcfpMUOyrSCA>
+    <xme:p6KsZFsnqM_UNl_QcrBFwqMX3lmoxjUTIk4kSZbpyNN7wHCSI-KCtv8yzlj1u4pog
+    0NiIqbHJHv_>
+X-ME-Received: <xmr:p6KsZPDbOKex_fD9wF3swSro3a1CfPTloMJovZT1sx1c0ILentE2eTLxSmuwnHoxy-MB7wOouYY_mW3F6wIjf6xOb5HamSTSP8OF04haqIMAmiJrQos>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrvdelgdefiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomhepkfgrnhcu
+    mfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucggtffrrghtthgvrhhnpe
+    euhfeuieeijeeuveekgfeitdethefguddtleffhfelfeelhfduuedvfefhgefhheenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehrrghvvghnse
+    hthhgvmhgrfidrnhgvth
+X-ME-Proxy: <xmx:p6KsZFex8m7vVHaz69jVijEnEbqH3v_Idofv8JYZhR8G6ZU2z5pjEw>
+    <xmx:p6KsZGNwIXOIl3rR1JA7oxcR67idVAB6RGPGKYy36GzY5Kpva_AbYA>
+    <xmx:p6KsZHloYAZ2-6Z_Le3SXth8Fc-ChN3l1QhYZoTkgB0H2galLEFjEQ>
+    <xmx:p6KsZI3wV89miuemEwfCzEsDjmW6kr8erCkf7xLONl9MGkzLRuuxww>
+Feedback-ID: i31e841b0:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Jul 2023 20:30:28 -0400 (EDT)
+Message-ID: <808f187f-adbe-50e5-6ad4-9563b0b11cf5@themaw.net>
+Date:   Tue, 11 Jul 2023 08:30:24 +0800
 MIME-Version: 1.0
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: Regression after changes for mounts from IPv6 addresses
+ introducing delays
+To:     Salvatore Bonaccorso <carnil@debian.org>
+Cc:     Goldwyn Rodrigues <rgoldwyn@suse.de>, autofs@vger.kernel.org,
+        Mike Gabriel <sunweaver@debian.org>
+References: <ZKrKz/QYjPSmMcts@eldamar.lan>
+ <236bbf5a-189b-6161-72a4-6beb435f10de@themaw.net>
+ <ZKukDcZJPTp1wfCK@eldamar.lan>
+ <6b0ef0a5-6136-a52f-ee68-c3ccd1ca1c70@themaw.net>
+ <ZKvdiheYex3VSiqW@eldamar.lan>
+ <c7bd0680-2a27-479c-2db2-1c99736c8a06@themaw.net>
+ <ZKv8nVvu2clupWXb@elende.valinor.li>
+Content-Language: en-US
+From:   Ian Kent <raven@themaw.net>
+In-Reply-To: <ZKv8nVvu2clupWXb@elende.valinor.li>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_NONE,T_FILL_THIS_FORM_SHORT,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Mon, 2023-07-10 at 14:35 +0200, Christian Brauner wrote:
-> On Fri, Jul 07, 2023 at 08:42:31AM -0400, Jeff Layton wrote:
-> > On Wed, 2023-07-05 at 14:58 -0400, Jeff Layton wrote:
-> > > v2:
-> > > - prepend patches to add missing ctime updates
-> > > - add simple_rename_timestamp helper function
-> > > - rename ctime accessor functions as inode_get_ctime/inode_set_ctime_=
-*
-> > > - drop individual inode_ctime_set_{sec,nsec} helpers
-> > >=20
-> >=20
-> > After review by Jan and others, and Jan's ext4 rework, the diff on top
-> > of the series I posted a couple of days ago is below. I don't really
-> > want to spam everyone with another ~100 patch v3 series, but I can if
-> > you think that's best.
-> >=20
-> > Christian, what would you like me to do here?
->=20
-> I picked up the series from the list and folded the fixups you posted
-> here into the respective fs conversion patches. I hope that helps you
-> avoid a resend. You should have received a separate "thank you" mail for
-> all of this.
->=20
-> To each patch that I folded one of the fixlets from below into I added a
-> git note that records a link to your mail here and the respective patch
-> hunk from this mail that I folded into the patch. git.kernel.org will
-> show notes by default. For example,
-> https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git/commit/?h=3Dv=
-fs.ctime&id=3D8b0e3c2e99004609a16ba145bcbdfdddb78e220e
-> should show you the note I added. You can also fetch them via
-> git fetch $remote refs/notes/*:refs/notes/*
-> (You probably know that ofc but jic.) if you're interested.
->=20
-> Based on v6.5-rc1 as of today.
->=20
+On 10/7/23 20:42, Salvatore Bonaccorso wrote:
+> Hi Ian,
+>
+> On Mon, Jul 10, 2023 at 07:11:09PM +0800, Ian Kent wrote:
+>> On 10/7/23 18:29, Salvatore Bonaccorso wrote:
+>>> Hi,
+>>>
+>>> On Mon, Jul 10, 2023 at 04:33:24PM +0800, Ian Kent wrote:
+>>>> On 10/7/23 14:24, Salvatore Bonaccorso wrote:
+>>>>> Hi Ian,
+>>>>>
+>>>>> On Mon, Jul 10, 2023 at 10:05:12AM +0800, Ian Kent wrote:
+>>>>>> On 9/7/23 22:57, Salvatore Bonaccorso wrote:
+>>>>>>> Hi
+>>>>>>>
+>>>>>>> The following sort of regression was noticed while updating a client
+>>>>>>> running Debian buster (with autofs 5.1.2 based) to Debian bullseye
+>>>>>>> (5.1.7 based autofs), but verified it's still present with 5.1.8. The
+>>>>>>> folloing setup is present:
+>>>>>>>
+>>>>>>> There is a NFS server, dualstacked, with both public IPv4 and IPv6
+>>>>>>> addresses resolvable in DNS. As I cannot put the public IPs here in
+>>>>>>> the report, let's assume It is called nfs-server with addresses
+>>>>>>> 192.168.122.188 and fc00:192:168:122::188.
+>>>>>>>
+>>>>>>> The client initially running Debian buster, is not dualstacked, has
+>>>>>>> only IPv4 and has correct routing, e.g. pinging to nfs-server will as
+>>>>>>> well go to the IPv4 address of nfs-server, or any tcp connection will
+>>>>>>> go to IPv4 (e.g. ssh -vvv nfs-server).
+>>>>>>>
+>>>>>>> Automount configuration is fairly simple:
+>>>>>>>
+>>>>>>> auto.master:
+>>>>>>> [...]
+>>>>>>> /home            /etc/auto/homes01
+>>>>>>> [...]
+>>>>>>>
+>>>>>>> and /etc/auto/homes01
+>>>>>>> [...]
+>>>>>>> * nfs-server:/srv/homes/homes01/&
+>>>>>>> [...]
+>>>>>>>
+>>>>>>> (note in fact the real configuration is slightly more complex,
+>>>>>>> nosuid,rw,hard,proto=tcp as options, but veried as wel stripping down the
+>>>>>>> options, even dropping proto=tcp). I hope I correctly de-anonymized
+>>>>>>> not messing up with paths in the logs below.
+>>>>>>>
+>>>>>>> After the update to autofs 5.1.7 based version there is a 10s delay on
+>>>>>>> mounts from the servers.
+>>>>>>>
+>>>>>>> In the following logs I had to slightly deanonymize the names. But I
+>>>>>>> think the delay problem is seen enough by the timestamps.
+>>>>>>>
+>>>>>>> Before the update, with autofs 5.1.2:
+>>>>>>>
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: handle_packet: type = 3
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: handle_packet_missing_indirect: token 26, name username, request pid 5285
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: attempting to mount entry /home/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: lookup_mount: lookup(program): username -> -nosuid,rw,hard,proto=tcp nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: parse_mount: parse(sun): expanded entry: -nosuid,rw,hard,proto=tcp nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: parse_mount: parse(sun): gathered options: nosuid,rw,hard,proto=tcp
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: parse_mount: parse(sun): dequote("nfs-server:/srv/homes/homes01/username") -> nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: parse_mount: parse(sun): core of entry: options=nosuid,rw,hard,proto=tcp, loc=nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: sun_mount: parse(sun): mounting root /home, mountpoint username, what nfs-server:/srv/homes/homes01/username, fstype nfs, options nosuid,rw,hard,proto=tcp
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: mount_mount: mount(nfs): root=/home name=username what=nfs-server:/srv/homes/homes01/username, fstype=nfs, options=nosuid,rw,hard,proto=tcp
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: mount_mount: mount(nfs): nfs options="nosuid,rw,hard,proto=tcp", nobind=0, nosymlink=0, ro=0
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: get_nfs_info: called with host nfs-server(192.168.122.188) proto 6 version 0x30
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: get_nfs_info: nfs v3 rpc ping time: 0.000000
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: get_nfs_info: host nfs-server cost 0 weight 0
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: prune_host_list: selected subset of hosts that support NFS3 over TCP
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: mount_mount: mount(nfs): calling mkdir_path /home/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: mount_mount: mount(nfs): calling mount -t nfs -s -o nosuid,rw,hard,proto=tcp nfs-server:/srv/homes/homes01/username /home/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: mount_mount: mount(nfs): mounted nfs-server:/srv/homes/homes01/username on /home/username
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: dev_ioctl_send_ready: token = 26
+>>>>>>> Jul 09 11:54:41 clienthost automount[5143]: mounted /home/username
+>>>>>>>
+>>>>>>> After the update to 5.1.7 (or 5.1.8):
+>>>>>>>
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: handle_packet: type = 3
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: handle_packet_missing_indirect: token 33, name username, request pid 7104
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: attempting to mount entry /home/username
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: lookup_mount: lookup(program): username -> -nosuid,rw,hard,proto=tcp nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: parse_mount: parse(sun): expanded entry: -nosuid,rw,hard,proto=tcp nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: parse_mount: parse(sun): gathered options: nosuid,rw,hard,proto=tcp
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: parse_mount: parse(sun): dequote("nfs-server:/srv/homes/homes01/username") -> nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: parse_mount: parse(sun): core of entry: options=nosuid,rw,hard,proto=tcp, loc=nfs-server:/srv/homes/homes01/username
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: sun_mount: parse(sun): mounting root /home, mountpoint username, what nfs-server:/srv/homes/homes01/username, fstype nfs, options nosuid,rw,hard,proto=tcp
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: mount(nfs): root=/home name=username what=nfs-server:/srv/homes/homes01/username, fstype=nfs, options=nosuid,rw,hard,proto=tcp
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: mount(nfs): nfs options="nosuid,rw,hard,proto=tcp", nobind=0, nosymlink=0, ro=0
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: get_nfs_info: called with host nfs-server(192.168.122.188) proto 6 version 0x20
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: get_nfs_info: nfs v3 rpc ping time: 0.000184
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: get_nfs_info: host nfs-server cost 183 weight 0
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: prune_host_list: selected subset of hosts that support NFS3 over TCP
+>>>>>>> Jul 09 11:56:23 clienthost automount[6952]: get_supported_ver_and_cost: called with host nfs-server(fc00:192:168:122::188) version 0x20
+>>>>>>> Jul 09 11:56:33 clienthost automount[6952]: get_supported_ver_and_cost: rpc ping time 0.000352
+>>>>>>> Jul 09 11:56:33 clienthost automount[6952]: get_supported_ver_and_cost: cost 352 weight 0
+>>>>>>> Jul 09 11:56:33 clienthost automount[6952]: mount_mount: mount(nfs): calling mkdir_path /home/username
+>>>>>>> Jul 09 11:56:33 clienthost automount[6952]: mount(nfs): calling mount -t nfs -s -o nosuid,rw,hard,proto=tcp nfs-server:/srv/homes/homes01/username /home/username
+>>>>>>> Jul 09 11:56:33 clienthost automount[6952]: mount_mount: mount(nfs): mounted nfs-server:/srv/homes/homes01/username on /home/username
+>>>>>>> Jul 09 11:56:33 clienthost automount[6952]: dev_ioctl_send_ready: token = 33
+>>>>>>> Jul 09 11:56:33 clienthost automount[6952]: mounted /home/username
+>>>>>>>
+>>>>>>> while first get_nfs_info is called again with host
+>>>>>>> nfs-server(192.168.12.2188), there is a get_supported_ver_and_cost
+>>>>>>> with the IPv6 address, hanging for 10s.
+>>>>>> The later call timed out, it's timeout is 10 seconds for addresses
+>>>>>>
+>>>>>> that look like they are on the local network so the IPv6 address is
+>>>>>>
+>>>>>> not responding.
+>>>>>>
+>>>>>>
+>>>>>> I know that 10 seconds is a bit long for interactive use, perhaps
+>>>>>>
+>>>>>> it should be a bit less, but it's better than the 2 minutes we
+>>>>>>
+>>>>>> would often see ...
+>>>>> Yes fully understand. We got complaints from clients having to wait
+>>>>> 10s for their homes to be mounted, this is how we start investigating
+>>>>> it.
+>>>>>
+>>>>>> I guess you are saying it should be responding ... not sure what
+>>>>>>
+>>>>>> I can do about that, I will need to reproduce the problem and IPv6
+>>>>>>
+>>>>>> is still not something I have a setup for easily available.
+>>>>> I'm not sure. I was actually surprised, given the Client is IPv4 only
+>>>>> networking, that there was happing with the updated autofs actually
+>>>>> a call to the IPv6 address.
+>>>>>
+>>>>>>> If I just revert c578e5b37c3c ("autofs-5.1.5 - Fix NFS mount from IPv6
+>>>>>>> addresses") then the mount is again quick, but logs an additional
+>>>>>>>
+>>>>>>> Jul 09 16:31:34 clienthost automount[12045]: check_address_proto: requested protocol does not match address
+>>>>>>>
+>>>>>>> so likely not the right fix.
+>>>>>> That does raise some interesting alternatives though.
+>>>>>>
+>>>>>> I'm not sure what the function check_address_proto() is seeing but it
+>>>>>>
+>>>>>> essentially (in 5.1.8) says "if the rpc request is for IPv6 and the
+>>>>>>
+>>>>>> host address length is not set to the length of an IPv6 address bail
+>>>>>>
+>>>>>> out". So whatever is wrong there is probably still wrong just not
+>>>>>>
+>>>>>> happening due to the check returning a fail.
+>>>>>>
+>>>>>>
+>>>>>> If I can setup an environment I can check that out further but sounds
+>>>>>>
+>>>>>> a bit suspicious. I can of course check the code to see if there's an
+>>>>>>
+>>>>>> obvious setup mistake ...
+>>>>> If I can provide any help in debugging this or you can give me hints
+>>>>> what I can try let me know. I will need to release the client host
+>>>>> soonish again to the customers, but will try to make a similar test
+>>>>> client available for further testing.
+>>>>>
+>>>>>>> I suspect mounts from server, which are dualstacked, but route to them
+>>>>>>> is only IPv4, are not correctly handled after 90532146bc0e
+>>>>>>> ("autofs-5.1.3 - fix ipv6 proto option handling") and c578e5b37c3c
+>>>>>>> ("autofs-5.1.5 - Fix NFS mount from IPv6 addresses").
+>>>>>> I'm not sure that these changes affect the routing at all, at least
+>>>>>>
+>>>>>> not due to autofs itself and the above is a proto TCP request so it
+>>>>>>
+>>>>>> shouldn't be the server simply not responding ... not sure why it's
+>>>>>>
+>>>>>> happening.
+>>>>>>
+>>>>>>
+>>>>>> The difference between the first and second log traces looks like
+>>>>>>
+>>>>>> dns lookup has returned two hosts in the second availability ping,
+>>>>>>
+>>>>>> an IPv4 and an IPv6 address. Not sure why an IPv6 address isn't
+>>>>>>
+>>>>>> present in the first availability ping.
+>>>>>>
+>>>>>>
+>>>>>> It might also be that NFSv3 is being checked for availability rather
+>>>>>>
+>>>>>> than IPv4. I've assumed that NFS v3 works over IPv6 ...
+>>>>> About NFsv3: This is actually independent, it is the same if I use
+>>>>> NFSv4 (with -vers=4 option, which we have in the original setup, I
+>>>>> just tried to strip down as many options as possible for the
+>>>>> reproducing case, though still not minimal, but we can actually ommint
+>>>>> any of the options).
+>>>>>
+>>>>>>> (note the package in Debian *is* built with --with-libtirpc).
+>>>>>>>
+>>>>>>> Does any of the above make sense?
+>>>>>> Sadly it does make sense but, as I say, I don't know what's causing
+>>>>>>
+>>>>>> it.
+>>>>> Ok. Again I'm eager to help as much as possible to pinpoint the issue,
+>>>>> but might need some hints what I should/can try to isolate the
+>>>>> problem. Are there potential missconficuration on client side which
+>>>>> cause us problem for autofs in this setup?
+>>>> This sounds a bit strange because above you mentioned the environment
+>>>>
+>>>> is IPv4 so the curious thing is where is that IPv6 address even coming
+>>>>
+>>>> from. Those addresses are coming from glibc so it's DNS or a hosts file.
+>>> The environment is equipped to be able to do dual stack, and in fact
+>>> the nfs-server has both IPv4 and IPv6.
+>>>
+>>> The particular client is though only equipped with IPv4 address.
+>>>
+>>> For the nfs-server both IPv4 and IPv6 addresses are both in DNS and as
+>>> well locally on every hosts in /etc/hosts file deployed via
+>>> configuration managment.
+>>>
+>>> So both resolvable even from the client, but the client reaches the
+>>> server only via IPv4.
+>> I was able to use a real IPv6 address and the ping works just fine.
+>>
+>>
+>> So it seems that the bug is actually that I try an IPv6 address at
+>>
+>> all on an IPv4 only node.
+>>
+>>
+>> It would be useful to know if there's an IPv6 address assigned to
+>>
+>> the network interface on the customer machine (even if it's the
+>>
+>> link-local address) so I know what to expect. You would think that
+>>
+>> trying to send an IPv6 packet on an interface not configured to do
+>>
+>> so would return an error not just timeout on connecting ...
+> Yes this is the case, on the given interface there is the link-local
+> address assigned:
+>
+> 7: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+>      link/ether d8:5e:d3:8f:5d:94 brd ff:ff:ff:ff:ff:ff
+>      inet 192.168.122.220/24 brd 192.168.122.255 scope global bond0
+>         valid_lft forever preferred_lft forever
+>      inet6 fe80::da5e:d3ff:fe8f:5d94/64 scope link
+>         valid_lft forever preferred_lft forever
 
-Many thanks!!! I'll get to work rebasing the multigrain timestamp series
-on top of that.
+Oh cool, I was concerned there was a real IPv6 address on the interface
 
-> Btw, both b4 and patchwork somehow treat the series in weird was.
-> IOW, based on the message id of the cover letter I was able to pull most
-> messages except for:
->=20
-> [07/92] fs: add ctime accessors infrastructure
-> [08/92] fs: new helper: simple_rename_timestamp
-> [92/92] fs: rename i_ctime field to __i_ctime
->=20
-> which I pulled in separately. Not sure what the cause of=A0
->=20
-> this is.
+but then IPv6 could be used for communication.
 
-Good to know.
 
-I ended up doing the send in two phases: one for the cover letter and
-infrastructure patches that went to everyone, and one for the per-
-subsystem patches that went do individual maintainers and lists.
+I have always thought that the link-local address should be usable for
 
-I suspect that screwed up the message IDs somehow. Hopefully I won't
-need to do a posting like that again soon, but I'll pay closer attention
-to the message id handling next time.
+local communication but I've always had trouble using them, don't know
 
-Thanks again!
---=20
-Jeff Layton <jlayton@kernel.org>
+why.
+
+
+It seems to me then that if an interface doesn't have an IPv6 address
+
+(excluding the link-local address in this case) then an IPv6 address
+
+seen via DNS should excluded from the proximity calculation (since it
+
+would not be reachable via that interface) and consequently excluded
+
+when constructing the list of addresses to be probed.
+
+
+Let me see if I can set things up to test this locally.
+
+
+Ian
+
