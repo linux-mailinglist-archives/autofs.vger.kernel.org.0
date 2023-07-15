@@ -2,217 +2,118 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B23E751679
-	for <lists+autofs@lfdr.de>; Thu, 13 Jul 2023 04:50:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5746A754C23
+	for <lists+autofs@lfdr.de>; Sat, 15 Jul 2023 23:42:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231812AbjGMCuF (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 12 Jul 2023 22:50:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60354 "EHLO
+        id S229650AbjGOVmn (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sat, 15 Jul 2023 17:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229646AbjGMCuE (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 12 Jul 2023 22:50:04 -0400
-X-Greylist: delayed 315 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 12 Jul 2023 19:50:02 PDT
-Received: from smtp01.aussiebb.com.au (smtp01.aussiebb.com.au [IPv6:2403:5800:3:25::1001])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E11EF10EC
-        for <autofs@vger.kernel.org>; Wed, 12 Jul 2023 19:50:02 -0700 (PDT)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 6B985100324
-        for <autofs@vger.kernel.org>; Thu, 13 Jul 2023 12:44:50 +1000 (AEST)
-X-Virus-Scanned: Debian amavisd-new at smtp01.aussiebb.com.au
-Received: from smtp01.aussiebb.com.au ([127.0.0.1])
-        by localhost (smtp01.aussiebb.com.au [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id clymIi-xFa1K for <autofs@vger.kernel.org>;
-        Thu, 13 Jul 2023 12:44:50 +1000 (AEST)
-Received: by smtp01.aussiebb.com.au (Postfix, from userid 116)
-        id 5D5FE1002F5; Thu, 13 Jul 2023 12:44:50 +1000 (AEST)
+        with ESMTP id S229582AbjGOVmm (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sat, 15 Jul 2023 17:42:42 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79F0F213F
+        for <autofs@vger.kernel.org>; Sat, 15 Jul 2023 14:42:40 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-57026f4bccaso32637267b3.2
+        for <autofs@vger.kernel.org>; Sat, 15 Jul 2023 14:42:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689457359; x=1692049359;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Jjiv6qB3jpMGsVhuo3kk8lwrnsl9iZDDBs5pN7U6L98=;
+        b=r/bsY9VcOE5/7nfRahsC1E1zhBOKOtbvUFsPiySVjQOaUxofngpCcT30SLqcAtftAQ
+         sYEVWHKeWlIrwttVdTDwb6t61fpQd8U8cQeJ29+45JLpYd4YsPRn6JjF4aeZy8JceShH
+         yzy7NAnTiGXjyGABwVfsr3Io7Ykn+C+B4yowGMmeCh+uRCm7rmyv4rLcMIr8m3dTrZAP
+         ITUuTUXFgtgI1GIR2lcTtIJcsPdDjYVUtrERqiGInHKQ2XGXYHzIgAvyI3kZU3LxAjrE
+         vQhzES0mZC1aXK+HKnRDLdA/XrRsNlUOmc/FvtZZrMRAzs1QksgBCq9B/ySS/3ejdrRq
+         3W9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689457359; x=1692049359;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Jjiv6qB3jpMGsVhuo3kk8lwrnsl9iZDDBs5pN7U6L98=;
+        b=DpGSfJj5oBTerVraMpNVDzvoDpPy0hu77/2l8eAT1Tpswmr/GnPegPm/suPTrVrxAT
+         2vEobnb5G0EyI3Xi/4WtqXcIxBM4h8abe9kDHsToVYgsY1xM+Owcl/GcG8btoZjatsXs
+         F5Z3VPpyrEMZyy3qwbUBbOWg6UGRJjuekzcZbkQHfB3Nxr9p54rIrI6yH5bt0xRyOlb3
+         QQjJkCCFwtfzk1jBk7bOtshk8BwPG4ogptoxmGs81pw9kFw00ThQF1YUnF+YTv+smRtg
+         FWvsCvzVYF515HBfo08q7yOgDMOZ7JrXsz7HXS5BMPXBGj0zfWUVem23JLnMlB02DF24
+         q0Kg==
+X-Gm-Message-State: ABy/qLYUYL+ZeXXw7ZvsLYGn5BMuAG4AhiRtqKf6iBm9lBlAI/CfY0Ws
+        fKkjoo00uIztA2MgMlY0pmjPW8z157CxGHJx1NOlxVQCD+nY/Q==
+X-Google-Smtp-Source: APBJJlEGlYJitsWK/7MGtjGh6ot3eT//gd43yoiWC+TCb+XNSwos9uhJeJzL2lisn04ugxzn3dGgxjt0AiFoK2nItkk=
+X-Received: by 2002:a0d:de05:0:b0:580:d073:73b9 with SMTP id
+ h5-20020a0dde05000000b00580d07373b9mr9990061ywe.23.1689457359658; Sat, 15 Jul
+ 2023 14:42:39 -0700 (PDT)
+MIME-Version: 1.0
+From:   =?UTF-8?Q?Micha=C5=82_Liszcz?= <liszcz.michal@gmail.com>
+Date:   Sat, 15 Jul 2023 23:42:28 +0200
+Message-ID: <CAEQCH4G+8026FCTtRv_Yizjz28T-9LYGPAV3Pbo3m_98y6smsA@mail.gmail.com>
+Subject: Support for arbitrary mount dependencies
+To:     raven@themaw.net
+Cc:     autofs@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
-Received: from donald.themaw.net (2403-580e-4b40-0-7968-2232-4db8-a45e.ip6.aussiebb.net [IPv6:2403:580e:4b40:0:7968:2232:4db8:a45e])
-        by smtp01.aussiebb.com.au (Postfix) with ESMTP id A87C5100286;
-        Thu, 13 Jul 2023 12:44:49 +1000 (AEST)
-Subject: [PATCH 2/2] autofs-5.1.8 - dont probe interface that cant send packet
-From:   Ian Kent <raven@themaw.net>
-To:     Salvatore Bonaccorso <carnil@debian.org>
-Cc:     Goldwyn Rodrigues <rgoldwyn@suse.de>,
-        Mike Gabriel <sunweaver@debian.org>,
-        autofs mailing list <autofs@vger.kernel.org>
-Date:   Thu, 13 Jul 2023 10:44:49 +0800
-Message-ID: <168921628931.13982.6488125346971046236.stgit@donald.themaw.net>
-In-Reply-To: <168921521309.13982.11820120661485368005.stgit@donald.themaw.net>
-References: <168921521309.13982.11820120661485368005.stgit@donald.themaw.net>
-User-Agent: StGit/1.5
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-When calculating the proximity add checks for basic reachability.
+Hello,
 
-If an interface doesn't have an address of the family of the target
-host, or the interface address is the IPv6 link local address, or
-the target host address is the IPv6 link local address then don't
-add it to the list of hosts to probe.
+I'm trying to migrate my setup from systemd.mount[1] to autofs/automount
+userspace daemon. I have a local disk encrypted with LUKS and a samba share
+with a keyfile for this disk. The goal is to automatically mount and decrypt
+this disk when connected to my home network.
 
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Cc: Goldwyn Rodrigues <rgoldwyn@suse.de>
-Cc: Mike Gabriel <sunweaver@debian.org>
-Signed-off-by: Ian Kent <raven@themaw.net>
----
- CHANGELOG            |    1 +
- lib/parse_subs.c     |   36 +++++++++++++++++++++++++++++++++++-
- modules/replicated.c |   19 +++++++++++--------
- 3 files changed, 47 insertions(+), 9 deletions(-)
+Below is my configuration. I'm mounting the encrypted disk with
+/sbin/mount.crypt helper from pam_mount[2].
 
-diff --git a/CHANGELOG b/CHANGELOG
-index 2f0b9dee..3885474c 100644
---- a/CHANGELOG
-+++ b/CHANGELOG
-@@ -91,6 +91,7 @@
- - add ioctlfd open helper.
- - make open files limit configurable.
- - use correct reference for IN6 macro call.
-+- dont probe interface that cant send packet.
- 
- 19/10/2021 autofs-5.1.8
- - add xdr_exports().
-diff --git a/lib/parse_subs.c b/lib/parse_subs.c
-index 0ee00d51..3c95996e 100644
---- a/lib/parse_subs.c
-+++ b/lib/parse_subs.c
-@@ -218,7 +218,7 @@ unsigned int get_proximity(struct sockaddr *host_addr)
- 	int addr_len;
- 	char buf[MAX_ERR_BUF];
- 	uint32_t mask, ha, ia, *mask6, *ha6, *ia6;
--	int ret;
-+	int ret, at_least_one;
- 
- 	addr = NULL;
- 	addr6 = NULL;
-@@ -228,6 +228,7 @@ unsigned int get_proximity(struct sockaddr *host_addr)
- 	ha6 = NULL;
- 	ia6 = NULL;
- 	ha = 0;
-+	at_least_one = 0;
- 
- 	switch (host_addr->sa_family) {
- 	case AF_INET:
-@@ -245,6 +246,14 @@ unsigned int get_proximity(struct sockaddr *host_addr)
- 		hst6_addr = (struct in6_addr *) &addr6->sin6_addr;
- 		ha6 = &hst6_addr->s6_addr32[0];
- 		addr_len = sizeof(*hst6_addr);
-+
-+		/* The link-local address always seems to be a problem so
-+		 * ignore it when trying to work out if the address we have
-+		 * is reachable.
-+		 */
-+		if (IN6_IS_ADDR_LINKLOCAL(hst6_addr))
-+			return PROXIMITY_UNSUPPORTED;
-+
- 		break;
- #endif
- 
-@@ -278,6 +287,14 @@ unsigned int get_proximity(struct sockaddr *host_addr)
- 				freeifaddrs(ifa);
- 				return PROXIMITY_LOCAL;
- 			}
-+
-+			/* If the target address is the loopback address it will
-+			 * have matched above so we can ignore it when trying to
-+			 * work out if the address we have is reachable.
-+			 */
-+			if (addr->sin_addr.s_addr != INADDR_LOOPBACK)
-+				at_least_one = 1;
-+
- 			break;
- 
- 		case AF_INET6:
-@@ -290,6 +307,15 @@ unsigned int get_proximity(struct sockaddr *host_addr)
- 				freeifaddrs(ifa);
- 				return PROXIMITY_LOCAL;
- 			}
-+
-+			/* If the interface address is the loopback address it will
-+			 * have matched above so we can ignore it and the link-local
-+			 * address always seems to be a problem so ignore it too when
-+			 * trying to work out if the address we have is reachable.
-+			 */
-+			if (!IN6_IS_ADDR_LINKLOCAL(&if6_addr->sin6_addr) &&
-+			    !IN6_IS_ADDR_LOOPBACK(&if6_addr->sin6_addr))
-+				at_least_one = 1;
- #endif
- 		default:
- 			break;
-@@ -297,6 +323,11 @@ unsigned int get_proximity(struct sockaddr *host_addr)
- 		this = this->ifa_next;
- 	}
- 
-+	if (!at_least_one) {
-+		freeifaddrs(ifa);
-+		return PROXIMITY_UNSUPPORTED;
-+	}
-+
- 	this = ifa;
- 	while (this) {
- 		if (!(this->ifa_flags & IFF_UP) ||
-@@ -353,6 +384,9 @@ unsigned int get_proximity(struct sockaddr *host_addr)
- 			if6_addr = (struct sockaddr_in6 *) this->ifa_addr;
- 			ia6 = &if6_addr->sin6_addr.s6_addr32[0];
- 
-+			if (IN6_IS_ADDR_LINKLOCAL(&if6_addr->sin6_addr))
-+				break;
-+
- 			/* Is the address within the network of the interface */
- 
- 			msk6_addr = (struct sockaddr_in6 *) this->ifa_netmask;
-diff --git a/modules/replicated.c b/modules/replicated.c
-index 2e628123..5e2f8b17 100644
---- a/modules/replicated.c
-+++ b/modules/replicated.c
-@@ -926,6 +926,15 @@ static int add_new_host(struct host **list,
- 
- 	prx = get_proximity(host_addr->ai_addr);
- 
-+	/*
-+	 * If we tried to add an IPv6 address and we don't have IPv6
-+	 * support (or the host_addr type doesn't match that of any
-+	 * of the interface addresses or looks unreachable) return
-+	 * success in the hope of getting a valid address later.
-+	 */
-+	if (prx == PROXIMITY_UNSUPPORTED)
-+		return 1;
-+
- 	/*
- 	 * If we want the weight to be the determining factor
- 	 * when selecting a host, or we are using random selection,
-@@ -938,13 +947,6 @@ static int add_new_host(struct host **list,
- 		       MOUNT_FLAG_RANDOM_SELECT)))
- 		prx = PROXIMITY_SUBNET;
- 
--	/*
--	 * If we tried to add an IPv6 address and we don't have IPv6
--	 * support return success in the hope of getting an IPv4
--	 * address later.
--	 */
--	if (prx == PROXIMITY_UNSUPPORTED)
--		return 1;
- 	if (prx == PROXIMITY_ERROR)
- 		return 0;
- 
-@@ -1038,7 +1040,8 @@ try_name:
- 		} else if (this->ai_family == AF_INET6) {
- 			struct sockaddr_in6 *addr = (struct sockaddr_in6 *) this->ai_addr;
- 
--			if (!IN6_IS_ADDR_LOOPBACK(&addr->sin6_addr))
-+			if (!IN6_IS_ADDR_LOOPBACK(&addr->sin6_addr) &&
-+			    !IN6_IS_ADDR_LINKLOCAL(&addr->sin6_addr))
- 				rr6++;
- 		}
- 		this = this->ai_next;
+# Master map file
+/- /home/mliszcz/var/autofs/router.map --timeout=60
+/- /home/mliszcz/var/autofs/disk.map --timeout=60
+# router.map
+/mnt/router -fstype=cifs,ro,guest,vers=2.0 ://172.18.0.5/USB_DISK
+# disk map
+/mnt/data -fstype=crypt,keyfile=/mnt/router/encryption.keyfile,fsk_cipher=none
+:/dev/loop0p1
+
+While /mnt/data is being mounted I'm seeing below logs:
+
+attempting to mount entry /mnt/data
+mount(generic): failed to mount /dev/loop0p1 (type crypt) on /mnt/data
+failed to mount /mnt/data
+
+I debugged this a bit. The mount helper for /mnt/data tries to access
+/mnt/router/encryption.keyfile, but it does not trigger automounting of
+/mnt/router. It seems that this is by design - there is already some code
+in autofs for handling dependent mounts (open(2) call with changed uid/gid
+to trigger mounting of the dependency before executing the actual mount
+command). But it only works if the two mounts share the mountpoint prefix.
+
+I verified this by changing the daemon/spawn.c file as follows:
+
+@@ -454,6 +454,9 @@ static int do_spawn(unsigned logopt, unsigned int wait,
+                         * let the VFS handle returns to each individual
+                         * waiter.
+                         */
++                       if(strcmp(argv[loc], "/dev/loop0p1") == 0)
++                           fd = open("/mnt/router", O_DIRECTORY);
++                       else
+                        fd = open(argv[loc], O_DIRECTORY);
+                        if (fd != -1)
+                                close(fd);
+
+Now I'm wondering if it would be possible to add a generic mechanism for
+declaring dependencies in autofs maps to make this work. If this could be
+accepted I can even work on a patch, provided that I get some pointers.
+
+Kind regards,
+Michal
 
 
+[1]: https://www.freedesktop.org/software/systemd/man/systemd.mount.html
+[2]: https://inai.de/projects/pam_mount/
