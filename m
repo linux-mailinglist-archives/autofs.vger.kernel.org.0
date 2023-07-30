@@ -2,100 +2,85 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07D287682CC
-	for <lists+autofs@lfdr.de>; Sun, 30 Jul 2023 02:27:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01C947683FC
+	for <lists+autofs@lfdr.de>; Sun, 30 Jul 2023 08:06:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbjG3A1k (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sat, 29 Jul 2023 20:27:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50156 "EHLO
+        id S229456AbjG3GGY (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Sun, 30 Jul 2023 02:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjG3A1j (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sat, 29 Jul 2023 20:27:39 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E4BE1708;
-        Sat, 29 Jul 2023 17:27:38 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 2A8B932005B5;
-        Sat, 29 Jul 2023 20:27:35 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Sat, 29 Jul 2023 20:27:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
-        :cc:content-transfer-encoding:content-type:content-type:date
-        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-        1690676854; x=1690763254; bh=5oVpB8cg24iMSoIqJPBrzh1VmgfW5bnbCkN
-        cqJv/vSY=; b=NnbNweek63dx+oTkE0HkrT2cbIXFOBsFi1ljUwofsDoEoSBlgSl
-        CTzCfaadIgqqaugqTvzKiqmY2itx2uY9Kgcrqa/eQEowNZebTGthd6uA2BShrEto
-        gxLxJJJi6uLnrPfuxtqiiJq5n9htCzwNH7GHz9YSV4LetlCiroE3TYLPZERAlxiW
-        gHzJIQWDfpVjRljBwINppGyOZG5QuVrMK48lFoKG3i7YCSg2VxoGixmJeXievni6
-        m4d4PzWFVQezyB8ne01Up1E9y1yQjLwPDgJWPvjggXZgFiNF6v/NSZYhsTVUJW8v
-        HWEvHnNvRiNzxQEgmKPeWud/1HRSyzIN9Og==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1690676854; x=1690763254; bh=5oVpB8cg24iMSoIqJPBrzh1VmgfW5bnbCkN
-        cqJv/vSY=; b=x5h9cydy/S0jYnVAfqDGbjqw6OL/FitloQa9bP5TsbcXzmhF+My
-        T0UmtyrI8l3hV657cwcmuwUcxP9hhYok6TprtPc7G/AxK2rIySycfACGeEFeBFl8
-        Kjc8D9ABYKLD4McgClcoNsO4GzqlQooHxfYMNNzps4sCR6T88htEoYWBz0BO2qNi
-        Bdjj6Z6ttg9p+diLgjmkQ7956Ldfd4Q9Zs0BzVRnyX1wjz6Mpqso/pPJ7ZQzsf1T
-        EeV2OibXxLE6qNmCklV/4ewmKP4j38eOSPWxNDqm4STtKLaTsYQnzWKaS0A9ke29
-        umG+PwlAZkquaPWi0YPa6qTBREo7rhVDbIw==
-X-ME-Sender: <xms:dq7FZLZ-5OI54pKHfjEaI2RguRjDFcCMk4jtLmQB8T1V_QRdnEiDYA>
-    <xme:dq7FZKaT39BdCLE_CUK1-tuNcIeqZyqLTZOdjU7NxkyczI-_QVypPgtvkqgefXU0S
-    7qbFHPAv4Kw>
-X-ME-Received: <xmr:dq7FZN9ZQdYlw5cOKie_VqSYAb7NeLUqt3qpBGryRvxI4cpJWHFAtodfJ8I_eMmgERVEzYI61fdrkdQmf8Rn5bbejT690aMBAi1vGlhqvZMZCGBaskw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrieelgdefgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomhepkfgrnhcu
-    mfgvnhhtuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucggtffrrghtthgvrhhnpe
-    euhfeuieeijeeuveekgfeitdethefguddtleffhfelfeelhfduuedvfefhgefhheenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehrrghvvghnse
-    hthhgvmhgrfidrnhgvth
-X-ME-Proxy: <xmx:dq7FZBoKCXFOCK1QrHM6hnS9Y2bIMruNH5vK0tSsJxj16bZnhDnYug>
-    <xmx:dq7FZGptKFgyS-YsyLkT9alBIFeHAoNTu_noMkGCowufprz6nEyZPw>
-    <xmx:dq7FZHRuIibnjzqQf9_B2lNjxm-DFVVLs8SgDOGizsBSVa3E8MU02g>
-    <xmx:dq7FZLB-ieafJmrnZCXjbRBZ3l3_Ps60ynjikPNgalStGxIaOIwemw>
-Feedback-ID: i31e841b0:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 29 Jul 2023 20:27:32 -0400 (EDT)
-Message-ID: <2afc8cac-5749-f7f5-1278-2e1252924ba4@themaw.net>
-Date:   Sun, 30 Jul 2023 08:27:28 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] arch/*/configs/*defconfig: Replace AUTOFS4_FS by
- AUTOFS_FS
-To:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Sven Joachim <svenjoac@gmx.de>
-Cc:     autofs@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230727200041.21404-1-svenjoac@gmx.de>
- <CAHk-=wgK9-Tx4BxYMrc0pg==mcaz3cjWF6-CBwVpM_BZAmf4JQ@mail.gmail.com>
-Content-Language: en-US
-From:   Ian Kent <raven@themaw.net>
+        with ESMTP id S229379AbjG3GGX (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Sun, 30 Jul 2023 02:06:23 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0A3C172C;
+        Sat, 29 Jul 2023 23:06:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1690697177; x=1691301977; i=svenjoac@gmx.de;
+ bh=F5U0XWlMGWxKX4lJcQ4zQRqGGIsSKTzGOyOlXbi2bUk=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:In-Reply-To:References:Date;
+ b=C7n28bjHHQR62VwOqATdh0g6/yDqte4WhoKxzGUQ2znaVOwoUIJRXmOkHpATXFQfDykn3ad
+ /jVwZXitr2HPX4ghCgIR4NDfasMKIcGnh8odMgGhcNQPVgRXIor2F6o0HDZKg1KHFCLoPObQr
+ 7jfQfwOzyX0gpxZRjdBuF4WCJaYQNQrKvAUmhOqzGgUve2m0E04PdEB+pbfoJBAYoFfuE+SYi
+ qEF1gkj364lWokVH69zKQlrJwh7+bqpfJr4ALxH0aBwnD81T5jYm7xU0rRSGf8sIhGEwFbpCc
+ iacQohzkOQlivgY6Oc5Nz/vi5DR/HIiNw+YQdhsbMOk2M5ETziDQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost.localdomain ([79.203.84.168]) by mail.gmx.net
+ (mrgmx004 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 1MbzyP-1ps1GI2Zw7-00dVky; Sun, 30 Jul 2023 08:06:17 +0200
+Received: by localhost.localdomain (Postfix, from userid 1000)
+        id A31FF80088; Sun, 30 Jul 2023 08:06:16 +0200 (CEST)
+From:   Sven Joachim <svenjoac@gmx.de>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Ian Kent <raven@themaw.net>, autofs@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arch/*/configs/*defconfig: Replace AUTOFS4_FS by AUTOFS_FS
 In-Reply-To: <CAHk-=wgK9-Tx4BxYMrc0pg==mcaz3cjWF6-CBwVpM_BZAmf4JQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        (Linus Torvalds's message of "Sat, 29 Jul 2023 14:07:41 -0700")
+References: <20230727200041.21404-1-svenjoac@gmx.de>
+        <CAHk-=wgK9-Tx4BxYMrc0pg==mcaz3cjWF6-CBwVpM_BZAmf4JQ@mail.gmail.com>
+Date:   Sun, 30 Jul 2023 08:06:16 +0200
+Message-ID: <87sf96kk6f.fsf@turtle.gmx.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Provags-ID: V03:K1:NyVFSpd/+qMSz0ViOLGTAse3o+sjmleMxjHv+3zytwfzlCDPQcE
+ oqT/+0Q+Svqiz6iefo64DHnGPA6VPMeZvdDgsab9U50jlSi8wrmoE+g7lcy4b5NUgWmoeDj
+ Z4gJv1fgyxNMY0h7a9YCDGxL5i7aBo6td2DeaYVKgeqlT4QK/J3GPUr6qsRECJ9xNvkfUvi
+ wZjpB69oAgkBbAIYWUdkA==
+UI-OutboundReport: notjunk:1;M01:P0:ptCZPK0zY1s=;O7Fd3TWE44KfrKdVccaBl6yeNMb
+ rffZL7w4qSi/WOr/Q/oB3prm15Bzagt+POqMpUbgOzrZXVPhgT+NA7VJtfrpqvSCruRaSmX6K
+ uq2ye8wk9SB87t9DBzlpWea/DcT2wgGhaLpPxe7kti03si/o5XsHeNRmQT2EPxKGPoEX1o95K
+ QW3oApMfxBcDop2LFR/O8aoF+L2fHJVDkpNkMSZlvMuBi8QCljfl9XOzxju3pOM4FArKqggCI
+ bONBexDpdeZ6vqyx3mpv4ZC2UXUhmWakzh3t5N04Enue4S628Ji3sbtJvk5gfmLtFUvANzS0T
+ Any9V+TXKutvBp7eq9nOxNwPec+OK0SRGHwidt0TfemCXcFbOC4sXKRe35lzW0i5mbvPuUCTn
+ bZfrmqsUO298+vZxEq3l1uQDpgMgOpjCojpHGCNEOdPm7VHp8xZ1/tcdh7mRBl+5eJQXqBclf
+ YcW8RtZpmnrt4Lr9/MpkrpUac448PNloROsgtkV6i283Cz8NkaW/KWTxBFoBKJ4Ei6AUOZLO7
+ srEj00v0YyI6OEwITWVyARBOfIjn/QBwH4yUUSSDPQJnwsuMDNJGgIF2xsxqopTydeCf0+/2D
+ rhjWKTF5jAyOObqbhQwHYS7wbvdY39/yj42rhlP4SvLWK8ABtutCO0uzodikqRepborM8WzLh
+ SpJBXcHej31lOA+XANph1BKRJsEmWX1SwjfRdPd+9jAub3IXQncQD9c0f3fYAr/ymVvsTY7z+
+ mXfDuJRDD92NcZte59tlrdyz0i2T0bnHmFKjfPfJNqqAAjQdDeWySppdP9iTVFZBD2NPFxzh1
+ rI5mRph5yCWYzBF2hyJrkwtMQVJ9fwHuRu9x7iseJcRf86lSFhDLvFI6RVTBZakzUPI35q2WC
+ dcKKLeJdp/kxZPat45mYBuiK7Hy7XxVRla4Pa/T2GZXOQy+Z4yAQGbFGxQciN0mC7U5qeG4pi
+ D1rGCJeXb5obzrsqXfJzJTSTbHU=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
+On 2023-07-29 14:07 -0700, Linus Torvalds wrote:
 
-On 30/7/23 05:07, Linus Torvalds wrote:
 > On Thu, 27 Jul 2023 at 13:01, Sven Joachim <svenjoac@gmx.de> wrote:
+>>
 >> Commit a2225d931f75 ("autofs: remove left-over autofs4 stubs")
 >> promised the removal of the fs/autofs/Kconfig fragment for AUTOFS4_FS
 >> within a couple of releases, but five years later this still has not
 >> happened yet, and AUTOFS4_FS is still enabled in 63 defconfigs.
+>
 > Ok, I ran the script, and also decided that we might as well remove
 > the AUTOFS4 legacy naming stub entry by now.
 >
@@ -103,8 +88,13 @@ On 30/7/23 05:07, Linus Torvalds wrote:
 > name with 'make oldconfig', or they just don't use 'make oldconfig' at
 > all.
 
-Agreed, thanks Linus.
+I had not added the suggested the removal of AUTOFS4_FS from the Kconfig
+in my patch, because some projects seem to have have copy-pasted from
+the kernel's defconfig files, e.g. systemd[1].  Hopefully not a big deal
+for actual users, but worth mentioning.
+
+Cheers,
+       Sven
 
 
-Ian
-
+1. https://github.com/systemd/systemd/pull/28561
