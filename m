@@ -2,113 +2,150 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39923768423
-	for <lists+autofs@lfdr.de>; Sun, 30 Jul 2023 09:21:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 729FE76F991
+	for <lists+autofs@lfdr.de>; Fri,  4 Aug 2023 07:33:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229463AbjG3HU5 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sun, 30 Jul 2023 03:20:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
+        id S229528AbjHDFd1 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Fri, 4 Aug 2023 01:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjG3HU4 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sun, 30 Jul 2023 03:20:56 -0400
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B7A419B7;
-        Sun, 30 Jul 2023 00:20:55 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 03F845C006E;
-        Sun, 30 Jul 2023 03:20:52 -0400 (EDT)
-Received: from imap46 ([10.202.2.96])
-  by compute2.internal (MEProxy); Sun, 30 Jul 2023 03:20:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=themaw.net; h=cc
-        :cc:content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1690701651; x=1690788051; bh=L5
-        yMUbQktbxKTCHMBew6jTG9neKt+p6qnBeFuafRANc=; b=QTUiE8rG2v3rmJI5GY
-        VFHa7XwwgyhRBqZzwjYSYA9wl5N873SBRXZx5z8vtL8h1VUlbSLQTuZLz9d8cMWm
-        dEa40v8ljTGwHlJ2lk6QA7ZlvV8QVZhyOG3Z2psbw9xd1UElqoXgXILhrWWEy6PW
-        VKHgpKOUY9kRk9DTL8XV/TErPhZ//81K1zfsvi76Cst/4C4pwC5ScsNmfNaIlxJa
-        +jSs1ZUkQ70XV1oB4dxzjzWEgXgc8BahtYZ3dXaleJCJic3nGbTHi3cTtE6ap6Sh
-        mFaqGSobQBESE+XrWW5YJaP1L5FfocC/r/OSJBKivJ/JjHW5+oDLcGOXe6n2PuRN
-        0V+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1690701651; x=1690788051; bh=L5yMUbQktbxKT
-        CHMBew6jTG9neKt+p6qnBeFuafRANc=; b=HsujcvwzVTo2IvA/HSoWUHMGLzW7D
-        K2/s+tvdCw9uziMXCb0ehV6gIfF8rcRBs2/OxZPyXmqh86q9xhc5EoG9ggJvYUJT
-        v5jfvMnoBrBotE6Rj0nsMlDMrQ/mpZ/vbAPGOj2PwBeHY92F31pIX//LH6ynSkP/
-        dws8mj3FyXgus03t/0LbKtccKMD8Qd2ip9gjVx4yMEqzLpwZtRdH5CIMU5hD/TW+
-        U0HR7aqCeIWJ4Lu1pTPspRmzz8SlzIu+XnNp5ZP6f/t59tVPJsSZCKNlKh5s7YJ6
-        CG/+iRcBZaRx2JEUwCCkp6CnSq9YXV1OaFB2Zyr2sFJojcNlQrN2T15ZA==
-X-ME-Sender: <xms:Uw_GZDskHgBUQGOaUJtVwIjNKLQ8w8LPv2O74R-aW7Z6xDr7HtiUoA>
-    <xme:Uw_GZEeLvPldRrWE_PUbRJKoISCpe98fNrbpxwE0XpuAouIrTUBp7bdqSI4oOskVC
-    sbs-aYdxb4l>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrjedtgddufecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfkrghn
-    ucfmvghnthdfuceorhgrvhgvnhesthhhvghmrgifrdhnvghtqeenucggtffrrghtthgvrh
-    hnpeejleeigeehveeiffevheeigefgvdeuuedvfeeiteefgeelleegjeffudevfffffeen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehrrghvvg
-    hnsehthhgvmhgrfidrnhgvth
-X-ME-Proxy: <xmx:Uw_GZGxvPakyNGXYys8t-uRGDMobAcE5cy7WYUDK8wdt2SLjyoDx1w>
-    <xmx:Uw_GZCPltuVLoCfbd1lXJ60ap1E3TQkpuoMIeoMrhMu-dkN3J-m3kA>
-    <xmx:Uw_GZD_GRPNE01E80i9DLr73siN8THGlnIBcEdqwJGZwJXmAF_NFMg>
-    <xmx:Uw_GZAGOCFCr_YWgLnS4z-UdgHSEr68Cp-qT-s7kX2Jx9cmY4F2MfA>
-Feedback-ID: i31e841b0:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 84EB52A20085; Sun, 30 Jul 2023 03:20:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-592-ga9d4a09b4b-fm-defalarms-20230725.001-ga9d4a09b
-Mime-Version: 1.0
-Message-Id: <016f771c-cfa7-4795-a0a4-9f486a5b5b0e@app.fastmail.com>
-In-Reply-To: <87sf96kk6f.fsf@turtle.gmx.de>
-References: <20230727200041.21404-1-svenjoac@gmx.de>
- <CAHk-=wgK9-Tx4BxYMrc0pg==mcaz3cjWF6-CBwVpM_BZAmf4JQ@mail.gmail.com>
- <87sf96kk6f.fsf@turtle.gmx.de>
-Date:   Sun, 30 Jul 2023 15:20:31 +0800
-From:   "Ian Kent" <raven@themaw.net>
-To:     "Sven Joachim" <svenjoac@gmx.de>,
-        "Linus Torvalds" <torvalds@linux-foundation.org>
-Cc:     autofs@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arch/*/configs/*defconfig: Replace AUTOFS4_FS by AUTOFS_FS
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        with ESMTP id S229498AbjHDFd0 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Fri, 4 Aug 2023 01:33:26 -0400
+Received: from smtp01.aussiebb.com.au (smtp01.aussiebb.com.au [121.200.0.92])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A2B119
+        for <autofs@vger.kernel.org>; Thu,  3 Aug 2023 22:33:21 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 35B501006E0;
+        Fri,  4 Aug 2023 15:33:15 +1000 (AEST)
+X-Virus-Scanned: Debian amavisd-new at smtp01.aussiebb.com.au
+Received: from smtp01.aussiebb.com.au ([127.0.0.1])
+        by localhost (smtp01.aussiebb.com.au [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 58RXBqPWJhLw; Fri,  4 Aug 2023 15:33:15 +1000 (AEST)
+Received: by smtp01.aussiebb.com.au (Postfix, from userid 116)
+        id 2CFAF10159A; Fri,  4 Aug 2023 15:33:15 +1000 (AEST)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Received: from donald.themaw.net (2403-580e-4b40-0-7968-2232-4db8-a45e.ip6.aussiebb.net [IPv6:2403:580e:4b40:0:7968:2232:4db8:a45e])
+        by smtp01.aussiebb.com.au (Postfix) with ESMTP id 535EE1006E0;
+        Fri,  4 Aug 2023 15:33:12 +1000 (AEST)
+Subject: [PATCH 1/2] autofs: fix memory leak of waitqueues in
+ autofs_catatonic_mode
+From:   Ian Kent <raven@themaw.net>
+To:     Al Viro <viro@ZenIV.linux.org.uk>,
+        Christian Brauner <brauner@kernel.org>
+Cc:     autofs mailing list <autofs@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
+        Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Fedor Pchelkin <pchelkin@ispras.ru>,
+        Takeshi Misawa <jeliantsurux@gmail.com>,
+        Alexey Khoroshilov <khoroshilov@ispras.ru>,
+        Matthew Wilcox <willy@infradead.org>,
+        Andrey Vagin <avagin@openvz.org>
+Date:   Fri, 04 Aug 2023 13:33:12 +0800
+Message-ID: <169112719161.7590.6700123246297365841.stgit@donald.themaw.net>
+User-Agent: StGit/1.5
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-On Sun, Jul 30, 2023, at 2:06 PM, Sven Joachim wrote:
-> On 2023-07-29 14:07 -0700, Linus Torvalds wrote:
->
->> On Thu, 27 Jul 2023 at 13:01, Sven Joachim <svenjoac@gmx.de> wrote:
->>>
->>> Commit a2225d931f75 ("autofs: remove left-over autofs4 stubs")
->>> promised the removal of the fs/autofs/Kconfig fragment for AUTOFS4_FS
->>> within a couple of releases, but five years later this still has not
->>> happened yet, and AUTOFS4_FS is still enabled in 63 defconfigs.
->>
->> Ok, I ran the script, and also decided that we might as well remove
->> the AUTOFS4 legacy naming stub entry by now.
->>
->> It has been five years, and people will have either picked up the new
->> name with 'make oldconfig', or they just don't use 'make oldconfig' at
->> all.
->
-> I had not added the suggested the removal of AUTOFS4_FS from the Kconfig
-> in my patch, because some projects seem to have have copy-pasted from
-> the kernel's defconfig files, e.g. systemd[1].  Hopefully not a big deal
-> for actual users, but worth mentioning.
+Syzkaller reports a memory leak:
 
-Right, it's time to do this though.
-Hopefully the systemd maintainers will post to the autofs mailing list for advice.
+BUG: memory leak
+unreferenced object 0xffff88810b279e00 (size 96):
+  comm "syz-executor399", pid 3631, jiffies 4294964921 (age 23.870s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 08 9e 27 0b 81 88 ff ff  ..........'.....
+    08 9e 27 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ..'.............
+  backtrace:
+    [<ffffffff814cfc90>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1046
+    [<ffffffff81bb75ca>] kmalloc include/linux/slab.h:576 [inline]
+    [<ffffffff81bb75ca>] autofs_wait+0x3fa/0x9a0 fs/autofs/waitq.c:378
+    [<ffffffff81bb88a7>] autofs_do_expire_multi+0xa7/0x3e0 fs/autofs/expire.c:593
+    [<ffffffff81bb8c33>] autofs_expire_multi+0x53/0x80 fs/autofs/expire.c:619
+    [<ffffffff81bb6972>] autofs_root_ioctl_unlocked+0x322/0x3b0 fs/autofs/root.c:897
+    [<ffffffff81bb6a95>] autofs_root_ioctl+0x25/0x30 fs/autofs/root.c:910
+    [<ffffffff81602a9c>] vfs_ioctl fs/ioctl.c:51 [inline]
+    [<ffffffff81602a9c>] __do_sys_ioctl fs/ioctl.c:870 [inline]
+    [<ffffffff81602a9c>] __se_sys_ioctl fs/ioctl.c:856 [inline]
+    [<ffffffff81602a9c>] __x64_sys_ioctl+0xfc/0x140 fs/ioctl.c:856
+    [<ffffffff84608225>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84608225>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84800087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Ian
+autofs_wait_queue structs should be freed if their wait_ctr becomes zero.
+Otherwise they will be lost.
+
+In this case an AUTOFS_IOC_EXPIRE_MULTI ioctl is done, then a new
+waitqueue struct is allocated in autofs_wait(), its initial wait_ctr
+equals 2. After that wait_event_killable() is interrupted (it returns
+-ERESTARTSYS), so that 'wq->name.name == NULL' condition may be not
+satisfied. Actually, this condition can be satisfied when
+autofs_wait_release() or autofs_catatonic_mode() is called and, what is
+also important, wait_ctr is decremented in those places. Upon the exit of
+autofs_wait(), wait_ctr is decremented to 1. Then the unmounting process
+begins: kill_sb calls autofs_catatonic_mode(), which should have freed the
+waitqueues, but it only decrements its usage counter to zero which is not
+a correct behaviour.
+
+edit:imk
+This description is of course not correct. The umount performed as a result
+of an expire is a umount of a mount that has been automounted, it's not the
+autofs mount itself. They happen independently, usually after everything
+mounted within the autofs file system has been expired away. If everything
+hasn't been expired away the automount daemon can still exit leaving mounts
+in place. But expires done in both cases will result in a notification that
+calls autofs_wait_release() with a result status. The problem case is the
+summary execution of of the automount daemon. In this case any waiting
+processes won't be woken up until either they are terminated or the mount
+is umounted.
+end edit: imk
+
+So in catatonic mode we should free waitqueues which counter becomes zero.
+
+edit: imk
+Initially I was concerned that the calling of autofs_wait_release() and
+autofs_catatonic_mode() was not mutually exclusive but that can't be the
+case (obviously) because the queue entry (or entries) is removed from the
+list when either of these two functions are called. Consequently the wait
+entry will be freed by only one of these functions or by the woken process
+in autofs_wait() depending on the order of the calls.
+end edit: imk
+
+Reported-by: syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com
+Suggested-by: Takeshi Misawa <jeliantsurux@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Ian Kent <raven@themaw.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: autofs@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+---
+ fs/autofs/waitq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
+index 54c1f8b8b075..efdc76732fae 100644
+--- a/fs/autofs/waitq.c
++++ b/fs/autofs/waitq.c
+@@ -32,8 +32,9 @@ void autofs_catatonic_mode(struct autofs_sb_info *sbi)
+ 		wq->status = -ENOENT; /* Magic is gone - report failure */
+ 		kfree(wq->name.name - wq->offset);
+ 		wq->name.name = NULL;
+-		wq->wait_ctr--;
+ 		wake_up_interruptible(&wq->queue);
++		if (!--wq->wait_ctr)
++			kfree(wq);
+ 		wq = nwq;
+ 	}
+ 	fput(sbi->pipe);	/* Close the pipe */
+
+
