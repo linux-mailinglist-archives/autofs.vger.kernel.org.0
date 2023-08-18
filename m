@@ -2,73 +2,78 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20E6F770DF5
-	for <lists+autofs@lfdr.de>; Sat,  5 Aug 2023 07:54:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65867780C48
+	for <lists+autofs@lfdr.de>; Fri, 18 Aug 2023 15:09:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229502AbjHEFy0 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Sat, 5 Aug 2023 01:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58598 "EHLO
+        id S240900AbjHRNI5 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Fri, 18 Aug 2023 09:08:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjHEFyZ (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Sat, 5 Aug 2023 01:54:25 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4959F4ECF
-        for <autofs@vger.kernel.org>; Fri,  4 Aug 2023 22:54:24 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4fe0d5f719dso4765760e87.2
-        for <autofs@vger.kernel.org>; Fri, 04 Aug 2023 22:54:24 -0700 (PDT)
+        with ESMTP id S1377029AbjHRNIc (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Fri, 18 Aug 2023 09:08:32 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D56FE2D4A
+        for <autofs@vger.kernel.org>; Fri, 18 Aug 2023 06:08:31 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-68896d7eb1eso743413b3a.3
+        for <autofs@vger.kernel.org>; Fri, 18 Aug 2023 06:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691214862; x=1691819662;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Fyaf0OHfvWgaqfRiwRufcy49gz6rXRNyNLf1qH0Ffk0=;
-        b=UVdH/uVvE/3OtwyRz9eNdJUatq8zqVGzuRpOBq8L0pWm/C1EWjPiC7OAkrX88isKUj
-         uMEPoYXkr67DSiAE3FzG2fxWF1N7vQAD64agGGEpveH5y/x+gWa19sCOGBvz2Y4IDxKH
-         MKffdAvCJfCPl8LG70Eo0VTYBMDSyAtJJXlvMR9EmdysufGwbXvNltidq3xpb8scnqN5
-         BEThuinH8iE3yUJHwx74N6Wb4iVT5Gnw1Nw0sjf3fuqTlIkLU9OnU7DvO1NsFvo9lne/
-         K4fE6YaF408wzsEIBw33kLg9Z46JdRUyLrijKZmkdqu1+5mKVm6f8Xz/9bpQfaCgTGC2
-         YABQ==
+        d=gmail.com; s=20221208; t=1692364111; x=1692968911;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=t5SFEzHA7UMaN7JCcAac+3FeaRCdvcn/YsILS93/wJ0=;
+        b=fn2V0TJMSr3cqkJDLLxyTbZZuQv5Z49ZLJMrBpgmKCxyDyWss9rN3IOtTcJbla7ONB
+         OCxJD39brNRpW7iMe5QghQy3qQk0reB1pLl3aosrpd2HQkyaRvMoIpzG6JscjXTTfwP5
+         HgI1+J+efY1c7zjdt3WnairjctU/OrBEP8Yguh04h/gA9fvks3AvCXfuhszVasrKDYet
+         +xxltzpIdmZXab0n9/pa5/B4vemYrC+pECSoCS/S9R1uMEZqhhgORN5vTKtPe9d3JLUO
+         BMc6NqmtPkjpbdKRQNcgb8vL7R2GFhH4KKiUD36u9PAqAHjkg+M0uREqkCMsmFi4pxU2
+         42JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691214862; x=1691819662;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fyaf0OHfvWgaqfRiwRufcy49gz6rXRNyNLf1qH0Ffk0=;
-        b=ENkTLOmcq8eIoRRPEpaNm+gZEWJtx7XVH6bv3GYQ7LB74VoqHWg0iRUZ66GE06VVEG
-         iiLTe3qjVA1F72PSfVO3imZ6ZAo0LEDNAIy7irPXwojDQVKNiiV4i++aBu3r1grVoUGk
-         EeWj2+k3Ylwa+0MjjY3iRHCAY14EVFLvqQH+QwyGMRDTqh/s2DIDyhpODg3xfcdaXqFI
-         TOPvWR81B++JQNaPt16Zm93igKlFT/CVAe3nM5uxZHoLTsva52ByHdtfV0YBRsf8yLB5
-         g1l8srDO+7lJ1B0yz4B7JumkqKIccEAb6LGJrB8OaEnFH4K4C8fi2fjYHJtlauQmBnLT
-         xLuQ==
-X-Gm-Message-State: AOJu0YyvPZ5zUiKhzAtz5nPh2O+J61aYGZ1o9zI7qgYix+XdwdBDlnR7
-        Z1fpnrBOA1m0FwQVo/1SF4nOEJlCgwTBWiNIrHU=
-X-Google-Smtp-Source: AGHT+IGNLy+88mIf953pbxZ/gP6SNdlMDv6qJAfSx7yoZXd2pKah2ZSWkDOa0RcR9ka0jf2gUBHOwVT+ULQKuZPxd4g=
-X-Received: by 2002:ac2:55af:0:b0:4fe:589a:857d with SMTP id
- y15-20020ac255af000000b004fe589a857dmr2337428lfg.34.1691214862365; Fri, 04
- Aug 2023 22:54:22 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692364111; x=1692968911;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t5SFEzHA7UMaN7JCcAac+3FeaRCdvcn/YsILS93/wJ0=;
+        b=Ch8CkV5qCcUhcPu5A3p64Ag0jjEtmQvARJD+IFPi58xdBVjTiqGQDHOO2Mjoh+Pt6E
+         GiLncyZrMji1Tm8QVN0iENfifRdmwNGqSwtDgw6hgE3+qhv1hmeBe7xSjasJ50jXH86S
+         uv4CSfIPbCzL98A/Wrgk4dxncYEe4k571mBMhYRU+p3nTiK8mvEmFYBsqolugNqsfvxl
+         Af7TLY+xAkdz/U29iYAIfOyau//IJcKFcu6XRkDWz0PnnOvbtBQjizdEQUpWiCC+qeRt
+         GVjFS81p4l+1GU368pAlMr5AA9C/d5MNB7MlOK8o/2pruvnZOIahAMdkF/qUuc0nyoE9
+         Ac9g==
+X-Gm-Message-State: AOJu0YwTIDrkMdXqTxF2IijU9xpiahUJTmWnTy4hy4nwAnmPJ8aA/0s5
+        RoLcbX18HplVp5wswM3Z9lSRJGuS2x6tsP/jduNKSIhD8rZgcg==
+X-Google-Smtp-Source: AGHT+IGb/pjvH+D9I5LlFO+g3/Slyqmf6Ri0KaKhotUEVX7z4H04Y6VkiDnMQHmApYdNrnS+e+Pg0dZPQ1/CgE25BkA=
+X-Received: by 2002:a05:6a00:850:b0:66a:365c:a0e6 with SMTP id
+ q16-20020a056a00085000b0066a365ca0e6mr2685232pfk.13.1692364111245; Fri, 18
+ Aug 2023 06:08:31 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a5d:698b:0:b0:311:10a1:4438 with HTTP; Fri, 4 Aug 2023
- 22:54:21 -0700 (PDT)
-Reply-To: bintu37999@gmail.com
-From:   BINTU FELICIA <bbimtu@gmail.com>
-Date:   Sat, 5 Aug 2023 06:54:21 +0100
-Message-ID: <CAJvvqXXwmKPZSa5QEn1wjC=tQmcsUwH=kLZwhS=WxnDDvwx3QQ@mail.gmail.com>
-Subject: HELLO...,
-To:     undisclosed-recipients:;
+From:   Robert Vasek <rvasek01@gmail.com>
+Date:   Fri, 18 Aug 2023 15:08:19 +0200
+Message-ID: <CADVsYmhgT=E+o3r9fEhQT2Wg04MJqeYr_xt0pDV9TTtFQjFrzA@mail.gmail.com>
+Subject: Sharing a direct map
+To:     autofs@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
-        SPF_PASS,UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+X-Spam-Status: No, score=0.1 required=5.0 tests=BAYES_40,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-How are you today? I hope you are fine. My name is Miss
-Bintu Felicia . l am single looking for honest and nice
-person whom i can partner with . I don't care about
-your color, ethnicity, Status or Sex. Upon your reply to
-this mail I will tell you more about myself and send you
-more of my picture .I am sending you this beautiful mail
-with a wish for much happiness
+Dear autofs community,
+
+is it possible to bind-mount a direct map without triggering the
+underlying mount? Or is this considered simply "beyond stat" and
+cannot be done?
+
+I'm trying to share the autofs mount into a container. While indirect
+maps work as expected (in the container I can see the autofs mount and
+then trigger mounts inside), sharing and bindmounting direct maps
+triggers the volume mount immediately, and the container sees only the
+volume.
+
+Thanks!
+
+Cheers,
+Robert
