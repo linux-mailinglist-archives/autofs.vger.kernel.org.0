@@ -2,110 +2,101 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9894B784ADF
-	for <lists+autofs@lfdr.de>; Tue, 22 Aug 2023 21:52:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A28678D0F7
+	for <lists+autofs@lfdr.de>; Wed, 30 Aug 2023 02:11:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbjHVTw4 (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 22 Aug 2023 15:52:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45864 "EHLO
+        id S233049AbjH3AKo (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Tue, 29 Aug 2023 20:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjHVTwz (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 22 Aug 2023 15:52:55 -0400
-X-Greylist: delayed 902 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 22 Aug 2023 12:52:46 PDT
-Received: from symantec4.comsats.net.pk (symantec4.comsats.net.pk [203.124.41.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9DECCB
-        for <autofs@vger.kernel.org>; Tue, 22 Aug 2023 12:52:45 -0700 (PDT)
-X-AuditID: cb7c291e-06dff70000002aeb-2c-64e4f990e94c
-Received: from iesco.comsatshosting.com (iesco.comsatshosting.com [210.56.28.11])
-        (using TLS with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by symantec4.comsats.net.pk (Symantec Messaging Gateway) with SMTP id 6E.F9.10987.099F4E46; Tue, 22 Aug 2023 23:08:16 +0500 (PKT)
-DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns;
-        d=iesco.com.pk; s=default;
-        h=received:content-type:mime-version:content-transfer-encoding
-          :content-description:subject:to:from:date:reply-to;
-        b=XIpc1EP5W99w6b0hX3hJflmAIGDwdLxxOJ6zwljv18xjYCDm5KQaM0FQemydO9l7D
-          aoirP8Uy8Sx6d5RUl7c7/O1K+ySJ0m7f1VALsQtEU4pZh7+Rk4VkgjE85U5zT3UDu
-          pphhQya6Q6vatKyIykU/EE6tNmA88+MZe6YxiN72Q=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=iesco.com.pk; s=default;
-        h=reply-to:date:from:to:subject:content-description
-          :content-transfer-encoding:mime-version:content-type;
-        bh=GMzYzcyTxDsE6wX/XHG6MHqAdAiHrhqbmmLQ/TZ1QnQ=;
-        b=f0HkXaSEAZ1P6mkiQCNLYTwIRBDQRTLZ0I5tJbRptZTJOnmYPDiDokzYNdebyzsAO
-          Q/AZLTXWkxTHBfXmD1y3QvCNpz58hfm5/G7l92luMaYJvBPcN9r0TDuU1Rb410Jzs
-          dtNOONdPdmsyCbEKMCkLDbyFSO6ZFkkdWgi3tzMF8=
-Received: from [94.156.6.90] (UnknownHost [94.156.6.90]) by iesco.comsatshosting.com with SMTP;
-   Tue, 22 Aug 2023 23:52:52 +0500
-Message-ID: <6E.F9.10987.099F4E46@symantec4.comsats.net.pk>
-Content-Type: text/plain; charset="iso-8859-1"
+        with ESMTP id S241432AbjH3AKb (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Tue, 29 Aug 2023 20:10:31 -0400
+Received: from zeniv.linux.org.uk (zeniv.linux.org.uk [IPv6:2a03:a000:7:0:5054:ff:fe1c:15ff])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B6FE73;
+        Tue, 29 Aug 2023 17:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=linux.org.uk; s=zeniv-20220401; h=Sender:In-Reply-To:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description;
+        bh=KPbzJvpAfmJnxRfz6vyXdTOuKHu0zGU5IcaLiuqidr0=; b=R5nzjv+Zq3LT9nshlafMmOel/V
+        V9V15FrSV4M//ybfLydJkCutspaga94ytJEx9riJh1zL9kWGgjuuGRS3RGNQd6UTwUkizww5yCRXa
+        65QMSK2fJSU4GVUhcmzwiC0Hq1HKwf7DGR4vmOTpwGMfQqlHke7T1R8K/2jSpp3mx40NSO3T4g2W/
+        plks+ScqIJIQRzH6Fj1pBu+DVUhZ7fIoVLT08blX/7g4fVPc+bxoQXE8ePVX4WwsUQ6HaxLzBDWrJ
+        7SC0zFm+4u87xlQbvEUtvlqkCX+4IE1iKrcHU8n3T8dKHajJ0gVzh2wyU+407y+rz29fwaL3T7RiK
+        4HRq0m2Q==;
+Received: from viro by zeniv.linux.org.uk with local (Exim 4.96 #2 (Red Hat Linux))
+        id 1qb8lD-001xRM-1m;
+        Wed, 30 Aug 2023 00:08:39 +0000
+Date:   Wed, 30 Aug 2023 01:08:39 +0100
+From:   Al Viro <viro@zeniv.linux.org.uk>
+To:     Jeff Layton <jlayton@kernel.org>
+Cc:     Christian Brauner <brauner@kernel.org>,
+        Brad Warrum <bwarrum@linux.ibm.com>,
+        Ritu Agarwal <rituagar@linux.ibm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Ian Kent <raven@themaw.net>,
+        "Tigran A. Aivazian" <aivazian.tigran@gmail.com>,
+        Jeremy Kerr <jk@ozlabs.org>, Ard Biesheuvel <ardb@kernel.org>,
+        Namjae Jeon <linkinjeon@kernel.org>,
+        Sungjong Seo <sj1557.seo@samsung.com>,
+        Steve French <sfrench@samba.org>,
+        Paulo Alcantara <pc@manguebit.com>,
+        Ronnie Sahlberg <lsahlber@redhat.com>,
+        Shyam Prasad N <sprasad@microsoft.com>,
+        Tom Talpey <tom@talpey.com>,
+        John Johansen <john.johansen@canonical.com>,
+        Paul Moore <paul@paul-moore.com>,
+        James Morris <jmorris@namei.org>,
+        "Serge E. Hallyn" <serge@hallyn.com>,
+        Ruihan Li <lrh2000@pku.edu.cn>,
+        Sebastian Reichel <sebastian.reichel@collabora.com>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        autofs@vger.kernel.org, linux-efi@vger.kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-cifs@vger.kernel.org,
+        samba-technical@lists.samba.org, apparmor@lists.ubuntu.com,
+        linux-security-module@vger.kernel.org
+Subject: Re: [PATCH v2 0/8] fs: add some missing ctime updates
+Message-ID: <20230830000839.GB461907@ZenIV>
+References: <20230612104524.17058-1-jlayton@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Re; Interest,
-To:     autofs@vger.kernel.org
-From:   "Chen Yun" <pso.chairmanbod@iesco.com.pk>
-Date:   Tue, 22 Aug 2023 11:53:06 -0700
-Reply-To: chnyne@gmail.com
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDLMWRmVeSWpSXmKPExsVyyUKGW3fCzycpBrse2VhsPX2a2YHR4/Mm
-        uQDGKC6blNSczLLUIn27BK6MJesusBTsZq5o61/E0sD4mKmLkZNDQsBEYs6kPSxdjFwcQgJ7
-        mCS2nWkHc1gEVjNL7O/pYIVwHjJLXDu1hB2irJlRYsPPHiCHg4NXwFqi4bgyyChmAT2JG1On
-        sIHYvAKCEidnPmGBiGtLLFv4mhmknFlATeJrVwlIWFhATOLTtGXsILaIgJTE9aOzGUFsNgF9
-        iRVfm8FsFgFVie7nd8FGCgHVbLyynm0CI/8sJNtmIdk2C8m2WQjbFjCyrGKUKK7MTQSGWrKJ
-        XnJ+bnFiSbFeXmqJXkH2JkZgGJ6u0ZTbwbj0UuIhRgEORiUe3p/rnqQIsSaWAXUdYpTgYFYS
-        4ZX+/jBFiDclsbIqtSg/vqg0J7X4EKM0B4uSOK+t0LNkIYH0xJLU7NTUgtQimCwTB6dUA2Np
-        defFoq96L7J3rH4TWbYzyO3A9pTO/Beev784f/q4S1np/MPd5WJ79nJ/ru0Ptfk9dVpZatiV
-        s5vDJR9P/yLUE80aNEvxafeL6u4mk7jPUp/XplstPVl36oeL79MbpR8+Buu9/VQh4VDQf2O+
-        V/gtja3cSx/Gf7Xd/zr26kJjr93JN2K7HK4rsRRnJBpqMRcVJwIAVzt1gT8CAAA=
-X-Spam-Status: Yes, score=6.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.0 RCVD_IN_DNSWL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
-        *      DNSWL was blocked.  See
-        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-        *      for more information.
-        *      [203.124.41.30 listed in list.dnswl.org]
-        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
-        *      [94.156.6.90 listed in zen.spamhaus.org]
-        *  0.1 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
-        *      blocked.  See
-        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-        *      for more information.
-        *      [URIs: iesco.com.pk]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
-X-Spam-Level: ******
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230612104524.17058-1-jlayton@kernel.org>
+Sender: Al Viro <viro@ftp.linux.org.uk>
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Re; Interest,
+On Mon, Jun 12, 2023 at 06:45:16AM -0400, Jeff Layton wrote:
+> Jeff Layton (8):
+>   ibmvmc: update ctime in conjunction with mtime on write
+>   usb: update the ctime as well when updating mtime after an ioctl
+>   autofs: set ctime as well when mtime changes on a dir
+>   bfs: update ctime in addition to mtime when adding entries
+>   efivarfs: update ctime when mtime changes on a write
+>   exfat: ensure that ctime is updated whenever the mtime is
+>   apparmor: update ctime whenever the mtime changes on an inode
+>   cifs: update the ctime on a partial page write
+> 
+>  drivers/misc/ibmvmc.c             |  2 +-
+>  drivers/usb/core/devio.c          | 16 ++++++++--------
+>  fs/autofs/root.c                  |  6 +++---
+>  fs/bfs/dir.c                      |  2 +-
+>  fs/efivarfs/file.c                |  2 +-
+>  fs/exfat/namei.c                  |  8 ++++----
+>  fs/smb/client/file.c              |  2 +-
+>  security/apparmor/apparmorfs.c    |  7 +++++--
+>  security/apparmor/policy_unpack.c | 11 +++++++----
+>  9 files changed, 31 insertions(+), 25 deletions(-)
 
-I am interested in discussing the Investment proposal as I explained
-in my previous mail. May you let me know your interest and the
-possibility of a cooperation aimed for mutual interest.
-
-Looking forward to your mail for further discussion.
-
-Regards
-
-------
-Chen Yun - Chairman of CREC
-China Railway Engineering Corporation - CRECG
-China Railway Plaza, No.69 Fuxing Road, Haidian District, Beijing, P.R.
-China
-
+As a possible followup (again, apologies for being MIA for months):
+touch_cmtime(inode)...
