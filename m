@@ -2,114 +2,158 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA7D079299D
-	for <lists+autofs@lfdr.de>; Tue,  5 Sep 2023 18:52:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09D5879760D
+	for <lists+autofs@lfdr.de>; Thu,  7 Sep 2023 18:01:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352409AbjIEQ1X (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Tue, 5 Sep 2023 12:27:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52924 "EHLO
+        id S236496AbjIGQBG (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 7 Sep 2023 12:01:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353816AbjIEITN (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Tue, 5 Sep 2023 04:19:13 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD0EE4D
-        for <autofs@vger.kernel.org>; Tue,  5 Sep 2023 01:19:05 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id 6a1803df08f44-64c1d487e72so13588566d6.0
-        for <autofs@vger.kernel.org>; Tue, 05 Sep 2023 01:19:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693901944; x=1694506744; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CvUmRYKO5rN5JiKdYLn9/Xxm/soJiVGtQm650JnL3Yc=;
-        b=IDuf0baB1t1F8QSCLjWC8pmRvzAKQ/R4M4t5u3FLsOX2SqRgQXz/Z3MpAk8Vd5Kb6m
-         OBaz+r/ujIbUuNkrji3TkmDn2dTAwQpGpPSmDRQp7o69pvQ/Nlbne7CwWkb0CdLrrzzk
-         IN5sVqz4WX/cEw2uA94JE67yTGlOm8wzR3yOF0SXEPyJnQGBjepPHYJlqPiS3zq3DGfU
-         I2yXoCdrDFdm20VoyBK97sKFjeM/5AIhQp1In2otrpCJ9z7tTsw9ci7s0XR+LUbYUzXt
-         uod929b61k889o1RxRCphXZmWycOoUHC60HIKvs/decRlJjUBc58LQQ4Se5bQ0loDS6t
-         OnEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693901944; x=1694506744;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CvUmRYKO5rN5JiKdYLn9/Xxm/soJiVGtQm650JnL3Yc=;
-        b=aXEqwZRBtQBy1ySG3SPIUFuFIy0q68ZW3zlbHK/2BXiov1ghPAx3YLPad7UnKdtDV0
-         PglhuzORnyRJuDSQLyt11PaH918RwnRsfsyLr48k3jMHprSVoZaKYKJIMUGj9pvPNLLT
-         HAZtpGV+c6YI63RSZWi1MfaALiQGfBxdbnka+jkH6t3wVD7/eyy5LNwI8rbq/cJyl3Qr
-         J6IhavJN11PINCDx2fvooL+UQMc81hFgrVxFEDsJAwr2sNtshdNw42t+j7jfCuQUbFga
-         Lhh8a5KnZkSGArya0qtwtaJDVWJy1+95wOsj4UxfNZVdSa6C+q5mQNeAhFMtMdzaY61I
-         dWIw==
-X-Gm-Message-State: AOJu0Yz3TbheBISKxTfSyU75L7QgCF9IrL9l/YkLfPG7lgfQ7+7SxVEe
-        CvI4uMQPBp7c/vrRRU+bWDGjx3MDjnr2i5L8HjQ=
-X-Google-Smtp-Source: AGHT+IERAX8PQb3+O/VRt2IpdT+B8+AIRhc7TR9qfBXEywqtD/tUeMqNmseulSPs3fS452xIhVN8tbhQYqX1LXl34po=
-X-Received: by 2002:a0c:aa1b:0:b0:653:5736:c0b4 with SMTP id
- d27-20020a0caa1b000000b006535736c0b4mr10412089qvb.54.1693901943569; Tue, 05
- Sep 2023 01:19:03 -0700 (PDT)
+        with ESMTP id S242731AbjIGP72 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 7 Sep 2023 11:59:28 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 421D046AC;
+        Thu,  7 Sep 2023 08:49:13 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF8DC4E667;
+        Thu,  7 Sep 2023 15:44:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1694101466;
+        bh=hIvDbjOIqW50OQ+qe1PIhVjqv5NYTvhiyd3gF1xpKBk=;
+        h=From:To:Cc:Subject:Date:From;
+        b=H5/udqMYL5LGBbcx23UDNyOczHzpwr6orhKLszg6AQz2AYgOJExi0NdrPZa1NoU1r
+         2mlgpbEBAma1n9/c0jKOVkACc6FwmcBwplTkCTkserILRlXJMFCnKtI43WNLtKC2/P
+         b9E9vr/JFo5o5Mc9rLvxIUKPsLD7STfa7B3F1P9339xjbqsVJAspAl6sD+CZ2b3UxW
+         fIA8jkpGsCniPy4q9SpOh0JsQQYnkkJ2supBtF8UZ6IgO2Wk42Ol0hsFCEW1pWz75N
+         erphJDdIQswyjTxzC7d8cGg8fEaQdKBHtaUExz3lV3pKvkMXC+BjydRY8HwWrNePeV
+         FNw1nDx9sBBjA==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Fedor Pchelkin <pchelkin@ispras.ru>,
+        syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com,
+        Takeshi Misawa <jeliantsurux@gmail.com>,
+        Alexey Khoroshilov <khoroshilov@ispras.ru>,
+        Ian Kent <raven@themaw.net>,
+        Matthew Wilcox <willy@infradead.org>,
+        Andrei Vagin <avagin@gmail.com>, autofs@vger.kernel.org,
+        Christian Brauner <brauner@kernel.org>,
+        Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 1/3] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+Date:   Thu,  7 Sep 2023 11:44:21 -0400
+Message-Id: <20230907154423.3422014-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Received: by 2002:a0c:de0e:0:b0:634:8588:8dcb with HTTP; Tue, 5 Sep 2023
- 01:19:02 -0700 (PDT)
-Reply-To: wuwumoneytransfer5000@hotmail.com
-From:   "(IMF) SCAM VICTIMS" <smmab4668@gmail.com>
-Date:   Tue, 5 Sep 2023 01:19:02 -0700
-Message-ID: <CAPvhgiGb_xchv+cBfjtNXZbs3T38s2BJRqmONSNBDUeOvUkr=Q@mail.gmail.com>
-Subject: Betrugsopfer
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 5.4.256
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-Sehr geehrter E-Mail-Besitzer,
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
+[ Upstream commit ccbe77f7e45dfb4420f7f531b650c00c6e9c7507 ]
 
+Syzkaller reports a memory leak:
 
-Der Internationale W=C3=A4hrungsfonds (IWF) entsch=C3=A4digt alle Betrugsop=
-fer
-und Ihre E-Mail-Adresse wurde auf der Liste der Betrugsopfer gefunden.
+BUG: memory leak
+unreferenced object 0xffff88810b279e00 (size 96):
+  comm "syz-executor399", pid 3631, jiffies 4294964921 (age 23.870s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 08 9e 27 0b 81 88 ff ff  ..........'.....
+    08 9e 27 0b 81 88 ff ff 00 00 00 00 00 00 00 00  ..'.............
+  backtrace:
+    [<ffffffff814cfc90>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1046
+    [<ffffffff81bb75ca>] kmalloc include/linux/slab.h:576 [inline]
+    [<ffffffff81bb75ca>] autofs_wait+0x3fa/0x9a0 fs/autofs/waitq.c:378
+    [<ffffffff81bb88a7>] autofs_do_expire_multi+0xa7/0x3e0 fs/autofs/expire.c:593
+    [<ffffffff81bb8c33>] autofs_expire_multi+0x53/0x80 fs/autofs/expire.c:619
+    [<ffffffff81bb6972>] autofs_root_ioctl_unlocked+0x322/0x3b0 fs/autofs/root.c:897
+    [<ffffffff81bb6a95>] autofs_root_ioctl+0x25/0x30 fs/autofs/root.c:910
+    [<ffffffff81602a9c>] vfs_ioctl fs/ioctl.c:51 [inline]
+    [<ffffffff81602a9c>] __do_sys_ioctl fs/ioctl.c:870 [inline]
+    [<ffffffff81602a9c>] __se_sys_ioctl fs/ioctl.c:856 [inline]
+    [<ffffffff81602a9c>] __x64_sys_ioctl+0xfc/0x140 fs/ioctl.c:856
+    [<ffffffff84608225>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84608225>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84800087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Dieses Western Union-B=C3=BCro wurde vom IWF beauftragt Ihnen Ihre
-Verg=C3=BCtung per Western Union Money Transfer zu =C3=BCberweisen.
+autofs_wait_queue structs should be freed if their wait_ctr becomes zero.
+Otherwise they will be lost.
 
-Wir haben uns jedoch entschieden Ihre eigene Zahlung =C3=BCber Geldtransfer
-der Westunion in H=C3=B6he von =E2=82=AC5,000, pro Tag vorzunehmen bis die
-Gesamtsumme von =E2=82=AC1,500.000.00, vollst=C3=A4ndig an Sie =C3=BCberwie=
-sen wurde.
+In this case an AUTOFS_IOC_EXPIRE_MULTI ioctl is done, then a new
+waitqueue struct is allocated in autofs_wait(), its initial wait_ctr
+equals 2. After that wait_event_killable() is interrupted (it returns
+-ERESTARTSYS), so that 'wq->name.name == NULL' condition may be not
+satisfied. Actually, this condition can be satisfied when
+autofs_wait_release() or autofs_catatonic_mode() is called and, what is
+also important, wait_ctr is decremented in those places. Upon the exit of
+autofs_wait(), wait_ctr is decremented to 1. Then the unmounting process
+begins: kill_sb calls autofs_catatonic_mode(), which should have freed the
+waitqueues, but it only decrements its usage counter to zero which is not
+a correct behaviour.
 
-Wir k=C3=B6nnen die Zahlung m=C3=B6glicherweise nicht nur mit Ihrer
-E-Mail-Adresse senden daher ben=C3=B6tigen wir Ihre Informationen dar=C3=BC=
-ber
-wohin wir das Geld an Sie senden wie z. B.:
+edit:imk
+This description is of course not correct. The umount performed as a result
+of an expire is a umount of a mount that has been automounted, it's not the
+autofs mount itself. They happen independently, usually after everything
+mounted within the autofs file system has been expired away. If everything
+hasn't been expired away the automount daemon can still exit leaving mounts
+in place. But expires done in both cases will result in a notification that
+calls autofs_wait_release() with a result status. The problem case is the
+summary execution of of the automount daemon. In this case any waiting
+processes won't be woken up until either they are terminated or the mount
+is umounted.
+end edit: imk
 
+So in catatonic mode we should free waitqueues which counter becomes zero.
 
-Name des Adressaten ________________
+edit: imk
+Initially I was concerned that the calling of autofs_wait_release() and
+autofs_catatonic_mode() was not mutually exclusive but that can't be the
+case (obviously) because the queue entry (or entries) is removed from the
+list when either of these two functions are called. Consequently the wait
+entry will be freed by only one of these functions or by the woken process
+in autofs_wait() depending on the order of the calls.
+end edit: imk
 
-Adresse________________
+Reported-by: syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com
+Suggested-by: Takeshi Misawa <jeliantsurux@gmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Signed-off-by: Ian Kent <raven@themaw.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: autofs@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Message-Id: <169112719161.7590.6700123246297365841.stgit@donald.themaw.net>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/autofs/waitq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Land__________________
+diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
+index b04c528b19d34..1230bdf329898 100644
+--- a/fs/autofs/waitq.c
++++ b/fs/autofs/waitq.c
+@@ -32,8 +32,9 @@ void autofs_catatonic_mode(struct autofs_sb_info *sbi)
+ 		wq->status = -ENOENT; /* Magic is gone - report failure */
+ 		kfree(wq->name.name);
+ 		wq->name.name = NULL;
+-		wq->wait_ctr--;
+ 		wake_up_interruptible(&wq->queue);
++		if (!--wq->wait_ctr)
++			kfree(wq);
+ 		wq = nwq;
+ 	}
+ 	fput(sbi->pipe);	/* Close the pipe */
+-- 
+2.40.1
 
-Telefonnummer________________
-
-Angeh=C3=A4ngte Kopie Ihres Ausweises______________
-
-Das Alter ________________________
-
-
-Wir beginnen mit der =C3=9Cbertragung sobald wir Ihre Informationen
-erhalten haben: Kontakt E-Mail: ( wuwumoneytransfer5000@hotmail.com)
-
-
-Getreu,
-
-
-Herr Anthony Duru,
-
-Direktor von Geldtransfer der Westunion
