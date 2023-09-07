@@ -2,30 +2,30 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09D5879760D
+	by mail.lfdr.de (Postfix) with ESMTP id C9ACA79760F
 	for <lists+autofs@lfdr.de>; Thu,  7 Sep 2023 18:01:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236496AbjIGQBG (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 7 Sep 2023 12:01:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55896 "EHLO
+        id S236609AbjIGQBH (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 7 Sep 2023 12:01:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242731AbjIGP72 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 7 Sep 2023 11:59:28 -0400
+        with ESMTP id S241371AbjIGP7P (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 7 Sep 2023 11:59:15 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 421D046AC;
-        Thu,  7 Sep 2023 08:49:13 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF8DC4E667;
-        Thu,  7 Sep 2023 15:44:25 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6295F4216;
+        Thu,  7 Sep 2023 08:48:16 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93042C4E66D;
+        Thu,  7 Sep 2023 15:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694101466;
-        bh=hIvDbjOIqW50OQ+qe1PIhVjqv5NYTvhiyd3gF1xpKBk=;
+        s=k20201202; t=1694101474;
+        bh=JwCsZY+aK9pAUlYWX5Rn6KecM6QTIyDLKxTgJbzclmY=;
         h=From:To:Cc:Subject:Date:From;
-        b=H5/udqMYL5LGBbcx23UDNyOczHzpwr6orhKLszg6AQz2AYgOJExi0NdrPZa1NoU1r
-         2mlgpbEBAma1n9/c0jKOVkACc6FwmcBwplTkCTkserILRlXJMFCnKtI43WNLtKC2/P
-         b9E9vr/JFo5o5Mc9rLvxIUKPsLD7STfa7B3F1P9339xjbqsVJAspAl6sD+CZ2b3UxW
-         fIA8jkpGsCniPy4q9SpOh0JsQQYnkkJ2supBtF8UZ6IgO2Wk42Ol0hsFCEW1pWz75N
-         erphJDdIQswyjTxzC7d8cGg8fEaQdKBHtaUExz3lV3pKvkMXC+BjydRY8HwWrNePeV
-         FNw1nDx9sBBjA==
+        b=NYWl03+ifD0uqdC5uCyneLDbXX2siUjb9sZW9Xw+4yTIMh1tJddCthn51QFGNl/eW
+         Q8B1XyaCRV585/glIoSfGYCZuvZRByAQ05AutuDKIHhrbdTeR4AK1FxFblfx2XmCNd
+         8/meXbwsWzTLBrPL96aOc4dkQan6+WEBuN/ragRyjvpD2HcMgcEZhwdT/+E2sQp+dE
+         HCI2stlFN/Xm5BI02TL+cisDXOiQ+BAsLfx447MKq7R+zRauP7Btu1Gthiju0Oq1by
+         rF1XQWs8jmRIXP/77KHy+2REx/sy3geYhOXVvrPoQvf1AnLdf8JRzzmVXuvWmbxx0w
+         FAVLPpCVH/Bpg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Fedor Pchelkin <pchelkin@ispras.ru>,
@@ -37,14 +37,14 @@ Cc:     Fedor Pchelkin <pchelkin@ispras.ru>,
         Andrei Vagin <avagin@gmail.com>, autofs@vger.kernel.org,
         Christian Brauner <brauner@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 1/3] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
-Date:   Thu,  7 Sep 2023 11:44:21 -0400
-Message-Id: <20230907154423.3422014-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 1/2] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+Date:   Thu,  7 Sep 2023 11:44:29 -0400
+Message-Id: <20230907154430.3422062-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.4.256
+X-stable-base: Linux 4.19.294
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
@@ -140,10 +140,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
-index b04c528b19d34..1230bdf329898 100644
+index f6385c6ef0a56..44ba0cd4ebc4f 100644
 --- a/fs/autofs/waitq.c
 +++ b/fs/autofs/waitq.c
-@@ -32,8 +32,9 @@ void autofs_catatonic_mode(struct autofs_sb_info *sbi)
+@@ -35,8 +35,9 @@ void autofs_catatonic_mode(struct autofs_sb_info *sbi)
  		wq->status = -ENOENT; /* Magic is gone - report failure */
  		kfree(wq->name.name);
  		wq->name.name = NULL;
