@@ -2,30 +2,30 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6785797772
-	for <lists+autofs@lfdr.de>; Thu,  7 Sep 2023 18:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F2CC7976A5
+	for <lists+autofs@lfdr.de>; Thu,  7 Sep 2023 18:14:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239738AbjIGQ0W (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 7 Sep 2023 12:26:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53480 "EHLO
+        id S238726AbjIGQOP (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Thu, 7 Sep 2023 12:14:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231166AbjIGQ0M (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 7 Sep 2023 12:26:12 -0400
+        with ESMTP id S231518AbjIGQNq (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Thu, 7 Sep 2023 12:13:46 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7117280;
-        Thu,  7 Sep 2023 09:22:28 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20AAC32795;
-        Thu,  7 Sep 2023 15:43:41 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7F90B1B4;
+        Thu,  7 Sep 2023 08:46:54 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC3DC433AD;
+        Thu,  7 Sep 2023 15:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694101422;
+        s=k20201202; t=1694101434;
         bh=m1gBSKQyE+///fvwwSS0gZyVVINTrFGUxYc7GN99hFQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=RKDREBu7Ri/TBCS3RdVmYicZUH1M0HiMIBj5/560Zl/4T/VKtf2xaFy5SlXnwfbIG
-         RVvFLTu8N2uJLaozhwpGRc/aghcDZHZYY5cIKOj/Shipswf699cWsHv3OweqRp5WhN
-         n4ztztPI19UKNWTIR9sADBaJRdivAy01DX2JGBbNWtTINVXm9xMq2HdOdMRaspJiCy
-         07AOXNLt2DpXJHUVy4fSg+Y5f7Eg2s5WLynkny5iT6gKccE8IaWBtXrW3/C0lK/ajp
-         49YVIRbrPdvTOCVgdK0uczhfyqd1Xe+KBQnsSATA8PEh6D4r3aWJM2WksgZAiegbBj
-         VUVtMv7AtSI8w==
+        b=eLHkVgA31C7Td9QIQhV2r4y6vx3tjW0A8+RPIA4WGgYovqJO0UVodgrAuPQmDX33Y
+         feAj3oIn8mzPkcVJyvJeg71sqvgRIrBe9DDUjMzfHePIFw0S9/pCDk9d9XSil497V7
+         Sw4lA4FK+T5NLxBCZAow+FInK+91haLQyP4uLJvut8xo/UXN89HUEHnusKqajETfJc
+         fmwlDRROP3FqUmsDskrMxy/hGDTzHdUsa1KvVrgSTTVOH8wuKcvw/ryQXt2Ksysv+Y
+         p3nagx4BwMZql4j4USUcohTN5RZLS1RFTQLrUntvfysWB8vI/3bcx7s3lu7AoEeSVQ
+         0e84d3MFrWYZA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Fedor Pchelkin <pchelkin@ispras.ru>,
@@ -37,16 +37,16 @@ Cc:     Fedor Pchelkin <pchelkin@ispras.ru>,
         Andrei Vagin <avagin@gmail.com>, autofs@vger.kernel.org,
         Christian Brauner <brauner@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.5 2/6] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
-Date:   Thu,  7 Sep 2023 11:43:33 -0400
-Message-Id: <20230907154338.3421582-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.4 2/5] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+Date:   Thu,  7 Sep 2023 11:43:46 -0400
+Message-Id: <20230907154349.3421707-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230907154338.3421582-1-sashal@kernel.org>
-References: <20230907154338.3421582-1-sashal@kernel.org>
+In-Reply-To: <20230907154349.3421707-1-sashal@kernel.org>
+References: <20230907154349.3421707-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.5.2
+X-stable-base: Linux 6.4.15
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
