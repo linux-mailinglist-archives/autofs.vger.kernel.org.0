@@ -2,27 +2,27 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5098F7A7AA0
-	for <lists+autofs@lfdr.de>; Wed, 20 Sep 2023 13:44:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 400B97A7B9E
+	for <lists+autofs@lfdr.de>; Wed, 20 Sep 2023 13:53:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234500AbjITLoQ (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Wed, 20 Sep 2023 07:44:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
+        id S234781AbjITLx7 (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 20 Sep 2023 07:53:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234463AbjITLoP (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Wed, 20 Sep 2023 07:44:15 -0400
+        with ESMTP id S234786AbjITLx6 (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 20 Sep 2023 07:53:58 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB853C2;
-        Wed, 20 Sep 2023 04:44:09 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B5AC433C8;
-        Wed, 20 Sep 2023 11:44:09 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C59BA3;
+        Wed, 20 Sep 2023 04:53:51 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94486C433C7;
+        Wed, 20 Sep 2023 11:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1695210249;
-        bh=DyKwxzaJYpoA4xccVeB9/sY8k2MBqmWTPVNgHC29ZJI=;
+        s=korg; t=1695210831;
+        bh=2Wid6czrTEuk4bdVMbpgvq4dLWr7BlIxoN00MZqYWZk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=O7TiMV+pDIK3FoaObHDGu1K4CQ6eJwE4N9erCjK5mtgXnvNlBjylqB7riLvnSKTrf
-         G8GQVyd/K3L7d81la5ACGOV3ooYzYNP+nmo80nf/BI9L9kfGpf0C2NGRgW+7uGH+8n
-         QQ+/141Y0130ehiahkBefwIkFnVz/n2FpslRmrAU=
+        b=jPJgClVL9u6w90lJs/MYfy2aLeuXUvPwIMSX78QqCnnzKYHxRPy2QE+VujAlxDjIw
+         HYRgqeZCGO62FleHRJr9Rjrq2vbMqwtLyDnAIo4GOq+l432xFs27tFj44GYrZ6Xqna
+         UFWOlgOpyGCoGqPz9YTARejdNfUbFkOzGsQ6zq34=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     stable@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,12 +37,12 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         linux-kernel@vger.kernel.org,
         Christian Brauner <brauner@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 002/211] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
-Date:   Wed, 20 Sep 2023 13:27:26 +0200
-Message-ID: <20230920112845.931609612@linuxfoundation.org>
+Subject: [PATCH 6.1 001/139] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+Date:   Wed, 20 Sep 2023 13:28:55 +0200
+Message-ID: <20230920112835.606672517@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
-References: <20230920112845.859868994@linuxfoundation.org>
+In-Reply-To: <20230920112835.549467415@linuxfoundation.org>
+References: <20230920112835.549467415@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,7 +58,7 @@ Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
