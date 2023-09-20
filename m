@@ -2,49 +2,51 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D79B8797786
-	for <lists+autofs@lfdr.de>; Thu,  7 Sep 2023 18:26:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5098F7A7AA0
+	for <lists+autofs@lfdr.de>; Wed, 20 Sep 2023 13:44:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235776AbjIGQ1B (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Thu, 7 Sep 2023 12:27:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43230 "EHLO
+        id S234500AbjITLoQ (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Wed, 20 Sep 2023 07:44:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238857AbjIGQ0D (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Thu, 7 Sep 2023 12:26:03 -0400
+        with ESMTP id S234463AbjITLoP (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Wed, 20 Sep 2023 07:44:15 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB475FC2;
-        Thu,  7 Sep 2023 09:22:01 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1232EC4E665;
-        Thu,  7 Sep 2023 15:44:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694101459;
-        bh=S3Zcqv5mSE4VKddQEi7HICfwlH4pDphgZ/Aq0QDHjck=;
-        h=From:To:Cc:Subject:Date:From;
-        b=LkzC35z2GyViuvmtxXGTTQt+hxo/HjOZIEmwtv+1fPbqLqs8sntTx1LVVzNCYv/Y5
-         0+bKmJtU8R1otbncRp1X4mhXZczkJqgdZd5fQ2BP9KqFG6BIvEbs3fqBI+QQvF9ybJ
-         yTURFrBL6aeCWvP1/yOq+nilLYtMwQ4feTVEVEc5T51RqRRglW8Co1BNDxX65GLXkY
-         muTd/Uc54j+8gFWriHa+XH7KgyKVU++/q/gZpebHWMm9UokhJjCpv/FHMq92CqIElO
-         1pYpXfQ8FUnGnyinBdXuIfDONo2SOIwOmD+5gry5h9COrByDwdmmPIB/vLzQhWyKTr
-         JA2S8SzGH3uLQ==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Fedor Pchelkin <pchelkin@ispras.ru>,
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB853C2;
+        Wed, 20 Sep 2023 04:44:09 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B5AC433C8;
+        Wed, 20 Sep 2023 11:44:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1695210249;
+        bh=DyKwxzaJYpoA4xccVeB9/sY8k2MBqmWTPVNgHC29ZJI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=O7TiMV+pDIK3FoaObHDGu1K4CQ6eJwE4N9erCjK5mtgXnvNlBjylqB7riLvnSKTrf
+         G8GQVyd/K3L7d81la5ACGOV3ooYzYNP+nmo80nf/BI9L9kfGpf0C2NGRgW+7uGH+8n
+         QQ+/141Y0130ehiahkBefwIkFnVz/n2FpslRmrAU=
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     stable@vger.kernel.org
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        patches@lists.linux.dev,
         syzbot+5e53f70e69ff0c0a1c0c@syzkaller.appspotmail.com,
         Takeshi Misawa <jeliantsurux@gmail.com>,
+        Fedor Pchelkin <pchelkin@ispras.ru>,
         Alexey Khoroshilov <khoroshilov@ispras.ru>,
         Ian Kent <raven@themaw.net>,
         Matthew Wilcox <willy@infradead.org>,
         Andrei Vagin <avagin@gmail.com>, autofs@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Christian Brauner <brauner@kernel.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.10 1/3] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
-Date:   Thu,  7 Sep 2023 11:44:14 -0400
-Message-Id: <20230907154416.3421966-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.40.1
-MIME-Version: 1.0
+Subject: [PATCH 6.5 002/211] autofs: fix memory leak of waitqueues in autofs_catatonic_mode
+Date:   Wed, 20 Sep 2023 13:27:26 +0200
+Message-ID: <20230920112845.931609612@linuxfoundation.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20230920112845.859868994@linuxfoundation.org>
+References: <20230920112845.859868994@linuxfoundation.org>
+User-Agent: quilt/0.67
 X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.194
+X-Patchwork-Hint: ignore
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
@@ -55,6 +57,10 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
+
+6.5-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
@@ -140,12 +146,12 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fs/autofs/waitq.c b/fs/autofs/waitq.c
-index 5ced859dac539..dd479198310e8 100644
+index 54c1f8b8b0757..efdc76732faed 100644
 --- a/fs/autofs/waitq.c
 +++ b/fs/autofs/waitq.c
 @@ -32,8 +32,9 @@ void autofs_catatonic_mode(struct autofs_sb_info *sbi)
  		wq->status = -ENOENT; /* Magic is gone - report failure */
- 		kfree(wq->name.name);
+ 		kfree(wq->name.name - wq->offset);
  		wq->name.name = NULL;
 -		wq->wait_ctr--;
  		wake_up_interruptible(&wq->queue);
@@ -156,4 +162,6 @@ index 5ced859dac539..dd479198310e8 100644
  	fput(sbi->pipe);	/* Close the pipe */
 -- 
 2.40.1
+
+
 
