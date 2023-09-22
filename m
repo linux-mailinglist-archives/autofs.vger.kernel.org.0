@@ -2,61 +2,71 @@ Return-Path: <autofs-owner@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B97027AB1EA
-	for <lists+autofs@lfdr.de>; Fri, 22 Sep 2023 14:13:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F4457AB2A3
+	for <lists+autofs@lfdr.de>; Fri, 22 Sep 2023 15:26:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233989AbjIVMNa (ORCPT <rfc822;lists+autofs@lfdr.de>);
-        Fri, 22 Sep 2023 08:13:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56900 "EHLO
+        id S233434AbjIVN0e (ORCPT <rfc822;lists+autofs@lfdr.de>);
+        Fri, 22 Sep 2023 09:26:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233916AbjIVMN3 (ORCPT
-        <rfc822;autofs@vger.kernel.org>); Fri, 22 Sep 2023 08:13:29 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E5A92;
-        Fri, 22 Sep 2023 05:13:24 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5D3C433C8;
-        Fri, 22 Sep 2023 12:13:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1695384803;
-        bh=X0ckH1uMhzVew8rdJB1QtaZb/LOJh4Jl5v+9Kf3dRDA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JBwRrE78uA8RQbQfRMa+35uiC4QjM9urZKGRDdpohYAWUh4OGBf1kSr6p3BeNGGwu
-         pYWJzuuwdcJ3fNVslQKb53ZxdOVHrXTYghrYGrZmuUJrTaJnTAIDNx9IzVkdYroUXJ
-         X13pprrSpkewOp7blgroQunq0lxZOnEKk5lF3PGbo3YmZM5RICQubYlDuek/fbyVhn
-         Ecgi4yNsNpVETf1zpQiFV5w9L7NcvEbYRAA6DplaPLcwda8+Ak2CggEGPQ4fn5Wmz7
-         8t3v3YlAaS143H2SCuz4Ct2XcMocgaB+C6ahxlzjmiTDfErwlMFJNHiWu+G8q6vOHb
-         9YlXuEAD/HazA==
-From:   Christian Brauner <brauner@kernel.org>
+        with ESMTP id S233422AbjIVN0d (ORCPT
+        <rfc822;autofs@vger.kernel.org>); Fri, 22 Sep 2023 09:26:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A588D197
+        for <autofs@vger.kernel.org>; Fri, 22 Sep 2023 06:25:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1695389144;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ZOSEgdaNayKQCj0Rd2l3QVa88rL7jTEBUClTXsv6/B0=;
+        b=PUbt8imFAHppF+j2tux3PsVL2K/LG/N+L4BvoJtwmcLaxDiWRB9Vn2YyXCdvQEKmTx7wLM
+        0cdY8nmEyHjyR/rPFtC7pzSPXMVjnndwFeDApfkFgsob3gOW733PWWD/v+IGME5KAhJ60j
+        GrfleYRuuhW1CFVB3nL3XYoLlRrRc2o=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-619-9sys_9eAOPG9_9wgXY1GrQ-1; Fri, 22 Sep 2023 09:25:42 -0400
+X-MC-Unique: 9sys_9eAOPG9_9wgXY1GrQ-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com [10.11.54.8])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F172C3C0D1B5;
+        Fri, 22 Sep 2023 13:25:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.22.18.43])
+        by smtp.corp.redhat.com (Postfix) with ESMTPS id ECC53C15BB8;
+        Fri, 22 Sep 2023 13:25:40 +0000 (UTC)
+Date:   Fri, 22 Sep 2023 08:25:39 -0500
+From:   Bill O'Donnell <bodonnel@redhat.com>
 To:     Ian Kent <raven@themaw.net>
-Cc:     Christian Brauner <brauner@kernel.org>,
+Cc:     Al Viro <viro@zeniv.linux.org.uk>,
+        Christian Brauner <brauner@kernel.org>,
         autofs mailing list <autofs@vger.kernel.org>,
         linux-fsdevel <linux-fsdevel@vger.kernel.org>,
         Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Bill O'Donnell <billodo@redhat.com>,
         Miklos Szeredi <miklos@szeredi.hu>,
-        David Howells <dhowells@redhat.com>,
-        Al Viro <viro@ZenIV.linux.org.uk>
+        David Howells <dhowells@redhat.com>
 Subject: Re: [PATCH 0/8] autofs - convert to to use mount api
-Date:   Fri, 22 Sep 2023 14:11:04 +0200
-Message-Id: <20230922-fixieren-antworten-dbae8fccfeeb@brauner>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230922041215.13675-1-raven@themaw.net>
+Message-ID: <ZQ2V0wa6Hia9xbWS@redhat.com>
 References: <20230922041215.13675-1-raven@themaw.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1786; i=brauner@kernel.org; h=from:subject:message-id; bh=X0ckH1uMhzVew8rdJB1QtaZb/LOJh4Jl5v+9Kf3dRDA=; b=owGbwMvMwCU28Zj0gdSKO4sYT6slMaTytpin5a/9tb2nI6XRStBr4lSJeRvK6q+JcqrYr566Yx9T 4APDjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgIl8n8bwz/BkUkexclAIc8iyRYmCEy MiD9XtVf73uyHF2isvP8l0JiPD4wcfczYnengxR3Vr9YvP91+62zr5dsPnzm2KdYoVzpwcAA==
-X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230922041215.13675-1-raven@themaw.net>
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.8
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <autofs.vger.kernel.org>
 X-Mailing-List: autofs@vger.kernel.org
 
-On Fri, 22 Sep 2023 12:12:07 +0800, Ian Kent wrote:
+On Fri, Sep 22, 2023 at 12:12:07PM +0800, Ian Kent wrote:
 > There was a patch from David Howells to convert autofs to use the mount
 > api but it was never merged.
 > 
@@ -64,37 +74,28 @@ On Fri, 22 Sep 2023 12:12:07 +0800, Ian Kent wrote:
 > to review in the hope of having it merged.
 > 
 > Signed-off-by: Ian Kent <raven@themaw.net>
+
+for the series...
+Reviewed-by: Bill O'Donnell <bodonnel@redhat.com>
+
+
 > 
-> [...]
+> Ian Kent (8):
+>   autofs: refactor autofs_prepare_pipe()
+>   autofs: add autofs_parse_fd()
+>   autofs: refactor super block info init
+>   autofs: reformat 0pt enum declaration
+>   autofs: refactor parse_options()
+>   autofs: validate protocol version
+>   autofs: convert autofs to use the new mount api
+>   autofs: fix protocol sub version setting
+> 
+>  fs/autofs/autofs_i.h |  15 +-
+>  fs/autofs/init.c     |   9 +-
+>  fs/autofs/inode.c    | 423 +++++++++++++++++++++++++------------------
+>  3 files changed, 266 insertions(+), 181 deletions(-)
+> 
+> -- 
+> 2.41.0
+> 
 
-Applied to the vfs.autofs branch of the vfs/vfs.git tree.
-Patches in the vfs.autofs branch should appear in linux-next soon.
-
-Please report any outstanding bugs that were missed during review in a
-new review to the original patch series allowing us to drop it.
-
-It's encouraged to provide Acked-bys and Reviewed-bys even though the
-patch has now been applied. If possible patch trailers will be updated.
-
-Note that commit hashes shown below are subject to change due to rebase,
-trailer updates or similar. If in doubt, please check the listed branch.
-
-tree:   https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git
-branch: vfs.autofs
-
-[1/8] autofs: refactor autofs_prepare_pipe()
-      https://git.kernel.org/vfs/vfs/c/a1388470620f
-[2/8] autofs: add autofs_parse_fd()
-      https://git.kernel.org/vfs/vfs/c/917c4dd6e625
-[3/8] autofs: refactor super block info init
-      https://git.kernel.org/vfs/vfs/c/81a57bf0af7c
-[4/8] autofs: reformat 0pt enum declaration
-      https://git.kernel.org/vfs/vfs/c/34539aa9def8
-[5/8] autofs: refactor parse_options()
-      https://git.kernel.org/vfs/vfs/c/805b2411ca1c
-[6/8] autofs: validate protocol version
-      https://git.kernel.org/vfs/vfs/c/89405b46e168
-[7/8] autofs: convert autofs to use the new mount api
-      https://git.kernel.org/vfs/vfs/c/7bf383b78c56
-[8/8] autofs: fix protocol sub version setting
-      https://git.kernel.org/vfs/vfs/c/10afd722e290
