@@ -1,93 +1,95 @@
-Return-Path: <autofs+bounces-27-lists+autofs=lfdr.de@vger.kernel.org>
+Return-Path: <autofs+bounces-28-lists+autofs=lfdr.de@vger.kernel.org>
 X-Original-To: lists+autofs@lfdr.de
 Delivered-To: lists+autofs@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94ECE7F151E
-	for <lists+autofs@lfdr.de>; Mon, 20 Nov 2023 15:02:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EA4C816F73
+	for <lists+autofs@lfdr.de>; Mon, 18 Dec 2023 14:05:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B2781F24BE4
-	for <lists+autofs@lfdr.de>; Mon, 20 Nov 2023 14:02:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 54EDD1C22BF5
+	for <lists+autofs@lfdr.de>; Mon, 18 Dec 2023 13:05:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B99EB1BDE6;
-	Mon, 20 Nov 2023 14:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFA46129EFC;
+	Mon, 18 Dec 2023 12:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="guWpBVNR"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QistlKZA"
 X-Original-To: autofs@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF3B1BDE1;
-	Mon, 20 Nov 2023 14:02:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF78C433C8;
-	Mon, 20 Nov 2023 14:02:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700488957;
-	bh=FCrmZ65nO1A52VtVMBc8whDn/taxA3mU5UI2kUhmaBc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guWpBVNRYMm597lpO9bdcyXMBxX2ZOKL54b3ONVQMl2r6M1sVbA3ntY+anjCWwu+G
-	 l9G1hCcXaWFzztr61p92+zv1vtW3ruDSqjMYcGv2u3w7wmmDDtFn38NlTKfoUviD/8
-	 /EsINeGMXuz+GISsqakEWIMjJA051VhFGikrOQaTmvnzM1/FNXRpogPJCou3TXv2cn
-	 PJyuERk9vkLmc2oI5SZyQV9eK92i6VL59ut61dCI+hBldU8vUn/7YN0bxXfuc1VrVS
-	 3mYECa+fU8JK78i7NaRCPQIuB0l1Y9QX2hLt8I0034PV7U6HVC6Nc99Y2UVegx0Ynp
-	 PVwdYgEpO0/XA==
-From: Christian Brauner <brauner@kernel.org>
-To: Ian Kent <raven@themaw.net>
-Cc: Christian Brauner <brauner@kernel.org>,
-	Bill O'Donnell <billodo@redhat.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	autofs mailing list <autofs@vger.kernel.org>,
-	linux-fsdevel <linux-fsdevel@vger.kernel.org>,
-	syzbot+662f87a8ef490f45fa64@syzkaller.appspotmail.com,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: Re: [PATCH v2] autofs: add: new_inode check in autofs_fill_super()
-Date: Mon, 20 Nov 2023 15:01:55 +0100
-Message-ID: <20231120-dergleichen-parkverbot-dbfcafdc0c26@brauner>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231119225319.331156-1-raven@themaw.net>
-References: <20231119225319.331156-1-raven@themaw.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5D51D130
+	for <autofs@vger.kernel.org>; Mon, 18 Dec 2023 12:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1702903702;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=T4EPrxjAIh92vWgtSFQIbH68JsvVC3Ab3gn4ww31yBA=;
+	b=QistlKZA63xzQQCB+Usm4zRF9HGATsHaflYGAkdtMsKeZ5inGFhpJwUicetcK51hjeuMVJ
+	TB3A89WQNjb15RYF9uw2DvmmP0Gm9Y+l2k/nMinfHDkeS8UDU3JrMe81SCpeh3Wh1HojhC
+	fwBPaQt20cCkDrxTMMz/YB0uEp3tfmE=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-i2c9ZQbgODScM5B1NnmBJw-1; Mon,
+ 18 Dec 2023 07:48:21 -0500
+X-MC-Unique: i2c9ZQbgODScM5B1NnmBJw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com [10.11.54.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CE7A41C0170C
+	for <autofs@vger.kernel.org>; Mon, 18 Dec 2023 12:48:20 +0000 (UTC)
+Received: from oldenburg.str.redhat.com (unknown [10.39.192.77])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 4451940C6EB9
+	for <autofs@vger.kernel.org>; Mon, 18 Dec 2023 12:48:20 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: autofs@vger.kernel.org
+Subject: [PATCH] Fix incompatible function pointer types in cyrus-sasl module
+Date: Mon, 18 Dec 2023 13:48:18 +0100
+Message-ID: <878r5r4qy5.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.3 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: autofs@vger.kernel.org
 List-Id: <autofs.vger.kernel.org>
 List-Subscribe: <mailto:autofs+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:autofs+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1188; i=brauner@kernel.org; h=from:subject:message-id; bh=Tnvki9Nfk5bjCuJJqhEtlw/13JFN9XNgay+otjhGek0=; b=owGbwMvMwCU28Zj0gdSKO4sYT6slMaRGp13W+LxKUurNC1s+x59cvw/7tMrVTeWWbEvUde+7n 1TyNEm1o5SFQYyLQVZMkcWh3SRcbjlPxWajTA2YOaxMIEMYuDgFYCIPnzAynO3sWrh7xged89FF jsZvkuYI6l/6JfOsfN2E10LHDs9/8p3hf+TLLN2HwQsYFGON0r7e38rmVPS8Nrli41ympPWdLQs FeQA=
-X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 
-On Mon, 20 Nov 2023 06:53:19 +0800, Ian Kent wrote:
-> Add missing NULL check of root_inode in autofs_fill_super().
-> 
-> While we are at it simplify the logic by taking advantage of the VFS
-> cleanup procedures and get rid of the goto error handling, as suggested
-> by Al Viro.
-> 
-> 
-> [...]
+Add casts to SASL callbacks to avoid incompatible-pointer-types
+errors.  Avoids a build failure with stricter compilers.
 
-I've removed an unused variable. I also changed it so that it errors out
-right after autofs_get_inode() returns NULL.
+diff --git a/modules/cyrus-sasl.c b/modules/cyrus-sasl.c
+index e742eaf8ebe6ce8a..78b77942ba3efd56 100644
+--- a/modules/cyrus-sasl.c
++++ b/modules/cyrus-sasl.c
+@@ -109,17 +109,17 @@ static int getpass_func(sasl_conn_t *, void *, int, sasl_secret_t **);
+ static int getuser_func(void *, int, const char **, unsigned *);
+ 
+ static sasl_callback_t callbacks[] = {
+-	{ SASL_CB_USER, &getuser_func, NULL },
+-	{ SASL_CB_AUTHNAME, &getuser_func, NULL },
+-	{ SASL_CB_PASS, &getpass_func, NULL },
++	{ SASL_CB_USER, (int(*)(void)) &getuser_func, NULL },
++	{ SASL_CB_AUTHNAME, (int(*)(void)) &getuser_func, NULL },
++	{ SASL_CB_PASS, (int(*)(void)) &getpass_func, NULL },
+ 	{ SASL_CB_LIST_END, NULL, NULL },
+ };
+ 
+ static sasl_callback_t debug_callbacks[] = {
+-	{ SASL_CB_LOG, &sasl_log_func, NULL },
+-	{ SASL_CB_USER, &getuser_func, NULL },
+-	{ SASL_CB_AUTHNAME, &getuser_func, NULL },
+-	{ SASL_CB_PASS, &getpass_func, NULL },
++	{ SASL_CB_LOG, (int(*)(void)) &sasl_log_func, NULL },
++	{ SASL_CB_USER, (int(*)(void)) &getuser_func, NULL },
++	{ SASL_CB_AUTHNAME, (int(*)(void)) &getuser_func, NULL },
++	{ SASL_CB_PASS, (int(*)(void)) &getpass_func, NULL },
+ 	{ SASL_CB_LIST_END, NULL, NULL },
+ };
+ 
 
----
-
-Applied to the vfs.fixes branch of the vfs/vfs.git tree.
-Patches in the vfs.fixes branch should appear in linux-next soon.
-
-Please report any outstanding bugs that were missed during review in a
-new review to the original patch series allowing us to drop it.
-
-It's encouraged to provide Acked-bys and Reviewed-bys even though the
-patch has now been applied. If possible patch trailers will be updated.
-
-Note that commit hashes shown below are subject to change due to rebase,
-trailer updates or similar. If in doubt, please check the listed branch.
-
-tree:   https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git
-branch: vfs.fixes
-
-[1/1] autofs: add: new_inode check in autofs_fill_super()
-      https://git.kernel.org/vfs/vfs/c/368e8258536e
 
